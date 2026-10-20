@@ -1,0 +1,10 @@
+name = "LexProof"
+version = "0.1.0"
+defaultTargets = ["lexproof"]
+
+[[lean_lib]]
+name = "LexProof"
+
+[[lean_exe]]
+name = "lexproof"
+root = "Main"
