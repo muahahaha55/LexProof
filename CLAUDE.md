@@ -36,6 +36,24 @@ Graduation thesis project; research follow-up later (ASE / NeurIPS 2027 consider
 - Trust boundary: everything outside Lean is untrusted. LLM output must be
   approved by a human before it enters `Laws`.
 
+## Docs
+Documentation lives in `docs/`. Do not restate its content here; update the
+file and leave this list as pointers only.
+- `docs/requirements.md` — FR/NFR (ISO/IEC/IEEE 29148, ISO/IEC 25010), each with
+  acceptance criterion, verification method and status.
+- `docs/architecture.md` — HLD (arc42 + C4): the 4 tiers, trust boundary,
+  Loop A (translate/repair) and Loop B (counterexample), risks.
+- `docs/design-core.md` — LLD of `Core` and `Verify`, written from the code:
+  every declaration, the two linking theorems, and what is *not* proven.
+- `docs/decisions/` — one ADR per decision (MADR), `README.md` is the index.
+- `docs/traceability.md` — requirement → design → Lean declaration → test, plus
+  the G1/G2/G3 claims table and the **trust base** list.
+- `docs/conventions.md` — standards, repo layout, review checklists, and how to
+  run the build and the axiom audit.
+
+Read first: `docs/traceability.md` for what is actually proven versus trusted,
+and `docs/conventions.md` section 6 for why a plain `lake build` is not enough.
+
 ## Working decisions (not final)
 - Situations are modeled over a finite domain (Bool / enum / bounded values) so
   conflicts can be found automatically. Keep `Core` extensible beyond this.
