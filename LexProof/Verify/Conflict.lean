@@ -4,22 +4,26 @@ import LexProof.Verify.Validate
 # Level 1 conflict checking
 
 `Conflict` is the `Prop` saying two norms clash at one situation and one
-assignment of the open-textured parameters. `check` is a `Bool`-level search
-over the valid part of the finite domain.
+assignment of the open-textured parameters.
 
-What ties the two together is at the end of the file:
+**`analyze` is the only public entry point.** It validates first and only then
+searches. The search itself and everything under it live in `LexProof.Internal`
+so that no caller can skip validation by reaching for the checker directly.
 
-* `conflict_of_witness` (a) — a reported conflict is a real one;
-* `counterexample_fields_correct` (c) — every reported field matches the norms;
-* `not_conflict_of_consistentOn` (b) — `consistentOn` rules out conflicts;
-* `scopeOf_spec`, `check_scope` (d) — the scope says exactly what was checked;
+The public guarantees, all at the end of this file:
+
+* `conflict_of_witness` (a, c) — a reported conflict is real, at a valid point,
+  and every reported field matches the norm it claims to come from;
+* `not_conflict_of_consistentOn` (b) — `consistentOn` rules out conflicts on the
+  valid part of the domain;
+* `scopeOf_spec`, `analyze_scope` (d) — the scope says exactly what was checked,
+  including how much of the domain `valid` excluded;
 * `conflict_all_params`, `conditionalConflict_split` (e) — the two labels mean
   what they say;
-* theorem (f) lives in `Validate.lean` plus `Norm.applies_isSome_of_wf`, and is
-  assembled here as `applies_isSome_of_validate_nil`.
-
-Pairs are compared **once**, unordered, and only when the acts match. Only
-`valid` situation/parameter pairs are searched.
+* `applies_isSome_of_validate_nil` (f) — a clean validator run means nothing is
+  unevaluable;
+* `resolution_has_witness` — every reported resolution is a clash that really
+  arises somewhere valid.
 -/
 
 namespace LexProof
@@ -55,37 +59,7 @@ theorem not_conflict_self (A : Atoms S P) (n : Norm) (π : P) (s : S) :
   rw [Incompatible_irrefl] at hi
   simp at hi
 
-/-- Three-valued test: `some true` conflict, `some false` no conflict,
-`none` unknown (a malformed condition). -/
-def conflictsAt (A : Atoms S P) (n₁ n₂ : Norm) (π : P) (s : S) : Option Bool :=
-  match n₁.applies A π s, n₂.applies A π s with
-  | some a₁, some a₂ =>
-    some ((n₁.act == n₂.act) && a₁ && a₂ &&
-          Incompatible n₁.modality n₂.modality && !Norm.resolved n₁ n₂)
-  | _, _ => none
-
-/-- `true` only on a definite conflict. Unknown is not a conflict. -/
-def isConflictAt (A : Atoms S P) (n₁ n₂ : Norm) (π : P) (s : S) : Bool :=
-  (conflictsAt A n₁ n₂ π s).getD false
-
-/-- `true` when the encoding could not be evaluated at all. After a clean
-validator run this is unreachable (theorem (f)); it stays as a fail-closed
-guard. -/
-def isUnknownAt (A : Atoms S P) (n₁ n₂ : Norm) (π : P) (s : S) : Bool :=
-  (conflictsAt A n₁ n₂ π s).isNone
-
-/-- The atom of the checker agrees exactly with the `Prop`. -/
-theorem isConflictAt_eq_true_iff (A : Atoms S P) (n₁ n₂ : Norm) (π : P) (s : S) :
-    isConflictAt A n₁ n₂ π s = true ↔ Conflict A n₁ n₂ π s := by
-  simp only [isConflictAt, conflictsAt, Conflict]
-  cases h₁ : n₁.applies A π s with
-  | none => simp
-  | some a₁ =>
-    cases h₂ : n₂.applies A π s with
-    | none => simp
-    | some a₂ => cases a₁ <;> cases a₂ <;> simp [and_assoc]
-
-/-! ## Unordered pairs -/
+/-! ## Unordered pairs of norms -/
 
 /-- Each unordered pair of distinct list positions, once. No self-pairs. -/
 def pairsOf : List Norm → List (Norm × Norm)
@@ -131,7 +105,223 @@ theorem mem_pairsOf : ∀ {ns : List Norm} {n₁ n₂ : Norm},
         · exact Or.inl (List.mem_append.mpr (Or.inr hl))
         · exact Or.inr (List.mem_append.mpr (Or.inr hr))
 
-/-! ## The search space -/
+/-! ## Reported results -/
+
+/-- A conflict witness, as printable data for human review. -/
+structure Counterexample (S P : Type) where
+  situation : S
+  params : P
+  left : NormId
+  right : NormId
+  modalities : Modality × Modality
+  sources : SourceId × SourceId
+  deriving Repr, DecidableEq
+
+/-- Which norm prevailed over which, when explicit priority settled a clash. -/
+structure Resolution where
+  winner : NormId
+  loser : NormId
+  deriving Repr, DecidableEq
+
+/-- What the search did besides finding or not finding a conflict: clashes
+settled by priority, and norms it could not evaluate. Reported alongside
+**every** result, so a conflict never hides a norm that was skipped. -/
+structure Audit where
+  resolutions : List Resolution
+  unevaluable : List NormId
+  deriving Repr, DecidableEq
+
+/-- What was actually encoded and searched. A `consistentOn` claim is only ever
+about this much.
+
+`docId` is `none` when the list is empty or spans several documents — it is
+never guessed from the head of the list. `validExcluded` out of `validTotal`
+says how much of the domain the integrity constraint ruled out, so the reader
+can see how much narrower the claim is than the raw sizes. -/
+structure Scope where
+  docId : Option String
+  normIds : List NormId
+  articles : List String
+  situations : Nat
+  params : Nat
+  validExcluded : Nat
+  validTotal : Nat
+  deriving Repr, DecidableEq
+
+/-- Did the integrity constraint rule out any point at all? -/
+def Scope.isRestricted (sc : Scope) : Bool := 0 < sc.validExcluded
+
+inductive UnknownReason
+  | malformedCondition (norm : NormId)
+  deriving Repr, DecidableEq
+
+inductive Result (S P : Type)
+  /-- Conflict at that situation under every valid parameter assignment. -/
+  | conflict (c : Counterexample S P) (scope : Scope) (audit : Audit)
+  /-- Conflict for some valid parameter assignments and not others. The named
+  open-textured parameters decide it, and the system does not. -/
+  | conditionalConflict (c : Counterexample S P) (params : List String)
+      (scope : Scope) (audit : Audit)
+  | consistentOn (scope : Scope) (audit : Audit)
+  | unknown (reason : UnknownReason) (scope : Scope) (audit : Audit)
+  /-- Structural defects; nothing was checked for consistency. -/
+  | invalid (findings : List Finding)
+  deriving Repr, DecidableEq
+
+/-- The witness of either kind of conflict report. -/
+def Result.witness? : Result S P → Option (Counterexample S P)
+  | .conflict c _ _ => some c
+  | .conditionalConflict c _ _ _ => some c
+  | _ => none
+
+/-- The scope of any result that actually searched. -/
+def Result.scope? : Result S P → Option Scope
+  | .conflict _ sc _ => some sc
+  | .conditionalConflict _ _ sc _ => some sc
+  | .consistentOn sc _ => some sc
+  | .unknown _ sc _ => some sc
+  | .invalid _ => none
+
+def Result.isConsistentOn : Result S P → Bool
+  | .consistentOn _ _ => true
+  | _ => false
+
+/-! ## Scope and audit -/
+
+/-- Every `(parameter assignment, situation)` point of the enumerated domain. -/
+def validPoints (S P : Type) [Finite S] [Finite P] : List (P × S) :=
+  (Finite.enum (α := P)).flatMap fun π =>
+    (Finite.enum (α := S)).map fun s => (π, s)
+
+/-- How many points the integrity constraint rules out. -/
+def validExcludedOf [Finite S] [Finite P] (A : Atoms S P) : Nat :=
+  (validPoints S P).countP fun p => !(A.valid p.1 p.2)
+
+def scopeOf (S P : Type) [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) :
+    Scope :=
+  { docId := singleDocId? ns
+  , normIds := ns.map fun n => n.id
+  , articles := ns.map fun n => n.source.article
+  , situations := Finite.card S
+  , params := Finite.card P
+  , validExcluded := validExcludedOf A
+  , validTotal := (validPoints S P).length }
+
+/-- A valid point where both norms apply, if there is one. Carrying the point
+rather than a `Bool` is what makes `resolution_has_witness` provable. -/
+def coApplyPoint? [Finite S] [Finite P] (A : Atoms S P) (n₁ n₂ : Norm) :
+    Option (P × S) :=
+  (validPoints S P).find? fun p =>
+    A.valid p.1 p.2 && (n₁.applies A p.1 p.2 == some true) &&
+      (n₂.applies A p.1 p.2 == some true)
+
+/-- The resolution for one pair, if explicit priority settles a clash that
+**really arises** at some valid point. A pair whose norms never apply together
+yields nothing: there is no clash to settle. -/
+def resolutionOf? [Finite S] [Finite P] (A : Atoms S P) (p : Norm × Norm) :
+    Option Resolution :=
+  if p.1.act == p.2.act && Incompatible p.1.modality p.2.modality then
+    match Norm.winner? p.1 p.2, coApplyPoint? A p.1 p.2 with
+    | some w, some _ =>
+      some { winner := w, loser := if w == p.1.id then p.2.id else p.1.id }
+    | _, _ => none
+  else none
+
+def resolutionsOf [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) :
+    List Resolution :=
+  (pairsOf ns).filterMap (resolutionOf? A)
+
+def auditOf [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) : Audit :=
+  { resolutions := resolutionsOf A ns
+  , unevaluable := unevaluableIds A ns }
+
+theorem resolutionOf?_spec [Finite S] [Finite P] {A : Atoms S P} {p : Norm × Norm}
+    {r : Resolution} (h : resolutionOf? A p = some r) :
+    ∃ (π : P) (s : S),
+      A.valid π s = true ∧
+      p.1.applies A π s = some true ∧ p.2.applies A π s = some true ∧
+      p.1.act = p.2.act ∧
+      Incompatible p.1.modality p.2.modality = true ∧
+      Norm.winner? p.1 p.2 = some r.winner := by
+  simp only [resolutionOf?] at h
+  cases hcond : (p.1.act == p.2.act && Incompatible p.1.modality p.2.modality) with
+  | false => rw [hcond] at h; simp at h
+  | true =>
+    rw [hcond] at h
+    simp only [Bool.and_eq_true, beq_iff_eq] at hcond
+    cases hw : Norm.winner? p.1 p.2 with
+    | none => rw [hw] at h; simp at h
+    | some w =>
+      cases hq : coApplyPoint? A p.1 p.2 with
+      | none => rw [hw, hq] at h; simp at h
+      | some q =>
+        rw [hw, hq] at h
+        have hq' : (validPoints S P).find? (fun p' =>
+            A.valid p'.1 p'.2 && (p.1.applies A p'.1 p'.2 == some true) &&
+              (p.2.applies A p'.1 p'.2 == some true)) = some q := hq
+        have hpred := List.find?_some hq'
+        simp only [Bool.and_eq_true, beq_iff_eq] at hpred
+        have hfull : ({ winner := w
+                      , loser := if w == p.1.id then p.2.id else p.1.id }
+                        : Resolution) = r := by simpa using h
+        have hrw : r.winner = w := by rw [← hfull]
+        exact ⟨q.1, q.2, hpred.1.1, hpred.1.2, hpred.2, hcond.1, hcond.2,
+          by simp [hrw]⟩
+
+/-- **D23.** Every reported resolution is a clash that really arises: there is a
+valid point where both norms apply and their modalities conflict. A pair that
+never applies together is not reported. -/
+theorem resolution_has_witness [Finite S] [Finite P] {A : Atoms S P}
+    {ns : List Norm} {r : Resolution} (h : r ∈ resolutionsOf A ns) :
+    ∃ n₁ ∈ ns, ∃ n₂ ∈ ns, ∃ (π : P) (s : S),
+      A.valid π s = true ∧
+      n₁.applies A π s = some true ∧ n₂.applies A π s = some true ∧
+      n₁.act = n₂.act ∧
+      Incompatible n₁.modality n₂.modality = true ∧
+      Norm.winner? n₁ n₂ = some r.winner := by
+  rcases List.mem_filterMap.mp h with ⟨p, hp, hr⟩
+  obtain ⟨π, s, hv, h1, h2, hact, hinc, hw⟩ := resolutionOf?_spec hr
+  have hsub := pairsOf_subset hp
+  exact ⟨p.1, hsub.1, p.2, hsub.2, π, s, hv, h1, h2, hact, hinc, hw⟩
+
+/-! ## The search — internal
+
+Everything below is reachable only as `LexProof.Internal.*`. `analyze` is the
+public entry point, and it validates before it searches. -/
+
+namespace Internal
+
+variable {S P : Type}
+
+/-- Three-valued test: `some true` conflict, `some false` no conflict,
+`none` unknown (a malformed condition). -/
+def conflictsAt (A : Atoms S P) (n₁ n₂ : Norm) (π : P) (s : S) : Option Bool :=
+  match n₁.applies A π s, n₂.applies A π s with
+  | some a₁, some a₂ =>
+    some ((n₁.act == n₂.act) && a₁ && a₂ &&
+          Incompatible n₁.modality n₂.modality && !Norm.resolved n₁ n₂)
+  | _, _ => none
+
+/-- `true` only on a definite conflict. Unknown is not a conflict. -/
+def isConflictAt (A : Atoms S P) (n₁ n₂ : Norm) (π : P) (s : S) : Bool :=
+  (conflictsAt A n₁ n₂ π s).getD false
+
+/-- `true` when the encoding could not be evaluated at all. After a clean
+validator run this is unreachable (theorem (f)); it stays as a fail-closed
+guard. -/
+def isUnknownAt (A : Atoms S P) (n₁ n₂ : Norm) (π : P) (s : S) : Bool :=
+  (conflictsAt A n₁ n₂ π s).isNone
+
+/-- The atom of the checker agrees exactly with the `Prop`. -/
+theorem isConflictAt_eq_true_iff (A : Atoms S P) (n₁ n₂ : Norm) (π : P) (s : S) :
+    isConflictAt A n₁ n₂ π s = true ↔ Conflict A n₁ n₂ π s := by
+  simp only [isConflictAt, conflictsAt, Conflict]
+  cases h₁ : n₁.applies A π s with
+  | none => simp
+  | some a₁ =>
+    cases h₂ : n₂.applies A π s with
+    | none => simp
+    | some a₂ => cases a₁ <;> cases a₂ <;> simp [and_assoc]
 
 /-- One point of the search space. -/
 structure Cand (S P : Type) where
@@ -172,79 +362,6 @@ theorem mem_of_mem_cands [Finite S] [Finite P] {A : Atoms S P} {ns : List Norm}
   simp only [Bool.and_eq_true, beq_iff_eq] at hpred
   exact ⟨hsub.1, hsub.2, hpred.1, hpred.2⟩
 
-/-! ## Reported results -/
-
-/-- A conflict witness, as printable data for human review. -/
-structure Counterexample (S P : Type) where
-  situation : S
-  params : P
-  left : NormId
-  right : NormId
-  modalities : Modality × Modality
-  sources : SourceId × SourceId
-  deriving Repr, DecidableEq
-
-/-- Which norm prevailed over which, when explicit priority settled a clash. -/
-structure Resolution where
-  winner : NormId
-  loser : NormId
-  deriving Repr, DecidableEq
-
-/-- What the search did besides finding or not finding a conflict: clashes
-settled by priority, and norms it could not evaluate. `unevaluable` is reported
-alongside **every** result, so a conflict never hides a norm that was skipped. -/
-structure Audit where
-  resolutions : List Resolution
-  unevaluable : List NormId
-  deriving Repr, DecidableEq
-
-/-- What was actually encoded and searched. A `consistentOn` claim is only ever
-about this much. `validRestricted` says an integrity constraint excluded part of
-the domain, so the reader knows the claim is narrower than the raw sizes. -/
-structure Scope where
-  docId : String
-  normIds : List NormId
-  articles : List String
-  situations : Nat
-  params : Nat
-  validRestricted : Bool
-  deriving Repr, DecidableEq
-
-inductive UnknownReason
-  | malformedCondition (norm : NormId)
-  deriving Repr, DecidableEq
-
-inductive Result (S P : Type)
-  /-- Conflict at that situation under every valid parameter assignment. -/
-  | conflict (c : Counterexample S P) (scope : Scope) (audit : Audit)
-  /-- Conflict for some valid parameter assignments and not others. The named
-  open-textured parameters decide it, and the system does not. -/
-  | conditionalConflict (c : Counterexample S P) (params : List String)
-      (scope : Scope) (audit : Audit)
-  | consistentOn (scope : Scope) (audit : Audit)
-  | unknown (reason : UnknownReason) (scope : Scope) (audit : Audit)
-  /-- Structural defects; nothing was checked for consistency. -/
-  | invalid (findings : List Finding)
-  deriving Repr, DecidableEq
-
-/-- The witness of either kind of conflict report. -/
-def Result.witness? : Result S P → Option (Counterexample S P)
-  | .conflict c _ _ => some c
-  | .conditionalConflict c _ _ _ => some c
-  | _ => none
-
-/-- The scope of any result that actually searched. -/
-def Result.scope? : Result S P → Option Scope
-  | .conflict _ sc _ => some sc
-  | .conditionalConflict _ _ sc _ => some sc
-  | .consistentOn sc _ => some sc
-  | .unknown _ sc _ => some sc
-  | .invalid _ => none
-
-def Result.isConsistentOn : Result S P → Bool
-  | .consistentOn _ _ => true
-  | _ => false
-
 /-- Project a candidate into the reported witness. Every field comes from the
 two norms, which is what theorem (c) states. -/
 def ceOf (k : Cand S P) : Counterexample S P :=
@@ -260,31 +377,6 @@ def paramNames (A : Atoms S P) (n₁ n₂ : Norm) : List String :=
   ((n₁.paramIdxs ++ n₂.paramIdxs).eraseDups).filterMap fun i =>
     (A.param[i]?).map fun f => f.1
 
-/-- Does `valid` admit the whole enumerated domain? -/
-def validIsTrivial [Finite S] [Finite P] (A : Atoms S P) : Bool :=
-  (Finite.enum (α := P)).all fun π => (Finite.enum (α := S)).all fun s => A.valid π s
-
-def scopeOf (S P : Type) [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) : Scope :=
-  { docId := (ns.head?.map fun n => n.source.docId).getD ""
-  , normIds := ns.map fun n => n.id
-  , articles := ns.map fun n => n.source.article
-  , situations := Finite.card S
-  , params := Finite.card P
-  , validRestricted := !validIsTrivial A }
-
-/-- Clashing pairs that explicit priority settles, with the prevailing norm. -/
-def resolutionsOf (ns : List Norm) : List Resolution :=
-  (pairsOf ns).filterMap fun p =>
-    if p.1.act == p.2.act && Incompatible p.1.modality p.2.modality then
-      match Norm.winner? p.1 p.2 with
-      | some w => some { winner := w, loser := if w == p.1.id then p.2.id else p.1.id }
-      | none => none
-    else none
-
-def auditOf [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) : Audit :=
-  { resolutions := resolutionsOf ns
-  , unevaluable := unevaluableIds A ns }
-
 /-- Plain conflict when the clash holds at that situation for every **valid**
 parameter assignment; conditional conflict otherwise. -/
 def mkResult [Finite P] (A : Atoms S P) (k : Cand S P) (sc : Scope) (au : Audit) :
@@ -295,10 +387,9 @@ def mkResult [Finite P] (A : Atoms S P) (k : Cand S P) (sc : Scope) (au : Audit)
   else
     .conditionalConflict (ceOf k) (paramNames A k.left k.right) sc au
 
-/-! ## The checker -/
-
 /-- The search proper, on a non-empty norm list. -/
-def checkNonempty [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) : Result S P :=
+def checkNonempty [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) :
+    Result S P :=
   match (cands A ns).find? fun k =>
       isConflictAt A k.left k.right k.params k.situation with
   | some k => mkResult A k (scopeOf S P A ns) (auditOf A ns)
@@ -308,24 +399,16 @@ def checkNonempty [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) : Resul
     | i :: _ => .unknown (.malformedCondition i) (scopeOf S P A ns) (auditOf A ns)
 
 /-- Search the valid part of the finite domain. An empty norm list is a
-finding, never a consistency claim. -/
+finding, never a consistency claim.
+
+**Not the public entry point**: it does not validate. Use `LexProof.analyze`. -/
 def check [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) : Result S P :=
   match ns with
   | [] => .invalid [Finding.emptyNormList]
   | _ => checkNonempty A ns
 
-/-- Validate first, then check. This is the entry point: `unknown` is a
-fail-closed guard, not the place where structural defects are reported. -/
-def analyze [Finite S] [Finite P] (A : Atoms S P) (catalog : List String)
-    (ns : List Norm) : Result S P :=
-  match validate A catalog ns with
-  | [] => check A ns
-  | fs => .invalid fs
+/-! ### Extraction lemmas about the search -/
 
-/-! ## Core extraction lemma -/
-
-/-- Everything the positive results are built from: a candidate in the search
-space whose Bool test was true, and the witness built from it. -/
 theorem witness_spec [Finite S] [Finite P] {A : Atoms S P} {ns : List Norm}
     {c : Counterexample S P} (h : (checkNonempty A ns).witness? = some c) :
     ∃ k ∈ cands A ns, c = ceOf k ∧
@@ -345,11 +428,65 @@ theorem witness_spec [Finite S] [Finite P] {A : Atoms S P} {ns : List Norm}
     simp only [mkResult] at h
     split at h <;> simp [Result.witness?] at h <;> exact h.symm
 
-/-! ## (a) and (c): a reported conflict is real, in every reported field -/
+theorem conflict_label_spec [Finite S] [Finite P] {A : Atoms S P} {ns : List Norm}
+    {c : Counterexample S P} {sc : Scope} {au : Audit}
+    (h : checkNonempty A ns = .conflict c sc au) :
+    ∃ k ∈ cands A ns, c = ceOf k ∧
+      ((Finite.enum (α := P)).all fun π =>
+        !(A.valid π k.situation) ||
+          isConflictAt A k.left k.right π k.situation) = true := by
+  simp only [checkNonempty] at h
+  cases hf : (cands A ns).find? (fun k =>
+      isConflictAt A k.left k.right k.params k.situation) with
+  | none =>
+    rw [hf] at h
+    cases hu : unevaluableIds A ns with
+    | nil => rw [hu] at h; simp at h
+    | cons i r => rw [hu] at h; simp at h
+  | some k =>
+    rw [hf] at h
+    simp only [mkResult] at h
+    cases hcond : ((Finite.enum (α := P)).all fun π =>
+        !(A.valid π k.situation) ||
+          isConflictAt A k.left k.right π k.situation) with
+    | false => rw [hcond] at h; simp at h
+    | true =>
+      rw [hcond] at h
+      simp at h
+      exact ⟨k, List.mem_of_find?_eq_some hf, h.1.symm, hcond⟩
 
-/-- (a) If the checker reports a conflict, the witness is a real conflict
-between two norms of the document, at a **valid** parameter assignment and
-situation, and the witness is exactly the projection of those two norms. -/
+theorem conditionalConflict_label_spec [Finite S] [Finite P] {A : Atoms S P}
+    {ns : List Norm} {c : Counterexample S P} {ps : List String}
+    {sc : Scope} {au : Audit}
+    (h : checkNonempty A ns = .conditionalConflict c ps sc au) :
+    ∃ k ∈ cands A ns, c = ceOf k ∧
+      isConflictAt A k.left k.right k.params k.situation = true ∧
+      ((Finite.enum (α := P)).all fun π =>
+        !(A.valid π k.situation) ||
+          isConflictAt A k.left k.right π k.situation) = false := by
+  simp only [checkNonempty] at h
+  cases hf : (cands A ns).find? (fun k =>
+      isConflictAt A k.left k.right k.params k.situation) with
+  | none =>
+    rw [hf] at h
+    cases hu : unevaluableIds A ns with
+    | nil => rw [hu] at h; simp at h
+    | cons i r => rw [hu] at h; simp at h
+  | some k =>
+    rw [hf] at h
+    have hb := List.find?_some hf
+    simp only [mkResult] at h
+    cases hcond : ((Finite.enum (α := P)).all fun π =>
+        !(A.valid π k.situation) ||
+          isConflictAt A k.left k.right π k.situation) with
+    | true => rw [hcond] at h; simp at h
+    | false =>
+      rw [hcond] at h
+      simp at h
+      exact ⟨k, List.mem_of_find?_eq_some hf, h.1.symm, hb, hcond⟩
+
+/-! ### The search-level guarantees -/
+
 theorem conflict_of_witness [Finite S] [Finite P]
     {A : Atoms S P} {ns : List Norm} {c : Counterexample S P}
     (h : (check A ns).witness? = some c) :
@@ -367,30 +504,6 @@ theorem conflict_of_witness [Finite S] [Finite P]
     exact ⟨k.left, hl, k.right, hr, rfl, hv,
       (isConflictAt_eq_true_iff A k.left k.right k.params k.situation).mp hb⟩
 
-/-- (c) Every reported field — ids, modalities, sources — is the field of the
-norm it claims to come from, not just the ids. -/
-theorem counterexample_fields_correct [Finite S] [Finite P]
-    {A : Atoms S P} {ns : List Norm} {c : Counterexample S P}
-    (h : (check A ns).witness? = some c) :
-    ∃ n₁ ∈ ns, ∃ n₂ ∈ ns,
-      c.left = n₁.id ∧ c.right = n₂.id ∧
-      c.modalities = (n₁.modality, n₂.modality) ∧
-      c.sources = (n₁.source, n₂.source) ∧
-      Conflict A n₁ n₂ c.params c.situation := by
-  obtain ⟨n₁, h₁, n₂, h₂, hce, _, hconf⟩ := conflict_of_witness h
-  refine ⟨n₁, h₁, n₂, h₂, ?_, ?_, ?_, ?_, hconf⟩
-  · rw [hce]; rfl
-  · rw [hce]; rfl
-  · rw [hce]; rfl
-  · rw [hce]; rfl
-
-/-! ## (b): consistentOn rules out conflicts -/
-
-/-- (b) If the checker reports `consistentOn`, then no two norms of the
-document conflict at any **valid** situation and parameter assignment.
-
-This says nothing about situations `valid` excludes, and nothing about the law
-itself. -/
 theorem not_conflict_of_consistentOn [Finite S] [Finite P]
     {A : Atoms S P} {ns : List Norm} {sc : Scope} {au : Audit}
     (h : check A ns = .consistentOn sc au) :
@@ -415,22 +528,6 @@ theorem not_conflict_of_consistentOn [Finite S] [Finite P]
         · exact hnone _ (mem_cands hp hact.symm hv)
             ((isConflictAt_eq_true_iff A n₂ n₁ π s).mpr (Conflict_comm hconf))
 
-/-! ## (d): the scope says exactly what was checked -/
-
-/-- (d) `scopeOf` lists exactly the ids and articles of the norms given, and
-the enumerated domain sizes. -/
-theorem scopeOf_spec (S P : Type) [Finite S] [Finite P] (A : Atoms S P)
-    (ns : List Norm) :
-    (scopeOf S P A ns).normIds = ns.map (fun n => n.id) ∧
-    (scopeOf S P A ns).articles = ns.map (fun n => n.source.article) ∧
-    (scopeOf S P A ns).situations = Finite.card S ∧
-    (scopeOf S P A ns).params = Finite.card P ∧
-    ((scopeOf S P A ns).validRestricted = true ↔ validIsTrivial A = false) := by
-  refine ⟨rfl, rfl, rfl, rfl, ?_⟩
-  simp [scopeOf]
-
-/-- (d) Every result that searched reports that scope, so the guarantee of
-`scopeOf_spec` is the guarantee of the report. -/
 theorem check_scope [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm)
     (hne : ns ≠ []) : (check A ns).scope? = some (scopeOf S P A ns) := by
   cases ns with
@@ -447,63 +544,6 @@ theorem check_scope [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm)
       | nil => rfl
       | cons i r => rfl
 
-/-! ## (e): the two labels mean what they say -/
-
-theorem conflict_label_spec [Finite S] [Finite P] {A : Atoms S P} {ns : List Norm}
-    {c : Counterexample S P} {sc : Scope} {au : Audit}
-    (h : checkNonempty A ns = .conflict c sc au) :
-    ∃ k ∈ cands A ns, c = ceOf k ∧
-      ((Finite.enum (α := P)).all fun π =>
-        !(A.valid π k.situation) || isConflictAt A k.left k.right π k.situation) = true := by
-  simp only [checkNonempty] at h
-  cases hf : (cands A ns).find? (fun k =>
-      isConflictAt A k.left k.right k.params k.situation) with
-  | none =>
-    rw [hf] at h
-    cases hu : unevaluableIds A ns with
-    | nil => rw [hu] at h; simp at h
-    | cons i r => rw [hu] at h; simp at h
-  | some k =>
-    rw [hf] at h
-    simp only [mkResult] at h
-    cases hcond : ((Finite.enum (α := P)).all fun π =>
-        !(A.valid π k.situation) || isConflictAt A k.left k.right π k.situation) with
-    | false => rw [hcond] at h; simp at h
-    | true =>
-      rw [hcond] at h
-      simp at h
-      exact ⟨k, List.mem_of_find?_eq_some hf, h.1.symm, hcond⟩
-
-theorem conditionalConflict_label_spec [Finite S] [Finite P] {A : Atoms S P}
-    {ns : List Norm} {c : Counterexample S P} {ps : List String}
-    {sc : Scope} {au : Audit}
-    (h : checkNonempty A ns = .conditionalConflict c ps sc au) :
-    ∃ k ∈ cands A ns, c = ceOf k ∧
-      isConflictAt A k.left k.right k.params k.situation = true ∧
-      ((Finite.enum (α := P)).all fun π =>
-        !(A.valid π k.situation) || isConflictAt A k.left k.right π k.situation) = false := by
-  simp only [checkNonempty] at h
-  cases hf : (cands A ns).find? (fun k =>
-      isConflictAt A k.left k.right k.params k.situation) with
-  | none =>
-    rw [hf] at h
-    cases hu : unevaluableIds A ns with
-    | nil => rw [hu] at h; simp at h
-    | cons i r => rw [hu] at h; simp at h
-  | some k =>
-    rw [hf] at h
-    have hb := List.find?_some hf
-    simp only [mkResult] at h
-    cases hcond : ((Finite.enum (α := P)).all fun π =>
-        !(A.valid π k.situation) || isConflictAt A k.left k.right π k.situation) with
-    | true => rw [hcond] at h; simp at h
-    | false =>
-      rw [hcond] at h
-      simp at h
-      exact ⟨k, List.mem_of_find?_eq_some hf, h.1.symm, hb, hcond⟩
-
-/-- (e) part 1: `.conflict` means the clash holds at that situation under
-**every** valid parameter assignment. -/
 theorem conflict_all_params [Finite S] [Finite P]
     {A : Atoms S P} {ns : List Norm} {c : Counterexample S P}
     {sc : Scope} {au : Audit} (h : check A ns = .conflict c sc au) :
@@ -523,8 +563,6 @@ theorem conflict_all_params [Finite S] [Finite P]
     simp only [hv', Bool.not_true, Bool.false_or] at hx
     exact (isConflictAt_eq_true_iff A k.left k.right π k.situation).mp hx
 
-/-- (e) part 2: `.conditionalConflict` means there is a valid parameter
-assignment that conflicts and another that does not, at that same situation. -/
 theorem conditionalConflict_split [Finite S] [Finite P]
     {A : Atoms S P} {ns : List Norm} {c : Counterexample S P} {ps : List String}
     {sc : Scope} {au : Audit} (h : check A ns = .conditionalConflict c ps sc au) :
@@ -551,11 +589,145 @@ theorem conditionalConflict_split [Finite S] [Finite P]
         exact absurd
           (Or.inr ((isConflictAt_eq_true_iff A k.left k.right π k.situation).mpr hconf)) hx
 
-/-! ## (f): a clean validator run means nothing is unevaluable -/
+end Internal
 
-/-- (f) If the validator reports no findings, `applies` never returns `none` —
-at any `(π, s)`, valid or not. The guarantee is therefore stronger than the
-`valid` restriction the checker uses. -/
+/-! ## `analyze` — the public entry point -/
+
+/-- Validate first, then search. `unknown` is a fail-closed guard, not the
+place where structural defects are reported. -/
+def analyze [Finite S] [Finite P] (A : Atoms S P) (catalog : List String)
+    (ns : List Norm) : Result S P :=
+  match validate A catalog ns with
+  | [] => Internal.check A ns
+  | fs => .invalid fs
+
+/-- When the validator is silent, `analyze` is exactly the search. -/
+theorem analyze_eq_check [Finite S] [Finite P] {A : Atoms S P}
+    {catalog : List String} {ns : List Norm} (h : validate A catalog ns = []) :
+    analyze A catalog ns = Internal.check A ns := by
+  simp only [analyze, h]
+
+/-- A reported witness can only come from the search branch. -/
+theorem validate_nil_of_witness [Finite S] [Finite P] {A : Atoms S P}
+    {catalog : List String} {ns : List Norm} {c : Counterexample S P}
+    (h : (analyze A catalog ns).witness? = some c) : validate A catalog ns = [] := by
+  cases hv : validate A catalog ns with
+  | nil => rfl
+  | cons f fs =>
+    exfalso
+    rw [analyze, hv] at h
+    simp [Result.witness?] at h
+
+/-- A `consistentOn` report can only come from the search branch. -/
+theorem validate_nil_of_consistentOn [Finite S] [Finite P] {A : Atoms S P}
+    {catalog : List String} {ns : List Norm} {sc : Scope} {au : Audit}
+    (h : analyze A catalog ns = .consistentOn sc au) :
+    validate A catalog ns = [] := by
+  cases hv : validate A catalog ns with
+  | nil => rfl
+  | cons f fs =>
+    exfalso
+    rw [analyze, hv] at h
+    simp at h
+
+/-- A `conflict` report can only come from the search branch. -/
+theorem validate_nil_of_conflict [Finite S] [Finite P] {A : Atoms S P}
+    {catalog : List String} {ns : List Norm} {c : Counterexample S P}
+    {sc : Scope} {au : Audit} (h : analyze A catalog ns = .conflict c sc au) :
+    validate A catalog ns = [] :=
+  validate_nil_of_witness (c := c) (by rw [h]; rfl)
+
+/-- A `conditionalConflict` report can only come from the search branch. -/
+theorem validate_nil_of_conditionalConflict [Finite S] [Finite P] {A : Atoms S P}
+    {catalog : List String} {ns : List Norm} {c : Counterexample S P}
+    {ps : List String} {sc : Scope} {au : Audit}
+    (h : analyze A catalog ns = .conditionalConflict c ps sc au) :
+    validate A catalog ns = [] :=
+  validate_nil_of_witness (c := c) (by rw [h]; rfl)
+
+/-! ## The public guarantees -/
+
+/-- **(a) and (c).** If `analyze` reports a conflict, the witness is a real
+conflict between two norms of the document, at a **valid** point, and **every**
+reported field — ids, modalities, sources — is the field of the norm it claims
+to come from. -/
+theorem conflict_of_witness [Finite S] [Finite P]
+    {A : Atoms S P} {catalog : List String} {ns : List Norm}
+    {c : Counterexample S P} (h : (analyze A catalog ns).witness? = some c) :
+    ∃ n₁ ∈ ns, ∃ n₂ ∈ ns,
+      c.left = n₁.id ∧ c.right = n₂.id ∧
+      c.modalities = (n₁.modality, n₂.modality) ∧
+      c.sources = (n₁.source, n₂.source) ∧
+      A.valid c.params c.situation = true ∧
+      Conflict A n₁ n₂ c.params c.situation := by
+  rw [analyze_eq_check (validate_nil_of_witness h)] at h
+  obtain ⟨n₁, h₁, n₂, h₂, hce, hv, hconf⟩ := Internal.conflict_of_witness h
+  refine ⟨n₁, h₁, n₂, h₂, ?_, ?_, ?_, ?_, hv, hconf⟩
+  · rw [hce]; rfl
+  · rw [hce]; rfl
+  · rw [hce]; rfl
+  · rw [hce]; rfl
+
+/-- **(b).** If `analyze` reports `consistentOn`, then no two norms of the
+document conflict at any **valid** situation and parameter assignment.
+
+This says nothing about points `valid` excludes, and nothing about the law. -/
+theorem not_conflict_of_consistentOn [Finite S] [Finite P]
+    {A : Atoms S P} {catalog : List String} {ns : List Norm}
+    {sc : Scope} {au : Audit} (h : analyze A catalog ns = .consistentOn sc au) :
+    ∀ n₁ ∈ ns, ∀ n₂ ∈ ns, ∀ (π : P) (s : S),
+      A.valid π s = true → ¬ Conflict A n₁ n₂ π s := by
+  rw [analyze_eq_check (validate_nil_of_consistentOn h)] at h
+  exact Internal.not_conflict_of_consistentOn h
+
+/-- **(d).** `scopeOf` reports exactly the document, ids, articles, domain sizes
+and the share of the domain the integrity constraint excluded. -/
+theorem scopeOf_spec (S P : Type) [Finite S] [Finite P] (A : Atoms S P)
+    (ns : List Norm) :
+    (scopeOf S P A ns).docId = singleDocId? ns ∧
+    (scopeOf S P A ns).normIds = ns.map (fun n => n.id) ∧
+    (scopeOf S P A ns).articles = ns.map (fun n => n.source.article) ∧
+    (scopeOf S P A ns).situations = Finite.card S ∧
+    (scopeOf S P A ns).params = Finite.card P ∧
+    (scopeOf S P A ns).validExcluded = validExcludedOf A ∧
+    (scopeOf S P A ns).validTotal = (validPoints S P).length ∧
+    (scopeOf S P A ns).validExcluded ≤ (scopeOf S P A ns).validTotal :=
+  ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, List.countP_le_length⟩
+
+/-- **(d).** Every `analyze` result that searched reports that scope. -/
+theorem analyze_scope [Finite S] [Finite P] (A : Atoms S P)
+    (catalog : List String) (ns : List Norm) (hne : ns ≠ [])
+    (h : validate A catalog ns = []) :
+    (analyze A catalog ns).scope? = some (scopeOf S P A ns) := by
+  rw [analyze_eq_check h]
+  exact Internal.check_scope A ns hne
+
+/-- **(e) part 1.** `.conflict` means the clash holds at that situation under
+**every** valid parameter assignment. -/
+theorem conflict_all_params [Finite S] [Finite P]
+    {A : Atoms S P} {catalog : List String} {ns : List Norm}
+    {c : Counterexample S P} {sc : Scope} {au : Audit}
+    (h : analyze A catalog ns = .conflict c sc au) :
+    ∃ n₁ ∈ ns, ∃ n₂ ∈ ns,
+      ∀ π : P, A.valid π c.situation = true → Conflict A n₁ n₂ π c.situation := by
+  rw [analyze_eq_check (validate_nil_of_conflict h)] at h
+  exact Internal.conflict_all_params h
+
+/-- **(e) part 2.** `.conditionalConflict` means there is a valid parameter
+assignment that conflicts and another that does not, at that same situation. -/
+theorem conditionalConflict_split [Finite S] [Finite P]
+    {A : Atoms S P} {catalog : List String} {ns : List Norm}
+    {c : Counterexample S P} {ps : List String} {sc : Scope} {au : Audit}
+    (h : analyze A catalog ns = .conditionalConflict c ps sc au) :
+    ∃ n₁ ∈ ns, ∃ n₂ ∈ ns,
+      (∃ π : P, A.valid π c.situation = true ∧ Conflict A n₁ n₂ π c.situation) ∧
+      (∃ π : P, A.valid π c.situation = true ∧ ¬ Conflict A n₁ n₂ π c.situation) := by
+  rw [analyze_eq_check (validate_nil_of_conditionalConflict h)] at h
+  exact Internal.conditionalConflict_split h
+
+/-- **(f).** If the validator reports no findings, `applies` never returns
+`none` — at any `(π, s)`, valid or not. The guarantee is therefore stronger
+than the `valid` restriction the search uses. -/
 theorem applies_isSome_of_validate_nil [Finite S] [Finite P]
     {A : Atoms S P} {catalog : List String} {ns : List Norm}
     (h : validate A catalog ns = []) :
