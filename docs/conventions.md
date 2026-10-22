@@ -92,9 +92,13 @@ thiếu docstring nằm ở [design-core.md](design-core.md) mục 6.
 
 1. `lake build` **cho các module thật** (mục 6) phải xanh trước khi nói là xong.
 2. Audit axiom (mục 7) phải sạch cho mọi định lý mới.
-3. Thay đổi `Conflict`, `Norm.applies`, `Norm.resolved`, `Incompatible` hay
-   `Cond.eval` là thay đổi **trust base** → phải nói rõ trong mô tả PR và phải
-   kiểm lại các định lý phụ thuộc. Năm định nghĩa này không phải code thường.
+3. Thay đổi `Conflict`, `Norm.applies`, `Norm.resolved`, `Incompatible`,
+   `Cond.eval` hay **`Atoms.valid`** là thay đổi **trust base** → phải nói rõ
+   trong mô tả PR và phải kiểm lại các định lý phụ thuộc. Sáu định nghĩa này
+   không phải code thường.
+4. Code mới gọi bộ kiểm phải đi qua **`LexProof.analyze`**. `LexProof.Internal.*`
+   chỉ dành cho test và cho các chứng minh bên trong `Verify`: gọi
+   `Internal.check` trực tiếp là bỏ qua validator.
 4. Không mở rộng phạm vi ngoài phần được yêu cầu. Thêm phụ thuộc, đổi cấu trúc
    thư mục, sửa `lakefile.toml` hay `lean-toolchain` thì **phải hỏi trước**.
 
@@ -111,6 +115,11 @@ thiếu docstring nằm ở [design-core.md](design-core.md) mục 6.
       tiên ([ADR-0005](decisions/0005-exceptions-vs-priority.md)) — đây là nguồn
       sai faithfulness thường gặp nhất.
 - [ ] Mọi khái niệm mở đã thành **tham số**, không bị nhúng thành hằng.
+- [ ] **`Atoms.valid` được duyệt như một norm**: mỗi cặp `(π, s)` nó loại bỏ
+      phải thật sự không thể xảy ra. `valid` quá mạnh **che xung đột thật** và
+      không định lý nào phát hiện được
+      ([ADR-0021](decisions/0021-integrity-constraint-valid.md)). Đối chiếu
+      `Scope.validExcluded` / `validTotal` xem con số có hợp lý.
 - [ ] `docId`, `docType`, `effective` điền đúng, dù Level 1 chưa dùng
       ([ADR-0007](decisions/0007-keep-level2-fields-in-sourceid.md)).
 - [ ] Bản dịch ngược tiếng Việt khớp với văn bản gốc khi đọc song song.

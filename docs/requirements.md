@@ -77,18 +77,19 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
   `Norm.priority`, tham số `P`.
 
 ### FR7 — Kiểm tra xung đột ba/bốn kết quả
-- **Phát biểu**: Hệ thống phải kiểm tra xung đột và trả về đúng một trong bốn
-  kết quả: `conflict` / `conditionalConflict` / `consistentOn scope` / `unknown`.
+- **Phát biểu**: Hệ thống phải kiểm tra xung đột và trả về đúng một trong **năm**
+  kết quả: `conflict` / `conditionalConflict` / `consistentOn scope` / `unknown`
+  / `invalid` (khuyết điểm cấu trúc — không kiểm gì cả).
 - **Ưu tiên**: Must
 - **AC**: Không bao giờ phát biểu "văn bản đúng" một cách vô điều kiện; mọi
   khẳng định nhất quán đều kèm scope.
 - **Kiểm chứng**: Proof
-- **Trạng thái**: **Implemented** — `check`/`analyze`, `Result` (5 nhánh: thêm
-  `invalid` cho khuyết điểm cấu trúc), kèm các định lý (a) `conflict_of_witness`,
-  (c) `counterexample_fields_correct`, (b) `not_conflict_of_consistentOn`,
-  (d) `scopeOf_spec`/`check_scope`, (e) `conflict_all_params`/
-  `conditionalConflict_split`. Nhánh `conditionalConflict` nay **có** định lý
-  đặc trưng và có ca kiểm thử.
+- **Trạng thái**: **Implemented** — `analyze` là **điểm vào duy nhất** (validate
+  trước, rồi mới tìm; bộ kiểm nằm trong `LexProof.Internal` nên không bỏ qua
+  được validator). `Result` có năm nhánh như trên, kèm các định lý
+  (a)+(c) `conflict_of_witness`, (b) `not_conflict_of_consistentOn`,
+  (d) `scopeOf_spec`/`analyze_scope`, (e) `conflict_all_params`/
+  `conditionalConflict_split`. Mọi nhánh đều có ca kiểm thử.
 
 ### FR8 — Validator well-formedness
 - **Phát biểu**: Hệ thống phải chạy validator trước khi kiểm tra xung đột, phát
@@ -175,11 +176,15 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
   "nhất quán" mà không có scope.
 - **Kiểm chứng**: Proof + Review
 - **Trạng thái**: **Implemented** ở mức kiểu dữ liệu — `consistentOn` bắt buộc
-  mang `Scope`; `scopeOf_spec` và `check_scope` chứng minh scope nói đúng những
-  gì đã kiểm; `not_conflict_of_consistentOn` chỉ kết luận trên `ns` truyền vào
-  **và chỉ trên phần `valid`**; `Scope.validRestricted` nói cho người đọc biết
-  miền đã bị thu hẹp. `Scope` vẫn chưa ghi **tên** tham số khái niệm mở và chưa
-  ghi trạng thái duyệt ([ADR-0018](decisions/0018-scope-lists-parameter-names.md)).
+  mang `Scope`; `scopeOf_spec` và `analyze_scope` chứng minh scope nói đúng
+  những gì đã kiểm; `not_conflict_of_consistentOn` chỉ kết luận trên `ns` truyền
+  vào **và chỉ trên phần `valid`**; `Scope.validExcluded`/`validTotal` nói **bao
+  nhiêu** điểm bị ràng buộc toàn vẹn loại bỏ trên tổng số
+  ([ADR-0021](decisions/0021-integrity-constraint-valid.md)); `Scope.docId` là
+  `Option String` qua `singleDocId?`, **không** phỏng đoán từ đầu danh sách, và
+  danh sách lẫn nhiều văn bản là một finding. `Scope` vẫn chưa ghi **tên** tham
+  số khái niệm mở, chưa nói *điểm nào* bị `valid` loại, và chưa ghi trạng thái
+  duyệt ([ADR-0018](decisions/0018-scope-lists-parameter-names.md)).
 
 #### N3 — Fail-closed
 - **Phát biểu**: Khi LLM lỗi, đầu vào dị dạng, hoặc vượt ngân sách tính toán, hệ

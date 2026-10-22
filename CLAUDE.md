@@ -51,8 +51,13 @@ file and leave this list as pointers only.
 - `docs/conventions.md` — standards, repo layout, review checklists, and how to
   run the build and the axiom audit.
 
-Read first: `docs/traceability.md` for what is actually proven versus trusted,
-and `docs/conventions.md` section 6 for why a plain `lake build` is not enough.
+Read first: `docs/traceability.md` for what is actually proven versus trusted —
+in particular the trust base, which includes `Atoms.valid` and the completeness
+of priority-cycle detection.
+
+Entry point: `LexProof.analyze` validates before it searches. The search and
+everything under it live in `LexProof.Internal` and must not be called
+directly; `lake build` covers every module.
 
 ## Working decisions (not final)
 - Situations are modeled over a finite domain (Bool / enum / bounded values) so

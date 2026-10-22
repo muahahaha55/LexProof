@@ -30,7 +30,8 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 | [0013](0013-directional-priority-and-cycles.md) | `resolved` chỉ đúng khi **đúng một** norm override norm kia (XOR); override lẫn nhau là finding chu trình; `Audit.resolutions` ghi norm thắng |
 | [0014](0014-compare-pairs-by-index.md) | So cặp **không thứ tự**, mỗi cặp một lần, bỏ cặp khác `act`; ID trùng là finding |
 | [0015](0015-characterize-conflict-labels.md) | Ngữ nghĩa (a) cho hai nhãn, **có định lý đặc trưng**: `conflict_all_params`, `conditionalConflict_split` |
-| [0017](0017-wellformedness-validator-first.md) | Validator chạy trước bộ kiểm; `unknown` chỉ còn là chốt fail-closed |
+| [0017](0017-wellformedness-validator-first.md) | Validator chạy trước bộ kiểm; `unknown` chỉ còn là chốt fail-closed. `analyze` là điểm vào duy nhất; search nằm trong `LexProof.Internal` |
+| [0021](0021-integrity-constraint-valid.md) | `Atoms.valid` loại các cặp `(π, s)` không thể xảy ra; mọi định lý nói rõ "trên phần valid"; `Scope` ghi số điểm bị loại trên tổng. **`valid` nằm trong trust base** |
 
 ## Đã cài một phần (Planned phần còn lại)
 
@@ -38,7 +39,7 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 |---|---|---|
 | [0011](0011-trust-boundary-human-approval.md) | Tách `LexProof/` khỏi `pipeline/`; LLM sinh dữ liệu chứ không sinh mã | Cơ chế cưỡng chế phê duyệt; `Laws/` vẫn rỗng |
 | [0016](0016-reference-catalog-from-segmenter.md) | Danh mục tham chiếu đã là **tham số** của `validate`, và tham chiếu treo đã bị bắt | Danh mục chưa do segmenter sinh, chưa có bước duyệt, chưa ghi vào `Scope`; chưa phân biệt "treo" với "trỏ tới phần chưa mã hóa" |
-| [0018](0018-scope-lists-parameter-names.md) | `Scope.validRestricted` nói miền đã bị thu hẹp | `Scope` chưa liệt kê **tên** tham số khái niệm mở, chưa có trạng thái duyệt, chưa có danh sách điều khoản bỏ qua |
+| [0018](0018-scope-lists-parameter-names.md) | `Scope.validExcluded`/`validTotal` nói **bao nhiêu** điểm bị loại trên tổng; `Scope.docId` là `Option` và danh sách lẫn văn bản là finding | `Scope` chưa liệt kê **tên** tham số khái niệm mở, chưa nói *điểm nào* bị `valid` loại, chưa có trạng thái duyệt, chưa có danh sách điều khoản bỏ qua |
 
 ## Chưa quyết định (Open / Proposed)
 
@@ -46,15 +47,6 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 |---|---|
 | [0019](0019-back-translation-renderer.md) | Dịch ngược bằng LLM hay renderer tất định? Khuynh hướng: **tất định**, vì LLM có lỗi tương quan với bước dịch xuôi |
 | [0020](0020-untrusted-search-kernel-certificate.md) | Cho phép phép tìm kiếm chạy đã biên dịch, nhưng mọi kết luận "đã kiểm chứng" phải có chứng chỉ kernel kiểm. Điểm cốt lõi: **chỉ khẳng định tồn tại có chứng chỉ nhỏ**; khẳng định nhất quán thì không, nên không được lợi gì |
-
-## Chưa có ADR riêng
-
-**Ràng buộc toàn vẹn `Atoms.valid`** (đã cài): loại bỏ các cặp `(π, s)` không
-thể xảy ra; bộ kiểm chỉ xét cặp `valid`; `Scope.validRestricted` ghi lại việc
-miền bị thu hẹp. `valid` **nằm trong trust base** — một `valid` quá mạnh sẽ che
-xung đột thật và không định lý nào phát hiện được. Hiện được mô tả ở
-[../design-core.md](../design-core.md) §2.2 và trong bảng trust base của
-[../traceability.md](../traceability.md), chưa có ADR riêng.
 
 ## Thứ tự phụ thuộc giữa các việc còn lại
 

@@ -23,8 +23,8 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | FR4 | Tier 2 Loop A | — | — | Planned |
 | FR5 | Tier 2 Back-translator; [ADR-0019](decisions/0019-back-translation-renderer.md) | — | — | **Open** |
 | FR6 | `Core` lược đồ chuẩn tắc | `Modality`, `Cond`, `Norm.exceptions`, `Norm.priority`, tham số `P`, `Norm.applies` | `smoke_conflict`, `smoke_consistent` | Implemented |
-| FR7 | `Verify` bộ kiểm; `Result` 5 nhánh | `Result`, `check`, `analyze`, (a) `conflict_of_witness`, (b) `not_conflict_of_consistentOn`, (e) `conflict_all_params`, `conditionalConflict_split` | `Smoke.*` (4), `Tests.conditional_conflict_found`, `Tests.conditional_conflict_splits` | Implemented |
-| FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md) | `Finding`, `validate`, `inPriorityCycle`, `duplicateIds`, (f) `wf_of_validate_nil` | `Tests` ca 1–5 (chu trình, trùng id, tham chiếu treo, dị dạng, rỗng) | Implemented *(chỉ `wf_of_validate_nil` có chứng minh; các check khác chỉ có test)* |
+| FR7 | `Verify` bộ kiểm; `Result` **5 nhánh**: `conflict`, `conditionalConflict`, `consistentOn`, `unknown`, `invalid` | `Result`, `analyze` (điểm vào duy nhất), `Internal.check`, (a)+(c) `conflict_of_witness`, (b) `not_conflict_of_consistentOn`, (e) `conflict_all_params`, `conditionalConflict_split` | `Smoke.*` (7), `Tests.conditional_conflict_found`, `Tests.conditional_conflict_splits` | Implemented |
+| FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle`, `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, `cycle_of_validate_finding`, `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10 (chu trình 2/3/4 + cạnh rời, trùng id, tham chiếu treo, lẫn docId, dị dạng, rỗng) | Implemented *(completeness của phát hiện chu trình chưa chứng minh — xem mục 3)* |
 | FR9 | Tier 4 Phản ví dụ | `Counterexample` (+ `Repr`), `ceOf`, `Result.witness?`, (c) `counterexample_fields_correct` | `smoke_conflict`, `Tests.conflict_reported_with_bad_norm` | Planned *(dữ liệu: Implemented, và (c) chứng minh mọi trường khớp; render tiếng Việt: chưa có)* |
 | FR10 | Tier 4 Báo cáo | `Scope`, `scopeOf` | `smoke_consistent` so khớp nguyên khối `Scope` | Planned |
 | FR11 | `Cert` audit axiom | — *(thư mục rỗng)* | `#print axioms` **thủ công** | Planned |
@@ -77,6 +77,10 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.3c | `scopeOf_spec`, `check_scope` (d) — scope nói đúng ids/articles/kích thước miền, và mọi kết quả đã quét đều báo scope đó | Implemented |
 | G1.4 | `Finite.complete` + `mem_cands` + `mem_pairsOf` + `Conflict_comm` + `not_conflict_self` — phép liệt kê **chứng minh được** là không bỏ sót, dù chỉ quét mỗi cặp một lần | Implemented |
 | G1.7 | `applies_isSome_of_validate_nil` (f) — validate sạch ⇒ `applies` không bao giờ `none`, ở **mọi** `(π, s)` | Implemented |
+| G1.8 | `resolution_has_witness` — mọi resolution được báo là một clash **thật sự xảy ra** ở một điểm valid, không phải một cặp chưa bao giờ cùng áp dụng | Implemented |
+| G1.9 | `cycle_of_validate_finding` — chu trình ưu tiên được báo là chu trình **thật** của quan hệ `overrides` (soundness; completeness thì không — mục 3) | Implemented |
+| G1.10 | `singleDocId_isSome_of_validate_nil` — validate sạch ⇒ danh sách thuộc đúng một văn bản, nên `Scope.docId` là câu trả lời thật chứ không phải phỏng đoán | Implemented |
+| G1.11 | `analyze` là điểm vào duy nhất; search nằm trong `LexProof.Internal`, nên không gọi được bộ kiểm mà bỏ qua validator | Implemented |
 | G1.5 | `#print axioms` trên 48 khai báo: tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; không `sorryAx` | Implemented *(thủ công)* |
 | G1.6 | Grep: không `sorry`, `native_decide`, `bv_decide`, `axiom`, `unsafe`, `partial` | Implemented *(thủ công)* |
 
@@ -84,12 +88,15 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 
 - **Không** bao phủ việc `Conflict` có đúng là khái niệm xung đột pháp lý hay
   không. Đó là G2. Kernel kiểm *suy luận*, không kiểm *định nghĩa*.
-- **Không** bao phủ tính đúng đắn của **validator**: `inPriorityCycle` (kể cả
-  việc `ns.length` bước là đủ), `duplicateIds`, và hai thành phần finding còn
-  lại chỉ được kiểm bằng ca kiểm thử, không có định lý. Định lý duy nhất của
-  validator là `wf_of_validate_nil`.
-- **Không** bao phủ `Audit.resolutions`: không định lý nào nói nó liệt kê **đủ**
-  và **đúng** các clash đã được ưu tiên giải quyết.
+- **Không** bao phủ **tính đầy đủ** của phát hiện chu trình ưu tiên. Chiều
+  soundness đã chứng minh (`cycle_of_validate_finding`); chiều "mọi chu trình
+  đều bị báo" thì chưa — xem mục 3.
+- **Không** bao phủ tính đúng đắn của `duplicateIds`, `danglingFindings`,
+  `unknownOverrideFindings`: chỉ có ca kiểm thử, không có định lý.
+- **Không** bao phủ **tính đầy đủ** của `Audit.resolutions`. Soundness đã có
+  (`resolution_has_witness`: mọi resolution được báo là một clash thật sự xảy
+  ra ở một điểm valid); không có định lý nói nó liệt kê **đủ** mọi clash đã
+  được giải quyết.
 - **Không** bao phủ khi nào `Result.unknown` xuất hiện; chỉ bảo đảm rằng sau một
   lần `validate` sạch thì `applies` không bao giờ `none` (G1.7).
 - **Không** bao phủ ngân sách: `UnknownReason` vẫn **không có** `outOfBudget`,
@@ -156,10 +163,12 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 - `Scope.params : Nat` chỉ là **số lượng**, không phải tên; người đọc không biết
   kết luận đã lượng hóa trên những cách hiểu nào
   ([ADR-0018](decisions/0018-scope-lists-parameter-names.md) còn Planned).
-- `Scope.validRestricted` chỉ là một `Bool`: nó nói miền đã bị thu hẹp, **không**
-  nói thu hẹp cái gì. Người đọc không biết phần nào của miền đã bị loại.
-- `scopeOf` lấy `docId` từ `ns.head?`. Nếu danh sách lẫn norm của hai văn bản,
-  `Scope` **báo sai** và không có gì phát hiện.
+- `Scope.validExcluded` / `validTotal` nói **bao nhiêu** điểm bị loại, không nói
+  **điểm nào**. Người đọc chưa kiểm được `valid` từ báo cáo
+  ([ADR-0021](decisions/0021-integrity-constraint-valid.md)).
+- `Result.invalid` chỉ mang danh sách `Finding`, **không** mang `Scope`: khi có
+  khuyết điểm cấu trúc thì báo cáo không nói gì về phạm vi đã xem. Hợp lý (chưa
+  kiểm gì cả) nhưng tầng báo cáo phải xử lý nhánh này riêng.
 - G3 là tính chất của **đầu ra Lean**. Khi Tier 4 viết báo cáo tiếng Việt, không
   có gì bảo đảm bản tiếng Việt giữ được sự dè dặt đó — đó là ràng buộc quy
   trình, không phải ràng buộc kiểu.
@@ -172,15 +181,23 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
   kèm **mọi** kết quả đã quét — `Tests.bad_norm_also_reported`.
 - `validate` nêu **đúng** norm dị dạng, không nêu norm lành —
   `Tests.validator_names_the_bad_norm`.
+- `Scope.docId` không còn lấy từ `ns.head?`: nó là `Option String` qua
+  `singleDocId?`, và danh sách lẫn nhiều văn bản là một finding —
+  `Tests.mixed_docids_found`, `Tests.mixed_docids_no_scope_docid`.
+- `Audit.resolutions` không còn báo resolution cho cặp chưa bao giờ cùng áp
+  dụng — `Tests.no_resolution_without_co_application`, và định lý
+  `resolution_has_witness`.
+- Không còn gọi được bộ kiểm mà bỏ qua validator: `analyze` là điểm vào duy
+  nhất, search nằm trong `LexProof.Internal`.
 
 ---
 
 ## 3. Trust base — các định nghĩa được tin mà không được chứng minh
 
-Kernel Lean **không phải** toàn bộ cơ sở tin cậy. Năm định nghĩa sau nằm **cùng
+Kernel Lean **không phải** toàn bộ cơ sở tin cậy. Những mục sau nằm **cùng
 kernel** trong trust base. Chúng là *tiên đề nội dung* của hệ thống: kernel kiểm
 mọi suy luận *từ* chúng, nhưng **không có gì chứng minh chúng khớp với luật**.
-Sai một trong năm cái này thì mọi định lý vẫn đúng — và mọi kết luận vẫn vô giá
+Sai một trong số này thì mọi định lý vẫn đúng — và mọi kết luận vẫn vô giá
 trị.
 
 | Định nghĩa | Ở đâu | Điều được tin mà không chứng minh | Hỏng thì sao |
@@ -188,7 +205,8 @@ trị.
 | `Conflict` | `Verify/Conflict.lean` | Rằng "cùng act + cả hai áp dụng + modality khắc nhau + không có ưu tiên" **chính là** xung đột pháp lý | Toàn bộ kết luận sai nghĩa. Mọi định lý vẫn qua kernel |
 | `Norm.applies` | `Core/Norm.lean` | Rằng `condition && !(OR exceptions)` là cách đúng để ghép điều kiện với ngoại lệ | Norm áp dụng sai chỗ ⇒ cả xung đột lẫn nhất quán đều sai |
 | `Norm.resolved` | `Core/Norm.lean` | Rằng ưu tiên tường minh là **cách duy nhất** giải quyết một clash | Nay là XOR, nên override lẫn nhau không còn bị coi là đã giải quyết ([ADR-0013](decisions/0013-directional-priority-and-cycles.md)); nhưng giả định "chỉ ưu tiên tường minh mới giải quyết được" vẫn là điều được tin, không được chứng minh |
-| `Atoms.valid` | `Core/Norm.lean` | Rằng những cặp `(π, s)` nó loại bỏ **thật sự không thể xảy ra** | **Một `valid` quá mạnh che xung đột thật.** Mọi định lý đều có dạng "trên phần `valid`", nên không định lý nào phát hiện được việc này. Đây là bề mặt tin cậy *mới* thêm vào, và là cái dễ bị lạm dụng nhất |
+| `Atoms.valid` | `Core/Norm.lean` | Rằng những cặp `(π, s)` nó loại bỏ **thật sự không thể xảy ra** | **Một `valid` quá mạnh che xung đột thật.** Mọi định lý đều có dạng "trên phần `valid`", nên không định lý nào phát hiện được việc này. Là bề mặt tin cậy dễ bị lạm dụng nhất: `valid := fun _ _ => false` làm mọi văn bản "nhất quán". Phải duyệt như duyệt một norm — [ADR-0021](decisions/0021-integrity-constraint-valid.md) |
+| **Tính đầy đủ của phát hiện chu trình** (`inPriorityCycle`, `reachN`) | `Verify/Validate.lean` | Rằng `ns.length` vòng là **đủ** để tìm mọi chu trình, tức mọi chu trình đều bị báo | **Chiều soundness đã chứng minh** (`cycle_of_validate_finding`: báo ⇒ có chu trình thật). Chiều completeness **chưa**: cần lập luận pigeonhole, đắt khi không có Mathlib. Hệ quả nếu hỏng: một chu trình bị bỏ sót. Giảm nhẹ: với chu trình hai norm, `resolved` là XOR nên clash **vẫn** được báo là xung đột — bỏ sót finding không biến xung đột thành "nhất quán". Ca kiểm: chu trình 2, 3, 4 và chu trình kèm cạnh rời đều cho kết quả đúng |
 | `Incompatible` | `Core/Norm.lean` | Rằng đúng hai cặp modality đó xung đột, không hơn không kém | Báo nhiễu, hoặc bỏ sót im lặng ([ADR-0001](decisions/0001-incompatible-modalities.md)) |
 | `Cond.eval` | `Core/Norm.lean` | Rằng `and`/`or`/`not` trên `Option Bool` khớp với cách luật ghép điều kiện | Điều kiện bị hiểu sai ⇒ phạm vi áp dụng sai |
 
