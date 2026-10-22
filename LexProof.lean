@@ -3,5 +3,7 @@
 import LexProof.Basic
 import LexProof.Core.Finite
 import LexProof.Core.Norm
+import LexProof.Verify.Validate
 import LexProof.Verify.Conflict
 import LexProof.Verify.Smoke
+import LexProof.Verify.Tests

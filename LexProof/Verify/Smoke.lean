@@ -3,6 +3,11 @@ import LexProof.Verify.Conflict
 /-!
 # Smoke test for the conflict checker
 
+The minimal two-norm example: one deliberate conflict, and the same pair with
+the conflict removed. Scenario coverage (priority cycles, duplicate ids,
+dangling references, `valid`, conditional conflicts) lives in
+`LexProof/Verify/Tests.lean`.
+
 Not a `Laws` module: the two norms here are invented to exercise the checker,
 they are not an encoding of any real provision and nothing here was reviewed
 for faithfulness.
@@ -40,17 +45,19 @@ instance : Finite Params where
     obtain ⟨x⟩ := p
     cases x <;> decide
 
-/-- The atom table: condition atoms are indices into this. -/
+/-- The atom table. `valid` is left at its default, so every situation counts. -/
 def atoms : Atoms Sit Params where
   sit := [("overdue", fun s => s.overdue), ("disputed", fun s => s.disputed)]
   param := [("serious", fun p => p.serious)]
 
 /-! ## Two norms about the same act -/
 
+/-- Source of `normA`. -/
 def srcA : SourceId :=
   { docId := "SMOKE", docType := .decree
   , effective := ⟨2026, 1, 1⟩, article := "Điều 1" }
 
+/-- Source of `normB`. -/
 def srcB : SourceId :=
   { docId := "SMOKE", docType := .decree
   , effective := ⟨2026, 1, 1⟩, article := "Điều 2" }
@@ -72,18 +79,18 @@ the two norms never both apply and the conflict is gone. -/
 def normBFixed : Norm :=
   { normB with exceptions := [.sit 0] }
 
+/-- The pair that conflicts. -/
 def conflicting : List Norm := [normA, normB]
-def fixed : List Norm := [normA, normBFixed]
 
-#eval check atoms conflicting
-#eval check atoms fixed
+/-- The same pair with the conflict removed by an exception. -/
+def fixed : List Norm := [normA, normBFixed]
 
 /-! ## What the checker reports -/
 
 /-- The deliberate conflict is found, with the full witness. -/
 theorem smoke_conflict :
-    check atoms conflicting =
-      .conflict
+    (check atoms conflicting).witness? =
+      some
         { situation := ⟨true, false⟩
         , params := ⟨false⟩
         , left := "A"
@@ -92,16 +99,11 @@ theorem smoke_conflict :
         , sources := (srcA, srcB) } := by
   decide
 
-/-- With the conflict removed, the checker reports consistency, and says over
-exactly which norms, articles and domain size. -/
+/-- With the conflict removed, the checker reports consistency over exactly the
+scope `scopeOf` describes. -/
 theorem smoke_consistent :
     check atoms fixed =
-      .consistentOn
-        { docId := "SMOKE"
-        , normIds := ["A", "B"]
-        , articles := ["Điều 1", "Điều 2"]
-        , situations := 4
-        , params := 2 } := by
+      .consistentOn (scopeOf Sit Params atoms fixed) (auditOf atoms fixed) := by
   decide
 
 /-- The reported witness is a real `Conflict`, via `isConflictAt_eq_true_iff`. -/
@@ -109,11 +111,11 @@ theorem smoke_conflict_is_real :
     Conflict atoms normA normB ⟨false⟩ ⟨true, false⟩ :=
   (isConflictAt_eq_true_iff atoms normA normB ⟨false⟩ ⟨true, false⟩).mp (by decide)
 
-/-- And the `consistentOn` report really does rule out every conflict, via
-`not_conflict_of_consistentOn`. -/
+/-- And the `consistentOn` report really does rule out every conflict at every
+valid point, via `not_conflict_of_consistentOn`. -/
 theorem smoke_no_conflict_anywhere :
     ∀ n₁ ∈ fixed, ∀ n₂ ∈ fixed, ∀ (π : Params) (s : Sit),
-      ¬ Conflict atoms n₁ n₂ π s :=
+      atoms.valid π s = true → ¬ Conflict atoms n₁ n₂ π s :=
   not_conflict_of_consistentOn smoke_consistent
 
 end LexProof.Smoke
