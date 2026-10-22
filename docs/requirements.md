@@ -83,10 +83,12 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **AC**: Không bao giờ phát biểu "văn bản đúng" một cách vô điều kiện; mọi
   khẳng định nhất quán đều kèm scope.
 - **Kiểm chứng**: Proof
-- **Trạng thái**: **Implemented** — `check`, `Result`, kèm hai định lý
-  `conflict_of_witness` và `not_conflict_of_consistentOn`.
-  *Ghi chú*: nhánh `conditionalConflict` chưa có định lý đặc trưng và chưa có
-  test — xem [ADR-0015](decisions/0015-characterize-conflict-labels.md).
+- **Trạng thái**: **Implemented** — `check`/`analyze`, `Result` (5 nhánh: thêm
+  `invalid` cho khuyết điểm cấu trúc), kèm các định lý (a) `conflict_of_witness`,
+  (c) `counterexample_fields_correct`, (b) `not_conflict_of_consistentOn`,
+  (d) `scopeOf_spec`/`check_scope`, (e) `conflict_all_params`/
+  `conditionalConflict_split`. Nhánh `conditionalConflict` nay **có** định lý
+  đặc trưng và có ca kiểm thử.
 
 ### FR8 — Validator well-formedness
 - **Phát biểu**: Hệ thống phải chạy validator trước khi kiểm tra xung đột, phát
@@ -95,8 +97,12 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **Ưu tiên**: Must (bốn mục đầu) / Should (mục cuối)
 - **AC**: Có test trên văn bản đã cố tình tiêm lỗi, mỗi loại lỗi một ca.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Planned**. Hiện chỉ số atom sai lộ ra muộn, lúc eval, dưới
-  dạng `unknown` — xem [ADR-0017](decisions/0017-wellformedness-validator-first.md).
+- **Trạng thái**: **Implemented** — `validate` trong `LexProof/Verify/Validate.lean`
+  bắt cả năm loại (chỉ số atom qua kiểm **tĩnh** `Cond.wf`, trùng id, tham chiếu
+  treo đối chiếu catalog truyền vào, override tới id không tồn tại, chu trình ưu
+  tiên), mỗi finding nêu tên norm sai. Ca kiểm: `Tests` ca 1–5.
+  *Ghi chú*: mục Should (norm không bao giờ áp dụng được) **chưa làm**; và chỉ
+  `wf_of_validate_nil` có chứng minh — các check khác chỉ có ca kiểm thử.
 
 ### FR9 — Phản ví dụ phát lại được
 - **Phát biểu**: Hệ thống phải xuất phản ví dụ phát lại được, kèm ID nguồn của
@@ -169,8 +175,11 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
   "nhất quán" mà không có scope.
 - **Kiểm chứng**: Proof + Review
 - **Trạng thái**: **Implemented** ở mức kiểu dữ liệu — `consistentOn` bắt buộc
-  mang `Scope`, và `not_conflict_of_consistentOn` chỉ kết luận trên `ns` truyền
-  vào. `Scope` chưa ghi trạng thái duyệt ([ADR-0018](decisions/0018-scope-lists-parameter-names.md)).
+  mang `Scope`; `scopeOf_spec` và `check_scope` chứng minh scope nói đúng những
+  gì đã kiểm; `not_conflict_of_consistentOn` chỉ kết luận trên `ns` truyền vào
+  **và chỉ trên phần `valid`**; `Scope.validRestricted` nói cho người đọc biết
+  miền đã bị thu hẹp. `Scope` vẫn chưa ghi **tên** tham số khái niệm mở và chưa
+  ghi trạng thái duyệt ([ADR-0018](decisions/0018-scope-lists-parameter-names.md)).
 
 #### N3 — Fail-closed
 - **Phát biểu**: Khi LLM lỗi, đầu vào dị dạng, hoặc vượt ngân sách tính toán, hệ
@@ -178,9 +187,13 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **Ưu tiên**: Must
 - **AC**: Mỗi đường lỗi có một ca test cho ra `unknown`, không ra `consistentOn`.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Planned**. Đã có: `Cond.eval` trả `Option Bool`, `none` dẫn
-  tới `Result.unknown` ([ADR-0002](decisions/0002-cond-syntax-tree-option-eval.md)).
-  Chưa có: phát hiện vượt ngân sách (`UnknownReason` chỉ có `malformedCondition`).
+- **Trạng thái**: **Implemented** trừ ngân sách. Đã có: `Cond.eval` trả
+  `Option Bool` ([ADR-0002](decisions/0002-cond-syntax-tree-option-eval.md));
+  `validate` chặn trước khi kiểm; danh sách rỗng là finding, **không bao giờ**
+  `consistentOn`; `Audit.unevaluable` đi kèm **mọi** kết quả đã quét nên một
+  `conflict` không che được norm chưa đánh giá được. Ca kiểm: `Tests` ca 4, 5, 9.
+  **Chưa có**: phát hiện vượt ngân sách — `UnknownReason` vẫn chỉ có
+  `malformedCondition`, không có `outOfBudget` (N8).
 
 #### N4 — Faithfulness
 - **Phát biểu**: Độ khớp giữa bản mã hóa và luật phải được đo trên bộ ca chuyên
@@ -269,13 +282,15 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **AC**: `lake build` thất bại nếu bất kỳ file `.lean` nào trong `LexProof/`
   không biên dịch được.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Open — đang bị vi phạm (đã xác nhận bằng thực nghiệm)**.
-  `lakefile.toml` khai `lean_lib` không có `globs`, nên Lake chỉ build module
-  gốc `LexProof`, mà `LexProof.lean` chỉ `import LexProof.Basic`. Bốn module
-  `Core.Finite`, `Core.Norm`, `Verify.Conflict`, `Verify.Smoke` **không** được
-  `lake build` trần biên dịch, nên CI cũng không kiểm. Sửa được bằng cách thêm
-  `import` vào `LexProof.lean` hoặc thêm `globs` vào `lakefile.toml` — cả hai
-  file đều ngoài phạm vi tác vụ tài liệu này.
+- **Trạng thái**: **Implemented**. `LexProof.lean` import cả năm module
+  (`Core.Finite`, `Core.Norm`, `Verify.Validate`, `Verify.Conflict`,
+  `Verify.Smoke`, `Verify.Tests`), và `lake build` trần nay chạy 20 jobs, biên
+  dịch mọi module.
+  *Lưu ý về cách kiểm*: `touch` **không** phải phép thử hợp lệ — Lake băm nội
+  dung file, không xem mtime, nên `touch` rồi build sẽ báo `Replayed`. Muốn buộc
+  build lại thì xóa artifact trong `.lake/`.
+  *Lưu ý phạm vi*: build xanh nghĩa là "biên dịch được", **không** nghĩa là
+  "axiom sạch" — việc đó là FR11 và vẫn chưa tự động.
   *Lý do có yêu cầu này*: 4 module từng bị loại khỏi build mà không ai biết.
 
 ### 2.6 Security / Legal

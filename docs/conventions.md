@@ -147,26 +147,30 @@ phải chứng minh lại.
 
 ## 6. Chạy build
 
-> **Cảnh báo (N12)**: `lake build` **trần không đủ**. `lakefile.toml` khai
-> `[[lean_lib]] name = "LexProof"` không có `globs`, nên Lake chỉ build module
-> gốc `LexProof`, mà `LexProof.lean` chỉ có `import LexProof.Basic`. Bốn module
-> `Core.Finite`, `Core.Norm`, `Verify.Conflict`, `Verify.Smoke` **không** được
-> build. Đã xác nhận: `touch` bốn file rồi `lake build` → vẫn 8 jobs, không
-> rebuild. CI cũng vì vậy mà không kiểm. Xem N12 trong
-> [requirements.md](requirements.md).
-
-Đến khi N12 được sửa, dùng target tường minh:
+`LexProof.lean` import cả năm module, nên **`lake build` trần là đủ** (20 jobs):
 
 ```powershell
-# build mọi module thật (Smoke kéo theo cả ba module kia)
-lake build LexProof.Verify.Smoke
+lake build
+```
 
-# hoặc liệt kê hết cho rõ
-lake build LexProof.Core.Finite LexProof.Core.Norm LexProof.Verify.Conflict LexProof.Verify.Smoke
+Hai điều cần biết:
 
-# build lại từ đầu khi nghi artifact cũ
-Remove-Item -Recurse -Force .lake\build\lib\lean\LexProof\Core, .lake\build\lib\lean\LexProof\Verify
-lake build LexProof.Verify.Smoke
+> **`touch` không phải phép thử hợp lệ.** Lake băm **nội dung** file, không xem
+> mtime, nên `touch` rồi `lake build` sẽ báo `Replayed` dù module có trong đồ
+> thị build. Muốn buộc build lại thì xóa artifact:
+>
+> ```powershell
+> Remove-Item -Recurse -Force .lake\build\lib\lean\LexProof\Core, .lake\build\lib\lean\LexProof\Verify
+> lake build
+> ```
+
+> **Build xanh ≠ axiom sạch.** `lake build` biên dịch, nó **không** kiểm axiom.
+> Việc đó là mục 7, và vẫn chưa tự động (FR11, `Cert/` rỗng).
+
+Build một module lẻ khi cần vòng lặp nhanh:
+
+```powershell
+lake build LexProof.Verify.Conflict
 ```
 
 ---

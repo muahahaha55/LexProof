@@ -145,12 +145,12 @@ Trạng thái cài đặt của từng khối:
 
 | Khối | Trạng thái |
 |---|---|
-| `Core` (`Finite`, `Norm`, `Cond`) | **Implemented** |
-| `Verify` (`Conflict`, `check`, 2 định lý, smoke) | **Implemented** |
+| `Core` (`Finite`, `Norm`, `Cond` + `wf`, `Atoms.valid`) | **Implemented** |
+| `Verify` (`Conflict`, `cands`, `check`, `analyze`, định lý (a)–(f), smoke, 9 nhóm test) | **Implemented** |
+| Validator (`Verify/Validate.lean`: `Finding`, `validate`) | **Implemented** — [ADR-0017](decisions/0017-wellformedness-validator-first.md) |
 | `Laws` | **Planned** — thư mục rỗng |
-| `Cert` | **Planned** — thư mục rỗng; audit đang làm thủ công |
+| `Cert` | **Planned** — thư mục rỗng; audit đang làm thủ công. Đề xuất: [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md) |
 | Segmenter, Glossary, Translator, Back-translator | **Planned** — `pipeline/` rỗng |
-| Validator | **Planned** — [ADR-0017](decisions/0017-wellformedness-validator-first.md) |
 | Ca chuyên gia, báo cáo, truy vấn, phiên bản | **Planned** — `eval/`, `reports/` rỗng |
 
 ## 6. Khung nhìn thời gian chạy — hai vòng phản hồi
@@ -259,16 +259,20 @@ giảm số cặp. Số đo và giới hạn: N8 trong [requirements.md](require
 
 | # | Rủi ro / nợ | Mức | Xử lý |
 |---|---|---|---|
-| R1 | **`lake build` trần không build `Core`/`Verify`** (đã xác nhận). CI vì vậy cũng không kiểm. | Cao | N12; cần `import` trong `LexProof.lean` hoặc `globs` trong `lakefile.toml` |
-| R2 | Faithfulness không chứng minh được; trust base gồm 5 định nghĩa người viết | Cao | G2: ca chuyên gia + duyệt chéo (FR12, N4) |
-| R3 | Nhãn `conflict` vs `conditionalConflict` chưa có định lý đặc trưng | Trung bình | [ADR-0015](decisions/0015-characterize-conflict-labels.md) — bắt buộc xong trước module `Laws` đầu tiên |
-| R4 | Không có validator; chỉ số atom sai lộ ra muộn dưới dạng `unknown` | Trung bình | [ADR-0017](decisions/0017-wellformedness-validator-first.md) |
-| R5 | Nổ tổ hợp khi `\|S\|` lớn; chưa có chốt ngân sách | Trung bình | N8; `unknown(outOfBudget)` chưa cài |
-| R6 | `resolved` đang đối xứng, không ghi norm nào thắng; chu trình ưu tiên không bị phát hiện | Trung bình | [ADR-0013](decisions/0013-directional-priority-and-cycles.md) |
-| R7 | So cặp có thứ tự, gồm cả `(n, n)`; vô hại chỉ vì `Incompatible` phản xạ-sai | Thấp | [ADR-0014](decisions/0014-compare-pairs-by-index.md) |
-| R8 | Audit axiom làm thủ công; `Cert/` rỗng | Trung bình | FR11 |
-| R9 | `LexProof/Basic.lean` và `Main.lean` vẫn là mẫu `lake new` (`def hello`), và `lexproof` là target build mặc định | Thấp | Dọn khi sửa R1 |
+| R2 | Faithfulness không chứng minh được; trust base gồm **6** định nghĩa người viết (nay thêm `Atoms.valid`) | Cao | G2: ca chuyên gia + duyệt chéo (FR12, N4) |
+| R11 | **`Atoms.valid` quá mạnh sẽ che xung đột thật** và không định lý nào phát hiện được — mọi định lý đều có dạng "trên phần `valid`" | Cao | Duyệt `valid` như duyệt một norm; `Scope.validRestricted` để người đọc thấy |
+| R8 | Audit axiom làm thủ công; `Cert/` rỗng. Build xanh **không** kiểm axiom | Cao | FR11; [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md) |
+| R5 | Nổ tổ hợp khi `\|S\|` lớn; chưa có chốt ngân sách | Trung bình | N8; `unknown(outOfBudget)` chưa cài; [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md) |
+| R12 | Validator chỉ có **một** định lý (`wf_of_validate_nil`); phát hiện chu trình ưu tiên, trùng id và tham chiếu treo chỉ được kiểm bằng test | Trung bình | Chứng minh thêm, hoặc chấp nhận và nói rõ |
+| R13 | `Audit.resolutions` không có định lý nói nó liệt kê đủ và đúng | Thấp | Chứng minh khi báo cáo dựa vào nó |
+| R9 | `LexProof/Basic.lean` và `Main.lean` vẫn là mẫu `lake new` (`def hello`), và `lexproof` là target build mặc định | Thấp | Dọn riêng |
 | R10 | Mỗi văn bản mới phải viết tay instance `Finite`; chỉ có sẵn `Unit`, `Bool`, `×` | Thấp | Cân nhắc deriving handler sau |
+
+**Đã đóng**: R1 (`lake build` trần nay biên dịch mọi module, N12),
+R3 (nhãn đã có định lý đặc trưng, [ADR-0015](decisions/0015-characterize-conflict-labels.md)),
+R4 (validator đã có, [ADR-0017](decisions/0017-wellformedness-validator-first.md)),
+R6 (`resolved` nay là XOR, chu trình bị báo, norm thắng được ghi, [ADR-0013](decisions/0013-directional-priority-and-cycles.md)),
+R7 (so cặp không thứ tự, [ADR-0014](decisions/0014-compare-pairs-by-index.md)).
 
 ## 10. Thuật ngữ
 
