@@ -11,4 +11,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+      # Builds every module and runs the two build-time audits from
+      # LexProof/Cert/Audit.lean (#audit_axioms, #audit_encapsulation).
       - uses: leanprover/lean-action@v1
+
+      # The audits above make the build fail on a violation. This step checks
+      # the audit itself still knows how to fail: it runs a file outside the
+      # library that uses sorry, native_decide and a declared axiom, and
+      # requires all three to be rejected.
+      - name: Axiom audit negative test
+        run: bash ci/audit-negative.sh

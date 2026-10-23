@@ -106,19 +106,105 @@ inductive Reaches (ns : List Norm) : NormId → NormId → Prop
   | step {i j k : NormId} (t : Reaches ns i j) (h : k ∈ succsOf ns j) :
       Reaches ns i k
 
-/-- One round of closing a set of ids under `succsOf`. -/
-def reachStep (ns : List Norm) (acc : List NormId) : List NormId :=
-  (acc ++ acc.flatMap (succsOf ns)).eraseDups
+/-! ### Closure of the priority graph, computed to a fixpoint
 
-/-- Close under `succsOf`, `k` rounds. `k = ns.length` rounds is a bound, not a
-proved sufficiency — see `cycle_of_validate_finding` and the trust base. -/
-def reachN (ns : List Norm) : Nat → List NormId → List NormId
-  | 0, acc => acc
-  | k + 1, acc => reachN ns k (reachStep ns acc)
+Iterating a fixed number of rounds makes *soundness* easy and *completeness*
+hard: completeness would need a bound on path length, i.e. a pigeonhole
+argument over walks. Iterating **to a fixpoint** instead makes both directions
+provable, because at a fixpoint the collected set is closed under `succsOf` and
+completeness follows by induction on `Reaches` with no length bound at all.
+
+The iteration budget is `gnodes ns`, every id that can occur in the graph. The
+budget cannot run out before the set is closed: each round that is not already
+closed adds at least one new id, and the set stays inside `gnodes`.
+-/
+
+/-- Add each element of `xs` to `acc`, skipping ones already present. Written by
+hand rather than with `List.eraseDups` because core has no `Nodup` lemma for
+`eraseDups` and its loop lemmas are private. -/
+def addAll : List NormId → List NormId → List NormId
+  | [], acc => acc
+  | x :: xs, acc => addAll xs (if x ∈ acc then acc else x :: acc)
+
+theorem mem_addAll {y : NormId} : ∀ (xs acc : List NormId),
+    y ∈ addAll xs acc ↔ y ∈ xs ∨ y ∈ acc := by
+  intro xs
+  induction xs with
+  | nil => intro acc; simp [addAll]
+  | cons x xs ih =>
+    intro acc
+    simp only [addAll, ih, List.mem_cons]
+    split
+    · next hx =>
+      refine ⟨fun h => ?_, fun h => ?_⟩
+      · exact Or.imp Or.inr id h
+      · rcases h with (rfl | h) | h
+        · exact Or.inr hx
+        · exact Or.inl h
+        · exact Or.inr h
+    · next hx =>
+      simp only [List.mem_cons]
+      refine ⟨fun h => ?_, fun h => ?_⟩
+      · rcases h with h | (rfl | h)
+        · exact Or.inl (Or.inr h)
+        · exact Or.inl (Or.inl rfl)
+        · exact Or.inr h
+      · rcases h with (rfl | h) | h
+        · exact Or.inr (Or.inl rfl)
+        · exact Or.inl h
+        · exact Or.inr (Or.inr h)
+
+theorem nodup_addAll : ∀ (xs acc : List NormId),
+    acc.Nodup → (addAll xs acc).Nodup := by
+  intro xs
+  induction xs with
+  | nil => intro acc h; exact h
+  | cons x xs ih =>
+    intro acc h
+    simp only [addAll]
+    split
+    · exact ih _ h
+    · next hx => exact ih _ (List.nodup_cons.mpr ⟨hx, h⟩)
+
+/-- Every id that can occur in the priority graph: the ids of the norms, plus
+every id they claim precedence over. -/
+def gnodes (ns : List Norm) : List NormId :=
+  addAll ((ns.map fun n => n.id) ++ ns.flatMap Norm.overrideIds) []
+
+theorem nodup_gnodes (ns : List Norm) : (gnodes ns).Nodup :=
+  nodup_addAll _ [] List.nodup_nil
+
+theorem succsOf_subset_gnodes (ns : List Norm) (i : NormId) :
+    succsOf ns i ⊆ gnodes ns := by
+  intro y hy
+  simp only [succsOf] at hy
+  cases hf : ns.find? (fun n => n.id == i) with
+  | none => rw [hf] at hy; simp at hy
+  | some n =>
+    rw [hf] at hy
+    refine (mem_addAll _ _).mpr (Or.inl ?_)
+    exact List.mem_append.mpr (Or.inr
+      (List.mem_flatMap.mpr ⟨n, List.mem_of_find?_eq_some hf, hy⟩))
+
+/-- One round: add the successors of everything collected so far. -/
+def closureStep (ns : List Norm) (acc : List NormId) : List NormId :=
+  addAll (acc.flatMap (succsOf ns)) acc
+
+/-- Iterate `closureStep` until it adds nothing, using `budget` as the number
+of rounds still allowed. -/
+def closure (ns : List Norm) : List NormId → List NormId → List NormId
+  | [], acc => acc
+  | _ :: rest, acc =>
+    if (closureStep ns acc).all (fun y => acc.contains y) then acc
+    else closure ns rest (closureStep ns acc)
+
+/-- The ids reachable from `i` in one or more steps. -/
+def reachableFrom (ns : List Norm) (i : NormId) : List NormId :=
+  closure ns (gnodes ns) (addAll (succsOf ns i) [])
 
 /-- Can the norm reach itself through `overrides`? -/
 def inPriorityCycle (ns : List Norm) (n : Norm) : Bool :=
-  (reachN ns ns.length (succsOf ns n.id)).contains n.id
+  (reachableFrom ns n.id).contains n.id
 
 /-! ## Findings, one component per defect class -/
 
@@ -188,30 +274,167 @@ theorem wf_of_validate_nil {A : Atoms S P} {catalog : List String} {ns : List No
 Only this direction is proved. See `docs/traceability.md` for why the converse
 is not, and what that costs. -/
 
-/-- Everything `reachN` collects from a set already reachable from `i` is still
-reachable from `i`. -/
-theorem reachN_sound (ns : List Norm) (i : NormId) :
-    ∀ (k : Nat) (acc : List NormId), (∀ x ∈ acc, Reaches ns i x) →
-      ∀ x ∈ reachN ns k acc, Reaches ns i x := by
-  intro k
-  induction k with
-  | zero => intro acc hacc x hx; exact hacc x hx
-  | succ k ih =>
+/-- The accumulator survives the iteration. -/
+theorem subset_closure (ns : List Norm) : ∀ (budget acc : List NormId),
+    acc ⊆ closure ns budget acc := by
+  intro budget
+  induction budget with
+  | nil => intro acc; simp [closure]
+  | cons b rest ih =>
+    intro acc
+    simp only [closure]
+    split
+    · exact fun _ h => h
+    · intro y hy
+      refine ih _ ?_
+      simp only [closureStep]
+      exact (mem_addAll _ _).mpr (Or.inr hy)
+
+/-- Everything the closure collects from a set already reachable from `i` is
+still reachable from `i` — soundness. -/
+theorem closure_sound (ns : List Norm) (i : NormId) :
+    ∀ (budget acc : List NormId), (∀ y ∈ acc, Reaches ns i y) →
+      ∀ x ∈ closure ns budget acc, Reaches ns i x := by
+  intro budget
+  induction budget with
+  | nil => intro acc hacc x hx; simp only [closure] at hx; exact hacc x hx
+  | cons b rest ih =>
     intro acc hacc x hx
-    refine ih (reachStep ns acc) ?_ x hx
+    simp only [closure] at hx
+    split at hx
+    · exact hacc x hx
+    · refine ih _ ?_ x hx
+      intro y hy
+      simp only [closureStep] at hy
+      rcases (mem_addAll _ _).mp hy with hy | hy
+      · rcases List.mem_flatMap.mp hy with ⟨a, ha, hya⟩
+        exact Reaches.step (hacc a ha) hya
+      · exact hacc y hy
+
+theorem closure_subset_gnodes (ns : List Norm) : ∀ (budget acc : List NormId),
+    acc ⊆ gnodes ns → closure ns budget acc ⊆ gnodes ns := by
+  intro budget
+  induction budget with
+  | nil => intro acc h; simpa only [closure] using h
+  | cons b rest ih =>
+    intro acc h
+    simp only [closure]
+    split
+    · exact h
+    · refine ih _ ?_
+      intro y hy
+      simp only [closureStep] at hy
+      rcases (mem_addAll _ _).mp hy with hy | hy
+      · rcases List.mem_flatMap.mp hy with ⟨a, _, hya⟩
+        exact succsOf_subset_gnodes ns a hya
+      · exact h hy
+
+/-- **The fixpoint is reached before the budget runs out.** At the end the
+collected set is closed under `succsOf`; this is what the bounded-rounds
+version could not give, and it is what makes completeness provable. -/
+theorem closure_closed (ns : List Norm) : ∀ (budget acc : List NormId),
+    acc.Nodup → acc ⊆ gnodes ns →
+    (gnodes ns).length ≤ budget.length + acc.length →
+    ∀ x ∈ closure ns budget acc, succsOf ns x ⊆ closure ns budget acc := by
+  intro budget
+  induction budget with
+  | nil =>
+    intro acc hnd hsub hlen x hx
+    simp only [closure] at hx ⊢
     intro y hy
-    simp only [reachStep, List.mem_eraseDups, List.mem_append] at hy
-    rcases hy with hy | hy
-    · exact hacc y hy
-    · rcases List.mem_flatMap.mp hy with ⟨a, ha, hya⟩
-      exact Reaches.step (hacc a ha) hya
+    have hyg : y ∈ gnodes ns := succsOf_subset_gnodes ns x hy
+    by_cases hya : y ∈ acc
+    · exact hya
+    · exfalso
+      have h1 : (y :: acc) ⊆ gnodes ns := by
+        intro z hz
+        rcases List.mem_cons.mp hz with rfl | hz
+        · exact hyg
+        · exact hsub hz
+      have h2 : (y :: acc).Nodup := List.nodup_cons.mpr ⟨hya, hnd⟩
+      have h3 := List.Nodup.length_le_of_subset h2 h1
+      simp only [List.length_cons, List.length_nil] at h3 hlen
+      omega
+  | cons b rest ih =>
+    intro acc hnd hsub hlen
+    by_cases hall : (closureStep ns acc).all (fun y => acc.contains y) = true
+    · have hc : closure ns (b :: rest) acc = acc := by
+        show (if (closureStep ns acc).all (fun y => acc.contains y) then acc
+              else closure ns rest (closureStep ns acc)) = acc
+        exact ite_eq_left hall
+      rw [hc]
+      intro x hx y hy
+      have hmem : y ∈ closureStep ns acc := by
+        simp only [closureStep]
+        exact (mem_addAll _ _).mpr (Or.inl (List.mem_flatMap.mpr ⟨x, hx, hy⟩))
+      have := List.all_eq_true.mp hall y hmem
+      simpa only [List.contains_eq_mem, decide_eq_true_eq] using this
+    · have hfalse : (closureStep ns acc).all (fun y => acc.contains y) = false := by
+        simpa using hall
+      have hc : closure ns (b :: rest) acc = closure ns rest (closureStep ns acc) := by
+        show (if (closureStep ns acc).all (fun y => acc.contains y) then acc
+              else closure ns rest (closureStep ns acc)) = _
+        exact ite_eq_right hall
+      rw [hc]
+      -- the step added at least one new id, so the budget keeps up
+      obtain ⟨w, hw, hwnot⟩ := List.all_eq_false.mp hfalse
+      have hwacc : w ∉ acc := by
+        intro hc'
+        exact hwnot (by simpa only [List.contains_eq_mem, decide_eq_true_eq] using hc')
+      have haccsub : acc ⊆ closureStep ns acc := by
+        intro z hz
+        simp only [closureStep]
+        exact (mem_addAll _ _).mpr (Or.inr hz)
+      have hgrow : acc.length + 1 ≤ (closureStep ns acc).length := by
+        have h1 : (w :: acc) ⊆ closureStep ns acc := by
+          intro z hz
+          rcases List.mem_cons.mp hz with rfl | hz
+          · exact hw
+          · exact haccsub hz
+        have h2 : (w :: acc).Nodup := List.nodup_cons.mpr ⟨hwacc, hnd⟩
+        simpa only [List.length_cons] using List.Nodup.length_le_of_subset h2 h1
+      refine ih _ (nodup_addAll _ _ hnd) ?_ ?_
+      · intro y hy
+        simp only [closureStep] at hy
+        rcases (mem_addAll _ _).mp hy with hy | hy
+        · rcases List.mem_flatMap.mp hy with ⟨a, _, hya⟩
+          exact succsOf_subset_gnodes ns a hya
+        · exact hsub hy
+      · simp only [List.length_cons] at hlen
+        omega
+
+/-- **Completeness.** Every id reachable from `i` is collected. -/
+theorem mem_reachableFrom_of_reaches {ns : List Norm} {i j : NormId}
+    (h : Reaches ns i j) : j ∈ reachableFrom ns i := by
+  have hnd : (addAll (succsOf ns i) []).Nodup := nodup_addAll _ [] List.nodup_nil
+  have hsub : addAll (succsOf ns i) [] ⊆ gnodes ns := by
+    intro y hy
+    rcases (mem_addAll _ _).mp hy with hy | hy
+    · exact succsOf_subset_gnodes ns i hy
+    · simp at hy
+  have hclosed := closure_closed ns (gnodes ns) (addAll (succsOf ns i) [])
+    hnd hsub (Nat.le_add_right _ _)
+  induction h with
+  | base hb =>
+    exact subset_closure ns _ _ ((mem_addAll _ _).mpr (Or.inl hb))
+  | step _ hs ih => exact hclosed _ ih hs
 
 /-- `inPriorityCycle` only fires on a real cycle. -/
 theorem cycle_of_inPriorityCycle {ns : List Norm} {n : Norm}
     (h : inPriorityCycle ns n = true) : Reaches ns n.id n.id := by
-  simp only [inPriorityCycle, List.contains_eq_mem, decide_eq_true_eq] at h
-  exact reachN_sound ns n.id ns.length (succsOf ns n.id)
-    (fun _ hx => Reaches.base hx) n.id h
+  simp only [inPriorityCycle, reachableFrom, List.contains_eq_mem,
+    decide_eq_true_eq] at h
+  refine closure_sound ns n.id (gnodes ns) (addAll (succsOf ns n.id) []) ?_ n.id h
+  intro y hy
+  rcases (mem_addAll _ _).mp hy with hy | hy
+  · exact Reaches.base hy
+  · simp at hy
+
+/-- `inPriorityCycle` fires on **every** real cycle. -/
+theorem inPriorityCycle_of_reaches {ns : List Norm} {n : Norm}
+    (h : Reaches ns n.id n.id) : inPriorityCycle ns n = true := by
+  simp only [inPriorityCycle, List.contains_eq_mem, decide_eq_true_eq]
+  exact mem_reachableFrom_of_reaches h
 
 theorem mem_cycleFindings {ns : List Norm} {i : NormId}
     (h : Finding.priorityCycle i ∈ cycleFindings ns) :
@@ -246,6 +469,22 @@ theorem cycle_of_validate_finding {A : Atoms S P} {catalog : List String}
     ∃ n ∈ ns, n.id = i ∧ Reaches ns i i := by
   obtain ⟨n, hn, hid, hcyc⟩ := mem_cycleFindings (priorityCycle_mem_cycleFindings h)
   exact ⟨n, hn, hid, hid ▸ cycle_of_inPriorityCycle hcyc⟩
+
+/-- **Completeness of cycle detection (D34).** Every norm that lies on a cycle
+of the `overrides` relation gets a `priorityCycle` finding.
+
+With `cycle_of_validate_finding` this closes the loop: the validator reports a
+priority cycle for a norm **exactly when** that norm really lies on one. -/
+theorem cycle_finding_of_reaches {A : Atoms S P} {catalog : List String}
+    {ns : List Norm} {n : Norm} (hn : n ∈ ns) (h : Reaches ns n.id n.id) :
+    Finding.priorityCycle n.id ∈ validate A catalog ns := by
+  cases ns with
+  | nil => simp at hn
+  | cons n₀ rest =>
+    simp only [validate]
+    refine List.mem_append.mpr (Or.inr ?_)
+    exact List.mem_map.mpr
+      ⟨n, List.mem_filter.mpr ⟨hn, inPriorityCycle_of_reaches h⟩, rfl⟩
 
 /-! ## Proved property 3: a silent validator means one document -/
 
