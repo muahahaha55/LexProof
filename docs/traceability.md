@@ -23,7 +23,7 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | FR4 | Tier 2 Loop A | — | — | Planned |
 | FR5 | Tier 2 Back-translator; [ADR-0019](decisions/0019-back-translation-renderer.md) | — | — | **Open** |
 | FR6 | `Core` lược đồ chuẩn tắc | `Modality`, `Cond`, `Norm.exceptions`, `Norm.priority`, tham số `P`, `Norm.applies` | `smoke_conflict`, `smoke_consistent` | Implemented |
-| FR7 | `Verify` bộ kiểm; `Result` **5 nhánh**: `conflict`, `conditionalConflict`, `consistentOn`, `unknown`, `invalid` | `Result`, `analyze` (điểm vào duy nhất), `Internal.check`, (a)+(c) `conflict_of_witness`, (b) `not_conflict_of_consistentOn`, (e) `conflict_all_params`, `conditionalConflict_split` | `Smoke.*` (7), `Tests.conditional_conflict_found`, `Tests.conditional_conflict_splits` | Implemented |
+| FR7 | `Verify` bộ kiểm; `Result` **5 nhánh**: `conflict`, `conditionalConflict`, `consistentOn`, `unknown`, `invalid` | `Result`, `analyze` (điểm vào duy nhất), `Internal.check`, (a)+(c) `conflict_of_witness`, (b) `not_conflict_of_consistentOn`, (e) `conflict_all_params`, `conditionalConflict_split`, **`no_priority_cycle_of_*`** (mọi kết quả đã quét ⇒ không chu trình ưu tiên) | `Smoke.*` (7), `Tests.conditional_conflict_found`, `Tests.conditional_conflict_splits`, `Tests.fixed_has_no_priority_cycle` | Implemented |
 | FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle` (closure tới điểm bất động), `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, **`cycle_of_validate_finding` + `cycle_finding_of_reaches`** (hai chiều), `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10, 12 | **Implemented** *(phát hiện chu trình nay đúng và đủ, có chứng minh; `duplicateIds`/dangling/`unknownOverride` chỉ có test)* |
 | FR9 | Tier 4 Phản ví dụ | `Counterexample` (+ `Repr`), `ceOf`, `Result.witness?`, (c) `counterexample_fields_correct` | `smoke_conflict`, `Tests.conflict_reported_with_bad_norm` | Planned *(dữ liệu: Implemented, và (c) chứng minh mọi trường khớp; render tiếng Việt: chưa có)* |
 | FR10 | Tier 4 Báo cáo | `Scope`, `scopeOf` | `smoke_consistent` so khớp nguyên khối `Scope` | Planned |
@@ -85,6 +85,7 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.6 | `#audit_encapsulation` chạy trong mỗi `lake build`: không khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`, nên không thể gọi bộ kiểm mà bỏ qua validator | **Implemented (tự động)** |
 | G1.12 | `cycle_of_validate_finding` **và** `cycle_finding_of_reaches` — validator báo chu trình ưu tiên cho một norm **đúng khi** norm đó thật nằm trên một chu trình. Hai chiều, không còn trust base | **Implemented** (định lý) |
 | G1.13 | Negative test của audit trong CI (`ci/audit-negative.sh`): một file ngoài thư viện dùng `sorry`, `native_decide` và một `axiom`; CI đỏ nếu audit **không** từ chối cả ba | **Tested** (script + Lean, không phải kernel) |
+| G1.14 | `no_priority_cycle_of_consistentOn` / `_conflict` / `_conditionalConflict` — **mọi** kết quả đã quét kèm bảo đảm không norm nào nằm trên chu trình `overrides`, nên hiểm họa XOR-theo-cặp không lọt qua `analyze` | **Implemented** (định lý) |
 
 **G1 KHÔNG bao phủ**
 
@@ -281,10 +282,30 @@ chính phát biểu, hoặc trong `succsOf`/`gnodes`. So `inPriorityCycle` với
 |---|---|---|---|
 | 1 | 2 | `Tests.cycle_check_agrees_n1` | **Tested** (kernel kiểm) |
 | 2 | 16 | `Tests.cycle_check_agrees_n2` | **Tested** (kernel kiểm) |
-| 3 | 512 | `Tests.cycle_check_agrees_n3` | **Tested** (kernel kiểm, ~40s build) |
-| 4 | 65536 | `#eval agreeAll 4` ⇒ `true` | **Evaluated** — chạy biên dịch, kernel **không** kiểm. Chẩn đoán, không phải chứng minh |
+| 3 | 512 | `#eval agreeAll 3` ⇒ `true` | **Evaluated** — chạy biên dịch, kernel **không** kiểm |
+| 4 | 65536 | `#eval agreeAll 4` ⇒ `true` | **Evaluated** — chạy biên dịch, kernel **không** kiểm |
 
-Dòng n=4 thuộc trust base (kết quả của trình biên dịch, không của kernel), đúng
-ranh giới mà [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md)
-vạch ra. Đồ thị từ 5 đỉnh trở lên **chưa kiểm** — nhưng từ nay điều đó không còn
-quan trọng, vì định lý phủ mọi kích thước.
+Hai dòng cuối thuộc trust base (kết quả của trình biên dịch, không của kernel),
+đúng ranh giới mà [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md)
+vạch ra. Đồ thị từ 5 đỉnh trở lên **chưa kiểm**.
+
+n=3 trước đây là kernel kiểm; đã **hạ xuống `#eval`** vì nó tốn ~40s mỗi lần
+build và vai của nó chỉ còn là bằng chứng dư — định lý completeness phủ **mọi**
+kích thước đồ thị, nên không có gì phụ thuộc vào các lần chạy này. Build lạnh
+nhờ đó về 30.7s.
+
+### Mọi kết quả đã quét đều kèm bảo đảm không có chu trình ưu tiên
+
+Hệ quả trực tiếp của completeness, không cần sửa `resolved`:
+
+| Định lý | Khẳng định |
+|---|---|
+| `no_priority_cycle_of_validate_nil` | `validate = []` ⇒ không norm nào nằm trên chu trình |
+| `no_priority_cycle_of_consistentOn` | `analyze = .consistentOn _ _` ⇒ không có chu trình |
+| `no_priority_cycle_of_conflict` | `analyze = .conflict _ _ _` ⇒ không có chu trình |
+| `no_priority_cycle_of_conditionalConflict` | `analyze = .conditionalConflict _ _ _ _` ⇒ không có chu trình |
+
+Nghĩa là hiểm họa "chu trình 3 norm làm mọi cặp trông như đã giải quyết" **không
+thể lọt qua `analyze`**: nếu có chu trình thì kết quả là `.invalid`, không bao
+giờ là một khẳng định về nhất quán hay xung đột. Ca kiểm:
+`Tests.fixed_has_no_priority_cycle`.

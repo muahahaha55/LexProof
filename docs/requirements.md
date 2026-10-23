@@ -112,9 +112,14 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
   `cycle_of_validate_finding` (báo ⇒ có chu trình) và `cycle_finding_of_reaches`
   (có chu trình ⇒ được báo). Thuật toán lặp tới **điểm bất động**, không phải
   một số vòng cố định — xem [traceability.md](traceability.md) mục 4.
+  Hệ quả đã chứng minh: **mọi** kết quả đã quét của `analyze` kèm bảo đảm không
+  norm nào nằm trên chu trình `overrides` (`no_priority_cycle_of_consistentOn`
+  và hai bản cho `conflict`/`conditionalConflict`), nên cấu trúc ưu tiên vòng
+  tròn không thể bị báo thành nhất quán.
   *Ghi chú*: mục Should (norm không bao giờ áp dụng được) **chưa làm**.
   `duplicateIds`, `danglingFindings`, `unknownOverrideFindings` chỉ ở hạng
-  **Tested** (ca kiểm thử kernel), chưa có định lý.
+  **Tested** (ca kiểm thử kernel), chưa có định lý. Phép so cạn trên đồ thị 3 và
+  4 đỉnh ở hạng **Evaluated** (`#eval`), không phải kernel.
 
 ### FR9 — Phản ví dụ phát lại được
 - **Phát biểu**: Hệ thống phải xuất phản ví dụ phát lại được, kèm ID nguồn của

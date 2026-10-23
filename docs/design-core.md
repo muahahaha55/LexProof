@@ -186,7 +186,8 @@ chất của cả danh sách.
 | `unevaluableIds` | Norm có chỉ số atom ngoài phạm vi, theo id |
 | `addAll`, `gnodes` | Hợp không trùng lặp (viết tay, có bổ đề `Nodup`); mọi id có thể xuất hiện trong đồ thị |
 | `succsOf`, `closureStep`, `closure` | Bước và bao đóng của đồ thị `overrides`, **lặp tới điểm bất động** với `gnodes ns` làm ngân sách |
-| `reachableFrom`, `inPriorityCycle` | Các id tới được từ một norm; norm có tới lại được chính nó |
+| `reachableFrom ns gn i` | Các id tới được từ `i`. `gn` là **tham số**, không gọi `gnodes ns` bên trong, để `cycleFindings` tính danh sách đỉnh **một lần** cho cả văn bản thay vì một lần mỗi norm |
+| `inPriorityCycleWith ns gn n`, `inPriorityCycle ns n` | Norm có tới lại được chính nó; bản thứ hai là bản tiện dụng với `gn := gnodes ns` |
 | `validate` | `Atoms S P → List String → List Norm → List Finding` |
 
 `validate` trả `[Finding.emptyNormList]` cho danh sách rỗng, ngược lại nối sáu
@@ -215,6 +216,9 @@ theorem cycle_of_validate_finding (h : Finding.priorityCycle i ∈ validate A ca
 
 theorem cycle_finding_of_reaches (hn : n ∈ ns) (h : Reaches ns n.id n.id) :
     Finding.priorityCycle n.id ∈ validate A catalog ns
+
+theorem no_priority_cycle_of_validate_nil (h : validate A catalog ns = []) :
+    ∀ n ∈ ns, ¬ Reaches ns n.id n.id
 
 theorem singleDocId_isSome_of_validate_nil (hne : ns ≠ []) (h : validate A catalog ns = []) :
     (singleDocId? ns).isSome = true
@@ -414,7 +418,18 @@ theorem conditionalConflict_split
 -- (f) validate sạch ⇒ applies không bao giờ none
 theorem applies_isSome_of_validate_nil (h : validate A catalog ns = []) :
     ∀ n ∈ ns, ∀ (π : P) (s : S), (n.applies A π s).isSome = true
+
+-- (D40) mọi kết quả đã quét ⇒ không norm nào nằm trên chu trình `overrides`
+theorem no_priority_cycle_of_consistentOn
+    (h : analyze A catalog ns = .consistentOn sc au) :
+    ∀ n ∈ ns, ¬ Reaches ns n.id n.id
+-- cùng dạng: no_priority_cycle_of_conflict, no_priority_cycle_of_conditionalConflict
 ```
+
+**(D40) nói gì**: hiểm họa XOR-theo-cặp (chu trình ≥ 3 làm mọi cặp trông như đã
+giải quyết) **không thể lọt qua `analyze`**. Có chu trình thì kết quả là
+`.invalid`, không bao giờ là một khẳng định về nhất quán hay xung đột. Chứng
+minh từ completeness, **không** sửa `resolved`.
 
 Hai điểm đáng nói rõ:
 
@@ -450,7 +465,7 @@ trong đó `smoke_fields_correct` và `smoke_no_conflict_anywhere` **dùng thậ
 | 9 | Ưu tiên một chiều: giải quyết được, ghi norm thắng | `one_sided_priority_resolves`, `winner_is_recorded`, `resolved_pair_is_consistent`, `recorded_resolution_has_witness` |
 | 10 | Ưu tiên nhưng hai norm **không bao giờ cùng áp dụng** ⇒ không báo resolution | `no_resolution_without_co_application`, `no_co_apply_is_consistent` |
 | 11 | Validate sạch ⇒ luôn đánh giá được (định lý (f)) | `smoke_pair_always_evaluates` |
-| 12 | **Kiểm thử vi phân cạn** của phát hiện chu trình trên mọi đồ thị ≤ 4 đỉnh, so với `refInCycle` viết theo cách khác; cộng ba ca cho thấy chu trình 3 lừa được bộ kiểm còn chu trình 2 thì không | `cycle_check_agrees_n1/2/3` (kernel), `#eval agreeAll 4` (biên dịch), `two_cycle_still_reports_conflict`, `three_cycle_hides_conflict_from_search`, `three_cycle_is_caught_by_validation` |
+| 12 | **Kiểm thử vi phân cạn** của phát hiện chu trình trên mọi đồ thị ≤ 4 đỉnh, so với `refInCycle` viết theo cách khác; cộng ba ca cho thấy chu trình 3 lừa được bộ kiểm trần còn chu trình 2 thì không; cộng D40 | `cycle_check_agrees_n1/2` (kernel), `#eval agreeAll 3`/`agreeAll 4` (biên dịch, hạng *Evaluated*), `two_cycle_still_reports_conflict`, `three_cycle_hides_conflict_from_search`, `three_cycle_is_caught_by_validation`, `fixed_has_no_priority_cycle` |
 
 **Chưa có ca kiểm**: `Finding.unknownOverride`; `Cond` lồng sâu; nhiều hơn một
 ngoại lệ; chu trình dài hơn 4.
@@ -502,4 +517,4 @@ phần quy mô: [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md
 | `reachN` chạy `ns.length` vòng vô điều kiện | Không cắt sớm khi tập đã đóng; bậc hai theo số norm |
 | `validExcludedOf` quét toàn miền | Riêng việc *báo cáo* scope cũng tốn một lần quét |
 | `Internal` là quy ước ở mức kiểu, nhưng **có audit chặn** | Lean `private` sẽ chặn cả `Tests.lean`. Thay vào đó `#audit_encapsulation` làm build đỏ nếu khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`. Nó quét **tên hằng dùng trong cả type và value**, nên không lách được bằng alias |
-| Build lạnh **1m25s** | Chủ yếu là `cycle_check_agrees_n3` trong kernel và `#eval agreeAll 4`. Đã **vượt** ngưỡng ~1 phút đã thống nhất. Nay completeness có định lý nên phép so cạn chỉ còn là bằng chứng dư; hạ n=3 xuống `#eval` sẽ trả build về ~30s |
+| Build lạnh **30.7s** | Từ 1m04.7s, nhờ hạ n=3 từ kernel `decide` xuống `#eval` (D38) và tính `gnodes` một lần (D39). Trong ngưỡng ~1 phút đã thống nhất |
