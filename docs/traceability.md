@@ -24,10 +24,10 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | FR5 | Tier 2 Back-translator; [ADR-0019](decisions/0019-back-translation-renderer.md) | — | — | **Open** |
 | FR6 | `Core` lược đồ chuẩn tắc | `Modality`, `Cond`, `Norm.exceptions`, `Norm.priority`, tham số `P`, `Norm.applies` | `smoke_conflict`, `smoke_consistent` | Implemented |
 | FR7 | `Verify` bộ kiểm; `Result` **5 nhánh**: `conflict`, `conditionalConflict`, `consistentOn`, `unknown`, `invalid` | `Result`, `analyze` (điểm vào duy nhất), `Internal.check`, (a)+(c) `conflict_of_witness`, (b) `not_conflict_of_consistentOn`, (e) `conflict_all_params`, `conditionalConflict_split` | `Smoke.*` (7), `Tests.conditional_conflict_found`, `Tests.conditional_conflict_splits` | Implemented |
-| FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle`, `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, `cycle_of_validate_finding`, `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10 (chu trình 2/3/4 + cạnh rời, trùng id, tham chiếu treo, lẫn docId, dị dạng, rỗng) | Implemented *(completeness của phát hiện chu trình chưa chứng minh — xem mục 3)* |
+| FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle` (closure tới điểm bất động), `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, **`cycle_of_validate_finding` + `cycle_finding_of_reaches`** (hai chiều), `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10, 12 | **Implemented** *(phát hiện chu trình nay đúng và đủ, có chứng minh; `duplicateIds`/dangling/`unknownOverride` chỉ có test)* |
 | FR9 | Tier 4 Phản ví dụ | `Counterexample` (+ `Repr`), `ceOf`, `Result.witness?`, (c) `counterexample_fields_correct` | `smoke_conflict`, `Tests.conflict_reported_with_bad_norm` | Planned *(dữ liệu: Implemented, và (c) chứng minh mọi trường khớp; render tiếng Việt: chưa có)* |
 | FR10 | Tier 4 Báo cáo | `Scope`, `scopeOf` | `smoke_consistent` so khớp nguyên khối `Scope` | Planned |
-| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (1166 khai báo); ba ca từ chối (`sorry`, `native_decide`, `axiom`) đã kiểm bằng file dùng thử rồi xóa | **Implemented** |
+| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (1197 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
 | FR12 | Ca chuyên gia | — | — | Planned |
 | FR13 | Tier 4 Phiên bản | `SourceId.docId`, `.docType`, `.effective` | — | Planned |
 
@@ -83,16 +83,20 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.11 | `analyze` là điểm vào duy nhất; search nằm trong `LexProof.Internal`, nên không gọi được bộ kiểm mà bỏ qua validator | Implemented |
 | G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 1166 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
 | G1.6 | `#audit_encapsulation` chạy trong mỗi `lake build`: không khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`, nên không thể gọi bộ kiểm mà bỏ qua validator | **Implemented (tự động)** |
+| G1.12 | `cycle_of_validate_finding` **và** `cycle_finding_of_reaches` — validator báo chu trình ưu tiên cho một norm **đúng khi** norm đó thật nằm trên một chu trình. Hai chiều, không còn trust base | **Implemented** (định lý) |
+| G1.13 | Negative test của audit trong CI (`ci/audit-negative.sh`): một file ngoài thư viện dùng `sorry`, `native_decide` và một `axiom`; CI đỏ nếu audit **không** từ chối cả ba | **Tested** (script + Lean, không phải kernel) |
 
 **G1 KHÔNG bao phủ**
 
 - **Không** bao phủ việc `Conflict` có đúng là khái niệm xung đột pháp lý hay
   không. Đó là G2. Kernel kiểm *suy luận*, không kiểm *định nghĩa*.
-- **Không** bao phủ **tính đầy đủ** của phát hiện chu trình ưu tiên. Chiều
-  soundness đã chứng minh (`cycle_of_validate_finding`); chiều "mọi chu trình
-  đều bị báo" thì chưa — xem mục 3.
 - **Không** bao phủ tính đúng đắn của `duplicateIds`, `danglingFindings`,
   `unknownOverrideFindings`: chỉ có ca kiểm thử, không có định lý.
+- **Không** bao phủ tính **sắp xếp** của `sortStrings`: chỉ chứng minh *bảo toàn
+  phần tử* (`mem_sortStrings`). Việc `docIdsOf` không phụ thuộc thứ tự đầu vào
+  là **Tested một ví dụ** (`Tests.docIds_order_independent`), **không** phải
+  định lý. Chấp nhận được vì sắp xếp chỉ để báo cáo ổn định, không dính tới tính
+  đúng của kết luận.
 - **Không** bao phủ **tính đầy đủ** của `Audit.resolutions`. Soundness đã có
   (`resolution_has_witness`: mọi resolution được báo là một clash thật sự xảy
   ra ở một điểm valid); không có định lý nói nó liệt kê **đủ** mọi clash đã
@@ -103,10 +107,10 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
   và không có cơ chế đo hay chặn (N8).
 - **Không** bao phủ `Atoms.valid`. Mọi định lý nói "trên phần `valid`"; một
   `valid` quá mạnh làm chúng đúng mà vô nghĩa. Xem mục 3.
-- **Không** bao phủ việc bản thân audit **biết thất bại** trong build: ba ca từ
-  chối đã kiểm bằng tay (file dùng thử, đã xóa), nhưng không có ca tự động nào
-  trong build — một ca như thế phải làm build đỏ. Nếu ai đó làm hỏng chính
-  `Cert/Audit.lean` thành một audit luôn-xanh, build vẫn xanh.
+- Việc audit **biết thất bại** nay có kiểm tự động, nhưng ở **CI** chứ không ở
+  `lake build` (`ci/audit-negative.sh`, G1.13) — vì một ca như thế phải làm
+  lệnh build đỏ. Hạng: **Tested**, không phải kernel. Nếu ai đó sửa cả
+  `Cert/Audit.lean` **và** script CI thì vẫn qua được.
 - **Không** bao phủ `Scope.docId` khi danh sách lẫn norm của hai văn bản: lấy từ
   `ns.head?` nên sẽ báo sai mà không ai phát hiện.
 - **Không** bao phủ chính kernel Lean, `List`/`Option` của Lean core, và trình
@@ -207,7 +211,9 @@ trị.
 | `Norm.applies` | `Core/Norm.lean` | Rằng `condition && !(OR exceptions)` là cách đúng để ghép điều kiện với ngoại lệ | Norm áp dụng sai chỗ ⇒ cả xung đột lẫn nhất quán đều sai |
 | `Norm.resolved` | `Core/Norm.lean` | Rằng ưu tiên tường minh là **cách duy nhất** giải quyết một clash | Nay là XOR, nên override lẫn nhau không còn bị coi là đã giải quyết ([ADR-0013](decisions/0013-directional-priority-and-cycles.md)); nhưng giả định "chỉ ưu tiên tường minh mới giải quyết được" vẫn là điều được tin, không được chứng minh |
 | `Atoms.valid` | `Core/Norm.lean` | Rằng những cặp `(π, s)` nó loại bỏ **thật sự không thể xảy ra** | **Một `valid` quá mạnh che xung đột thật.** Mọi định lý đều có dạng "trên phần `valid`", nên không định lý nào phát hiện được việc này. Là bề mặt tin cậy dễ bị lạm dụng nhất: `valid := fun _ _ => false` làm mọi văn bản "nhất quán". Phải duyệt như duyệt một norm — [ADR-0021](decisions/0021-integrity-constraint-valid.md) |
-| **Tính đầy đủ của phát hiện chu trình** (`inPriorityCycle`, `reachN`) | `Verify/Validate.lean` | Rằng `ns.length` vòng là **đủ** để tìm mọi chu trình, tức mọi chu trình đều bị báo | **Chiều soundness đã chứng minh** (`cycle_of_validate_finding`: báo ⇒ có chu trình thật). Chiều completeness **chưa** — xem ô dưới về hậu quả, và mục 4 về bằng chứng thay thế |
+*(Hàng "tính đầy đủ của phát hiện chu trình" đã được **bỏ khỏi trust base**: nay
+có chứng minh cả hai chiều — `cycle_of_validate_finding` và
+`cycle_finding_of_reaches`. Xem mục 4.)*
 | `Incompatible` | `Core/Norm.lean` | Rằng đúng hai cặp modality đó xung đột, không hơn không kém | Báo nhiễu, hoặc bỏ sót im lặng ([ADR-0001](decisions/0001-incompatible-modalities.md)) |
 | `Cond.eval` | `Core/Norm.lean` | Rằng `and`/`or`/`not` trên `Option Bool` khớp với cách luật ghép điều kiện | Điều kiện bị hiểu sai ⇒ phạm vi áp dụng sai |
 
@@ -243,20 +249,42 @@ khẳng định "nhất quán" sai. Đây cũng là lý do nữa để `analyze`
 nhất ([ADR-0017](decisions/0017-wellformedness-validator-first.md)) và để bộ
 kiểm nằm trong `LexProof.Internal`, có audit chặn ở build.
 
-## 4. Bằng chứng thay thế cho completeness của phát hiện chu trình
+## 4. Phát hiện chu trình: nay đã chứng minh cả hai chiều
 
-Vì chưa chứng minh được, chỗ trống được bù bằng **kiểm thử vi phân cạn**: so
-`inPriorityCycle` với một bộ kiểm **viết theo cách khác** (`refInCycle`: tìm
-theo độ sâu, không có tập đã thăm, không dedupe) trên **mọi** đồ thị `overrides`
-nhỏ.
+Rủi ro ở mục 3 đã được đóng bằng chứng minh, không còn bằng kiểm thử.
 
-| Số đỉnh | Số đồ thị | Bằng chứng |
+Thuật toán đổi từ "lặp một số vòng cố định" sang **lặp tới điểm bất động**:
+`closure` dừng khi một vòng không thêm gì, với `gnodes ns` (mọi id có thể xuất
+hiện trong đồ thị) làm ngân sách vòng lặp. Đó là hình dạng cho phép chứng minh
+*cả hai* chiều: tại điểm bất động tập đã đóng dưới `succsOf`, nên completeness
+suy ra bằng quy nạp trên `Reaches` **không cần chặn độ dài đường đi** — tức
+không cần lập luận pigeonhole, thứ đã làm hướng "chặn số vòng" quá đắt.
+
+| Chiều | Định lý | Trạng thái |
 |---|---|---|
-| 1 | 2 | `Tests.cycle_check_agrees_n1`, **kernel kiểm** |
-| 2 | 16 | `Tests.cycle_check_agrees_n2`, **kernel kiểm** |
-| 3 | 512 | `Tests.cycle_check_agrees_n3`, **kernel kiểm** (~12s build) |
-| 4 | 65536 | `#eval agreeAll 4` ⇒ `true`. **Chạy biên dịch, kernel KHÔNG kiểm** — `decide` sẽ mất khoảng nửa giờ. Là chẩn đoán, không phải chứng minh |
+| Báo ⇒ có chu trình thật | `cycle_of_validate_finding` (qua `closure_sound`) | **Implemented** (định lý) |
+| Có chu trình thật ⇒ được báo | `cycle_finding_of_reaches` (qua `closure_closed`, `mem_reachableFrom_of_reaches`) | **Implemented** (định lý) |
 
-Dòng cuối thuộc trust base: nó là kết quả của trình biên dịch, không của kernel,
-đúng theo ranh giới mà [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md)
-vạch ra. Đồ thị từ 5 đỉnh trở lên **chưa kiểm**.
+Mắt khóa là `closure_closed`: ngân sách **không thể cạn trước khi tập đóng**, vì
+mỗi vòng chưa đóng thêm ít nhất một id mới và tập luôn nằm trong `gnodes`. Chứng
+minh dùng `List.Nodup.length_le_of_subset` của Lean core; `addAll` được viết tay
+thay cho `List.eraseDups` vì core không có bổ đề `Nodup` cho `eraseDups` và các
+bổ đề vòng lặp của nó là `private`.
+
+### Kiểm thử vi phân cạn — nay là bằng chứng **dư**, không phải thay thế
+
+Vẫn giữ lại vì nó bắt được lỗi ở chỗ chứng minh không với tới: sai sót trong
+chính phát biểu, hoặc trong `succsOf`/`gnodes`. So `inPriorityCycle` với
+`refInCycle` (tìm theo độ sâu, không tập đã thăm, không dedupe).
+
+| Số đỉnh | Số đồ thị | Bằng chứng | Hạng |
+|---|---|---|---|
+| 1 | 2 | `Tests.cycle_check_agrees_n1` | **Tested** (kernel kiểm) |
+| 2 | 16 | `Tests.cycle_check_agrees_n2` | **Tested** (kernel kiểm) |
+| 3 | 512 | `Tests.cycle_check_agrees_n3` | **Tested** (kernel kiểm, ~40s build) |
+| 4 | 65536 | `#eval agreeAll 4` ⇒ `true` | **Evaluated** — chạy biên dịch, kernel **không** kiểm. Chẩn đoán, không phải chứng minh |
+
+Dòng n=4 thuộc trust base (kết quả của trình biên dịch, không của kernel), đúng
+ranh giới mà [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md)
+vạch ra. Đồ thị từ 5 đỉnh trở lên **chưa kiểm** — nhưng từ nay điều đó không còn
+quan trọng, vì định lý phủ mọi kích thước.

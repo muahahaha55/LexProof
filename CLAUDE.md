@@ -52,8 +52,9 @@ file and leave this list as pointers only.
   run the build and the axiom audit.
 
 Read first: `docs/traceability.md` for what is actually proven versus trusted —
-in particular the trust base, which includes `Atoms.valid` and the completeness
-of priority-cycle detection.
+in particular the trust base, which includes `Atoms.valid`. Priority-cycle
+detection is now proved in both directions (`cycle_of_validate_finding`,
+`cycle_finding_of_reaches`) and is no longer trusted.
 
 Entry point: `LexProof.analyze` validates before it searches. The search and
 everything under it live in `LexProof.Internal` and must not be called directly.

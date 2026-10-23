@@ -175,8 +175,13 @@ Hai điều cần biết:
 
 > **Build xanh nay bao gồm cả audit axiom.** `LexProof.lean` import
 > `LexProof.Cert.Audit`, nên mỗi `lake build` chạy `#audit_axioms` và
-> `#audit_encapsulation`; vi phạm làm build **đỏ**. Build mất thêm ~17s cho
-> kiểm thử vi phân chu trình.
+> `#audit_encapsulation`; vi phạm làm build **đỏ**. Build lạnh ~**1m25s**, phần
+> lớn là phép so cạn trên đồ thị chu trình.
+
+> **Audit có negative test riêng, chạy ở CI.** `bash ci/audit-negative.sh` chạy
+> `ci/audit-negative/BadAxioms.lean` (ngoài thư viện, nên `lake build` không
+> thấy) và đòi audit phải từ chối cả `sorry`, `native_decide` và một `axiom`.
+> Chạy được cục bộ bằng chính lệnh đó.
 
 Build một module lẻ khi cần vòng lặp nhanh:
 

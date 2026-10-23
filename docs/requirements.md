@@ -8,9 +8,15 @@ chứng (Proof | Test | Review | Demo) và trạng thái.
 
 | Trạng thái | Nghĩa |
 |---|---|
-| Implemented | Đã có trong code và đã được build kiểm tra |
+| **Implemented** | Có **định lý** hoặc **ca kiểm thử kernel kiểm** chống lưng |
+| **Tested** | Có ca kiểm thử chạy được, nhưng không phải kernel kiểm (script, CI), hoặc kernel kiểm nhưng chỉ **một ví dụ** chứ không phải mệnh đề tổng quát |
+| **Evaluated** | Chỉ chạy bằng trình biên dịch (`#eval`); kernel **không** kiểm. Là chẩn đoán, không phải chứng minh |
 | Planned | Đã quyết định, chưa có code |
 | Open | Chưa quyết định xong |
+
+Phân biệt này là có chủ ý: "Implemented" **không** được dùng cho thứ chỉ chạy
+thử. Ví dụ: `docIdsOf` không phụ thuộc thứ tự đầu vào là **Tested một ví dụ**,
+và phép so cạn trên đồ thị 4 đỉnh là **Evaluated**.
 
 Phạm vi: **Level 1** — nhất quán *trong một* văn bản. Level 2 (giữa các văn
 bản, thứ bậc hiệu lực) ngoài phạm vi, xem [ADR-0012](decisions/0012-scope-level1-now.md).
@@ -99,11 +105,16 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **AC**: Có test trên văn bản đã cố tình tiêm lỗi, mỗi loại lỗi một ca.
 - **Kiểm chứng**: Test
 - **Trạng thái**: **Implemented** — `validate` trong `LexProof/Verify/Validate.lean`
-  bắt cả năm loại (chỉ số atom qua kiểm **tĩnh** `Cond.wf`, trùng id, tham chiếu
+  bắt sáu loại (chỉ số atom qua kiểm **tĩnh** `Cond.wf`, trùng id, tham chiếu
   treo đối chiếu catalog truyền vào, override tới id không tồn tại, chu trình ưu
-  tiên), mỗi finding nêu tên norm sai. Ca kiểm: `Tests` ca 1–5.
-  *Ghi chú*: mục Should (norm không bao giờ áp dụng được) **chưa làm**; và chỉ
-  `wf_of_validate_nil` có chứng minh — các check khác chỉ có ca kiểm thử.
+  tiên, lẫn `docId`), mỗi finding nêu tên norm sai.
+  **Phát hiện chu trình ưu tiên có chứng minh cả hai chiều**:
+  `cycle_of_validate_finding` (báo ⇒ có chu trình) và `cycle_finding_of_reaches`
+  (có chu trình ⇒ được báo). Thuật toán lặp tới **điểm bất động**, không phải
+  một số vòng cố định — xem [traceability.md](traceability.md) mục 4.
+  *Ghi chú*: mục Should (norm không bao giờ áp dụng được) **chưa làm**.
+  `duplicateIds`, `danglingFindings`, `unknownOverrideFindings` chỉ ở hạng
+  **Tested** (ca kiểm thử kernel), chưa có định lý.
 
 ### FR9 — Phản ví dụ phát lại được
 - **Phát biểu**: Hệ thống phải xuất phản ví dụ phát lại được, kèm ID nguồn của
@@ -148,11 +159,13 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
   **tập** axiom với whitelist, không khớp theo tên — điều này thiết yếu vì axiom
   do `native_decide` sinh được đặt tên theo định lý, không theo tiền tố cố định.
   Một `axiom` khai trong module của ta cũng bị từ chối.
-  Đã kiểm bằng một file dùng thử (ngoài build, đã xóa) với `sorry`,
-  `native_decide` và `axiom`: cả ba đều bị từ chối.
-  *Còn thiếu*: build xanh chứng tỏ audit đã chạy, nhưng chưa có ca kiểm tự động
-  nào *trong* build chứng tỏ audit biết **thất bại** — việc đó chỉ kiểm được
-  bằng tay vì nó phải làm build đỏ.
+  **Negative test cố định trong CI** (`ci/audit-negative.sh`, chạy
+  `ci/audit-negative/BadAxioms.lean` — ngoài thư viện nên `lake build` không
+  thấy): file dùng `sorry`, `native_decide` và một `axiom`; CI đỏ nếu audit
+  **không** từ chối cả ba. Hạng của negative test là **Tested** (script +
+  Lean), không phải kernel.
+  *Còn thiếu*: negative test nằm ở CI chứ không ở `lake build`, vì một ca như
+  thế phải làm lệnh build đỏ. Sửa cả audit **và** script thì vẫn lọt.
 
 ### FR12 — Bộ ca kiểm thử của chuyên gia
 - **Phát biểu**: Hệ thống nên chạy bộ ca do chuyên gia soạn trên phần đã mã hóa

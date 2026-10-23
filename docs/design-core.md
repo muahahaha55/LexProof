@@ -184,8 +184,9 @@ chất của cả danh sách.
 | `docIdsOf`, `singleDocId?` | Các `docId` khác nhau trong danh sách; `none` nếu rỗng hoặc lẫn nhiều văn bản |
 | `duplicateIds` | Id xuất hiện nhiều hơn một lần |
 | `unevaluableIds` | Norm có chỉ số atom ngoài phạm vi, theo id |
-| `succsOf`, `reachStep`, `reachN` | Bước và bao đóng của đồ thị `overrides` |
-| `inPriorityCycle` | Norm tới lại được chính nó, trong `ns.length` vòng |
+| `addAll`, `gnodes` | Hợp không trùng lặp (viết tay, có bổ đề `Nodup`); mọi id có thể xuất hiện trong đồ thị |
+| `succsOf`, `closureStep`, `closure` | Bước và bao đóng của đồ thị `overrides`, **lặp tới điểm bất động** với `gnodes ns` làm ngân sách |
+| `reachableFrom`, `inPriorityCycle` | Các id tới được từ một norm; norm có tới lại được chính nó |
 | `validate` | `Atoms S P → List String → List Norm → List Finding` |
 
 `validate` trả `[Finding.emptyNormList]` cho danh sách rỗng, ngược lại nối sáu
@@ -212,14 +213,31 @@ theorem reachN_sound (ns) (i) : ∀ (k) (acc), (∀ x ∈ acc, Reaches ns i x) �
 theorem cycle_of_validate_finding (h : Finding.priorityCycle i ∈ validate A catalog ns) :
     ∃ n ∈ ns, n.id = i ∧ Reaches ns i i
 
+theorem cycle_finding_of_reaches (hn : n ∈ ns) (h : Reaches ns n.id n.id) :
+    Finding.priorityCycle n.id ∈ validate A catalog ns
+
 theorem singleDocId_isSome_of_validate_nil (hne : ns ≠ []) (h : validate A catalog ns = []) :
     (singleDocId? ns).isSome = true
 ```
 
-`cycle_of_validate_finding` là **soundness** của phát hiện chu trình: báo cáo
-nào cũng ứng với một chu trình thật. **Completeness — mọi chu trình đều bị báo —
-chưa được chứng minh**; xem mục 6 và bảng trust base trong
-[traceability.md](traceability.md).
+Hai định lý đầu là **soundness và completeness** của phát hiện chu trình:
+validator báo chu trình cho một norm **đúng khi** norm đó thật nằm trên một chu
+trình. Chúng dựa trên bốn bổ đề về `closure`:
+
+| Bổ đề | Việc |
+|---|---|
+| `subset_closure` | Bộ tích lũy không bị mất đi |
+| `closure_sound` | Mọi id thu được đều tới được từ điểm xuất phát |
+| `closure_subset_gnodes` | Bộ tích lũy luôn nằm trong `gnodes` |
+| `closure_closed` | **Ngân sách không thể cạn trước khi tập đóng** — mỗi vòng chưa đóng thêm ít nhất một id, và tập bị chặn trong `gnodes`. Dùng `List.Nodup.length_le_of_subset` |
+
+Lặp tới **điểm bất động** là lý do completeness chứng minh được: tại điểm bất
+động tập đã đóng dưới `succsOf`, nên quy nạp trên `Reaches` đi qua **không cần
+chặn độ dài đường đi**. Bản trước lặp một số vòng cố định và chiều này sẽ cần
+lập luận pigeonhole trên đường đi — đắt hơn hẳn.
+
+`addAll` được viết tay thay cho `List.eraseDups` vì Lean core không có bổ đề
+`Nodup` cho `eraseDups` và các bổ đề vòng lặp của nó là `private`.
 
 ---
 
@@ -443,7 +461,8 @@ ngoại lệ; chu trình dài hơn 4.
 
 | Khoảng trống | Hệ quả |
 |---|---|
-| **Completeness của phát hiện chu trình** | Soundness đã có (`cycle_of_validate_finding`). Chiều "mọi chu trình đều bị báo" **chưa**. **Đính chính bản trước**: bỏ sót một chu trình *không* vô hại. `resolved` là XOR **theo cặp**, nên trong chu trình từ 3 norm trở lên **mọi** cặp trông như đã giải quyết và bộ kiểm báo `consistentOn` — đã kiểm: `Tests.three_cycle_hides_conflict_from_search`. Chỉ chu trình 2 norm mới tự lộ. Bù bằng kiểm thử vi phân cạn: [traceability.md](traceability.md) mục 4 |
+| ~~Completeness của phát hiện chu trình~~ | **Đã chứng minh** (`cycle_finding_of_reaches`) — không còn là khoảng trống. Hiểm họa bên dưới vẫn thật và vẫn nên biết: `resolved` là XOR **theo cặp**, nên trong chu trình từ 3 norm trở lên **mọi** cặp trông như đã giải quyết và bộ kiểm trần báo `consistentOn` (`Tests.three_cycle_hides_conflict_from_search`). Nay validator chắc chắn bắt được, nên lớp chặn không còn dựa vào niềm tin |
+| Tính **sắp xếp** của `sortStrings` | Chỉ chứng minh *bảo toàn phần tử* (`mem_sortStrings`). Việc `docIdsOf` bất biến theo thứ tự đầu vào là **Tested một ví dụ**, không phải định lý. Chấp nhận: sắp xếp chỉ để báo cáo ổn định |
 | **Completeness của `Audit.resolutions`** | Soundness đã có (`resolution_has_witness`); không có định lý nói nó liệt kê **đủ** mọi clash đã giải quyết |
 | `duplicateIds`, `danglingFindings`, `unknownOverrideFindings` | Chỉ có ca kiểm thử, không có định lý |
 | Khi nào `unknown` xuất hiện | Không định lý nào nói `unknown` chỉ xảy ra khi thật có norm dị dạng |
@@ -483,4 +502,4 @@ phần quy mô: [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md
 | `reachN` chạy `ns.length` vòng vô điều kiện | Không cắt sớm khi tập đã đóng; bậc hai theo số norm |
 | `validExcludedOf` quét toàn miền | Riêng việc *báo cáo* scope cũng tốn một lần quét |
 | `Internal` là quy ước ở mức kiểu, nhưng **có audit chặn** | Lean `private` sẽ chặn cả `Tests.lean`. Thay vào đó `#audit_encapsulation` làm build đỏ nếu khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`. Nó quét **tên hằng dùng trong cả type và value**, nên không lách được bằng alias |
-| Build chậm hơn ~17s | `cycle_check_agrees_n3` (~12s) và `#eval agreeAll 4` (~5s) là giá của kiểm thử vi phân cạn |
+| Build lạnh **1m25s** | Chủ yếu là `cycle_check_agrees_n3` trong kernel và `#eval agreeAll 4`. Đã **vượt** ngưỡng ~1 phút đã thống nhất. Nay completeness có định lý nên phép so cạn chỉ còn là bằng chứng dư; hạ n=3 xuống `#eval` sẽ trả build về ~30s |
