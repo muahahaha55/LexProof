@@ -197,6 +197,15 @@ def validPoints (S P : Type) [Finite S] [Finite P] : List (P × S) :=
 def validExcludedOf [Finite S] [Finite P] (A : Atoms S P) : Nat :=
   (validPoints S P).countP fun p => !(A.valid p.1 p.2)
 
+/-- **Which** points the integrity constraint rules out, up to `cap` of them.
+
+Deliberately a function and **not** a `Scope` field: the list is `O(|S| × |P|)`
+and would swamp a report, but a reviewer checking whether `valid` is too strong
+needs to see actual points. `Scope` keeps only the counts. -/
+def excludedPoints [Finite S] [Finite P] (A : Atoms S P) (cap : Nat) :
+    List (P × S) :=
+  ((validPoints S P).filter fun p => !(A.valid p.1 p.2)).take cap
+
 def scopeOf (S P : Type) [Finite S] [Finite P] (A : Atoms S P) (ns : List Norm) :
     Scope :=
   { docId := singleDocId? ns

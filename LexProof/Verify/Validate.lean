@@ -41,9 +41,40 @@ inductive Finding
 
 /-! ## Individual checks -/
 
-/-- The distinct `docId`s the list spans. -/
+/-- Insert into a sorted list. Structurally recursive, so it reduces in the
+kernel — `List.mergeSort` is well-founded and would block every `decide`. -/
+def insertSorted (x : String) : List String → List String
+  | [] => [x]
+  | y :: ys => if x < y then x :: y :: ys else y :: insertSorted x ys
+
+/-- Insertion sort on strings. -/
+def sortStrings : List String → List String
+  | [] => []
+  | x :: xs => insertSorted x (sortStrings xs)
+
+theorem mem_insertSorted {x a : String} {l : List String} :
+    a ∈ insertSorted x l ↔ a = x ∨ a ∈ l := by
+  induction l with
+  | nil => simp [insertSorted]
+  | cons y ys ih =>
+    simp only [insertSorted]
+    split
+    · simp
+    · simp only [List.mem_cons, ih]
+      constructor
+      · rintro (rfl | rfl | h) <;> simp_all
+      · rintro (rfl | rfl | h) <;> simp_all
+
+theorem mem_sortStrings {a : String} {l : List String} :
+    a ∈ sortStrings l ↔ a ∈ l := by
+  induction l with
+  | nil => simp [sortStrings]
+  | cons x xs ih => simp [sortStrings, mem_insertSorted, ih]
+
+/-- The distinct `docId`s the list spans, deduplicated **and sorted**, so that
+neither this nor `Finding.mixedDocIds` depends on the order of the norm list. -/
 def docIdsOf (ns : List Norm) : List String :=
-  (ns.map fun n => n.source.docId).eraseDups
+  sortStrings ((ns.map fun n => n.source.docId).eraseDups)
 
 /-- The document the list belongs to, or `none` when it is empty or mixed.
 `Scope.docId` uses this instead of guessing from the head of the list. -/
@@ -231,7 +262,7 @@ theorem singleDocId_isSome_of_validate_nil {A : Atoms S P} {catalog : List Strin
     | nil =>
       exfalso
       have : (n₀.source.docId) ∈ docIdsOf (n₀ :: rest) := by
-        simp [docIdsOf, List.mem_eraseDups]
+        simp [docIdsOf, mem_sortStrings, List.mem_eraseDups]
       rw [hd] at this; simp at this
     | cons d ds =>
       cases ds with

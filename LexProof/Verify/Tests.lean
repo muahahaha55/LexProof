@@ -115,10 +115,19 @@ theorem dangling_reference_found :
 def mixedDocs : List Norm :=
   [normA, { normB with source := srcOther "Điều 2" }]
 
-/-- A list spanning two documents is a finding, not a level-1 claim. -/
+/-- A list spanning two documents is a finding, not a level-1 claim. The ids
+come out **sorted**, not in list order. -/
 theorem mixed_docids_found :
     validate atoms catalog mixedDocs =
-      [Finding.mixedDocIds ["SMOKE", "OTHER"]] := by decide
+      [Finding.mixedDocIds ["OTHER", "SMOKE"]] := by decide
+
+/-- D30: reversing the norm list does not change the finding. -/
+theorem mixed_docids_order_independent :
+    validate atoms catalog mixedDocs.reverse =
+      validate atoms catalog mixedDocs := by decide
+
+theorem docIds_order_independent :
+    docIdsOf mixedDocs.reverse = docIdsOf mixedDocs := by decide
 
 /-- And the scope refuses to guess a document id. -/
 theorem mixed_docids_no_scope_docid : singleDocId? mixedDocs = none := by decide
@@ -297,5 +306,90 @@ theorem smoke_pair_always_evaluates :
     ∀ n ∈ conflicting, ∀ (π : Params) (s : Sit),
       (n.applies atoms π s).isSome = true :=
   applies_isSome_of_validate_nil smoke_validates
+
+
+/-! ## 12. Differential test of cycle detection over all small graphs (D28)
+
+Completeness of `inPriorityCycle` is **not proved** (see the report and the
+trust base). Instead, every `overrides` graph on up to 4 nodes is compared
+against a reference check written a different way: a depth-bounded search with
+no visited set and no deduplication, versus the iterative set closure that
+`inPriorityCycle` uses. -/
+
+set_option maxRecDepth 8000
+
+/-- Node id `i`. -/
+def gid (i : Nat) : NormId := toString i
+
+/-- Norm `i` of the graph encoded by the bits of `g`: edge `i → j` iff bit
+`i * n + j` is set. -/
+def gNorm (n : Nat) (g : Nat) (i : Nat) : Norm :=
+  { id := gid i, modality := .obligation, act := "a"
+  , condition := .tt, exceptions := []
+  , priority := some ⟨((List.range n).filter fun j => g.testBit (i * n + j)).map gid⟩
+  , source := srcOf "x", references := [] }
+
+def gNorms (n : Nat) (g : Nat) : List Norm := (List.range n).map (gNorm n g)
+
+/-- Reference reachability: depth-bounded search, **no** visited set and **no**
+deduplication — a different algorithm from `reachN`. -/
+def refReaches (succ : NormId → List NormId) : Nat → NormId → NormId → Bool
+  | 0, _, _ => false
+  | k + 1, i, j => (succ i).contains j || (succ i).any fun m => refReaches succ k m j
+
+def refInCycle (ns : List Norm) (x : Norm) : Bool :=
+  refReaches (succsOf ns) ns.length x.id x.id
+
+/-- Do the two checks agree on every node of this graph? -/
+def agree (n : Nat) (g : Nat) : Bool :=
+  let ns := gNorms n g
+  ns.all fun x => inPriorityCycle ns x == refInCycle ns x
+
+/-- Do they agree on **every** graph on `n` nodes? -/
+def agreeAll (n : Nat) : Bool := (List.range (2 ^ (n * n))).all (agree n)
+
+/-- All 2 graphs on 1 node agree. Kernel-checked. -/
+theorem cycle_check_agrees_n1 : agreeAll 1 = true := by decide
+
+/-- All 16 graphs on 2 nodes agree. Kernel-checked. -/
+theorem cycle_check_agrees_n2 : agreeAll 2 = true := by decide
+
+/-- All 512 graphs on 3 nodes agree. Kernel-checked (~12s of the build). -/
+theorem cycle_check_agrees_n3 : agreeAll 3 = true := by decide
+
+/-! All 65536 graphs on 4 nodes. **Compiled evaluation, not kernel-checked** —
+`decide` on this would take roughly half an hour. It is a diagnostic, not a
+proof, and it is listed as such in the trust base. -/
+
+#eval agreeAll 4
+
+/-! ### Why a missed cycle finding is *not* harmless (D28)
+
+`resolved` is XOR **per pair**. In a cycle of length ≥ 3 every pair has exactly
+one direction of override, so every pair looks resolved and the search reports
+consistency — even though nothing actually has precedence. Only in a 2-cycle
+does XOR come out false and keep the clash visible.
+
+So completeness of cycle detection is not cosmetic: the validator is the only
+thing standing between a circular priority structure and a false
+"consistentOn". -/
+
+/-- A 2-cycle survives even without validation: XOR is false for the pair, so
+the clash is still reported. -/
+theorem two_cycle_still_reports_conflict :
+    (Internal.check atoms cyc2).witness?.isSome = true := by decide
+
+/-- A 3-cycle **fools the bare search**: every pair looks resolved, so it
+reports consistency. This is the concrete reason the earlier claim that a
+missed cycle finding is harmless was wrong. -/
+theorem three_cycle_hides_conflict_from_search :
+    (Internal.check atoms cyc3).isConsistentOn = true := by decide
+
+/-- Validation is what prevents it: through `analyze` the 3-cycle is a finding,
+and nothing is reported as consistent. -/
+theorem three_cycle_is_caught_by_validation :
+    analyze atoms catalog cyc3 =
+      .invalid [Finding.priorityCycle "A", Finding.priorityCycle "B",
+                Finding.priorityCycle "C"] := by decide
 
 end LexProof.Tests
