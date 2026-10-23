@@ -24,7 +24,7 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | FR5 | Tier 2 Back-translator; [ADR-0019](decisions/0019-back-translation-renderer.md) | — | — | **Open** |
 | FR6 | `Core` lược đồ chuẩn tắc | `Modality`, `Cond`, `Norm.exceptions`, `Norm.priority`, tham số `P`, `Norm.applies` | `smoke_conflict`, `smoke_consistent` | Implemented |
 | FR7 | `Verify` bộ kiểm; `Result` **5 nhánh**: `conflict`, `conditionalConflict`, `consistentOn`, `unknown`, `invalid` | `Result`, `analyze` (điểm vào duy nhất), `Internal.check`, (a)+(c) `conflict_of_witness`, (b) `not_conflict_of_consistentOn`, (e) `conflict_all_params`, `conditionalConflict_split`, **`no_priority_cycle_of_*`** (mọi kết quả đã quét ⇒ không chu trình ưu tiên) | `Smoke.*` (7), `Tests.conditional_conflict_found`, `Tests.conditional_conflict_splits`, `Tests.fixed_has_no_priority_cycle` | Implemented |
-| FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle` (closure tới điểm bất động), `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, **`cycle_of_validate_finding` + `cycle_finding_of_reaches`** (hai chiều), `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10, 12 | **Implemented** *(phát hiện chu trình nay đúng và đủ, có chứng minh; `duplicateIds`/dangling/`unknownOverride` chỉ có test)* |
+| FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle` (closure tới điểm bất động), `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, **`cycle_of_validate_finding` + `cycle_finding_of_reaches`** (hai chiều), **`nodup_ids_of_validate_nil`**, **`succsOf_eq_overrideIds_of_validate_nil`**, `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10, 12 | **Implemented** *(chu trình: đúng và đủ; id trùng: có định lý; dangling và `unknownOverride` vẫn chỉ có test)* |
 | FR9 | Tier 4 Phản ví dụ | `Counterexample` (+ `Repr`), `ceOf`, `Result.witness?`, (c) `counterexample_fields_correct` | `smoke_conflict`, `Tests.conflict_reported_with_bad_norm` | Planned *(dữ liệu: Implemented, và (c) chứng minh mọi trường khớp; render tiếng Việt: chưa có)* |
 | FR10 | Tier 4 Báo cáo | `Scope`, `scopeOf` | `smoke_consistent` so khớp nguyên khối `Scope` | Planned |
 | FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (1197 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
@@ -86,13 +86,15 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.12 | `cycle_of_validate_finding` **và** `cycle_finding_of_reaches` — validator báo chu trình ưu tiên cho một norm **đúng khi** norm đó thật nằm trên một chu trình. Hai chiều, không còn trust base | **Implemented** (định lý) |
 | G1.13 | Negative test của audit trong CI (`ci/audit-negative.sh`): một file ngoài thư viện dùng `sorry`, `native_decide` và một `axiom`; CI đỏ nếu audit **không** từ chối cả ba | **Tested** (script + Lean, không phải kernel) |
 | G1.14 | `no_priority_cycle_of_consistentOn` / `_conflict` / `_conditionalConflict` — **mọi** kết quả đã quét kèm bảo đảm không norm nào nằm trên chu trình `overrides`, nên hiểm họa XOR-theo-cặp không lọt qua `analyze` | **Implemented** (định lý) |
+| G1.15 | `nodup_ids_of_validate_nil` — validate sạch ⇒ id các norm **đôi một khác nhau**; và `succsOf_eq_overrideIds_of_validate_nil` — khi đó bước của đồ thị ưu tiên **chính là** trường `overrides`, không có nhập nhằng tra cứu | **Implemented** (định lý) |
 
 **G1 KHÔNG bao phủ**
 
 - **Không** bao phủ việc `Conflict` có đúng là khái niệm xung đột pháp lý hay
   không. Đó là G2. Kernel kiểm *suy luận*, không kiểm *định nghĩa*.
-- **Không** bao phủ tính đúng đắn của `duplicateIds`, `danglingFindings`,
+- **Không** bao phủ tính đúng đắn của `danglingFindings` và
   `unknownOverrideFindings`: chỉ có ca kiểm thử, không có định lý.
+  (`duplicateIds` **nay đã có** — `nodup_ids_of_validate_nil`, xem G1.15.)
 - **Không** bao phủ tính **sắp xếp** của `sortStrings`: chỉ chứng minh *bảo toàn
   phần tử* (`mem_sortStrings`). Việc `docIdsOf` không phụ thuộc thứ tự đầu vào
   là **Tested một ví dụ** (`Tests.docIds_order_independent`), **không** phải
@@ -304,6 +306,32 @@ Hệ quả trực tiếp của completeness, không cần sửa `resolved`:
 | `no_priority_cycle_of_consistentOn` | `analyze = .consistentOn _ _` ⇒ không có chu trình |
 | `no_priority_cycle_of_conflict` | `analyze = .conflict _ _ _` ⇒ không có chu trình |
 | `no_priority_cycle_of_conditionalConflict` | `analyze = .conditionalConflict _ _ _ _` ⇒ không có chu trình |
+
+**Chuỗi bổ đề mà bảo đảm này dựa vào** — đọc từ dưới lên:
+
+```
+mem_addAll, nodup_addAll, succsOf_subset_gnodes        (tính chất của addAll / gnodes)
+        ↓
+subset_closure, closure_subset_gnodes, closure_closed   (closure đạt điểm bất động và đã đóng)
+        ↓
+mem_reachableFrom_of_reaches                            (Reaches ⇒ được thu thập)
+        ↓
+inPriorityCycle_of_reaches                              (⇒ cờ Bool bật)
+        ↓
+cycle_finding_of_reaches                                (⇒ finding có trong validate)
+        ↓
+no_priority_cycle_of_validate_nil                       (phản đảo: validate = [] ⇒ không chu trình)
+        ↓
+validate_nil_of_consistentOn / _of_conflict / _of_conditionalConflict
+        ↓
+no_priority_cycle_of_consistentOn / _of_conflict / _of_conditionalConflict
+```
+
+Một mắt nữa khiến phát biểu **có nghĩa** chứ không chỉ đúng hình thức:
+`succsOf_eq_overrideIds_of_validate_nil` (D42) — sau một lần validate sạch, các
+bước của đồ thị `Reaches` đi qua **chính** trường `overrides` của norm. Thiếu nó,
+`succsOf` về nguyên tắc có thể tra ra một norm khác trùng id, và "không có chu
+trình" sẽ nói về một đồ thị khác với đồ thị người đọc nghĩ tới.
 
 Nghĩa là hiểm họa "chu trình 3 norm làm mọi cặp trông như đã giải quyết" **không
 thể lọt qua `analyze`**: nếu có chu trình thì kết quả là `.invalid`, không bao

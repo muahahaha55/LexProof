@@ -220,6 +220,13 @@ theorem cycle_finding_of_reaches (hn : n ∈ ns) (h : Reaches ns n.id n.id) :
 theorem no_priority_cycle_of_validate_nil (h : validate A catalog ns = []) :
     ∀ n ∈ ns, ¬ Reaches ns n.id n.id
 
+-- (D42) validate sạch ⇒ id đôi một khác nhau, và đồ thị ưu tiên đúng là `overrides`
+theorem nodup_ids_of_validate_nil (h : validate A catalog ns = []) :
+    (ns.map fun n => n.id).Nodup
+theorem succsOf_eq_overrideIds_of_nodup_ids
+    (hnd : (ns.map fun n => n.id).Nodup) (hn : n ∈ ns) :
+    succsOf ns n.id = n.overrideIds
+
 theorem singleDocId_isSome_of_validate_nil (hne : ns ≠ []) (h : validate A catalog ns = []) :
     (singleDocId? ns).isSome = true
 ```
@@ -479,7 +486,7 @@ ngoại lệ; chu trình dài hơn 4.
 | ~~Completeness của phát hiện chu trình~~ | **Đã chứng minh** (`cycle_finding_of_reaches`) — không còn là khoảng trống. Hiểm họa bên dưới vẫn thật và vẫn nên biết: `resolved` là XOR **theo cặp**, nên trong chu trình từ 3 norm trở lên **mọi** cặp trông như đã giải quyết và bộ kiểm trần báo `consistentOn` (`Tests.three_cycle_hides_conflict_from_search`). Nay validator chắc chắn bắt được, nên lớp chặn không còn dựa vào niềm tin |
 | Tính **sắp xếp** của `sortStrings` | Chỉ chứng minh *bảo toàn phần tử* (`mem_sortStrings`). Việc `docIdsOf` bất biến theo thứ tự đầu vào là **Tested một ví dụ**, không phải định lý. Chấp nhận: sắp xếp chỉ để báo cáo ổn định |
 | **Completeness của `Audit.resolutions`** | Soundness đã có (`resolution_has_witness`); không có định lý nói nó liệt kê **đủ** mọi clash đã giải quyết |
-| `duplicateIds`, `danglingFindings`, `unknownOverrideFindings` | Chỉ có ca kiểm thử, không có định lý |
+| `danglingFindings`, `unknownOverrideFindings` | Chỉ có ca kiểm thử, không có định lý. (`duplicateIds` **đã có**: `nodup_ids_of_validate_nil`) |
 | Khi nào `unknown` xuất hiện | Không định lý nào nói `unknown` chỉ xảy ra khi thật có norm dị dạng |
 | Ngân sách | `UnknownReason` **không có** `outOfBudget`; không có cơ chế đo hay chặn (N8) |
 | `Atoms.valid` | Nằm trong trust base; `valid` quá mạnh che xung đột và không định lý nào thấy ([ADR-0021](decisions/0021-integrity-constraint-valid.md)) |

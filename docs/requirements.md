@@ -116,10 +116,16 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
   norm nào nằm trên chu trình `overrides` (`no_priority_cycle_of_consistentOn`
   và hai bản cho `conflict`/`conditionalConflict`), nên cấu trúc ưu tiên vòng
   tròn không thể bị báo thành nhất quán.
+  **Id trùng nay cũng có định lý**: `nodup_ids_of_validate_nil` — validate sạch
+  ⇒ id các norm đôi một khác nhau. Kèm theo
+  `succsOf_eq_overrideIds_of_validate_nil`: khi đó bước của đồ thị ưu tiên
+  **chính là** trường `overrides` của norm, nên phát biểu "không có chu trình"
+  nói về đúng đồ thị mà người đọc nghĩ tới, không phải một đồ thị bị nhập nhằng
+  tra cứu id.
   *Ghi chú*: mục Should (norm không bao giờ áp dụng được) **chưa làm**.
-  `duplicateIds`, `danglingFindings`, `unknownOverrideFindings` chỉ ở hạng
-  **Tested** (ca kiểm thử kernel), chưa có định lý. Phép so cạn trên đồ thị 3 và
-  4 đỉnh ở hạng **Evaluated** (`#eval`), không phải kernel.
+  `danglingFindings` và `unknownOverrideFindings` vẫn ở hạng **Tested** (ca kiểm
+  thử kernel), chưa có định lý. Phép so cạn trên đồ thị 3 và 4 đỉnh ở hạng
+  **Evaluated** (`#eval`), không phải kernel.
 
 ### FR9 — Phản ví dụ phát lại được
 - **Phát biểu**: Hệ thống phải xuất phản ví dụ phát lại được, kèm ID nguồn của
