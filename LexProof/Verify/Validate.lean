@@ -507,6 +507,75 @@ theorem no_priority_cycle_of_validate_nil {A : Atoms S P} {catalog : List String
   rw [h] at hmem
   simp at hmem
 
+/-! ## Proved property 4: a silent validator means distinct ids, and then the
+priority graph is exactly the `overrides` data -/
+
+/-- **(a)** If the validator is silent, the norm ids are pairwise distinct.
+
+Stated with `List.Nodup` on the id list rather than on `duplicateIds`, because
+`Nodup` is the fact every later proof wants. -/
+theorem nodup_ids_of_validate_nil {A : Atoms S P} {catalog : List String}
+    {ns : List Norm} (h : validate A catalog ns = []) :
+    (ns.map fun n => n.id).Nodup := by
+  rw [List.nodup_iff_count]
+  intro a
+  by_cases hle : List.count a (ns.map fun n => n.id) ≤ 1
+  · exact hle
+  · exfalso
+    have hlt : 1 < List.count a (ns.map fun n => n.id) := by omega
+    have hmem : a ∈ (ns.map fun n => n.id) := List.count_pos_iff.mp (by omega)
+    have hdup : a ∈ duplicateIds ns := by
+      simp only [duplicateIds]
+      refine List.mem_eraseDups.mpr (List.mem_filter.mpr ⟨hmem, ?_⟩)
+      simp only [decide_eq_true_eq]
+      rw [← List.countP_eq_length_filter, ← List.count_eq_countP]
+      exact hlt
+    have hfind : Finding.duplicateId a ∈ validate A catalog ns := by
+      cases ns with
+      | nil => simp [duplicateIds] at hdup
+      | cons n₀ rest =>
+        simp only [validate]
+        refine List.mem_append.mpr (Or.inl (List.mem_append.mpr (Or.inl
+          (List.mem_append.mpr (Or.inl (List.mem_append.mpr (Or.inl
+            (List.mem_append.mpr (Or.inr ?_)))))))))
+        exact List.mem_map.mpr ⟨a, hdup, rfl⟩
+    rw [h] at hfind
+    simp at hfind
+
+/-- With distinct ids, looking a norm up by its own id finds that very norm. -/
+theorem find?_eq_self_of_nodup_ids {ns : List Norm}
+    (hnd : (ns.map fun n => n.id).Nodup) {n : Norm} (hn : n ∈ ns) :
+    ns.find? (fun m => m.id == n.id) = some n := by
+  induction ns with
+  | nil => simp at hn
+  | cons n₀ rest ih =>
+    simp only [List.map_cons, List.nodup_cons] at hnd
+    obtain ⟨hnotin, hnd'⟩ := hnd
+    rcases List.mem_cons.mp hn with rfl | hn'
+    · exact List.find?_cons_of_pos (by simp)
+    · have hne : n₀.id ≠ n.id := by
+        intro heq
+        exact hnotin (heq ▸ List.mem_map.mpr ⟨n, hn', rfl⟩)
+      rw [List.find?_cons_of_neg (by simp [hne])]
+      exact ih hnd' hn'
+
+/-- **(b)** With distinct ids, the step relation of the priority graph *is* the
+`overrides` field of the norm — no lookup ambiguity.
+
+This is what ties `Reaches` to the actual priority data: without it, `succsOf`
+could in principle read a different norm that happens to share an id. -/
+theorem succsOf_eq_overrideIds_of_nodup_ids {ns : List Norm}
+    (hnd : (ns.map fun n => n.id).Nodup) {n : Norm} (hn : n ∈ ns) :
+    succsOf ns n.id = n.overrideIds := by
+  simp only [succsOf, find?_eq_self_of_nodup_ids hnd hn]
+
+/-- (a) and (b) composed: after a silent validator run, the priority graph the
+cycle check walks is literally the `overrides` data of the norms. -/
+theorem succsOf_eq_overrideIds_of_validate_nil {A : Atoms S P}
+    {catalog : List String} {ns : List Norm} (h : validate A catalog ns = []) :
+    ∀ n ∈ ns, succsOf ns n.id = n.overrideIds := fun _ hn =>
+  succsOf_eq_overrideIds_of_nodup_ids (nodup_ids_of_validate_nil h) hn
+
 /-! ## Proved property 3: a silent validator means one document -/
 
 /-- If the validator is silent, the list does not mix documents, so
