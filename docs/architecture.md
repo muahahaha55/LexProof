@@ -149,7 +149,7 @@ Trạng thái cài đặt của từng khối:
 | `Verify` (`Conflict`, `cands`, `check`, `analyze`, định lý (a)–(f), smoke, 9 nhóm test) | **Implemented** |
 | Validator (`Verify/Validate.lean`: `Finding`, `validate`) | **Implemented** — [ADR-0017](decisions/0017-wellformedness-validator-first.md) |
 | `Laws` | **Planned** — thư mục rỗng |
-| `Cert` | **Planned** — thư mục rỗng; audit đang làm thủ công. Đề xuất: [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md) |
+| `Cert` (`Cert/Audit.lean`: `#audit_axioms`, `#audit_encapsulation`) | **Implemented** — chạy trong mỗi `lake build`, làm build đỏ khi vi phạm. Đề xuất cho phần quy mô: [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md) |
 | Segmenter, Glossary, Translator, Back-translator | **Planned** — `pipeline/` rỗng |
 | Ca chuyên gia, báo cáo, truy vấn, phiên bản | **Planned** — `eval/`, `reports/` rỗng |
 
@@ -261,7 +261,8 @@ giảm số cặp. Số đo và giới hạn: N8 trong [requirements.md](require
 |---|---|---|---|
 | R2 | Faithfulness không chứng minh được; trust base gồm **6** định nghĩa người viết (nay thêm `Atoms.valid`) | Cao | G2: ca chuyên gia + duyệt chéo (FR12, N4) |
 | R11 | **`Atoms.valid` quá mạnh sẽ che xung đột thật** và không định lý nào phát hiện được — mọi định lý đều có dạng "trên phần `valid`" | Cao | Duyệt `valid` như duyệt một norm; `Scope.validRestricted` để người đọc thấy |
-| R8 | Audit axiom làm thủ công; `Cert/` rỗng. Build xanh **không** kiểm axiom | Cao | FR11; [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md) |
+| R14 | **Chu trình ưu tiên từ 3 norm trở lên lừa được bộ kiểm**: `resolved` là XOR theo cặp nên mọi cặp trông như đã giải quyết ⇒ `consistentOn` sai. Validator là lớp chặn duy nhất, mà completeness của nó **chưa chứng minh** | Cao | `analyze` là điểm vào duy nhất + `#audit_encapsulation`; kiểm thử vi phân cạn ≤ 4 đỉnh — [traceability.md](traceability.md) mục 4 |
+| R15 | Audit tự kiểm chính nó: nếu `Cert/Audit.lean` bị sửa thành audit luôn-xanh, build vẫn xanh | Trung bình | Ba ca từ chối đã kiểm bằng tay; chưa có ca tự động |
 | R5 | Nổ tổ hợp khi `\|S\|` lớn; chưa có chốt ngân sách | Trung bình | N8; `unknown(outOfBudget)` chưa cài; [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md) |
 | R12 | Validator chỉ có **một** định lý (`wf_of_validate_nil`); phát hiện chu trình ưu tiên, trùng id và tham chiếu treo chỉ được kiểm bằng test | Trung bình | Chứng minh thêm, hoặc chấp nhận và nói rõ |
 | R13 | `Audit.resolutions` không có định lý nói nó liệt kê đủ và đúng | Thấp | Chứng minh khi báo cáo dựa vào nó |
@@ -272,7 +273,10 @@ giảm số cặp. Số đo và giới hạn: N8 trong [requirements.md](require
 R3 (nhãn đã có định lý đặc trưng, [ADR-0015](decisions/0015-characterize-conflict-labels.md)),
 R4 (validator đã có, [ADR-0017](decisions/0017-wellformedness-validator-first.md)),
 R6 (`resolved` nay là XOR, chu trình bị báo, norm thắng được ghi, [ADR-0013](decisions/0013-directional-priority-and-cycles.md)),
-R7 (so cặp không thứ tự, [ADR-0014](decisions/0014-compare-pairs-by-index.md)).
+R7 (so cặp không thứ tự, [ADR-0014](decisions/0014-compare-pairs-by-index.md)),
+R8 (audit axiom nay tự động trong `lake build`, FR11),
+R12 (validator nay có thêm `cycle_of_validate_finding` và `singleDocId_isSome_of_validate_nil`; completeness chu trình thì chuyển thành R14),
+R13 (`resolution_has_witness` đã chứng minh).
 
 ## 10. Thuật ngữ
 

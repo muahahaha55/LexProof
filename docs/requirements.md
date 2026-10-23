@@ -122,7 +122,16 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **AC**: Báo cáo luôn có mục scope; không có mục scope thì không phát hành.
 - **Kiểm chứng**: Review
 - **Trạng thái**: **Planned**. `Scope` đã có `docId`, `normIds`, `articles`,
-  `situations`, `params`; chưa có trường "đã duyệt"/"đã bỏ qua".
+  `situations`, `params`, `validExcluded`/`validTotal`; chưa có trường "đã
+  duyệt"/"đã bỏ qua".
+- **Ràng buộc cho tầng báo cáo (D33)**: `Result.invalid` **không** mang `Scope`,
+  và sẽ không mang. Khi có khuyết điểm cấu trúc thì **chưa kiểm gì cả**, nên
+  không có phạm vi nào để báo. Báo cáo phải hiển thị nhánh này thành
+  **"không kiểm được do có khuyết điểm cấu trúc"** kèm danh sách `Finding`,
+  **không** được hiển thị như một phạm vi rỗng hay một kết quả nhất quán.
+- **Ràng buộc thứ hai**: khi `valid` loại bỏ điểm, báo cáo nên kèm
+  `excludedPoints` (một **hàm**, không phải trường của `Scope`) để người duyệt
+  xem được *điểm nào* bị loại, chứ không chỉ số lượng.
 
 ### FR11 — Audit axiom
 - **Phát biểu**: Hệ thống phải audit axiom theo whitelist
@@ -131,9 +140,19 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **Ưu tiên**: Must
 - **AC**: CI đỏ khi có bất kỳ axiom ngoài whitelist hoặc bất kỳ `sorryAx`.
 - **Kiểm chứng**: Test (trong CI)
-- **Trạng thái**: **Planned**. `LexProof/Cert/` rỗng; audit hiện làm **thủ công**
-  bằng `#print axioms`. Nghiêm trọng hơn: CI hiện không build các module mới —
-  xem N12.
+- **Trạng thái**: **Implemented** — `LexProof/Cert/Audit.lean` cung cấp lệnh
+  `#audit_axioms`, chạy khi `LexProof.lean` import module đó, nên **`lake build`
+  trần và CI đều chạy nó**. Audit lấy danh sách khai báo **từ môi trường**
+  (mọi module `LexProof.*` cộng file đang elaborate), nên không có danh sách tên
+  viết tay nào để mục ruỗng; lần chạy hiện tại phủ **1166 khai báo**. Nó so
+  **tập** axiom với whitelist, không khớp theo tên — điều này thiết yếu vì axiom
+  do `native_decide` sinh được đặt tên theo định lý, không theo tiền tố cố định.
+  Một `axiom` khai trong module của ta cũng bị từ chối.
+  Đã kiểm bằng một file dùng thử (ngoài build, đã xóa) với `sorry`,
+  `native_decide` và `axiom`: cả ba đều bị từ chối.
+  *Còn thiếu*: build xanh chứng tỏ audit đã chạy, nhưng chưa có ca kiểm tự động
+  nào *trong* build chứng tỏ audit biết **thất bại** — việc đó chỉ kiểm được
+  bằng tay vì nó phải làm build đỏ.
 
 ### FR12 — Bộ ca kiểm thử của chuyên gia
 - **Phát biểu**: Hệ thống nên chạy bộ ca do chuyên gia soạn trên phần đã mã hóa
@@ -165,8 +184,10 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **Ưu tiên**: Must · **Mục tiêu**: 100%
 - **AC**: `#print axioms` của mọi định lý kết luận ⊆ `{propext, Classical.choice, Quot.sound}`; không `sorryAx`.
 - **Kiểm chứng**: Proof
-- **Trạng thái**: **Implemented** cho phần đã có (đo được: chỉ `propext` và
-  `Quot.sound`). Việc tự động hóa audit là FR11/Planned.
+- **Trạng thái**: **Implemented**. Đo được: mọi định lý chỉ dùng `propext`,
+  `Classical.choice`, `Quot.sound`. Audit nay **tự động trong `lake build`**
+  (FR11), nên khẳng định này được kiểm lại ở mỗi lần build thay vì mỗi lần ai đó
+  nhớ chạy tay.
 
 #### N2 — Honest scope (phạm vi trung thực)
 - **Phát biểu**: Mọi khẳng định "nhất quán" phải nêu scope của nó, và không được

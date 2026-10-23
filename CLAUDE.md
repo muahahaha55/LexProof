@@ -56,8 +56,13 @@ in particular the trust base, which includes `Atoms.valid` and the completeness
 of priority-cycle detection.
 
 Entry point: `LexProof.analyze` validates before it searches. The search and
-everything under it live in `LexProof.Internal` and must not be called
-directly; `lake build` covers every module.
+everything under it live in `LexProof.Internal` and must not be called directly.
+
+`lake build` covers every module and runs two build-time audits from
+`LexProof/Cert/Audit.lean`: `#audit_axioms` (whitelist only; rejects sorryAx,
+native_decide/bv_decide axioms and any declared axiom) and
+`#audit_encapsulation` (no `LexProof.Internal.*` use outside
+`Verify.{Conflict,Tests,Smoke}`). A violation makes the build fail.
 
 ## Working decisions (not final)
 - Situations are modeled over a finite domain (Bool / enum / bounded values) so

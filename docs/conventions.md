@@ -173,8 +173,10 @@ Hai điều cần biết:
 > lake build
 > ```
 
-> **Build xanh ≠ axiom sạch.** `lake build` biên dịch, nó **không** kiểm axiom.
-> Việc đó là mục 7, và vẫn chưa tự động (FR11, `Cert/` rỗng).
+> **Build xanh nay bao gồm cả audit axiom.** `LexProof.lean` import
+> `LexProof.Cert.Audit`, nên mỗi `lake build` chạy `#audit_axioms` và
+> `#audit_encapsulation`; vi phạm làm build **đỏ**. Build mất thêm ~17s cho
+> kiểm thử vi phân chu trình.
 
 Build một module lẻ khi cần vòng lặp nhanh:
 

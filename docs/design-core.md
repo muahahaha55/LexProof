@@ -26,10 +26,12 @@ LexProof/Verify/Conflict.lean  ← Conflict, analyze, Internal.check, các đị
         ↑
 LexProof/Verify/Smoke.lean     ← ví dụ hai norm tối thiểu
         ↑
-LexProof/Verify/Tests.lean     ← 11 nhóm ca kiểm thử, mọi kết quả ghim bằng `decide`
+LexProof/Verify/Tests.lean     ← 12 nhóm ca kiểm thử, mọi kết quả ghim bằng `decide`
+        ↑
+LexProof/Cert/Audit.lean       ← #audit_axioms và #audit_encapsulation, chạy trong lake build
 ```
 
-`LexProof/Laws/` và `LexProof/Cert/` **rỗng** (Planned).
+`LexProof/Laws/` **rỗng** (Planned). `LexProof/Cert/` nay có audit tự động.
 
 **Biên API.** `LexProof.analyze` là **điểm vào duy nhất**: nó validate trước,
 rồi mới tìm. Bộ kiểm và mọi thứ dưới nó nằm trong `LexProof.Internal`, nên
@@ -298,6 +300,7 @@ khi có khuyết điểm cấu trúc thì chưa kiểm gì cả.
 | `Result.witness?` / `scope?` / `isConsistentOn` | Truy cập từng phần của báo cáo |
 | `validPoints (S P)` | Mọi điểm `(π, s)` của miền liệt kê |
 | `validExcludedOf A` | Đếm điểm bị `valid` loại |
+| `excludedPoints A cap` | **Những** điểm bị loại, tối đa `cap` cái. Là **hàm**, không phải trường của `Scope`: danh sách là `O(\|S\|×\|P\|)` nên sẽ làm ngập báo cáo, nhưng người duyệt cần thấy điểm thật để kiểm `valid` có quá mạnh |
 | `scopeOf S P A ns` | `singleDocId?`, ids, articles, `card S`, `card P`, số bị loại, tổng |
 | `coApplyPoint? A n₁ n₂` | Một điểm **valid** mà cả hai norm đều áp dụng, nếu có |
 | `resolutionOf? A p` | Resolution của một cặp, **chỉ khi** clash thật sự xảy ra |
@@ -429,6 +432,7 @@ trong đó `smoke_fields_correct` và `smoke_no_conflict_anywhere` **dùng thậ
 | 9 | Ưu tiên một chiều: giải quyết được, ghi norm thắng | `one_sided_priority_resolves`, `winner_is_recorded`, `resolved_pair_is_consistent`, `recorded_resolution_has_witness` |
 | 10 | Ưu tiên nhưng hai norm **không bao giờ cùng áp dụng** ⇒ không báo resolution | `no_resolution_without_co_application`, `no_co_apply_is_consistent` |
 | 11 | Validate sạch ⇒ luôn đánh giá được (định lý (f)) | `smoke_pair_always_evaluates` |
+| 12 | **Kiểm thử vi phân cạn** của phát hiện chu trình trên mọi đồ thị ≤ 4 đỉnh, so với `refInCycle` viết theo cách khác; cộng ba ca cho thấy chu trình 3 lừa được bộ kiểm còn chu trình 2 thì không | `cycle_check_agrees_n1/2/3` (kernel), `#eval agreeAll 4` (biên dịch), `two_cycle_still_reports_conflict`, `three_cycle_hides_conflict_from_search`, `three_cycle_is_caught_by_validation` |
 
 **Chưa có ca kiểm**: `Finding.unknownOverride`; `Cond` lồng sâu; nhiều hơn một
 ngoại lệ; chu trình dài hơn 4.
@@ -439,7 +443,7 @@ ngoại lệ; chu trình dài hơn 4.
 
 | Khoảng trống | Hệ quả |
 |---|---|
-| **Completeness của phát hiện chu trình** | Soundness đã có (`cycle_of_validate_finding`). Chiều "mọi chu trình đều bị báo" cần lập luận pigeonhole (một đường đi dài hơn số đỉnh phải lặp đỉnh), đắt khi không có Mathlib. **Giảm nhẹ**: với chu trình hai norm, `resolved` là XOR nên clash **vẫn** được báo là xung đột — bỏ sót finding không biến xung đột thành "nhất quán" |
+| **Completeness của phát hiện chu trình** | Soundness đã có (`cycle_of_validate_finding`). Chiều "mọi chu trình đều bị báo" **chưa**. **Đính chính bản trước**: bỏ sót một chu trình *không* vô hại. `resolved` là XOR **theo cặp**, nên trong chu trình từ 3 norm trở lên **mọi** cặp trông như đã giải quyết và bộ kiểm báo `consistentOn` — đã kiểm: `Tests.three_cycle_hides_conflict_from_search`. Chỉ chu trình 2 norm mới tự lộ. Bù bằng kiểm thử vi phân cạn: [traceability.md](traceability.md) mục 4 |
 | **Completeness của `Audit.resolutions`** | Soundness đã có (`resolution_has_witness`); không có định lý nói nó liệt kê **đủ** mọi clash đã giải quyết |
 | `duplicateIds`, `danglingFindings`, `unknownOverrideFindings` | Chỉ có ca kiểm thử, không có định lý |
 | Khi nào `unknown` xuất hiện | Không định lý nào nói `unknown` chỉ xảy ra khi thật có norm dị dạng |
@@ -460,9 +464,12 @@ ngoại lệ; chu trình dài hơn 4.
 | `scopeOf_spec`, `analyze_scope`, `analyze_eq_check`, `Internal.isConflictAt_eq_true_iff`, `resolutionOf?_spec`, và các định lý `decide` trong `Tests.lean` | `propext` |
 | `Norm.resolved_comm`, `Tests.mutual_override_not_resolved` | *không axiom nào* |
 
-Audit vẫn làm **thủ công**: `LexProof/Cert/` rỗng và `lake build` xanh **không**
-kiểm axiom (FR11). Cách chạy lại: [conventions.md](conventions.md) §7. Đề xuất
-cho phần quy mô: [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md).
+Audit nay **tự động**: `LexProof/Cert/Audit.lean` chạy `#audit_axioms` trong mỗi
+`lake build` (1166 khai báo) và làm **build đỏ** nếu có axiom ngoài whitelist,
+`sorryAx`, axiom do `native_decide`/`bv_decide` sinh, hay `axiom` tự khai. Cùng
+file chạy `#audit_encapsulation` để chặn việc dùng `LexProof.Internal.*` ngoài
+ba module được phép. Chi tiết: [conventions.md](conventions.md) §7. Đề xuất cho
+phần quy mô: [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md).
 
 ---
 
@@ -475,4 +482,5 @@ cho phần quy mô: [ADR-0020](decisions/0020-untrusted-search-kernel-certificat
 | `Date` không kiểm hợp lệ | `⟨2026, 99, 99⟩` hợp kiểu |
 | `reachN` chạy `ns.length` vòng vô điều kiện | Không cắt sớm khi tập đã đóng; bậc hai theo số norm |
 | `validExcludedOf` quét toàn miền | Riêng việc *báo cáo* scope cũng tốn một lần quét |
-| `Internal` là quy ước, không phải `private` | Lean `private` sẽ chặn cả `Tests.lean`, nên bộ kiểm vẫn gọi được nếu ai đó cố ý viết `Internal.check` |
+| `Internal` là quy ước ở mức kiểu, nhưng **có audit chặn** | Lean `private` sẽ chặn cả `Tests.lean`. Thay vào đó `#audit_encapsulation` làm build đỏ nếu khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`. Nó quét **tên hằng dùng trong cả type và value**, nên không lách được bằng alias |
+| Build chậm hơn ~17s | `cycle_check_agrees_n3` (~12s) và `#eval agreeAll 4` (~5s) là giá của kiểm thử vi phân cạn |
