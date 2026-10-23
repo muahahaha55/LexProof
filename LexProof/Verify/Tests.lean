@@ -354,13 +354,17 @@ theorem cycle_check_agrees_n1 : agreeAll 1 = true := by decide
 /-- All 16 graphs on 2 nodes agree. Kernel-checked. -/
 theorem cycle_check_agrees_n2 : agreeAll 2 = true := by decide
 
-/-- All 512 graphs on 3 nodes agree. Kernel-checked (~12s of the build). -/
-theorem cycle_check_agrees_n3 : agreeAll 3 = true := by decide
+/-! Graphs on 3 and 4 nodes (512 and 65536 of them) are checked by **compiled
+evaluation, not by the kernel** — status *Evaluated*, a diagnostic rather than
+a proof. `decide` on n=3 cost about 40s of every build, and `decide` on n=4
+would cost roughly half an hour.
 
-/-! All 65536 graphs on 4 nodes. **Compiled evaluation, not kernel-checked** —
-`decide` on this would take roughly half an hour. It is a diagnostic, not a
-proof, and it is listed as such in the trust base. -/
+Paying that is no longer worth it: completeness of cycle detection is now a
+theorem (`cycle_finding_of_reaches`) covering **every** graph size, so these
+runs are redundant confirmation that the statement and `succsOf`/`gnodes` say
+what was meant — not the evidence the guarantee rests on. -/
 
+#eval agreeAll 3
 #eval agreeAll 4
 
 /-! ### Why a missed cycle finding is *not* harmless (D28)
@@ -391,5 +395,12 @@ theorem three_cycle_is_caught_by_validation :
     analyze atoms catalog cyc3 =
       .invalid [Finding.priorityCycle "A", Finding.priorityCycle "B",
                 Finding.priorityCycle "C"] := by decide
+
+/-- D40 applied: because `analyze` reported `consistentOn` for the fixed pair,
+**no** norm in it lies on a priority cycle — a guarantee that now rides along
+with every searched result. -/
+theorem fixed_has_no_priority_cycle :
+    ∀ n ∈ fixed, ¬ Reaches fixed n.id n.id :=
+  no_priority_cycle_of_consistentOn smoke_consistent
 
 end LexProof.Tests

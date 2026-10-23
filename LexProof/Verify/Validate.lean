@@ -198,13 +198,21 @@ def closure (ns : List Norm) : List NormId → List NormId → List NormId
     if (closureStep ns acc).all (fun y => acc.contains y) then acc
     else closure ns rest (closureStep ns acc)
 
-/-- The ids reachable from `i` in one or more steps. -/
-def reachableFrom (ns : List Norm) (i : NormId) : List NormId :=
-  closure ns (gnodes ns) (addAll (succsOf ns i) [])
+/-- The ids reachable from `i` in one or more steps.
+
+`gn` is the iteration budget. It is a parameter rather than a call to
+`gnodes ns` inside, so a caller that checks every norm of a document computes
+the node list **once** instead of once per norm. -/
+def reachableFrom (ns : List Norm) (gn : List NormId) (i : NormId) : List NormId :=
+  closure ns gn (addAll (succsOf ns i) [])
+
+/-- Can the norm reach itself through `overrides`, given a precomputed budget? -/
+def inPriorityCycleWith (ns : List Norm) (gn : List NormId) (n : Norm) : Bool :=
+  (reachableFrom ns gn n.id).contains n.id
 
 /-- Can the norm reach itself through `overrides`? -/
 def inPriorityCycle (ns : List Norm) (n : Norm) : Bool :=
-  (reachableFrom ns n.id).contains n.id
+  inPriorityCycleWith ns (gnodes ns) n
 
 /-! ## Findings, one component per defect class -/
 
@@ -231,7 +239,8 @@ def unknownOverrideFindings (ns : List Norm) : List Finding :=
       Finding.unknownOverride n.id t
 
 def cycleFindings (ns : List Norm) : List Finding :=
-  (ns.filter fun n => inPriorityCycle ns n).map fun n => Finding.priorityCycle n.id
+  let gn := gnodes ns
+  (ns.filter fun n => inPriorityCycleWith ns gn n).map fun n => Finding.priorityCycle n.id
 
 /-- Run every check. `[]` means no structural defect was found; it says nothing
 about consistency, and nothing about faithfulness. -/
@@ -405,7 +414,7 @@ theorem closure_closed (ns : List Norm) : ∀ (budget acc : List NormId),
 
 /-- **Completeness.** Every id reachable from `i` is collected. -/
 theorem mem_reachableFrom_of_reaches {ns : List Norm} {i j : NormId}
-    (h : Reaches ns i j) : j ∈ reachableFrom ns i := by
+    (h : Reaches ns i j) : j ∈ reachableFrom ns (gnodes ns) i := by
   have hnd : (addAll (succsOf ns i) []).Nodup := nodup_addAll _ [] List.nodup_nil
   have hsub : addAll (succsOf ns i) [] ⊆ gnodes ns := by
     intro y hy
@@ -422,8 +431,8 @@ theorem mem_reachableFrom_of_reaches {ns : List Norm} {i j : NormId}
 /-- `inPriorityCycle` only fires on a real cycle. -/
 theorem cycle_of_inPriorityCycle {ns : List Norm} {n : Norm}
     (h : inPriorityCycle ns n = true) : Reaches ns n.id n.id := by
-  simp only [inPriorityCycle, reachableFrom, List.contains_eq_mem,
-    decide_eq_true_eq] at h
+  simp only [inPriorityCycle, inPriorityCycleWith, reachableFrom,
+    List.contains_eq_mem, decide_eq_true_eq] at h
   refine closure_sound ns n.id (gnodes ns) (addAll (succsOf ns n.id) []) ?_ n.id h
   intro y hy
   rcases (mem_addAll _ _).mp hy with hy | hy
@@ -433,7 +442,8 @@ theorem cycle_of_inPriorityCycle {ns : List Norm} {n : Norm}
 /-- `inPriorityCycle` fires on **every** real cycle. -/
 theorem inPriorityCycle_of_reaches {ns : List Norm} {n : Norm}
     (h : Reaches ns n.id n.id) : inPriorityCycle ns n = true := by
-  simp only [inPriorityCycle, List.contains_eq_mem, decide_eq_true_eq]
+  simp only [inPriorityCycle, inPriorityCycleWith, List.contains_eq_mem,
+    decide_eq_true_eq]
   exact mem_reachableFrom_of_reaches h
 
 theorem mem_cycleFindings {ns : List Norm} {i : NormId}
@@ -485,6 +495,17 @@ theorem cycle_finding_of_reaches {A : Atoms S P} {catalog : List String}
     refine List.mem_append.mpr (Or.inr ?_)
     exact List.mem_map.mpr
       ⟨n, List.mem_filter.mpr ⟨hn, inPriorityCycle_of_reaches h⟩, rfl⟩
+
+/-- **D40, the core step.** A silent validator means **no** norm lies on a
+cycle of `overrides`. This is the contrapositive of completeness, and it is
+what lets every searched result carry the guarantee. -/
+theorem no_priority_cycle_of_validate_nil {A : Atoms S P} {catalog : List String}
+    {ns : List Norm} (h : validate A catalog ns = []) :
+    ∀ n ∈ ns, ¬ Reaches ns n.id n.id := by
+  intro n hn hc
+  have hmem := cycle_finding_of_reaches (A := A) (catalog := catalog) hn hc
+  rw [h] at hmem
+  simp at hmem
 
 /-! ## Proved property 3: a silent validator means one document -/
 

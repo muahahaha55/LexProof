@@ -734,6 +734,39 @@ theorem conditionalConflict_split [Finite S] [Finite P]
   rw [analyze_eq_check (validate_nil_of_conditionalConflict h)] at h
   exact Internal.conditionalConflict_split h
 
+/-! ### Every searched result rules out a circular priority structure (D40)
+
+`resolved` is XOR per pair, so in a cycle of length ≥ 3 every pair looks
+resolved and the bare search would report consistency. These theorems say that
+cannot happen through `analyze`: any result that searched at all comes with the
+guarantee that **no** norm lies on a cycle of `overrides`.
+
+Proved from completeness of cycle detection, without touching `resolved`. -/
+
+/-- If `analyze` reported `consistentOn`, no norm lies on a priority cycle. -/
+theorem no_priority_cycle_of_consistentOn [Finite S] [Finite P]
+    {A : Atoms S P} {catalog : List String} {ns : List Norm}
+    {sc : Scope} {au : Audit} (h : analyze A catalog ns = .consistentOn sc au) :
+    ∀ n ∈ ns, ¬ Reaches ns n.id n.id :=
+  no_priority_cycle_of_validate_nil (validate_nil_of_consistentOn h)
+
+/-- If `analyze` reported a plain conflict, no norm lies on a priority cycle. -/
+theorem no_priority_cycle_of_conflict [Finite S] [Finite P]
+    {A : Atoms S P} {catalog : List String} {ns : List Norm}
+    {c : Counterexample S P} {sc : Scope} {au : Audit}
+    (h : analyze A catalog ns = .conflict c sc au) :
+    ∀ n ∈ ns, ¬ Reaches ns n.id n.id :=
+  no_priority_cycle_of_validate_nil (validate_nil_of_conflict h)
+
+/-- If `analyze` reported a conditional conflict, no norm lies on a priority
+cycle. -/
+theorem no_priority_cycle_of_conditionalConflict [Finite S] [Finite P]
+    {A : Atoms S P} {catalog : List String} {ns : List Norm}
+    {c : Counterexample S P} {ps : List String} {sc : Scope} {au : Audit}
+    (h : analyze A catalog ns = .conditionalConflict c ps sc au) :
+    ∀ n ∈ ns, ¬ Reaches ns n.id n.id :=
+  no_priority_cycle_of_validate_nil (validate_nil_of_conditionalConflict h)
+
 /-- **(f).** If the validator reports no findings, `applies` never returns
 `none` — at any `(π, s)`, valid or not. The guarantee is therefore stronger
 than the `valid` restriction the search uses. -/
