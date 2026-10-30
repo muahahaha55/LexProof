@@ -59,6 +59,13 @@ detection is now proved in both directions (`cycle_of_validate_finding`,
 Entry point: `LexProof.analyze` validates before it searches. The search and
 everything under it live in `LexProof.Internal` and must not be called directly.
 
+Laws modules (atom tables + readers + norms) must go through `analyzeP` / `analyzeReport`
+(`Verify/AnalyzeProjected.lean`, `Verify/AnalyzeReport.lean`); they check table and reader
+findings that `analyze` does not. `analyze` is for atoms built from functions (tests, `Smoke`).
+Always print the `analyzeReport` render, not only the core result: it carries the review status
+(`DRAFT, NOT HUMAN REVIEWED`) and the vacuity flag (a `consistentOn` over a module with no possible
+modality clash says nothing about the conditions).
+
 `lake build` covers every module and runs two build-time audits from
 `LexProof/Cert/Audit.lean`: `#audit_axioms` (whitelist only; rejects sorryAx,
 native_decide/bv_decide axioms and any declared axiom) and

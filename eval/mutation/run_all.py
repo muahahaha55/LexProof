@@ -227,7 +227,7 @@ regress = {"valid_mutants": len(valid),
            "pairs_equal_full_domain": sum(1 for r in valid if r["hits"] == r["unc"]),
            "pairs_reported_not_confirmed": sum(len(r["hits"] - r["unc"]) for r in valid),
            "pairs_missed": sum(len(r["unc"] - r["hits"]) for r in valid)}
-us = sorted(r["us"] for r in res[1:] if r["valid"])
+us = sorted(r["us"] for r in res if r["valid"] and r["m"]["op"] != "base")
 timing = {"n": len(us), "median_us": statistics.median(us), "p90_us": us[int(0.9 * len(us))], "max_us": us[-1],
           "first_call_us": res[0]["us"]}
 summary = {"mutants": len(muts) - 3, "disagreements": len(dis), "regression": regress, "timing": timing,

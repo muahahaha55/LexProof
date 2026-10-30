@@ -8,9 +8,9 @@
   "pairs_missed": 0
  },
  "timing": {
-  "n": 235,
+  "n": 233,
   "median_us": 4829,
-  "p90_us": 6331,
+  "p90_us": 6310,
   "max_us": 9543,
   "first_call_us": 53398
  },

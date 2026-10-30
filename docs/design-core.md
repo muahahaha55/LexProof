@@ -506,7 +506,7 @@ ngoại lệ; chu trình dài hơn 4.
 | `Norm.resolved_comm`, `Tests.mutual_override_not_resolved` | *không axiom nào* |
 
 Audit nay **tự động**: `LexProof/Cert/Audit.lean` chạy `#audit_axioms` trong mỗi
-`lake build` (2107 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean`, `Verify/AnalyzeProjected.lean`, `Core/Render.lean` và `Laws/AlcoholSale.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
+`lake build` (2286 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean`, `Verify/AnalyzeProjected.lean`, `Core/Render.lean`, `Laws/AlcoholSale.lean` và `Verify/AnalyzeReport.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
 `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, hay `axiom` tự khai. Cùng
 file chạy `#audit_encapsulation` để chặn việc dùng `LexProof.Internal.*` ngoài
 ba module được phép. Chi tiết: [conventions.md](conventions.md) §7. Đề xuất cho
@@ -644,3 +644,20 @@ Phép đo B5 dùng các atom thừa **nhân tạo**: lợi ích thật của vi�
 | `no_conflict_in_group` | hệ quả qua `not_conflict_of_consistentOnP` |
 
 **Ý nghĩa bị giới hạn.** Mọi norm trong nhóm là *cấm*, nên `consistentOn` đúng với mọi nội dung điều kiện (xem phiếu duyệt, mục 8). Bộ kiểm không phát hiện khe hở hay chồng lấn giữa các dải; việc đó chạy ngoài Lean (`eval/sale-group/boundaries.py`). **Ranh giới tin cậy**: tệp nằm trong `LexProof/Laws/` mà chưa có người duyệt, trái với nguyên tắc «đầu ra của LLM phải được người duyệt trước khi vào `Laws`» (CLAUDE.md, [ADR-0011](decisions/0011-trust-boundary-human-approval.md)); cơ chế cưỡng chế chưa có, nên cờ duy nhất là docstring và tên phiếu.
+
+---
+
+## 14. `Verify/AnalyzeReport.lean` — `analyzeReport`: kết quả của `analyzeP` kèm ngữ cảnh để không đọc nhầm
+
+Cộng thêm, không sửa gì có sẵn. `analyzeReport status actCatalog ts tp rs rp catalog ns` trả `AnalysisReport` với trường `core` **bằng đúng** `analyzeP` (`analyzeReport_core`, và đã kiểm lúc chạy ở 410 mutant).
+Các trường còn lại:
+
+| Mục | Trường | Định lý |
+|---|---|---|
+| **D47** độ rỗng theo act | `acts` (số norm, modality có mặt, có cặp khắc nhau), `noModalityClash` | `not_conflict_of_noClashAct` (theo act), `not_conflict_of_noModalityClash` (cả module): nếu cờ đặt thì **không** hai norm nào xung đột ở điểm nào, bất kể điều kiện; `analyzeP_not_conflicts_of_noClash`: khi đó `analyzeP` không thể trả `.conflicts` |
+| **D48** ưu tiên | `resolutions` — cặp cùng act, modality khắc nhau, mà `Norm.resolved` giải quyết, kèm người thắng | `resolvedPairs_sound` và `resolvedPairs_complete` (đủ và đúng **ở mức cặp**); `not_conflict_of_resolved`. **Không** gồm việc hai norm có cùng áp dụng tại một điểm hay không (D23) |
+| **D49** dùng act | `singleUseActs`, `unusedCatalogActs`, `actFindings` (act dùng mà ngoài danh mục) | `singleUseActs_sound`, `unusedCatalogActs_sound`, `actFindings_sound` (chỉ chiều đúng, không phát biểu đầy đủ) |
+| **D50** trạng thái | `status : ReviewStatus` (`draft` hoặc `reviewed` kèm tên, ngày) | **không có định lý**; `render` in «DRAFT, NOT HUMAN REVIEWED» cho `draft` (có ví dụ `decide`). `reviewed` chỉ ghi lại tên và ngày, không có gì kiểm |
+
+**Không thay đổi** ý nghĩa của `consistentOn`; không dùng ràng buộc toàn vẹn; không cho biết bản mã hóa có khớp luật. Cột «điểm mù D47–D50 chạm tới và không chạm tới» (một kỳ vọng, không phải phép đo):
+[mutation-results.md](mutation-results.md) mục 8; số đo post-hoc: [mutation-posthoc-analyzereport.md](mutation-posthoc-analyzereport.md).

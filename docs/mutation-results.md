@@ -108,7 +108,7 @@ Tổng cộng **60 cặp** trên 10 mutant M10a (mỗi mutant 6 cặp); mọi mu
 
 ## 6. Thời gian `analyzeP` mỗi mutant
 
-Trong trình thông dịch Lean (`lake env lean --run`), **không** phải kernel: trung vị **4829 µs**, phân vị 90 **6331 µs**, lớn nhất **9543 µs** (trên 235 mutant hợp lệ, không tính 3 gốc).
+Trong trình thông dịch Lean (`lake env lean --run`), **không** phải kernel: trung vị **4829 µs**, phân vị 90 **6310 µs**, lớn nhất **9543 µs** (trên 233 mutant hợp lệ, không tính 3 gốc).
 Lần gọi đầu (B0) mất 53398 µs do khởi động. Không so sánh được với số đo `decide +kernel`. Toàn bộ phần Lean của thí nghiệm (410 mutant, gồm kiểm toàn miền) chạy khoảng 5 phút.
 
 ## 7. Điều tôi không xác minh được
@@ -118,3 +118,25 @@ Lần gọi đầu (B0) mất 53398 µs do khởi động. Không so sánh đư�
 * **IC-A** là giả định của tôi về «bất khả thi trong thực tế»; **`SYN-P`** là norm tổng hợp, không có trong luật. Không điều nào được duyệt.
 * Không đột biến: `docId` lẫn, hoa/thường trong tên act, thứ tự bộ đọc trong bảng, đột biến tổ hợp (hai lỗi cùng lúc), ngoại lệ phức tạp, và ràng buộc toàn vẹn sai (quá mạnh che xung đột — `valid` vẫn là điểm tin cậy).
 * Không có số liệu nào ở đây nói về lỗi thật trong luật thật hay về độ tin cậy của người mã hóa.
+
+## 8. KỲ VỌNG (không phải số đo): D47 đến D50 sẽ và sẽ không cảnh báo điểm mù nào
+
+Mục này được thêm **sau** khi đã thấy kết quả ở trên; D47 (độ rỗng theo act), D48 (ưu tiên mức cặp), D49 (dùng act so với danh mục do người gọi cung cấp) và D50 (trạng thái duyệt)
+là các trường của `analyzeReport` (`Verify/AnalyzeReport.lean`). Bảng chỉ là **kỳ vọng suy ra từ định nghĩa các trường**, chưa phải phép đo. Số đo post-hoc tương ứng (có nhãn rõ) ở
+[mutation-posthoc-analyzereport.md](mutation-posthoc-analyzereport.md).
+
+| Điểm mù | D47 (modality theo act, cờ rỗng) | D48 (ưu tiên mức cặp) | D49 (act so với danh mục) | D50 (trạng thái) |
+|---|---|---|---|---|
+| M1: đổi modality của norm đứng một mình trên act | **không cảnh báo**; bảng act đổi (hiện thêm modality) nhưng cờ «không có cặp khắc nhau» vẫn đúng | không | không | chỉ in nhãn DRAFT |
+| M2: thêm norm modality đối không giao điều kiện | **có thể**: cờ «không có cặp khắc nhau» đổi từ đúng sang sai (đúng chỗ nó nên nhắc người duyệt); điều kiện không giao thì vẫn không có xung đột | không | không | — |
+| M3: bỏ ngoại lệ | **không** (không trường nào nhắc ngoại lệ) | không | không | — |
+| M4: đổi / thu hẹp / nới tập dải | **không** | không | không | — |
+| M7a: gộp act sang act có sẵn | bảng act và «act dùng một lần» đổi; cờ đổi nếu gộp tạo cặp khắc nhau | không | **có thể** (act danh mục không còn dùng) | — |
+| M7b: đổi sang act mới | bảng act có thêm dòng | không | **có**, nếu người gọi cung cấp danh mục: act ngoài danh mục (finding) và act danh mục không dùng | — |
+| M8a, M8d: bộ đọc / `Cond.sit` trỏ nhầm trong khoảng | **không** | không | không | — |
+| M9a: thêm cạnh ưu tiên | không | **có** nếu cặp là cùng act và khắc modality (cặp được liệt kê là đã giải quyết); không nếu cặp không khắc nhau | không | — |
+| Cặp xung đột chỉ ở tình huống bất khả thi (M10a) | không phân biệt | không | không | — |
+| Mọi lỗi faithfulness (đọc sai luật) | **không** | không | không | **không**: nhãn `reviewed` chỉ ghi tên và ngày, không kiểm gì |
+
+Điều quan trọng: D47 giải quyết được đúng một điểm mù — một `consistentOn` rỗng vì mọi norm trong module là cấm — bằng cách nói thẳng «đúng với mọi nội dung điều kiện». D48 chỉ làm lộ cái bị ưu tiên giải quyết. D49 chỉ bắt đổi tên act **khi có danh mục**.
+Không trường nào bắt lỗi ngưỡng, ngoại lệ, hay bộ đọc đọc sai nghĩa.
