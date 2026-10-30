@@ -1,0 +1,411 @@
+CHECK B0 equals module: ts=true tp=true rs=true rp=true norms=true
+B0				consistent	consistent		22	140	53398
+B1				consistent	consistent		24	148	4727
+B2		3-12	3-12	conflict	conflicts	3-12	24	146	8067
+B0.M5.00	N:duplicateId:5.9-ii			invalid	invalid		0	0	1840
+B0.M5.01	N:duplicateId:5.9-ii			invalid	invalid		0	0	441
+B0.M5.02	N:duplicateId:5.11-ii			invalid	invalid		0	0	446
+B0.M5.03	N:duplicateId:5.11-ii			invalid	invalid		0	0	401
+B0.M5.04	N:duplicateId:19.4			invalid	invalid		0	0	419
+B0.M5.05	N:duplicateId:19.6			invalid	invalid		0	0	431
+B0.M6a.00	N:dangling:5.9-ii:Điều 99			invalid	invalid		0	0	536
+B0.M6a.01	N:dangling:19.2:Điều 99			invalid	invalid		0	0	462
+B0.M6a.02	N:dangling:19.3:Điều 99			invalid	invalid		0	0	414
+B0.M6a.03	N:dangling:19.4:Điều 99			invalid	invalid		0	0	337
+B0.M6a.04	N:dangling:19.5:Điều 99			invalid	invalid		0	0	419
+B0.M6a.05	N:dangling:19.6:Điều 99			invalid	invalid		0	0	421
+B0.M8b.00	RS:readerValueOutOfRange:S04 chưa đủ 18:6:2			consistent	invalid		0	0	782
+B0.M8b.01	RS:readerValueOutOfRange:S04 từ đủ 18:8:2			consistent	invalid		0	0	520
+B0.M8b.02	RS:readerValueOutOfRange:S02 từ 15:0:2			consistent	invalid		0	0	575
+B0.M8b.03	RS:readerValueOutOfRange:S15:1:2			consistent	invalid		0	0	576
+B0.M8b.04	RS:readerValueOutOfRange:S16:6:2			consistent	invalid		0	0	492
+B0.M8b.05	RS:readerValueOutOfRange:S18:1:2			consistent	invalid		0	0	529
+B0.M8c.00	RS:readerAtomOutOfRange:S04 chưa đủ 18:9			consistent	invalid		0	0	540
+B0.M8c.01	RS:readerAtomOutOfRange:S02 từ 15:9			consistent	invalid		0	0	552
+B0.M8c.02	RS:readerAtomOutOfRange:S14:9			consistent	invalid		0	0	512
+B0.M8c.03	RS:readerAtomOutOfRange:S16:9			consistent	invalid		0	0	524
+B0.M8c.04	RS:readerAtomOutOfRange:S18:9			consistent	invalid		0	0	546
+B0.M8c.05	RS:readerAtomOutOfRange:S20:9			consistent	invalid		0	0	516
+B0.M8e.00	N:atomIndexOutOfRange:5.3-ban			invalid	invalid		0	0	472
+B0.M8e.01	N:atomIndexOutOfRange:5.3-cung-cap			invalid	invalid		0	0	401
+B0.M8e.02	N:atomIndexOutOfRange:5.9-i			invalid	invalid		0	0	423
+B0.M8e.03	N:atomIndexOutOfRange:19.1			invalid	invalid		0	0	448
+B0.M8e.04	N:atomIndexOutOfRange:19.5			invalid	invalid		0	0	415
+B0.M8e.05	N:atomIndexOutOfRange:19.6			invalid	invalid		0	0	408
+B0.M9b.00	N:priorityCycle:5.3-cung-cap;N:priorityCycle:5.9-i			invalid	invalid		0	0	501
+B0.M9b.01	N:priorityCycle:5.3-cung-cap;N:priorityCycle:19.1			invalid	invalid		0	0	540
+B0.M9b.02	N:priorityCycle:5.3-cung-cap;N:priorityCycle:19.2			invalid	invalid		0	0	479
+B0.M9b.03	N:priorityCycle:5.9-i;N:priorityCycle:19.3			invalid	invalid		0	0	481
+B0.M9b.04	N:priorityCycle:5.9-ii;N:priorityCycle:19.3			invalid	invalid		0	0	483
+B0.M9b.05	N:priorityCycle:5.9-ii;N:priorityCycle:19.5			invalid	invalid		0	0	477
+B0.M9c.00	N:unknownOverride:5.9-i:khong_co_id			invalid	invalid		0	0	450
+B0.M9c.01	N:unknownOverride:5.9-ii:khong_co_id			invalid	invalid		0	0	443
+B0.M9c.02	N:unknownOverride:5.11-ii:khong_co_id			invalid	invalid		0	0	448
+B0.M9c.03	N:unknownOverride:19.1:khong_co_id			invalid	invalid		0	0	429
+B0.M9c.04	N:unknownOverride:19.4:khong_co_id			invalid	invalid		0	0	447
+B0.M9c.05	N:unknownOverride:19.6:khong_co_id			invalid	invalid		0	0	441
+B0.M11a.00	TS:duplicateAtomName:S04 tuổi của người nhận			consistent	invalid		0	0	556
+B0.M11a.01	TS:duplicateAtomName:S02 độ cồn của rượu, bia			consistent	invalid		0	0	567
+B0.M11a.02	TS:duplicateAtomName:S14 địa điểm là cơ sở y tế			consistent	invalid		0	0	556
+B0.M11a.03	TS:duplicateAtomName:S14 địa điểm là cơ sở y tế			consistent	invalid		0	0	399
+B0.M11a.04	TS:duplicateAtomName:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí			consistent	invalid		0	0	932
+B0.M11a.05	TS:duplicateAtomName:S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập			consistent	invalid		0	0	453
+B0.M11b.00	TS:emptyDomain:S04 tuổi của người nhận;RS:readerValueOutOfRange:S04 chưa đủ 18:0:0;RS:readerValueOutOfRange:S04 từ đủ 18:0:1			consistent	invalid		0	0	431
+B0.M11b.01	TS:emptyDomain:S02 độ cồn của rượu, bia;RS:readerValueOutOfRange:S02 dưới 15:1:0;RS:readerValueOutOfRange:S02 từ 15:1:1			consistent	invalid		0	0	423
+B0.M11c.00	TS:emptyAtomSource:S02 độ cồn của rượu, bia			consistent	invalid		0	0	522
+B0.M11c.01	TS:emptyBandSource:S02 độ cồn của rượu, bia:dưới 15 độ			consistent	invalid		0	0	563
+B0.M11c.02	TS:emptyAtomSource:S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác			consistent	invalid		0	0	584
+B0.M11c.03	TS:emptyAtomSource:S18 địa điểm là cơ sở bảo trợ xã hội			consistent	invalid		0	0	536
+B0.M11c.04	TS:emptyAtomSource:S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập			consistent	invalid		0	0	572
+B0.M11c.05	TS:emptyAtomSource:S20 địa điểm được phép kinh doanh rượu, bia			consistent	invalid		0	0	592
+B0.M11d.00	TS:duplicateBandLabel:S04 tuổi của người nhận:chưa đủ 18 tuổi			consistent	invalid		0	0	561
+B0.M11d.01	TS:duplicateBandLabel:S02 độ cồn của rượu, bia:dưới 15 độ			consistent	invalid		0	0	538
+B0.M1.00				consistent	consistent		22	140	4143
+B0.M1.01		0-7,6-7,7-8,7-9,7-10,7-11	0-7,6-7,7-8,7-9,7-10,7-11	conflict	conflicts	0-7,6-7,7-8,7-9,7-10,7-11	22	140	4619
+B0.M1.02		0-8,6-8,7-8,8-9,8-10,8-11	0-8,6-8,7-8,8-9,8-10,8-11	conditional	conflicts	0-8,6-8,7-8,8-9,8-10,8-11	22	140	4808
+B0.M1.03		0-9,6-9,7-9,8-9,9-10,9-11	0-9,6-9,7-9,8-9,9-10,9-11	conflict	conflicts	0-9,6-9,7-9,8-9,9-10,9-11	22	140	4886
+B0.M1.04		0-9,6-9,7-9,8-9,9-10,9-11	0-9,6-9,7-9,8-9,9-10,9-11	conflict	conflicts	0-9,6-9,7-9,8-9,9-10,9-11	22	140	4508
+B0.M1.05		0-11,6-11,7-11,8-11,9-11,10-11	0-11,6-11,7-11,8-11,9-11,10-11	conflict	conflicts	0-11,6-11,7-11,8-11,9-11,10-11	22	140	4319
+B0.M2.00		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conditional	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	172	5493
+B0.M2.01		4-12	4-12	conflict	conflicts	4-12	23	144	6230
+B0.M2.02		5-12	5-12	conflict	conflicts	5-12	23	142	5017
+B0.M2.03		0-12,6-12,8-12,9-12,10-12,11-12	0-12,6-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,8-12,9-12,10-12,11-12	29	174	5519
+B0.M2.04				consistent	consistent		23	144	4342
+B0.M2.05		5-12	5-12	conflict	conflicts	5-12	23	144	4692
+B0.M2.06		1-12	1-12	conditional	conflicts	1-12	23	144	4908
+B0.M2.07		1-12	1-12	conflict	conflicts	1-12	23	148	4835
+B0.M2.08		4-12	4-12	conflict	conflicts	4-12	23	144	4872
+B0.M2.09		4-12	4-12	conflict	conflicts	4-12	23	144	4592
+B0.M3.00				consistent	consistent		22	112	3921
+B0.M4.00				consistent	consistent		22	124	3945
+B0.M4.01				consistent	consistent		22	140	4386
+B0.M4.02				consistent	consistent		22	140	5403
+B0.M4.03				consistent	consistent		22	140	4612
+B0.M4.04				consistent	consistent		22	140	4750
+B0.M4.05				consistent	consistent		22	140	5015
+B0.M7a.00				consistent	consistent		17	112	3686
+B0.M7a.01				consistent	consistent		29	174	7552
+B0.M7a.02				consistent	consistent		17	110	3712
+B0.M7a.03				consistent	consistent		18	116	5541
+B0.M7a.04				consistent	consistent		17	88	3478
+B0.M7a.05				consistent	consistent		17	112	3798
+B0.M7b.00				consistent	consistent		16	108	3641
+B0.M7b.01				consistent	consistent		21	136	4520
+B0.M7b.02				consistent	consistent		22	140	4561
+B0.M7b.03				consistent	consistent		16	108	4525
+B0.M7b.04				consistent	consistent		16	108	4040
+B0.M7b.05				consistent	consistent		16	84	3226
+B0.M8a.00				consistent	consistent		22	140	5501
+B0.M8a.01				consistent	consistent		22	132	4360
+B0.M8a.02				consistent	consistent		22	138	4209
+B0.M8a.03				consistent	consistent		22	138	4378
+B0.M8a.04				consistent	consistent		22	138	4408
+B0.M8a.05				consistent	consistent		22	136	5123
+B0.M8d.00				consistent	consistent		22	136	4420
+B0.M8d.01				consistent	consistent		22	140	4454
+B0.M8d.02				consistent	consistent		22	138	4473
+B0.M8d.03				consistent	consistent		22	140	5055
+B0.M8d.04				consistent	consistent		22	138	4481
+B0.M8d.05				consistent	consistent		22	140	4579
+B0.M9a.00				consistent	consistent		22	140	4444
+B0.M9a.01				consistent	consistent		22	140	4758
+B0.M9a.02				consistent	consistent		22	140	4380
+B0.M9a.03				consistent	consistent		22	140	4450
+B0.M9a.04				consistent	consistent		22	140	4633
+B0.M9a.05				consistent	consistent		22	140	4866
+B0.M10a.00		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	252	7540
+B0.M10a.01		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	252	7416
+B0.M10a.02		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	252	7624
+B0.M10a.03		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	252	7937
+B0.M10a.04		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	252	9543
+B0.M10a.05		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	252	8182
+B0.M10a.06		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	252	7217
+B0.M10a.07		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	252	7614
+B0.M10a.08		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	332	8878
+B0.M10a.09		0-12,6-12,7-12,9-12,10-12,11-12		conditional	conflicts	0-12,6-12,7-12,9-12,10-12,11-12	29	332	8961
+B0.M10b.00		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	174	6373
+B0.M10b.01		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	174	6310
+B0.M10b.02		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	174	6568
+B0.M10b.03		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	174	5790
+B0.M10b.04		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	174	5783
+B0.M10b.05		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	174	5493
+B0.M10b.06		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	174	6772
+B0.M10b.07		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	174	6683
+B0.M10b.08		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	200	7118
+B0.M10b.09		0-12,6-12,7-12,8-12,9-12,10-12,11-12	0-12,6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	0-12,6-12,7-12,8-12,9-12,10-12,11-12	29	200	6158
+B0.C1.00				consistent	consistent		22	140	4215
+B0.C1.01				consistent	consistent		22	140	4422
+B0.C1.02				consistent	consistent		22	140	5428
+B0.C1.03				consistent	consistent		22	140	4905
+B0.C1.04				consistent	consistent		22	140	4851
+B0.C1.05				consistent	consistent		22	140	4243
+B0.C2.00				consistent	consistent		22	140	4734
+B0.C2.01				consistent	consistent		22	140	4596
+B0.C2.02				consistent	consistent		22	140	4708
+B0.C2.03				consistent	consistent		22	140	4477
+B0.C2.04				consistent	consistent		22	140	4536
+B0.C2.05				consistent	consistent		22	140	4698
+B0.C3.00				consistent	consistent		22	140	5373
+B0.C3.01				consistent	consistent		22	140	4737
+B0.C3.02				consistent	consistent		22	140	4492
+B0.C3.03				consistent	consistent		22	140	4392
+B0.C3.04				consistent	consistent		22	140	5052
+B0.C3.05				consistent	consistent		22	140	5315
+B1.M5.00	N:duplicateId:5.3-cung-cap			invalid	invalid		0	0	477
+B1.M5.01	N:duplicateId:5.9-ii			invalid	invalid		0	0	467
+B1.M5.02	N:duplicateId:19.2			invalid	invalid		0	0	460
+B1.M5.03	N:duplicateId:19.3			invalid	invalid		0	0	434
+B1.M5.04	N:duplicateId:19.5			invalid	invalid		0	0	472
+B1.M5.05	N:duplicateId:SYN-P			invalid	invalid		0	0	466
+B1.M6a.00	N:dangling:5.3-cung-cap:Điều 99			invalid	invalid		0	0	512
+B1.M6a.01	N:dangling:5.9-ii:Điều 99			invalid	invalid		0	0	465
+B1.M6a.02	N:dangling:19.2:Điều 99			invalid	invalid		0	0	450
+B1.M6a.03	N:dangling:19.5:Điều 99			invalid	invalid		0	0	458
+B1.M6a.04	N:dangling:19.6:Điều 99			invalid	invalid		0	0	462
+B1.M6a.05	N:dangling:SYN-P:Điều 99			invalid	invalid		0	0	373
+B1.M8b.00	RS:readerValueOutOfRange:S04 chưa đủ 18:8:2			consistent	invalid		0	0	633
+B1.M8b.01	RS:readerValueOutOfRange:S02 từ 15:5:2			consistent	invalid		0	0	609
+B1.M8b.02	RS:readerValueOutOfRange:S15:0:2			consistent	invalid		0	0	565
+B1.M8b.03	RS:readerValueOutOfRange:S15:5:2			consistent	invalid		0	0	522
+B1.M8b.04	RS:readerValueOutOfRange:S17:1:2			consistent	invalid		0	0	583
+B1.M8b.05	RS:readerValueOutOfRange:S19:6:2			consistent	invalid		0	0	556
+B1.M8c.00	RS:readerAtomOutOfRange:S04 từ đủ 18:9			consistent	invalid		0	0	579
+B1.M8c.01	RS:readerAtomOutOfRange:S02 dưới 15:9	3-12	3-12	conflict	invalid		0	0	599
+B1.M8c.02	RS:readerAtomOutOfRange:S15:9			consistent	invalid		0	0	561
+B1.M8c.03	RS:readerAtomOutOfRange:S16:9			consistent	invalid		0	0	570
+B1.M8c.04	RS:readerAtomOutOfRange:S19:9			consistent	invalid		0	0	536
+B1.M8c.05	RS:readerAtomOutOfRange:S20:9			consistent	invalid		0	0	551
+B1.M8e.00	N:atomIndexOutOfRange:5.3-cung-cap			invalid	invalid		0	0	464
+B1.M8e.01	N:atomIndexOutOfRange:5.9-i			invalid	invalid		0	0	453
+B1.M8e.02	N:atomIndexOutOfRange:19.4			invalid	invalid		0	0	491
+B1.M8e.03	N:atomIndexOutOfRange:19.5			invalid	invalid		0	0	553
+B1.M8e.04	N:atomIndexOutOfRange:SYN-P			invalid	invalid		0	0	460
+B1.M8e.05	N:atomIndexOutOfRange:SYN-P			invalid	invalid		0	0	535
+B1.M9b.00	N:priorityCycle:5.3-khuyen-mai;N:priorityCycle:19.3			invalid	invalid		0	0	506
+B1.M9b.01	N:priorityCycle:5.9-ii;N:priorityCycle:19.1			invalid	invalid		0	0	483
+B1.M9b.02	N:priorityCycle:5.9-ii;N:priorityCycle:19.3			invalid	invalid		0	0	511
+B1.M9b.03	N:priorityCycle:5.11-ii;N:priorityCycle:19.4			invalid	invalid		0	0	490
+B1.M9b.04	N:priorityCycle:19.4;N:priorityCycle:19.6			invalid	invalid		0	0	499
+B1.M9b.05	N:priorityCycle:19.5;N:priorityCycle:SYN-P			invalid	invalid		0	0	523
+B1.M9c.00	N:unknownOverride:5.3-khuyen-mai:khong_co_id			invalid	invalid		0	0	491
+B1.M9c.01	N:unknownOverride:5.11-ii:khong_co_id			invalid	invalid		0	0	483
+B1.M9c.02	N:unknownOverride:19.2:khong_co_id			invalid	invalid		0	0	487
+B1.M9c.03	N:unknownOverride:19.3:khong_co_id			invalid	invalid		0	0	501
+B1.M9c.04	N:unknownOverride:19.4:khong_co_id			invalid	invalid		0	0	483
+B1.M9c.05	N:unknownOverride:SYN-P:khong_co_id			invalid	invalid		0	0	477
+B1.M11a.00	TS:duplicateAtomName:S04 tuổi của người nhận			consistent	invalid		0	0	571
+B1.M11a.01	TS:duplicateAtomName:S02 độ cồn của rượu, bia			consistent	invalid		0	0	574
+B1.M11a.02	TS:duplicateAtomName:S02 độ cồn của rượu, bia			consistent	invalid		0	0	617
+B1.M11a.03	TS:duplicateAtomName:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí			consistent	invalid		0	0	679
+B1.M11a.04	TS:duplicateAtomName:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí			consistent	invalid		0	0	586
+B1.M11a.05	TS:duplicateAtomName:S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác			consistent	invalid		0	0	572
+B1.M11b.00	TS:emptyDomain:S04 tuổi của người nhận;RS:readerValueOutOfRange:S04 chưa đủ 18:0:0;RS:readerValueOutOfRange:S04 từ đủ 18:0:1			consistent	invalid		0	0	545
+B1.M11b.01	TS:emptyDomain:S02 độ cồn của rượu, bia;RS:readerValueOutOfRange:S02 dưới 15:1:0;RS:readerValueOutOfRange:S02 từ 15:1:1			consistent	invalid		0	0	573
+B1.M11c.00	TS:emptyAtomSource:S02 độ cồn của rượu, bia			consistent	invalid		0	0	535
+B1.M11c.01	TS:emptyBandSource:S02 độ cồn của rượu, bia:dưới 15 độ			consistent	invalid		0	0	606
+B1.M11c.02	TS:emptyAtomSource:S14 địa điểm là cơ sở y tế			consistent	invalid		0	0	559
+B1.M11c.03	TS:emptyAtomSource:S15 địa điểm là cơ sở giáo dục			consistent	invalid		0	0	902
+B1.M11c.04	TS:emptyAtomSource:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí			consistent	invalid		0	0	592
+B1.M11c.05	TS:emptyAtomSource:S20 địa điểm được phép kinh doanh rượu, bia			consistent	invalid		0	0	542
+B1.M11d.00	TS:duplicateBandLabel:S04 tuổi của người nhận:chưa đủ 18 tuổi			consistent	invalid		0	0	823
+B1.M11d.01	TS:duplicateBandLabel:S02 độ cồn của rượu, bia:dưới 15 độ			consistent	invalid		0	0	563
+B1.M1.00		0-6,0-7,0-8,0-9,0-10,0-11	0-6,0-7,0-8,0-9,0-10,0-11	conflict	conflicts	0-6,0-7,0-8,0-9,0-10,0-11	24	148	4737
+B1.M1.01				consistent	consistent		24	148	4782
+B1.M1.02				consistent	consistent		24	148	4896
+B1.M1.03		0-6,6-7,6-8,6-9,6-10,6-11	0-6,6-7,6-8,6-9,6-10,6-11	conflict	conflicts	0-6,6-7,6-8,6-9,6-10,6-11	24	148	4959
+B1.M1.04		0-8,6-8,7-8,8-9,8-10,8-11	0-8,6-8,7-8,8-9,8-10,8-11	conditional	conflicts	0-8,6-8,7-8,8-9,8-10,8-11	24	148	5096
+B1.M1.05		0-10,6-10,7-10,8-10,9-10,10-11	0-10,6-10,7-10,8-10,9-10,10-11	conflict	conflicts	0-10,6-10,7-10,8-10,9-10,10-11	24	148	5804
+B1.M2.00		1-13	1-13	conflict	conflicts	1-13	25	152	5207
+B1.M2.01		1-13	1-13	conflict	conflicts	1-13	25	156	5137
+B1.M2.02		4-13	4-13	conflict	conflicts	4-13	25	150	5381
+B1.M2.03		1-13	1-13	conflict	conflicts	1-13	25	156	5472
+B1.M2.04		5-13	5-13	conflict	conflicts	5-13	25	150	4921
+B1.M2.05		12-13	12-13	conflict	conflicts	12-13	27	164	5520
+B1.M2.06		1-13	1-13	conflict	conflicts	1-13	25	156	6331
+B1.M2.07		1-13	1-13	conflict	conflicts	1-13	25	152	6241
+B1.M2.08		2-13,3-13	2-13,3-13	conflict	conflicts	2-13,3-13	27	164	5543
+B1.M2.09		1-13	1-13	conflict	conflicts	1-13	25	156	5072
+B1.M3.00				consistent	consistent		24	120	4077
+B1.M4.00				consistent	consistent		24	148	6068
+B1.M4.01				consistent	consistent		24	148	6410
+B1.M4.02				consistent	consistent		24	148	6869
+B1.M4.03				consistent	consistent		24	146	4597
+B1.M4.04		3-12	3-12	conflict	conflicts	3-12	24	148	4810
+B1.M4.05				consistent	consistent		24	148	4911
+B1.M7a.00				consistent	consistent		21	126	4222
+B1.M7a.01				consistent	consistent		31	182	6051
+B1.M7a.02				consistent	consistent		23	142	4736
+B1.M7a.03		5-12	5-12	conflict	conflicts	5-12	27	156	5976
+B1.M7a.04		7-12	7-12	conflict	conflicts	7-12	21	132	4536
+B1.M7a.05				consistent	consistent		19	120	4085
+B1.M7b.00				consistent	consistent		22	140	4832
+B1.M7b.01				consistent	consistent		24	148	4525
+B1.M7b.02				consistent	consistent		18	116	4136
+B1.M7b.03				consistent	consistent		18	116	4046
+B1.M7b.04				consistent	consistent		18	92	3794
+B1.M7b.05				consistent	consistent		18	116	4085
+B1.M8a.00		2-12	2-12	conflict	conflicts	2-12	24	152	5296
+B1.M8a.01				consistent	consistent		24	144	4632
+B1.M8a.02				consistent	consistent		24	144	4902
+B1.M8a.03				consistent	consistent		24	140	4498
+B1.M8a.04				consistent	consistent		24	144	4911
+B1.M8a.05				consistent	consistent		24	146	4729
+B1.M8d.00				consistent	consistent		24	146	4737
+B1.M8d.01				consistent	consistent		24	144	4741
+B1.M8d.02		2-12	2-12	conflict	conflicts	2-12	24	152	5168
+B1.M8d.03		3-12	3-12	conflict	conflicts	3-12	24	148	5042
+B1.M8d.04				consistent	consistent		24	144	4852
+B1.M8d.05		2-12	2-12	conflict	conflicts	2-12	24	152	6845
+B1.M9a.00				consistent	consistent		24	148	4996
+B1.M9a.01				consistent	consistent		24	148	4793
+B1.M9a.02				consistent	consistent		24	148	4633
+B1.M9a.03				consistent	consistent		24	148	5255
+B1.M9a.04				consistent	consistent		24	148	5308
+B1.M9a.05				consistent	consistent		24	148	4794
+B1.C1.00				consistent	consistent		24	148	4862
+B1.C1.01				consistent	consistent		24	148	4799
+B1.C1.02				consistent	consistent		24	148	4843
+B1.C1.03				consistent	consistent		24	148	4693
+B1.C1.04				consistent	consistent		24	148	4686
+B1.C1.05				consistent	consistent		24	148	5088
+B1.C2.00				consistent	consistent		24	148	4773
+B1.C2.01				consistent	consistent		24	148	5268
+B1.C2.02				consistent	consistent		24	148	4880
+B1.C2.03				consistent	consistent		24	148	4569
+B1.C2.04				consistent	consistent		24	148	4548
+B1.C2.05				consistent	consistent		24	148	4757
+B1.C3.00				consistent	consistent		24	148	4864
+B1.C3.01				consistent	consistent		24	148	4715
+B1.C3.02				consistent	consistent		24	148	4876
+B1.C3.03				consistent	consistent		24	148	5099
+B1.C3.04				consistent	consistent		24	148	4784
+B1.C3.05				consistent	consistent		24	148	5070
+B2.M5.00	N:duplicateId:5.3-cung-cap	3-12	3-12	invalid	invalid		0	0	476
+B2.M5.01	N:duplicateId:19.1	3-12	3-12	invalid	invalid		0	0	440
+B2.M5.02	N:duplicateId:19.1	3-12	3-12	invalid	invalid		0	0	448
+B2.M5.03	N:duplicateId:19.1	3-12	3-12	invalid	invalid		0	0	482
+B2.M5.04	N:duplicateId:19.5	3-12	3-12	invalid	invalid		0	0	465
+B2.M5.05	N:duplicateId:SYN-P	3-12	3-12	invalid	invalid		0	0	450
+B2.M6a.00	N:dangling:5.9-ii:Điều 99	3-12	3-12	invalid	invalid		0	0	465
+B2.M6a.01	N:dangling:19.1:Điều 99	3-12	3-12	invalid	invalid		0	0	474
+B2.M6a.02	N:dangling:19.2:Điều 99	3-12	3-12	invalid	invalid		0	0	434
+B2.M6a.03	N:dangling:19.4:Điều 99	3-12	3-12	invalid	invalid		0	0	465
+B2.M6a.04	N:dangling:19.5:Điều 99	3-12	3-12	invalid	invalid		0	0	562
+B2.M6a.05	N:dangling:19.6:Điều 99	3-12	3-12	invalid	invalid		0	0	478
+B2.M8b.00	RS:readerValueOutOfRange:S04 từ đủ 18:4:2			consistent	invalid		0	0	596
+B2.M8b.01	RS:readerValueOutOfRange:S14:6:2	3-12	3-12	conflict	invalid		0	0	591
+B2.M8b.02	RS:readerValueOutOfRange:S16:5:2	3-12	3-12	conflict	invalid		0	0	557
+B2.M8b.03	RS:readerValueOutOfRange:S18:5:2	3-12	3-12	conflict	invalid		0	0	649
+B2.M8b.04	RS:readerValueOutOfRange:S18:7:2	3-12	3-12	conflict	invalid		0	0	384
+B2.M8b.05	RS:readerValueOutOfRange:S19:0:2	3-12	3-12	conflict	invalid		0	0	591
+B2.M8c.00	RS:readerAtomOutOfRange:S02 dưới 15:9	3-12	3-12	conflict	invalid		0	0	658
+B2.M8c.01	RS:readerAtomOutOfRange:S02 từ 15:9			consistent	invalid		0	0	771
+B2.M8c.02	RS:readerAtomOutOfRange:S14:9	3-12	3-12	conflict	invalid		0	0	561
+B2.M8c.03	RS:readerAtomOutOfRange:S16:9	3-12	3-12	conflict	invalid		0	0	599
+B2.M8c.04	RS:readerAtomOutOfRange:S17:9	3-12	3-12	conflict	invalid		0	0	527
+B2.M8c.05	RS:readerAtomOutOfRange:S20:9	3-12	3-12	conflict	invalid		0	0	568
+B2.M8e.00	N:atomIndexOutOfRange:5.3-ban	3-12	3-12	invalid	invalid		0	0	474
+B2.M8e.01	N:atomIndexOutOfRange:5.3-khuyen-mai	3-12	3-12	invalid	invalid		0	0	559
+B2.M8e.02	N:atomIndexOutOfRange:5.9-i			invalid	invalid		0	0	460
+B2.M8e.03	N:atomIndexOutOfRange:19.3	3-12	3-12	invalid	invalid		0	0	478
+B2.M8e.04	N:atomIndexOutOfRange:19.4	3-12	3-12	invalid	invalid		0	0	459
+B2.M8e.05	N:atomIndexOutOfRange:SYN-P			invalid	invalid		0	0	530
+B2.M9b.00	N:priorityCycle:5.3-ban;N:priorityCycle:5.11-ii	3-12	3-12	invalid	invalid		0	0	505
+B2.M9b.01	N:priorityCycle:5.3-khuyen-mai;N:priorityCycle:19.5	3-12	3-12	invalid	invalid		0	0	404
+B2.M9b.02	N:priorityCycle:5.9-ii;N:priorityCycle:19.5	3-12	3-12	invalid	invalid		0	0	534
+B2.M9b.03	N:priorityCycle:19.1;N:priorityCycle:19.4	3-12	3-12	invalid	invalid		0	0	457
+B2.M9b.04	N:priorityCycle:19.1;N:priorityCycle:SYN-P	3-12	3-12	invalid	invalid		0	0	392
+B2.M9b.05	N:priorityCycle:19.3;N:priorityCycle:SYN-P	3-12	3-12	invalid	invalid		0	0	566
+B2.M9c.00	N:unknownOverride:5.3-ban:khong_co_id	3-12	3-12	invalid	invalid		0	0	487
+B2.M9c.01	N:unknownOverride:5.3-cung-cap:khong_co_id	3-12	3-12	invalid	invalid		0	0	427
+B2.M9c.02	N:unknownOverride:5.3-khuyen-mai:khong_co_id	3-12	3-12	invalid	invalid		0	0	524
+B2.M9c.03	N:unknownOverride:19.2:khong_co_id	3-12	3-12	invalid	invalid		0	0	328
+B2.M9c.04	N:unknownOverride:19.5:khong_co_id	3-12	3-12	invalid	invalid		0	0	357
+B2.M9c.05	N:unknownOverride:19.6:khong_co_id	3-12	3-12	invalid	invalid		0	0	650
+B2.M11a.00	TS:duplicateAtomName:S04 tuổi của người nhận	3-12	3-12	conflict	invalid		0	0	440
+B2.M11a.01	TS:duplicateAtomName:S04 tuổi của người nhận	3-12	3-12	conflict	invalid		0	0	595
+B2.M11a.02	TS:duplicateAtomName:S04 tuổi của người nhận	3-12	3-12	conflict	invalid		0	0	467
+B2.M11a.03	TS:duplicateAtomName:S02 độ cồn của rượu, bia	3-12	3-12	conflict	invalid		0	0	563
+B2.M11a.04	TS:duplicateAtomName:S02 độ cồn của rượu, bia	3-12	3-12	conflict	invalid		0	0	552
+B2.M11a.05	TS:duplicateAtomName:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí	3-12	3-12	conflict	invalid		0	0	570
+B2.M11b.00	TS:emptyDomain:S04 tuổi của người nhận;RS:readerValueOutOfRange:S04 chưa đủ 18:0:0;RS:readerValueOutOfRange:S04 từ đủ 18:0:1			consistent	invalid		0	0	476
+B2.M11b.01	TS:emptyDomain:S02 độ cồn của rượu, bia;RS:readerValueOutOfRange:S02 dưới 15:1:0;RS:readerValueOutOfRange:S02 từ 15:1:1			consistent	invalid		0	0	449
+B2.M11c.00	TS:emptyAtomSource:S14 địa điểm là cơ sở y tế	3-12	3-12	conflict	invalid		0	0	439
+B2.M11c.01	TS:emptyAtomSource:S15 địa điểm là cơ sở giáo dục	3-12	3-12	conflict	invalid		0	0	832
+B2.M11c.02	TS:emptyAtomSource:S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác	3-12	3-12	conflict	invalid		0	0	442
+B2.M11c.03	TS:emptyAtomSource:S18 địa điểm là cơ sở bảo trợ xã hội	3-12	3-12	conflict	invalid		0	0	562
+B2.M11c.04	TS:emptyAtomSource:S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập	3-12	3-12	conflict	invalid		0	0	482
+B2.M11c.05	TS:emptyAtomSource:S20 địa điểm được phép kinh doanh rượu, bia	3-12	3-12	conflict	invalid		0	0	437
+B2.M11d.00	TS:duplicateBandLabel:S04 tuổi của người nhận:chưa đủ 18 tuổi	3-12	3-12	conflict	invalid		0	0	1985
+B2.M11d.01	TS:duplicateBandLabel:S02 độ cồn của rượu, bia:dưới 15 độ	3-12	3-12	conflict	invalid		0	0	477
+B2.M1.00		0-6,0-7,0-8,0-9,0-10,0-11,3-12	0-6,0-7,0-8,0-9,0-10,0-11,3-12	conflict	conflicts	0-6,0-7,0-8,0-9,0-10,0-11,3-12	24	146	3978
+B2.M1.01		2-3,3-12	2-3,3-12	conflict	conflicts	2-3,3-12	24	146	3994
+B2.M1.02		2-3	2-3	conflict	conflicts	2-3	24	146	6370
+B2.M1.03		0-7,3-12,6-7,7-8,7-9,7-10,7-11	0-7,3-12,6-7,7-8,7-9,7-10,7-11	conflict	conflicts	0-7,3-12,6-7,7-8,7-9,7-10,7-11	24	146	5042
+B2.M1.04		0-8,3-12,6-8,7-8,8-9,8-10,8-11	0-8,3-12,6-8,7-8,8-9,8-10,8-11	conditional	conflicts	0-8,3-12,6-8,7-8,8-9,8-10,8-11	24	146	4865
+B2.M1.05		0-11,3-12,6-11,7-11,8-11,9-11,10-11	0-11,3-12,6-11,7-11,8-11,9-11,10-11	conflict	conflicts	0-11,3-12,6-11,7-11,8-11,9-11,10-11	24	146	5416
+B2.M2.00		1-13,3-12	1-13,3-12	conditional	conflicts	1-13,3-12	25	150	4719
+B2.M2.01		3-12,5-13	3-12,5-13	conflict	conflicts	3-12,5-13	25	148	4595
+B2.M2.02		3-12,4-13	3-12,4-13	conflict	conflicts	3-12,4-13	25	150	5291
+B2.M2.03		3-12,4-13	3-12,4-13	conflict	conflicts	3-12,4-13	25	154	4937
+B2.M2.04		1-13,3-12	1-13,3-12	conflict	conflicts	1-13,3-12	25	154	5870
+B2.M2.05		0-13,3-12,6-13,7-13,8-13,9-13,10-13	0-13,3-12,6-13,7-13,8-13,9-13,10-13	conflict	conflicts	0-13,3-12,6-13,7-13,8-13,9-13,10-13	31	178	4601
+B2.M2.06		3-12,5-13	3-12,5-13	conflict	conflicts	3-12,5-13	25	150	5609
+B2.M2.07		2-13,3-12,3-13	2-13,3-12,3-13	conflict	conflicts	2-13,3-12,3-13	27	170	5359
+B2.M2.08		3-12,5-13	3-12,5-13	conflict	conflicts	3-12,5-13	25	148	3940
+B2.M2.09		0-13,3-12,6-13,7-13,8-13,9-13,10-13,11-13	0-13,3-12,6-13,7-13,8-13,9-13,10-13,11-13	conflict	conflicts	0-13,3-12,6-13,7-13,8-13,9-13,10-13,11-13	31	180	5836
+B2.M3.00		3-12	3-12	conflict	conflicts	3-12	24	118	4075
+B2.M4.00		3-12	3-12	conflict	conflicts	3-12	24	130	4423
+B2.M4.01		3-12	3-12	conflict	conflicts	3-12	24	146	4893
+B2.M4.02		3-12	3-12	conflict	conflicts	3-12	24	144	5152
+B2.M4.03		3-12	3-12	conflict	conflicts	3-12	24	146	4835
+B2.M4.04				consistent	consistent		24	142	3506
+B2.M4.05				consistent	consistent		24	144	3741
+B2.M7a.00		3-12	3-12	conflict	conflicts	3-12	23	142	4656
+B2.M7a.01				consistent	consistent		29	174	5237
+B2.M7a.02		3-12	3-12	conflict	conflicts	3-12	19	116	3907
+B2.M7a.03		3-12	3-12	conflict	conflicts	3-12	19	118	4259
+B2.M7a.04		3-12	3-12	conflict	conflicts	3-12	19	118	4328
+B2.M7a.05		6-12,7-12,8-12,9-12,10-12,11-12	6-12,7-12,8-12,9-12,10-12,11-12	conflict	conflicts	6-12,7-12,8-12,9-12,10-12,11-12	29	174	6220
+B2.M7b.00		3-12	3-12	conflict	conflicts	3-12	18	114	3538
+B2.M7b.01		3-12	3-12	conflict	conflicts	3-12	22	140	4723
+B2.M7b.02		3-12	3-12	conflict	conflicts	3-12	18	114	2869
+B2.M7b.03		3-12	3-12	conflict	conflicts	3-12	18	114	3188
+B2.M7b.04		3-12	3-12	conflict	conflicts	3-12	18	90	3682
+B2.M7b.05				consistent	consistent		22	140	4753
+B2.M8a.00		2-12,3-12	2-12,3-12	conflict	conflicts	2-12,3-12	24	146	6246
+B2.M8a.01		3-12	3-12	conflict	conflicts	3-12	24	146	4743
+B2.M8a.02		3-12	3-12	conflict	conflicts	3-12	24	144	4976
+B2.M8a.03		3-12	3-12	conflict	conflicts	3-12	24	142	4990
+B2.M8a.04		3-12	3-12	conflict	conflicts	3-12	24	144	4664
+B2.M8a.05		3-12	3-12	conflict	conflicts	3-12	24	142	5109
+B2.M8d.00		3-12	3-12	conflict	conflicts	3-12	24	144	4575
+B2.M8d.01		3-12	3-12	conflict	conflicts	3-12	24	146	6954
+B2.M8d.02		2-12,3-12	2-12,3-12	conflict	conflicts	2-12,3-12	24	148	5191
+B2.M8d.03		3-12	3-12	conflict	conflicts	3-12	24	142	4712
+B2.M8d.04		3-12	3-12	conflict	conflicts	3-12	24	144	4629
+B2.M8d.05		3-12	3-12	conflict	conflicts	3-12	24	142	4872
+B2.M9a.00		3-12	3-12	conflict	conflicts	3-12	24	146	4782
+B2.M9a.01		3-12	3-12	conflict	conflicts	3-12	24	146	4725
+B2.M9a.02		3-12	3-12	conflict	conflicts	3-12	24	146	4784
+B2.M9a.03		3-12	3-12	conflict	conflicts	3-12	24	146	5191
+B2.M9a.04		3-12	3-12	conflict	conflicts	3-12	24	146	4699
+B2.M9a.05		3-12	3-12	conflict	conflicts	3-12	24	146	5652
+B2.C1.00		3-12	3-12	conflict	conflicts	3-12	24	146	4900
+B2.C1.01		3-12	3-12	conflict	conflicts	3-12	24	146	6578
+B2.C1.02		3-12	3-12	conflict	conflicts	3-12	24	146	5191
+B2.C1.03		3-12	3-12	conflict	conflicts	3-12	24	146	4828
+B2.C1.04		3-12	3-12	conflict	conflicts	3-12	24	146	4829
+B2.C1.05		3-12	3-12	conflict	conflicts	3-12	24	146	4862
+B2.C2.00		3-12	3-12	conflict	conflicts	3-12	24	146	4727
+B2.C2.01		3-12	3-12	conflict	conflicts	3-12	24	146	5029
+B2.C2.02		3-12	3-12	conflict	conflicts	3-12	24	146	4691
+B2.C2.03		3-12	3-12	conflict	conflicts	3-12	24	146	4947
+B2.C2.04		3-12	3-12	conflict	conflicts	3-12	24	146	4884
+B2.C2.05		3-12	3-12	conflict	conflicts	3-12	24	146	4775
+B2.C3.00		3-12	3-12	conflict	conflicts	3-12	24	146	4790
+B2.C3.01		3-12	3-12	conflict	conflicts	3-12	24	146	4783
+B2.C3.02		3-12	3-12	conflict	conflicts	3-12	24	146	4863
+B2.C3.03		3-12	3-12	conflict	conflicts	3-12	24	146	4850
+B2.C3.04		3-12	3-12	conflict	conflicts	3-12	24	146	5683
+B2.C3.05		3-12	3-12	conflict	conflicts	3-12	24	146	4740

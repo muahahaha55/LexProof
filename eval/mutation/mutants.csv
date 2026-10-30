@@ -1,0 +1,411 @@
+id,base,op,group,description,expected_finding_keys
+B0,B0,base,-,unmutated,
+B1,B1,base,-,unmutated,
+B2,B2,base,-,unmutated,
+B0.M5.00,B0,M5,A,id of norm 2 (5.3-khuyen-mai) := id of norm 4,N:duplicateId:5.9-ii
+B0.M5.01,B0,M5,A,id of norm 3 (5.9-i) := id of norm 4,N:duplicateId:5.9-ii
+B0.M5.02,B0,M5,A,id of norm 2 (5.3-khuyen-mai) := id of norm 5,N:duplicateId:5.11-ii
+B0.M5.03,B0,M5,A,id of norm 6 (19.1) := id of norm 5,N:duplicateId:5.11-ii
+B0.M5.04,B0,M5,A,id of norm 2 (5.3-khuyen-mai) := id of norm 9,N:duplicateId:19.4
+B0.M5.05,B0,M5,A,id of norm 3 (5.9-i) := id of norm 11,N:duplicateId:19.6
+B0.M6a.00,B0,M6a,A,norm 5.9-ii cites Điều 99,N:dangling:5.9-ii:Điều 99
+B0.M6a.01,B0,M6a,A,norm 19.2 cites Điều 99,N:dangling:19.2:Điều 99
+B0.M6a.02,B0,M6a,A,norm 19.3 cites Điều 99,N:dangling:19.3:Điều 99
+B0.M6a.03,B0,M6a,A,norm 19.4 cites Điều 99,N:dangling:19.4:Điều 99
+B0.M6a.04,B0,M6a,A,norm 19.5 cites Điều 99,N:dangling:19.5:Điều 99
+B0.M6a.05,B0,M6a,A,norm 19.6 cites Điều 99,N:dangling:19.6:Điều 99
+B0.M8b.00,B0,M8b,A,reader S04 chưa đủ 18 -> atom 6 value 2 (outside its domain),RS:readerValueOutOfRange:S04 chưa đủ 18:6:2
+B0.M8b.01,B0,M8b,A,reader S04 từ đủ 18 -> atom 8 value 2 (outside its domain),RS:readerValueOutOfRange:S04 từ đủ 18:8:2
+B0.M8b.02,B0,M8b,A,reader S02 từ 15 -> atom 0 value 2 (outside its domain),RS:readerValueOutOfRange:S02 từ 15:0:2
+B0.M8b.03,B0,M8b,A,reader S15 -> atom 1 value 2 (outside its domain),RS:readerValueOutOfRange:S15:1:2
+B0.M8b.04,B0,M8b,A,reader S16 -> atom 6 value 2 (outside its domain),RS:readerValueOutOfRange:S16:6:2
+B0.M8b.05,B0,M8b,A,reader S18 -> atom 1 value 2 (outside its domain),RS:readerValueOutOfRange:S18:1:2
+B0.M8c.00,B0,M8c,A,reader S04 chưa đủ 18 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S04 chưa đủ 18:9
+B0.M8c.01,B0,M8c,A,reader S02 từ 15 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S02 từ 15:9
+B0.M8c.02,B0,M8c,A,reader S14 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S14:9
+B0.M8c.03,B0,M8c,A,reader S16 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S16:9
+B0.M8c.04,B0,M8c,A,reader S18 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S18:9
+B0.M8c.05,B0,M8c,A,reader S20 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S20:9
+B0.M8e.00,B0,M8e,A,5.3-ban: Cond.sit 0 -> 11 (out of range),N:atomIndexOutOfRange:5.3-ban
+B0.M8e.01,B0,M8e,A,5.3-cung-cap: Cond.sit 0 -> 11 (out of range),N:atomIndexOutOfRange:5.3-cung-cap
+B0.M8e.02,B0,M8e,A,5.9-i: Cond.sit 3 -> 11 (out of range),N:atomIndexOutOfRange:5.9-i
+B0.M8e.03,B0,M8e,A,19.1: Cond.sit 4 -> 11 (out of range),N:atomIndexOutOfRange:19.1
+B0.M8e.04,B0,M8e,A,19.5: Cond.sit 8 -> 11 (out of range),N:atomIndexOutOfRange:19.5
+B0.M8e.05,B0,M8e,A,19.6: Cond.sit 9 -> 11 (out of range),N:atomIndexOutOfRange:19.6
+B0.M9b.00,B0,M9b,A,5.3-cung-cap and 5.9-i override each other,N:priorityCycle:5.3-cung-cap;N:priorityCycle:5.9-i
+B0.M9b.01,B0,M9b,A,5.3-cung-cap and 19.1 override each other,N:priorityCycle:5.3-cung-cap;N:priorityCycle:19.1
+B0.M9b.02,B0,M9b,A,5.3-cung-cap and 19.2 override each other,N:priorityCycle:5.3-cung-cap;N:priorityCycle:19.2
+B0.M9b.03,B0,M9b,A,5.9-i and 19.3 override each other,N:priorityCycle:5.9-i;N:priorityCycle:19.3
+B0.M9b.04,B0,M9b,A,5.9-ii and 19.3 override each other,N:priorityCycle:5.9-ii;N:priorityCycle:19.3
+B0.M9b.05,B0,M9b,A,5.9-ii and 19.5 override each other,N:priorityCycle:5.9-ii;N:priorityCycle:19.5
+B0.M9c.00,B0,M9c,A,5.9-i overrides unknown id,N:unknownOverride:5.9-i:khong_co_id
+B0.M9c.01,B0,M9c,A,5.9-ii overrides unknown id,N:unknownOverride:5.9-ii:khong_co_id
+B0.M9c.02,B0,M9c,A,5.11-ii overrides unknown id,N:unknownOverride:5.11-ii:khong_co_id
+B0.M9c.03,B0,M9c,A,19.1 overrides unknown id,N:unknownOverride:19.1:khong_co_id
+B0.M9c.04,B0,M9c,A,19.4 overrides unknown id,N:unknownOverride:19.4:khong_co_id
+B0.M9c.05,B0,M9c,A,19.6 overrides unknown id,N:unknownOverride:19.6:khong_co_id
+B0.M11a.00,B0,M11a,A,situation atoms 0 and 4 share a name,TS:duplicateAtomName:S04 tuổi của người nhận
+B0.M11a.01,B0,M11a,A,situation atoms 1 and 6 share a name,"TS:duplicateAtomName:S02 độ cồn của rượu, bia"
+B0.M11a.02,B0,M11a,A,situation atoms 2 and 3 share a name,TS:duplicateAtomName:S14 địa điểm là cơ sở y tế
+B0.M11a.03,B0,M11a,A,situation atoms 2 and 4 share a name,TS:duplicateAtomName:S14 địa điểm là cơ sở y tế
+B0.M11a.04,B0,M11a,A,situation atoms 4 and 5 share a name,"TS:duplicateAtomName:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí"
+B0.M11a.05,B0,M11a,A,situation atoms 7 and 8 share a name,"TS:duplicateAtomName:S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập"
+B0.M11b.00,B0,M11b,A,situation atom 0 (S04) has no bands,TS:emptyDomain:S04 tuổi của người nhận;RS:readerValueOutOfRange:S04 chưa đủ 18:0:0;RS:readerValueOutOfRange:S04 từ đủ 18:0:1
+B0.M11b.01,B0,M11b,A,situation atom 1 (S02) has no bands,"TS:emptyDomain:S02 độ cồn của rượu, bia;RS:readerValueOutOfRange:S02 dưới 15:1:0;RS:readerValueOutOfRange:S02 từ 15:1:1"
+B0.M11c.00,B0,M11c,A,S atom 1: empty source,"TS:emptyAtomSource:S02 độ cồn của rượu, bia"
+B0.M11c.01,B0,M11c,A,S atom 1 band 0: empty source,"TS:emptyBandSource:S02 độ cồn của rượu, bia:dưới 15 độ"
+B0.M11c.02,B0,M11c,A,S atom 5: empty source,"TS:emptyAtomSource:S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác"
+B0.M11c.03,B0,M11c,A,S atom 6: empty source,TS:emptyAtomSource:S18 địa điểm là cơ sở bảo trợ xã hội
+B0.M11c.04,B0,M11c,A,S atom 7: empty source,"TS:emptyAtomSource:S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập"
+B0.M11c.05,B0,M11c,A,S atom 8: empty source,"TS:emptyAtomSource:S20 địa điểm được phép kinh doanh rượu, bia"
+B0.M11d.00,B0,M11d,A,situation atom 0: two bands labelled the same,TS:duplicateBandLabel:S04 tuổi của người nhận:chưa đủ 18 tuổi
+B0.M11d.01,B0,M11d,A,situation atom 1: two bands labelled the same,"TS:duplicateBandLabel:S02 độ cồn của rượu, bia:dưới 15 độ"
+B0.M1.00,B0,M1,B,norm 5.3-cung-cap: modality prohibition -> permission,
+B0.M1.01,B0,M1,B,norm 19.2: modality prohibition -> permission,
+B0.M1.02,B0,M1,B,norm 19.3: modality prohibition -> obligation,
+B0.M1.03,B0,M1,B,norm 19.4: modality prohibition -> obligation,
+B0.M1.04,B0,M1,B,norm 19.4: modality prohibition -> permission,
+B0.M1.05,B0,M1,B,norm 19.6: modality prohibition -> obligation,
+B0.M2.00,B0,M2,B,"add obligation M2new-1 on act ban_ruou_bia, cond ('param', 0)",
+B0.M2.01,B0,M2,B,"add obligation M2new-7 on act dung_ruou_bia_lam_qua_khuyen_mai, cond ('or', ('sit', 6), ('not', ('sit', 2)))",
+B0.M2.02,B0,M2,B,"add obligation M2new-8 on act ban_ruou_bia_bang_may_tu_dong, cond ('sit', 0)",
+B0.M2.03,B0,M2,B,"add obligation M2new-9 on act ban_ruou_bia, cond ('not', ('sit', 5))",
+B0.M2.04,B0,M2,B,"add permission M2new-10 on act dung_ruou_bia_lam_qua_khuyen_mai, cond ('and', ('sit', 2), ('sit', 8))",
+B0.M2.05,B0,M2,B,"add obligation M2new-12 on act ban_ruou_bia_bang_may_tu_dong, cond ('and', ('not', ('sit', 1)), ('sit', 3))",
+B0.M2.06,B0,M2,B,"add obligation M2new-15 on act cung_cap_ruou_bia, cond ('not', ('param', 0))",
+B0.M2.07,B0,M2,B,"add permission M2new-16 on act cung_cap_ruou_bia, cond ('or', ('sit', 2), ('sit', 8))",
+B0.M2.08,B0,M2,B,"add permission M2new-21 on act dung_ruou_bia_lam_qua_khuyen_mai, cond ('not', ('sit', 4))",
+B0.M2.09,B0,M2,B,"add permission M2new-22 on act dung_ruou_bia_lam_qua_khuyen_mai, cond ('sit', 7)",
+B0.M3.00,B0,M3,B,drop exception of 19.6,
+B0.M4.00,B0,M4,B,5.3-ban: narrow band reader 0,
+B0.M4.01,B0,M4,B,5.3-cung-cap: narrow band reader 0,
+B0.M4.02,B0,M4,B,5.3-khuyen-mai: widen band reader 0,
+B0.M4.03,B0,M4,B,5.9-i: widen band reader 3,
+B0.M4.04,B0,M4,B,5.9-ii: widen band reader 3,
+B0.M4.05,B0,M4,B,5.9-ii: swap band reader 3,
+B0.M7a.00,B0,M7a,B,norm 5.3-ban: act ban_ruou_bia -> existing dung_ruou_bia_lam_qua_khuyen_mai,
+B0.M7a.01,B0,M7a,B,norm 5.3-cung-cap: act cung_cap_ruou_bia -> existing ban_ruou_bia,
+B0.M7a.02,B0,M7a,B,norm 19.1: act ban_ruou_bia -> existing ban_ruou_bia_bang_may_tu_dong,
+B0.M7a.03,B0,M7a,B,norm 19.2: act ban_ruou_bia -> existing khuyen_mai_ruou_bia,
+B0.M7a.04,B0,M7a,B,norm 19.3: act ban_ruou_bia -> existing ban_ruou_bia_bang_may_tu_dong,
+B0.M7a.05,B0,M7a,B,norm 19.4: act ban_ruou_bia -> existing dung_ruou_bia_lam_qua_khuyen_mai,
+B0.M7b.00,B0,M7b,B,norm 5.3-ban: act ban_ruou_bia -> new act_moi_5.3-ban,
+B0.M7b.01,B0,M7b,B,norm 5.9-i: act khuyen_mai_ruou_bia -> new act_moi_5.9-i,
+B0.M7b.02,B0,M7b,B,norm 5.9-ii: act dung_ruou_bia_lam_qua_khuyen_mai -> new act_moi_5.9-ii,
+B0.M7b.03,B0,M7b,B,norm 19.1: act ban_ruou_bia -> new act_moi_19.1,
+B0.M7b.04,B0,M7b,B,norm 19.4: act ban_ruou_bia -> new act_moi_19.4,
+B0.M7b.05,B0,M7b,B,norm 19.6: act ban_ruou_bia -> new act_moi_19.6,
+B0.M8a.00,B0,M8a,B,"reader S02 dưới 15 (1,0) -> (3,0) in range",
+B0.M8a.01,B0,M8a,B,"reader S16 (4,1) -> (7,0) in range",
+B0.M8a.02,B0,M8a,B,"reader S17 (5,1) -> (3,0) in range",
+B0.M8a.03,B0,M8a,B,"reader S18 (6,1) -> (3,1) in range",
+B0.M8a.04,B0,M8a,B,"reader S18 (6,1) -> (5,0) in range",
+B0.M8a.05,B0,M8a,B,"reader S19 (7,1) -> (3,1) in range",
+B0.M8d.00,B0,M8d,B,5.3-ban: Cond.sit 0 -> 10 (in range),
+B0.M8d.01,B0,M8d,B,5.3-khuyen-mai: Cond.sit 0 -> 6 (in range),
+B0.M8d.02,B0,M8d,B,19.1: Cond.sit 4 -> 7 (in range),
+B0.M8d.03,B0,M8d,B,19.4: Cond.sit 7 -> 3 (in range),
+B0.M8d.04,B0,M8d,B,19.4: Cond.sit 7 -> 5 (in range),
+B0.M8d.05,B0,M8d,B,19.6: Cond.sit 9 -> 2 (in range),
+B0.M9a.00,B0,M9a,B,5.3-khuyen-mai overrides 5.9-i,
+B0.M9a.01,B0,M9a,B,5.9-i overrides 19.3,
+B0.M9a.02,B0,M9a,B,5.11-ii overrides 5.3-cung-cap,
+B0.M9a.03,B0,M9a,B,19.3 overrides 19.5,
+B0.M9a.04,B0,M9a,B,19.4 overrides 19.6,
+B0.M9a.05,B0,M9a,B,19.6 overrides 5.3-ban,
+B0.M10a.00,B0,M10a,C,add permission Z on ban_ruou_bia with cond 19.1 AND P14 AND NOT S16,
+B0.M10a.01,B0,M10a,C,add obligation Z on ban_ruou_bia with cond 19.1 AND P14 AND NOT S16,
+B0.M10a.02,B0,M10a,C,add permission Z on ban_ruou_bia with cond 19.2 AND P14 AND NOT S16,
+B0.M10a.03,B0,M10a,C,add obligation Z on ban_ruou_bia with cond 19.2 AND P14 AND NOT S16,
+B0.M10a.04,B0,M10a,C,add permission Z on ban_ruou_bia with cond 19.4 AND P14 AND NOT S16,
+B0.M10a.05,B0,M10a,C,add obligation Z on ban_ruou_bia with cond 19.4 AND P14 AND NOT S16,
+B0.M10a.06,B0,M10a,C,add permission Z on ban_ruou_bia with cond 19.5 AND P14 AND NOT S16,
+B0.M10a.07,B0,M10a,C,add obligation Z on ban_ruou_bia with cond 19.5 AND P14 AND NOT S16,
+B0.M10a.08,B0,M10a,C,add permission Z on ban_ruou_bia with cond 19.6 AND P14 AND NOT S16,
+B0.M10a.09,B0,M10a,C,add obligation Z on ban_ruou_bia with cond 19.6 AND P14 AND NOT S16,
+B0.M10b.00,B0,M10b,C,add permission Z on ban_ruou_bia with cond 19.1,
+B0.M10b.01,B0,M10b,C,add obligation Z on ban_ruou_bia with cond 19.1,
+B0.M10b.02,B0,M10b,C,add permission Z on ban_ruou_bia with cond 19.2,
+B0.M10b.03,B0,M10b,C,add obligation Z on ban_ruou_bia with cond 19.2,
+B0.M10b.04,B0,M10b,C,add permission Z on ban_ruou_bia with cond 19.4,
+B0.M10b.05,B0,M10b,C,add obligation Z on ban_ruou_bia with cond 19.4,
+B0.M10b.06,B0,M10b,C,add permission Z on ban_ruou_bia with cond 19.5,
+B0.M10b.07,B0,M10b,C,add obligation Z on ban_ruou_bia with cond 19.5,
+B0.M10b.08,B0,M10b,C,add permission Z on ban_ruou_bia with cond 19.6,
+B0.M10b.09,B0,M10b,C,add obligation Z on ban_ruou_bia with cond 19.6,
+B0.C1.00,B0,C1,D,control: norm 5.3-ban gets a new unique id,
+B0.C1.01,B0,C1,D,control: norm 5.3-khuyen-mai gets a new unique id,
+B0.C1.02,B0,C1,D,control: norm 19.1 gets a new unique id,
+B0.C1.03,B0,C1,D,control: norm 19.2 gets a new unique id,
+B0.C1.04,B0,C1,D,control: norm 19.5 gets a new unique id,
+B0.C1.05,B0,C1,D,control: norm 19.6 gets a new unique id,
+B0.C2.00,B0,C2,D,control: norm 5.3-khuyen-mai cites the existing Điều 5,
+B0.C2.01,B0,C2,D,control: norm 5.9-i cites the existing Điều 5,
+B0.C2.02,B0,C2,D,control: norm 5.11-ii cites the existing Điều 5,
+B0.C2.03,B0,C2,D,control: norm 19.2 cites the existing Điều 5,
+B0.C2.04,B0,C2,D,control: norm 19.3 cites the existing Điều 5,
+B0.C2.05,B0,C2,D,control: norm 19.6 cites the existing Điều 5,
+B0.C3.00,B0,C3,D,control: swap list positions 0 and 3,
+B0.C3.01,B0,C3,D,control: swap list positions 0 and 5,
+B0.C3.02,B0,C3,D,control: swap list positions 1 and 6,
+B0.C3.03,B0,C3,D,control: swap list positions 4 and 5,
+B0.C3.04,B0,C3,D,control: swap list positions 5 and 10,
+B0.C3.05,B0,C3,D,control: swap list positions 6 and 8,
+B1.M5.00,B1,M5,A,id of norm 8 (19.3) := id of norm 1,N:duplicateId:5.3-cung-cap
+B1.M5.01,B1,M5,A,id of norm 11 (19.6) := id of norm 4,N:duplicateId:5.9-ii
+B1.M5.02,B1,M5,A,id of norm 5 (5.11-ii) := id of norm 7,N:duplicateId:19.2
+B1.M5.03,B1,M5,A,id of norm 9 (19.4) := id of norm 8,N:duplicateId:19.3
+B1.M5.04,B1,M5,A,id of norm 4 (5.9-ii) := id of norm 10,N:duplicateId:19.5
+B1.M5.05,B1,M5,A,id of norm 7 (19.2) := id of norm 12,N:duplicateId:SYN-P
+B1.M6a.00,B1,M6a,A,norm 5.3-cung-cap cites Điều 99,N:dangling:5.3-cung-cap:Điều 99
+B1.M6a.01,B1,M6a,A,norm 5.9-ii cites Điều 99,N:dangling:5.9-ii:Điều 99
+B1.M6a.02,B1,M6a,A,norm 19.2 cites Điều 99,N:dangling:19.2:Điều 99
+B1.M6a.03,B1,M6a,A,norm 19.5 cites Điều 99,N:dangling:19.5:Điều 99
+B1.M6a.04,B1,M6a,A,norm 19.6 cites Điều 99,N:dangling:19.6:Điều 99
+B1.M6a.05,B1,M6a,A,norm SYN-P cites Điều 99,N:dangling:SYN-P:Điều 99
+B1.M8b.00,B1,M8b,A,reader S04 chưa đủ 18 -> atom 8 value 2 (outside its domain),RS:readerValueOutOfRange:S04 chưa đủ 18:8:2
+B1.M8b.01,B1,M8b,A,reader S02 từ 15 -> atom 5 value 2 (outside its domain),RS:readerValueOutOfRange:S02 từ 15:5:2
+B1.M8b.02,B1,M8b,A,reader S15 -> atom 0 value 2 (outside its domain),RS:readerValueOutOfRange:S15:0:2
+B1.M8b.03,B1,M8b,A,reader S15 -> atom 5 value 2 (outside its domain),RS:readerValueOutOfRange:S15:5:2
+B1.M8b.04,B1,M8b,A,reader S17 -> atom 1 value 2 (outside its domain),RS:readerValueOutOfRange:S17:1:2
+B1.M8b.05,B1,M8b,A,reader S19 -> atom 6 value 2 (outside its domain),RS:readerValueOutOfRange:S19:6:2
+B1.M8c.00,B1,M8c,A,reader S04 từ đủ 18 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S04 từ đủ 18:9
+B1.M8c.01,B1,M8c,A,reader S02 dưới 15 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S02 dưới 15:9
+B1.M8c.02,B1,M8c,A,reader S15 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S15:9
+B1.M8c.03,B1,M8c,A,reader S16 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S16:9
+B1.M8c.04,B1,M8c,A,reader S19 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S19:9
+B1.M8c.05,B1,M8c,A,reader S20 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S20:9
+B1.M8e.00,B1,M8e,A,5.3-cung-cap: Cond.sit 0 -> 11 (out of range),N:atomIndexOutOfRange:5.3-cung-cap
+B1.M8e.01,B1,M8e,A,5.9-i: Cond.sit 3 -> 11 (out of range),N:atomIndexOutOfRange:5.9-i
+B1.M8e.02,B1,M8e,A,19.4: Cond.sit 7 -> 11 (out of range),N:atomIndexOutOfRange:19.4
+B1.M8e.03,B1,M8e,A,19.5: Cond.sit 8 -> 11 (out of range),N:atomIndexOutOfRange:19.5
+B1.M8e.04,B1,M8e,A,SYN-P: Cond.sit 2 -> 11 (out of range),N:atomIndexOutOfRange:SYN-P
+B1.M8e.05,B1,M8e,A,SYN-P: Cond.sit 1 -> 11 (out of range),N:atomIndexOutOfRange:SYN-P
+B1.M9b.00,B1,M9b,A,5.3-khuyen-mai and 19.3 override each other,N:priorityCycle:5.3-khuyen-mai;N:priorityCycle:19.3
+B1.M9b.01,B1,M9b,A,5.9-ii and 19.1 override each other,N:priorityCycle:5.9-ii;N:priorityCycle:19.1
+B1.M9b.02,B1,M9b,A,5.9-ii and 19.3 override each other,N:priorityCycle:5.9-ii;N:priorityCycle:19.3
+B1.M9b.03,B1,M9b,A,5.11-ii and 19.4 override each other,N:priorityCycle:5.11-ii;N:priorityCycle:19.4
+B1.M9b.04,B1,M9b,A,19.4 and 19.6 override each other,N:priorityCycle:19.4;N:priorityCycle:19.6
+B1.M9b.05,B1,M9b,A,19.5 and SYN-P override each other,N:priorityCycle:19.5;N:priorityCycle:SYN-P
+B1.M9c.00,B1,M9c,A,5.3-khuyen-mai overrides unknown id,N:unknownOverride:5.3-khuyen-mai:khong_co_id
+B1.M9c.01,B1,M9c,A,5.11-ii overrides unknown id,N:unknownOverride:5.11-ii:khong_co_id
+B1.M9c.02,B1,M9c,A,19.2 overrides unknown id,N:unknownOverride:19.2:khong_co_id
+B1.M9c.03,B1,M9c,A,19.3 overrides unknown id,N:unknownOverride:19.3:khong_co_id
+B1.M9c.04,B1,M9c,A,19.4 overrides unknown id,N:unknownOverride:19.4:khong_co_id
+B1.M9c.05,B1,M9c,A,SYN-P overrides unknown id,N:unknownOverride:SYN-P:khong_co_id
+B1.M11a.00,B1,M11a,A,situation atoms 0 and 8 share a name,TS:duplicateAtomName:S04 tuổi của người nhận
+B1.M11a.01,B1,M11a,A,situation atoms 1 and 2 share a name,"TS:duplicateAtomName:S02 độ cồn của rượu, bia"
+B1.M11a.02,B1,M11a,A,situation atoms 1 and 6 share a name,"TS:duplicateAtomName:S02 độ cồn của rượu, bia"
+B1.M11a.03,B1,M11a,A,situation atoms 4 and 6 share a name,"TS:duplicateAtomName:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí"
+B1.M11a.04,B1,M11a,A,situation atoms 4 and 7 share a name,"TS:duplicateAtomName:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí"
+B1.M11a.05,B1,M11a,A,situation atoms 5 and 8 share a name,"TS:duplicateAtomName:S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác"
+B1.M11b.00,B1,M11b,A,situation atom 0 (S04) has no bands,TS:emptyDomain:S04 tuổi của người nhận;RS:readerValueOutOfRange:S04 chưa đủ 18:0:0;RS:readerValueOutOfRange:S04 từ đủ 18:0:1
+B1.M11b.01,B1,M11b,A,situation atom 1 (S02) has no bands,"TS:emptyDomain:S02 độ cồn của rượu, bia;RS:readerValueOutOfRange:S02 dưới 15:1:0;RS:readerValueOutOfRange:S02 từ 15:1:1"
+B1.M11c.00,B1,M11c,A,S atom 1: empty source,"TS:emptyAtomSource:S02 độ cồn của rượu, bia"
+B1.M11c.01,B1,M11c,A,S atom 1 band 0: empty source,"TS:emptyBandSource:S02 độ cồn của rượu, bia:dưới 15 độ"
+B1.M11c.02,B1,M11c,A,S atom 2: empty source,TS:emptyAtomSource:S14 địa điểm là cơ sở y tế
+B1.M11c.03,B1,M11c,A,S atom 3: empty source,TS:emptyAtomSource:S15 địa điểm là cơ sở giáo dục
+B1.M11c.04,B1,M11c,A,S atom 4: empty source,"TS:emptyAtomSource:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí"
+B1.M11c.05,B1,M11c,A,S atom 8: empty source,"TS:emptyAtomSource:S20 địa điểm được phép kinh doanh rượu, bia"
+B1.M11d.00,B1,M11d,A,situation atom 0: two bands labelled the same,TS:duplicateBandLabel:S04 tuổi của người nhận:chưa đủ 18 tuổi
+B1.M11d.01,B1,M11d,A,situation atom 1: two bands labelled the same,"TS:duplicateBandLabel:S02 độ cồn của rượu, bia:dưới 15 độ"
+B1.M1.00,B1,M1,B,norm 5.3-ban: modality prohibition -> permission,
+B1.M1.01,B1,M1,B,norm 5.3-cung-cap: modality prohibition -> permission,
+B1.M1.02,B1,M1,B,norm 5.9-ii: modality prohibition -> permission,
+B1.M1.03,B1,M1,B,norm 19.1: modality prohibition -> obligation,
+B1.M1.04,B1,M1,B,norm 19.3: modality prohibition -> permission,
+B1.M1.05,B1,M1,B,norm 19.5: modality prohibition -> obligation,
+B1.M2.00,B1,M2,B,"add obligation M2new-3 on act cung_cap_ruou_bia, cond ('and', ('sit', 10), ('not', ('sit', 1)))",
+B1.M2.01,B1,M2,B,"add permission M2new-5 on act cung_cap_ruou_bia, cond ('or', ('sit', 2), ('sit', 9))",
+B1.M2.02,B1,M2,B,"add permission M2new-8 on act dung_ruou_bia_lam_qua_khuyen_mai, cond ('sit', 3)",
+B1.M2.03,B1,M2,B,"add obligation M2new-13 on act cung_cap_ruou_bia, cond ('or', ('sit', 6), ('sit', 7))",
+B1.M2.04,B1,M2,B,"add permission M2new-14 on act ban_ruou_bia_bang_may_tu_dong, cond ('not', ('sit', 0))",
+B1.M2.05,B1,M2,B,"add prohibition M2new-16 on act khuyen_mai_ruou_bia, cond ('sit', 8)",
+B1.M2.06,B1,M2,B,"add permission M2new-19 on act cung_cap_ruou_bia, cond ('and', ('sit', 2), ('sit', 10))",
+B1.M2.07,B1,M2,B,"add permission M2new-22 on act cung_cap_ruou_bia, cond ('sit', 3)",
+B1.M2.08,B1,M2,B,"add obligation M2new-26 on act khuyen_mai_ruou_bia, cond ('sit', 9)",
+B1.M2.09,B1,M2,B,"add obligation M2new-28 on act cung_cap_ruou_bia, cond ('and', ('sit', 8), ('sit', 3))",
+B1.M3.00,B1,M3,B,drop exception of 19.6,
+B1.M4.00,B1,M4,B,5.3-ban: widen band reader 0,
+B1.M4.01,B1,M4,B,5.3-cung-cap: widen band reader 0,
+B1.M4.02,B1,M4,B,5.3-cung-cap: swap band reader 0,
+B1.M4.03,B1,M4,B,5.3-khuyen-mai: narrow band reader 0,
+B1.M4.04,B1,M4,B,5.9-i: swap band reader 3,
+B1.M4.05,B1,M4,B,5.9-ii: widen band reader 3,
+B1.M7a.00,B1,M7a,B,norm 5.3-ban: act ban_ruou_bia -> existing khuyen_mai_ruou_bia,
+B1.M7a.01,B1,M7a,B,norm 5.3-cung-cap: act cung_cap_ruou_bia -> existing ban_ruou_bia,
+B1.M7a.02,B1,M7a,B,norm 5.9-i: act khuyen_mai_ruou_bia -> existing dung_ruou_bia_lam_qua_khuyen_mai,
+B1.M7a.03,B1,M7a,B,norm 5.11-ii: act ban_ruou_bia_bang_may_tu_dong -> existing khuyen_mai_ruou_bia,
+B1.M7a.04,B1,M7a,B,norm 19.2: act ban_ruou_bia -> existing khuyen_mai_ruou_bia,
+B1.M7a.05,B1,M7a,B,norm 19.5: act ban_ruou_bia -> existing cung_cap_ruou_bia,
+B1.M7b.00,B1,M7b,B,norm 5.9-i: act khuyen_mai_ruou_bia -> new act_moi_5.9-i,
+B1.M7b.01,B1,M7b,B,norm 5.11-ii: act ban_ruou_bia_bang_may_tu_dong -> new act_moi_5.11-ii,
+B1.M7b.02,B1,M7b,B,norm 19.1: act ban_ruou_bia -> new act_moi_19.1,
+B1.M7b.03,B1,M7b,B,norm 19.2: act ban_ruou_bia -> new act_moi_19.2,
+B1.M7b.04,B1,M7b,B,norm 19.3: act ban_ruou_bia -> new act_moi_19.3,
+B1.M7b.05,B1,M7b,B,norm 19.5: act ban_ruou_bia -> new act_moi_19.5,
+B1.M8a.00,B1,M8a,B,"reader S04 từ đủ 18 (0,1) -> (5,1) in range",
+B1.M8a.01,B1,M8a,B,"reader S15 (3,1) -> (8,0) in range",
+B1.M8a.02,B1,M8a,B,"reader S16 (4,1) -> (2,0) in range",
+B1.M8a.03,B1,M8a,B,"reader S16 (4,1) -> (8,0) in range",
+B1.M8a.04,B1,M8a,B,"reader S17 (5,1) -> (8,1) in range",
+B1.M8a.05,B1,M8a,B,"reader S18 (6,1) -> (3,1) in range",
+B1.M8d.00,B1,M8d,B,5.3-ban: Cond.sit 0 -> 4 (in range),
+B1.M8d.01,B1,M8d,B,5.3-ban: Cond.sit 0 -> 9 (in range),
+B1.M8d.02,B1,M8d,B,5.3-khuyen-mai: Cond.sit 0 -> 10 (in range),
+B1.M8d.03,B1,M8d,B,5.9-i: Cond.sit 3 -> 2 (in range),
+B1.M8d.04,B1,M8d,B,19.5: Cond.sit 8 -> 9 (in range),
+B1.M8d.05,B1,M8d,B,SYN-P: Cond.sit 1 -> 6 (in range),
+B1.M9a.00,B1,M9a,B,5.3-cung-cap overrides 5.9-ii,
+B1.M9a.01,B1,M9a,B,19.1 overrides 5.3-cung-cap,
+B1.M9a.02,B1,M9a,B,19.1 overrides 5.11-ii,
+B1.M9a.03,B1,M9a,B,19.2 overrides SYN-P,
+B1.M9a.04,B1,M9a,B,19.5 overrides 5.3-cung-cap,
+B1.M9a.05,B1,M9a,B,19.5 overrides 5.11-ii,
+B1.C1.00,B1,C1,D,control: norm 5.3-ban gets a new unique id,
+B1.C1.01,B1,C1,D,control: norm 5.9-ii gets a new unique id,
+B1.C1.02,B1,C1,D,control: norm 19.2 gets a new unique id,
+B1.C1.03,B1,C1,D,control: norm 19.3 gets a new unique id,
+B1.C1.04,B1,C1,D,control: norm 19.5 gets a new unique id,
+B1.C1.05,B1,C1,D,control: norm 19.6 gets a new unique id,
+B1.C2.00,B1,C2,D,control: norm 5.3-khuyen-mai cites the existing Điều 5,
+B1.C2.01,B1,C2,D,control: norm 5.11-ii cites the existing Điều 5,
+B1.C2.02,B1,C2,D,control: norm 19.1 cites the existing Điều 5,
+B1.C2.03,B1,C2,D,control: norm 19.2 cites the existing Điều 5,
+B1.C2.04,B1,C2,D,control: norm 19.4 cites the existing Điều 5,
+B1.C2.05,B1,C2,D,control: norm SYN-P cites the existing Điều 5,
+B1.C3.00,B1,C3,D,control: swap list positions 0 and 3,
+B1.C3.01,B1,C3,D,control: swap list positions 0 and 4,
+B1.C3.02,B1,C3,D,control: swap list positions 2 and 8,
+B1.C3.03,B1,C3,D,control: swap list positions 3 and 5,
+B1.C3.04,B1,C3,D,control: swap list positions 6 and 7,
+B1.C3.05,B1,C3,D,control: swap list positions 6 and 12,
+B2.M5.00,B2,M5,A,id of norm 5 (5.11-ii) := id of norm 1,N:duplicateId:5.3-cung-cap
+B2.M5.01,B2,M5,A,id of norm 5 (5.11-ii) := id of norm 6,N:duplicateId:19.1
+B2.M5.02,B2,M5,A,id of norm 7 (19.2) := id of norm 6,N:duplicateId:19.1
+B2.M5.03,B2,M5,A,id of norm 8 (19.3) := id of norm 6,N:duplicateId:19.1
+B2.M5.04,B2,M5,A,id of norm 2 (5.3-khuyen-mai) := id of norm 10,N:duplicateId:19.5
+B2.M5.05,B2,M5,A,id of norm 2 (5.3-khuyen-mai) := id of norm 12,N:duplicateId:SYN-P
+B2.M6a.00,B2,M6a,A,norm 5.9-ii cites Điều 99,N:dangling:5.9-ii:Điều 99
+B2.M6a.01,B2,M6a,A,norm 19.1 cites Điều 99,N:dangling:19.1:Điều 99
+B2.M6a.02,B2,M6a,A,norm 19.2 cites Điều 99,N:dangling:19.2:Điều 99
+B2.M6a.03,B2,M6a,A,norm 19.4 cites Điều 99,N:dangling:19.4:Điều 99
+B2.M6a.04,B2,M6a,A,norm 19.5 cites Điều 99,N:dangling:19.5:Điều 99
+B2.M6a.05,B2,M6a,A,norm 19.6 cites Điều 99,N:dangling:19.6:Điều 99
+B2.M8b.00,B2,M8b,A,reader S04 từ đủ 18 -> atom 4 value 2 (outside its domain),RS:readerValueOutOfRange:S04 từ đủ 18:4:2
+B2.M8b.01,B2,M8b,A,reader S14 -> atom 6 value 2 (outside its domain),RS:readerValueOutOfRange:S14:6:2
+B2.M8b.02,B2,M8b,A,reader S16 -> atom 5 value 2 (outside its domain),RS:readerValueOutOfRange:S16:5:2
+B2.M8b.03,B2,M8b,A,reader S18 -> atom 5 value 2 (outside its domain),RS:readerValueOutOfRange:S18:5:2
+B2.M8b.04,B2,M8b,A,reader S18 -> atom 7 value 2 (outside its domain),RS:readerValueOutOfRange:S18:7:2
+B2.M8b.05,B2,M8b,A,reader S19 -> atom 0 value 2 (outside its domain),RS:readerValueOutOfRange:S19:0:2
+B2.M8c.00,B2,M8c,A,reader S02 dưới 15 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S02 dưới 15:9
+B2.M8c.01,B2,M8c,A,reader S02 từ 15 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S02 từ 15:9
+B2.M8c.02,B2,M8c,A,reader S14 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S14:9
+B2.M8c.03,B2,M8c,A,reader S16 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S16:9
+B2.M8c.04,B2,M8c,A,reader S17 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S17:9
+B2.M8c.05,B2,M8c,A,reader S20 -> atom 9 (outside the table),RS:readerAtomOutOfRange:S20:9
+B2.M8e.00,B2,M8e,A,5.3-ban: Cond.sit 0 -> 11 (out of range),N:atomIndexOutOfRange:5.3-ban
+B2.M8e.01,B2,M8e,A,5.3-khuyen-mai: Cond.sit 0 -> 11 (out of range),N:atomIndexOutOfRange:5.3-khuyen-mai
+B2.M8e.02,B2,M8e,A,5.9-i: Cond.sit 3 -> 11 (out of range),N:atomIndexOutOfRange:5.9-i
+B2.M8e.03,B2,M8e,A,19.3: Cond.sit 6 -> 11 (out of range),N:atomIndexOutOfRange:19.3
+B2.M8e.04,B2,M8e,A,19.4: Cond.sit 7 -> 11 (out of range),N:atomIndexOutOfRange:19.4
+B2.M8e.05,B2,M8e,A,SYN-P: Cond.sit 1 -> 11 (out of range),N:atomIndexOutOfRange:SYN-P
+B2.M9b.00,B2,M9b,A,5.3-ban and 5.11-ii override each other,N:priorityCycle:5.3-ban;N:priorityCycle:5.11-ii
+B2.M9b.01,B2,M9b,A,5.3-khuyen-mai and 19.5 override each other,N:priorityCycle:5.3-khuyen-mai;N:priorityCycle:19.5
+B2.M9b.02,B2,M9b,A,5.9-ii and 19.5 override each other,N:priorityCycle:5.9-ii;N:priorityCycle:19.5
+B2.M9b.03,B2,M9b,A,19.1 and 19.4 override each other,N:priorityCycle:19.1;N:priorityCycle:19.4
+B2.M9b.04,B2,M9b,A,19.1 and SYN-P override each other,N:priorityCycle:19.1;N:priorityCycle:SYN-P
+B2.M9b.05,B2,M9b,A,19.3 and SYN-P override each other,N:priorityCycle:19.3;N:priorityCycle:SYN-P
+B2.M9c.00,B2,M9c,A,5.3-ban overrides unknown id,N:unknownOverride:5.3-ban:khong_co_id
+B2.M9c.01,B2,M9c,A,5.3-cung-cap overrides unknown id,N:unknownOverride:5.3-cung-cap:khong_co_id
+B2.M9c.02,B2,M9c,A,5.3-khuyen-mai overrides unknown id,N:unknownOverride:5.3-khuyen-mai:khong_co_id
+B2.M9c.03,B2,M9c,A,19.2 overrides unknown id,N:unknownOverride:19.2:khong_co_id
+B2.M9c.04,B2,M9c,A,19.5 overrides unknown id,N:unknownOverride:19.5:khong_co_id
+B2.M9c.05,B2,M9c,A,19.6 overrides unknown id,N:unknownOverride:19.6:khong_co_id
+B2.M11a.00,B2,M11a,A,situation atoms 0 and 1 share a name,TS:duplicateAtomName:S04 tuổi của người nhận
+B2.M11a.01,B2,M11a,A,situation atoms 0 and 2 share a name,TS:duplicateAtomName:S04 tuổi của người nhận
+B2.M11a.02,B2,M11a,A,situation atoms 0 and 7 share a name,TS:duplicateAtomName:S04 tuổi của người nhận
+B2.M11a.03,B2,M11a,A,situation atoms 1 and 2 share a name,"TS:duplicateAtomName:S02 độ cồn của rượu, bia"
+B2.M11a.04,B2,M11a,A,situation atoms 1 and 7 share a name,"TS:duplicateAtomName:S02 độ cồn của rượu, bia"
+B2.M11a.05,B2,M11a,A,situation atoms 4 and 6 share a name,"TS:duplicateAtomName:S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí"
+B2.M11b.00,B2,M11b,A,situation atom 0 (S04) has no bands,TS:emptyDomain:S04 tuổi của người nhận;RS:readerValueOutOfRange:S04 chưa đủ 18:0:0;RS:readerValueOutOfRange:S04 từ đủ 18:0:1
+B2.M11b.01,B2,M11b,A,situation atom 1 (S02) has no bands,"TS:emptyDomain:S02 độ cồn của rượu, bia;RS:readerValueOutOfRange:S02 dưới 15:1:0;RS:readerValueOutOfRange:S02 từ 15:1:1"
+B2.M11c.00,B2,M11c,A,S atom 2: empty source,TS:emptyAtomSource:S14 địa điểm là cơ sở y tế
+B2.M11c.01,B2,M11c,A,S atom 3: empty source,TS:emptyAtomSource:S15 địa điểm là cơ sở giáo dục
+B2.M11c.02,B2,M11c,A,S atom 5: empty source,"TS:emptyAtomSource:S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác"
+B2.M11c.03,B2,M11c,A,S atom 6: empty source,TS:emptyAtomSource:S18 địa điểm là cơ sở bảo trợ xã hội
+B2.M11c.04,B2,M11c,A,S atom 7: empty source,"TS:emptyAtomSource:S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập"
+B2.M11c.05,B2,M11c,A,S atom 8: empty source,"TS:emptyAtomSource:S20 địa điểm được phép kinh doanh rượu, bia"
+B2.M11d.00,B2,M11d,A,situation atom 0: two bands labelled the same,TS:duplicateBandLabel:S04 tuổi của người nhận:chưa đủ 18 tuổi
+B2.M11d.01,B2,M11d,A,situation atom 1: two bands labelled the same,"TS:duplicateBandLabel:S02 độ cồn của rượu, bia:dưới 15 độ"
+B2.M1.00,B2,M1,B,norm 5.3-ban: modality prohibition -> permission,
+B2.M1.01,B2,M1,B,norm 5.3-khuyen-mai: modality prohibition -> obligation,
+B2.M1.02,B2,M1,B,norm 5.9-i: modality prohibition -> obligation,
+B2.M1.03,B2,M1,B,norm 19.2: modality prohibition -> obligation,
+B2.M1.04,B2,M1,B,norm 19.3: modality prohibition -> permission,
+B2.M1.05,B2,M1,B,norm 19.6: modality prohibition -> permission,
+B2.M2.00,B2,M2,B,"add permission M2new-2 on act cung_cap_ruou_bia, cond ('param', 0)",
+B2.M2.01,B2,M2,B,"add permission M2new-3 on act ban_ruou_bia_bang_may_tu_dong, cond ('or', ('sit', 3), ('not', ('sit', 3)))",
+B2.M2.02,B2,M2,B,"add obligation M2new-4 on act dung_ruou_bia_lam_qua_khuyen_mai, cond ('sit', 10)",
+B2.M2.03,B2,M2,B,"add obligation M2new-6 on act dung_ruou_bia_lam_qua_khuyen_mai, cond ('and', ('not', ('sit', 7)), ('sit', 4))",
+B2.M2.04,B2,M2,B,"add obligation M2new-12 on act cung_cap_ruou_bia, cond ('and', ('sit', 6), ('sit', 9))",
+B2.M2.05,B2,M2,B,"add obligation M2new-13 on act ban_ruou_bia, cond ('sit', 10)",
+B2.M2.06,B2,M2,B,"add obligation M2new-21 on act ban_ruou_bia_bang_may_tu_dong, cond ('or', ('sit', 5), ('not', ('sit', 3)))",
+B2.M2.07,B2,M2,B,"add obligation M2new-24 on act khuyen_mai_ruou_bia, cond ('or', ('not', ('sit', 8)), ('sit', 6))",
+B2.M2.08,B2,M2,B,"add obligation M2new-25 on act ban_ruou_bia_bang_may_tu_dong, cond ('and', ('not', ('sit', 9)), ('not', ('sit', 9)))",
+B2.M2.09,B2,M2,B,"add permission M2new-28 on act ban_ruou_bia, cond ('sit', 7)",
+B2.M3.00,B2,M3,B,drop exception of 19.6,
+B2.M4.00,B2,M4,B,5.3-ban: narrow band reader 0,
+B2.M4.01,B2,M4,B,5.3-cung-cap: swap band reader 0,
+B2.M4.02,B2,M4,B,5.3-khuyen-mai: narrow band reader 0,
+B2.M4.03,B2,M4,B,5.9-i: widen band reader 3,
+B2.M4.04,B2,M4,B,5.9-i: narrow band reader 3,
+B2.M4.05,B2,M4,B,SYN-P: narrow band reader 1,
+B2.M7a.00,B2,M7a,B,norm 5.3-khuyen-mai: act khuyen_mai_ruou_bia -> existing ban_ruou_bia_bang_may_tu_dong,
+B2.M7a.01,B2,M7a,B,norm 5.9-i: act khuyen_mai_ruou_bia -> existing ban_ruou_bia,
+B2.M7a.02,B2,M7a,B,norm 19.2: act ban_ruou_bia -> existing ban_ruou_bia_bang_may_tu_dong,
+B2.M7a.03,B2,M7a,B,norm 19.4: act ban_ruou_bia -> existing cung_cap_ruou_bia,
+B2.M7a.04,B2,M7a,B,norm 19.4: act ban_ruou_bia -> existing dung_ruou_bia_lam_qua_khuyen_mai,
+B2.M7a.05,B2,M7a,B,norm SYN-P: act khuyen_mai_ruou_bia -> existing ban_ruou_bia,
+B2.M7b.00,B2,M7b,B,norm 5.3-ban: act ban_ruou_bia -> new act_moi_5.3-ban,
+B2.M7b.01,B2,M7b,B,norm 5.3-khuyen-mai: act khuyen_mai_ruou_bia -> new act_moi_5.3-khuyen-mai,
+B2.M7b.02,B2,M7b,B,norm 19.2: act ban_ruou_bia -> new act_moi_19.2,
+B2.M7b.03,B2,M7b,B,norm 19.4: act ban_ruou_bia -> new act_moi_19.4,
+B2.M7b.04,B2,M7b,B,norm 19.6: act ban_ruou_bia -> new act_moi_19.6,
+B2.M7b.05,B2,M7b,B,norm SYN-P: act khuyen_mai_ruou_bia -> new act_moi_SYN-P,
+B2.M8a.00,B2,M8a,B,"reader S04 chưa đủ 18 (0,0) -> (3,0) in range",
+B2.M8a.01,B2,M8a,B,"reader S16 (4,1) -> (1,1) in range",
+B2.M8a.02,B2,M8a,B,"reader S17 (5,1) -> (0,1) in range",
+B2.M8a.03,B2,M8a,B,"reader S17 (5,1) -> (7,0) in range",
+B2.M8a.04,B2,M8a,B,"reader S18 (6,1) -> (2,1) in range",
+B2.M8a.05,B2,M8a,B,"reader S19 (7,1) -> (0,1) in range",
+B2.M8d.00,B2,M8d,B,5.3-ban: Cond.sit 0 -> 4 (in range),
+B2.M8d.01,B2,M8d,B,5.3-cung-cap: Cond.sit 0 -> 3 (in range),
+B2.M8d.02,B2,M8d,B,5.3-khuyen-mai: Cond.sit 0 -> 10 (in range),
+B2.M8d.03,B2,M8d,B,5.9-i: Cond.sit 3 -> 1 (in range),
+B2.M8d.04,B2,M8d,B,19.2: Cond.sit 5 -> 0 (in range),
+B2.M8d.05,B2,M8d,B,19.5: Cond.sit 8 -> 10 (in range),
+B2.M9a.00,B2,M9a,B,5.3-ban overrides 19.3,
+B2.M9a.01,B2,M9a,B,5.9-i overrides 5.3-khuyen-mai,
+B2.M9a.02,B2,M9a,B,19.1 overrides 5.11-ii,
+B2.M9a.03,B2,M9a,B,19.2 overrides 19.1,
+B2.M9a.04,B2,M9a,B,19.6 overrides 5.3-ban,
+B2.M9a.05,B2,M9a,B,19.6 overrides 19.1,
+B2.C1.00,B2,C1,D,control: norm 5.9-i gets a new unique id,
+B2.C1.01,B2,C1,D,control: norm 5.9-ii gets a new unique id,
+B2.C1.02,B2,C1,D,control: norm 19.1 gets a new unique id,
+B2.C1.03,B2,C1,D,control: norm 19.2 gets a new unique id,
+B2.C1.04,B2,C1,D,control: norm 19.3 gets a new unique id,
+B2.C1.05,B2,C1,D,control: norm 19.6 gets a new unique id,
+B2.C2.00,B2,C2,D,control: norm 5.3-ban cites the existing Điều 5,
+B2.C2.01,B2,C2,D,control: norm 5.3-cung-cap cites the existing Điều 5,
+B2.C2.02,B2,C2,D,control: norm 5.3-khuyen-mai cites the existing Điều 5,
+B2.C2.03,B2,C2,D,control: norm 5.9-i cites the existing Điều 5,
+B2.C2.04,B2,C2,D,control: norm 19.3 cites the existing Điều 5,
+B2.C2.05,B2,C2,D,control: norm SYN-P cites the existing Điều 5,
+B2.C3.00,B2,C3,D,control: swap list positions 1 and 10,
+B2.C3.01,B2,C3,D,control: swap list positions 2 and 6,
+B2.C3.02,B2,C3,D,control: swap list positions 2 and 9,
+B2.C3.03,B2,C3,D,control: swap list positions 3 and 12,
+B2.C3.04,B2,C3,D,control: swap list positions 4 and 10,
+B2.C3.05,B2,C3,D,control: swap list positions 5 and 10,
