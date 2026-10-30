@@ -10,4 +10,5 @@ import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
 import LexProof.Verify.Projection
 import LexProof.Verify.ProjectedCheck
+import LexProof.Verify.AnalyzeProjected
 import LexProof.Cert.Audit

@@ -9,6 +9,7 @@ import LexProof.Verify.Validate
 import LexProof.Verify.Conflict
 import LexProof.Verify.Projection
 import LexProof.Verify.ProjectedCheck
+import LexProof.Verify.AnalyzeProjected
 import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
 
