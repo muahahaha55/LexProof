@@ -1,0 +1,124 @@
+== BẢNG TÌNH HUỐNG
+S04 tuổi của người nhận [enum 2] — nguồn: Điều 5 khoản 3
+    · chưa đủ 18 tuổi — nguồn: Điều 5 khoản 3: «cho người chưa đủ 18 tuổi»
+    · từ đủ 18 tuổi trở lên — nguồn: KHÔNG có khoản nào nêu; là phần bù của «chưa đủ 18 tuổi» (Điều 5 khoản 3), giả định của người mã hóa
+S02 độ cồn của rượu, bia [enum 2] — nguồn: Điều 2 khoản 4 (định nghĩa độ cồn); Điều 5 khoản 9
+    · dưới 15 độ — nguồn: Điều 11 tiêu đề: «có độ cồn dưới 15 độ»; phần bù của «từ 15 độ trở lên» (Điều 5 khoản 9)
+    · từ 15 độ trở lên — nguồn: Điều 5 khoản 9: «có độ cồn từ 15 độ trở lên»
+S14 địa điểm là cơ sở y tế [Bool] — nguồn: Điều 19 khoản 1
+S15 địa điểm là cơ sở giáo dục [Bool] — nguồn: Điều 19 khoản 2
+S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí [Bool] — nguồn: Điều 19 khoản 3
+S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác [Bool] — nguồn: Điều 19 khoản 4
+S18 địa điểm là cơ sở bảo trợ xã hội [Bool] — nguồn: Điều 19 khoản 5
+S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập [Bool] — nguồn: Điều 19 khoản 6
+S20 địa điểm được phép kinh doanh rượu, bia [Bool] — nguồn: Điều 19 khoản 6 (ngoại lệ «trừ địa điểm được phép kinh doanh rượu, bia»)
+== BẢNG THAM SỐ
+P14 địa điểm «dành cho» người chưa đủ 18 tuổi [Bool] — nguồn: Điều 19 khoản 3 («dành cho người chưa đủ 18 tuổi»: khái niệm mở, luật không định nghĩa)
+== BỘ ĐỌC TÌNH HUỐNG
+0: S04 tuổi của người nhận = chưa đủ 18 tuổi
+1: S04 tuổi của người nhận = từ đủ 18 tuổi trở lên
+2: S02 độ cồn của rượu, bia = dưới 15 độ
+3: S02 độ cồn của rượu, bia = từ 15 độ trở lên
+4: S14 địa điểm là cơ sở y tế
+5: S15 địa điểm là cơ sở giáo dục
+6: S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí
+7: S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác
+8: S18 địa điểm là cơ sở bảo trợ xã hội
+9: S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập
+10: S20 địa điểm được phép kinh doanh rượu, bia
+== BỘ ĐỌC THAM SỐ
+0: P14 địa điểm «dành cho» người chưa đủ 18 tuổi
+== NORM
+[5.3-ban] act = ban_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 5 khoản 3
+  điều kiện: S04 tuổi của người nhận = chưa đủ 18 tuổi
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[5.3-cung-cap] act = cung_cap_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 5 khoản 3
+  điều kiện: S04 tuổi của người nhận = chưa đủ 18 tuổi
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[5.3-khuyen-mai] act = khuyen_mai_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 5 khoản 3
+  điều kiện: S04 tuổi của người nhận = chưa đủ 18 tuổi
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[5.9-i] act = khuyen_mai_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 5 khoản 9
+  điều kiện: S02 độ cồn của rượu, bia = từ 15 độ trở lên
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[5.9-ii] act = dung_ruou_bia_lam_qua_khuyen_mai | loại = cấm | nguồn = 44/2019/QH14, Điều 5 khoản 9
+  điều kiện: S02 độ cồn của rượu, bia = từ 15 độ trở lên
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[5.11-ii] act = ban_ruou_bia_bang_may_tu_dong | loại = cấm | nguồn = 44/2019/QH14, Điều 5 khoản 11
+  điều kiện: luôn đúng
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[19.1] act = ban_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 19 khoản 1
+  điều kiện: S14 địa điểm là cơ sở y tế
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[19.2] act = ban_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 19 khoản 2
+  điều kiện: S15 địa điểm là cơ sở giáo dục
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[19.3] act = ban_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 19 khoản 3
+  điều kiện: (S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí VÀ [tham số] P14 địa điểm «dành cho» người chưa đủ 18 tuổi)
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[19.4] act = ban_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 19 khoản 4
+  điều kiện: S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[19.5] act = ban_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 19 khoản 5
+  điều kiện: S18 địa điểm là cơ sở bảo trợ xã hội
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): không có
+  ưu tiên: không khai báo
+[19.6] act = ban_ruou_bia | loại = cấm | nguồn = 44/2019/QH14, Điều 19 khoản 6
+  điều kiện: S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập
+  ngoại lệ (norm không áp dụng nếu bất kỳ cái nào đúng): S20 địa điểm được phép kinh doanh rượu, bia
+  ưu tiên: không khai báo
+== CHƯA MÃ HÓA
+Điều 5 tiêu đề ‖ không phải norm riêng: modality «cấm» được áp dụng cho từng khoản qua G1 conservative
+Điều 19 tiêu đề ‖ không phải norm riêng: modality «cấm» và act «bán» được áp dụng cho từng khoản 1 đến 6 qua G1 conservative
+Điều 5 khoản 11 nhánh (i) ‖ khác nhóm act (kinh_doanh_ruou_khong_phep_hoac_dang_ky): thuộc mô-đun cấp phép (G12); thực chất là nghĩa vụ có giấy phép/đăng ký, phụ thuộc Điều 15
+Điều 2 khoản 1, 2, 4 ‖ định nghĩa rượu, bia, độ cồn: dùng làm từ vựng (atom S02), không phải norm
+Điều 11 ‖ ngoài lát cắt 1; chỉ yêu cầu «tuân thủ» luật này và pháp luật về khuyến mại (dẫn chiếu văn bản khác); chưa đọc phân tích
+Điều 15 khoản 4 ‖ ngoài lát cắt 1; điều kiện cấp phép mua bán rượu từ 5,5 độ; định nghĩa «được phép kinh doanh» dùng ở 19.6 (S20) nằm ở đây; chưa đọc phân tích
+Điều 16 ‖ ngoài lát cắt 1; điều kiện bán qua thương mại điện tử (nghĩa vụ hình thức, giao Chính phủ quy định biện pháp, dẫn pháp luật thương mại điện tử); chưa đọc phân tích
+Điều 32 khoản 3, 5, 7 ‖ ngoài lát cắt 1; trách nhiệm của cơ sở kinh doanh: 32.3 lao động dưới 18 (liên quan 5.4), 32.5 nghĩa vụ niêm yết (hình thức), 32.7 cấm mở điểm bán mới trong bán kính 100 m — khoảng cách không biểu diễn được bằng Core hiện tại
+== KẾT QUẢ analyzeP
+consistentOn { docId := some "44/2019/QH14",
+  normIds := ["5.3-ban", "5.3-cung-cap", "5.3-khuyen-mai", "5.9-i", "5.9-ii", "5.11-ii", "19.1", "19.2", "19.3", "19.4",
+              "19.5", "19.6"],
+  articles := ["Điều 5 khoản 3", "Điều 5 khoản 3", "Điều 5 khoản 3", "Điều 5 khoản 9", "Điều 5 khoản 9",
+               "Điều 5 khoản 11", "Điều 19 khoản 1", "Điều 19 khoản 2", "Điều 19 khoản 3", "Điều 19 khoản 4",
+               "Điều 19 khoản 5", "Điều 19 khoản 6"],
+  fullSituations := 512,
+  fullParams := 2,
+  pairsChecked := 22,
+  pairsSkipped := 44,
+  pointsPerPair := [("5.3-ban", "19.1", 4),
+                    ("5.3-ban", "19.2", 4),
+                    ("5.3-ban", "19.3", 8),
+                    ("5.3-ban", "19.4", 4),
+                    ("5.3-ban", "19.5", 4),
+                    ("5.3-ban", "19.6", 8),
+                    ("5.3-khuyen-mai", "5.9-i", 4),
+                    ("19.1", "19.2", 4),
+                    ("19.1", "19.3", 8),
+                    ("19.1", "19.4", 4),
+                    ("19.1", "19.5", 4),
+                    ("19.1", "19.6", 8),
+                    ("19.2", "19.3", 8),
+                    ("19.2", "19.4", 4),
+                    ("19.2", "19.5", 4),
+                    ("19.2", "19.6", 8),
+                    ("19.3", "19.4", 8),
+                    ("19.3", "19.5", 8),
+                    ("19.3", "19.6", 16),
+                    ("19.4", "19.5", 4),
+                    ("19.4", "19.6", 8),
+                    ("19.5", "19.6", 8)],
+  constraintsUsed := false }
+findings: []
+catalog: 36 first=(some (Điều 1)) last=(some (Điều 36))

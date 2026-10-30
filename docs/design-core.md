@@ -506,7 +506,7 @@ ngoại lệ; chu trình dài hơn 4.
 | `Norm.resolved_comm`, `Tests.mutual_override_not_resolved` | *không axiom nào* |
 
 Audit nay **tự động**: `LexProof/Cert/Audit.lean` chạy `#audit_axioms` trong mỗi
-`lake build` (2039 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean` và `Verify/AnalyzeProjected.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
+`lake build` (2107 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean`, `Verify/AnalyzeProjected.lean`, `Core/Render.lean` và `Laws/AlcoholSale.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
 `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, hay `axiom` tự khai. Cùng
 file chạy `#audit_encapsulation` để chặn việc dùng `LexProof.Internal.*` ngoài
 ba module được phép. Chi tiết: [conventions.md](conventions.md) §7. Đề xuất cho
@@ -628,3 +628,19 @@ danh sách bộ đọc, danh mục tham chiếu và danh sách norm, rồi theo 
 
 **Chưa có**: ràng buộc toàn vẹn trong bộ kiểm; ưu tiên nâng cao (`Audit.resolutions`, D23); `Scope` mới cho `analyze`; một bảng thật của một văn bản.
 Phép đo B5 dùng các atom thừa **nhân tạo**: lợi ích thật của việc chiếu theo cặp chưa đo được cho đến khi có một bảng thật.
+
+---
+
+## 13. `Core/Render.lean` và `Laws/AlcoholSale.lean` — bản nháp đầu tiên của một mô-đun `Laws`
+
+**`Core/Render.lean`** (86 dòng): in một `Norm` một cách **tất định** từ dữ liệu Lean — act, loại, điều kiện, ngoại lệ, ưu tiên, tên atom, nhãn dải, khoản nguồn của từng dải — để người duyệt đọc đúng cái bộ kiểm thấy. Không LLM, không diễn giải; bộ đọc thiếu hoặc atom thiếu được in là `‹…›` chứ không bị ẩn. Đây là phương án A (tất định) của [ADR-0019](decisions/0019-back-translation-renderer.md), chưa phải quyết định cuối.
+
+**`Laws/AlcoholSale.lean`**: **BẢN NHÁP, CHƯA AI DUYỆT.** Nhóm act «bán / cung cấp / khuyến mại rượu, bia» (mục C của slice1-notes): Điều 5 khoản 3, 9, 11 (nhánh ii) và Điều 19 khoản 1 đến 6 — 12 norm, 9 atom tình huống, 1 tham số, 36 điều trong danh mục. Mỗi atom và mỗi dải mang khoản nguồn. Điều khoản của nhóm hoặc sát nhóm không mã hóa nằm trong `notEncoded` (kèm lý do). Phiếu duyệt cho con người: [review/sale-group-review.md](review/sale-group-review.md).
+
+| Định lý | Nội dung |
+|---|---|
+| `silent` | `pfindings … = []`: `validate`, hai bảng, hai danh sách bộ đọc đều im lặng |
+| `consistent` | `analyzeP … = .consistentOn (projScope …)`, kernel (`decide +kernel`) |
+| `no_conflict_in_group` | hệ quả qua `not_conflict_of_consistentOnP` |
+
+**Ý nghĩa bị giới hạn.** Mọi norm trong nhóm là *cấm*, nên `consistentOn` đúng với mọi nội dung điều kiện (xem phiếu duyệt, mục 8). Bộ kiểm không phát hiện khe hở hay chồng lấn giữa các dải; việc đó chạy ngoài Lean (`eval/sale-group/boundaries.py`). **Ranh giới tin cậy**: tệp nằm trong `LexProof/Laws/` mà chưa có người duyệt, trái với nguyên tắc «đầu ra của LLM phải được người duyệt trước khi vào `Laws`» (CLAUDE.md, [ADR-0011](decisions/0011-trust-boundary-human-approval.md)); cơ chế cưỡng chế chưa có, nên cờ duy nhất là docstring và tên phiếu.

@@ -1,0 +1,12 @@
+== S02 độ cồn (đơn vị: độ = % thể tích, Điều 2 khoản 4)
+  band dưới 15 độ               [0, 15)   label in Lean: yes
+     hi end fixed by clause 11 (lines 206-208): 'có độ cồn dưới 15 độ' -> found
+  band từ 15 độ trở lên         [15, 100]   label in Lean: yes
+     lo end fixed by clause 5.9 (lines 103-104): 'có độ cồn từ 15 độ trở lên' -> found
+  'dưới 15 độ' | 'từ 15 độ trở lên' : meet exactly = True, gap = False, overlap = False
+== S04 tuổi của người nhận (năm)
+  band chưa đủ 18 tuổi          [0, 18)   label in Lean: yes
+     hi end fixed by clause 5.3 (lines 91-91): 'người chưa đủ 18 tuổi' -> found
+  band từ đủ 18 tuổi trở lên    [18, ∞)   label in Lean: yes
+     (no clause states this band; it is the complement of the previous one)
+  'chưa đủ 18 tuổi' | 'từ đủ 18 tuổi trở lên' : meet exactly = True, gap = False, overlap = False
