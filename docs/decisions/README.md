@@ -40,6 +40,7 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 | [0011](0011-trust-boundary-human-approval.md) | Tách `LexProof/` khỏi `pipeline/`; LLM sinh dữ liệu chứ không sinh mã | Cơ chế cưỡng chế phê duyệt; `Laws/` vẫn rỗng |
 | [0016](0016-reference-catalog-from-segmenter.md) | Danh mục tham chiếu đã là **tham số** của `validate`, và tham chiếu treo đã bị bắt | Danh mục chưa do segmenter sinh, chưa có bước duyệt, chưa ghi vào `Scope`; chưa phân biệt "treo" với "trỏ tới phần chưa mã hóa" |
 | [0018](0018-scope-lists-parameter-names.md) | `Scope.validExcluded`/`validTotal` nói **bao nhiêu** điểm bị loại trên tổng; `Scope.docId` là `Option` và danh sách lẫn văn bản là finding | `Scope` chưa liệt kê **tên** tham số khái niệm mở, chưa nói *điểm nào* bị `valid` loại, chưa có trạng thái duyệt, chưa có danh sách điều khoản bỏ qua |
+| [0022](0022-atom-table-valuation-situation.md) | Bảng atom + phép gán, finding của bảng, kiểm theo cặp không ràng buộc và `analyzeP` (tầng **bổ sung**, không sửa `Atoms`/`Finite`/`analyze`) | Chưa: ràng buộc trong bộ kiểm, `Scope` và D23 mới, bảng thật, thay hẳn `Atoms S P` (khẳng định rộng vẫn mở) |
 
 ## Chưa quyết định (Open / Proposed)
 
@@ -47,7 +48,6 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 |---|---|
 | [0019](0019-back-translation-renderer.md) | Dịch ngược bằng LLM hay renderer tất định? Khuynh hướng: **tất định**, vì LLM có lỗi tương quan với bước dịch xuôi |
 | [0020](0020-untrusted-search-kernel-certificate.md) | Cho phép phép tìm kiếm chạy đã biên dịch, nhưng mọi kết luận "đã kiểm chứng" phải có chứng chỉ kernel kiểm. Điểm cốt lõi: **chỉ khẳng định tồn tại có chứng chỉ nhỏ**; khẳng định nhất quán thì không, nên không được lợi gì |
-| [0022](0022-atom-table-valuation-situation.md) | Tình huống là phép gán trị cho **bảng atom** (tên, miền, khoản nguồn); thêm tầng V0 mà không sửa `Atoms`/`Finite`; ràng buộc là cây `Cond`. V0 đã có (`Core/AtomTable.lean`), chưa nối vào bộ kiểm; chưa giải quyết ràng buộc/`Scope`/D23 |
 
 ## Thứ tự phụ thuộc giữa các việc còn lại
 

@@ -1,7 +1,7 @@
 # ADR-0022: Tình huống là phép gán trị cho bảng atom (V0, chỉ thêm)
 
-- **Status**: Proposed — **chưa quyết định** có chuyển `Laws` sang mô hình này hay không
-- **Trạng thái cài đặt**: **Implemented một phần** — chỉ tầng V0 (`LexProof/Core/AtomTable.lean`); chưa nối vào `check`/`analyze`
+- **Status**: **Accepted cho tầng bổ sung** (bảng atom, phép gán, finding của bảng, kiểm theo cặp không ràng buộc, `analyzeP`); **Proposed / mở** cho khẳng định rộng hơn (thay hẳn `Atoms S P`, đưa ràng buộc vào bộ kiểm, `Scope` và D23 mới) — ngày chốt tầng bổ sung: 2026-10-30
+- **Trạng thái cài đặt**: **Implemented** cho tầng bổ sung (`Core/AtomTable.lean`, `Verify/ProjectedCheck.lean`, `Verify/AnalyzeProjected.lean`); `check`/`analyze` **không đổi** và không gọi tầng này. **Planned/Open** cho phần còn lại
 - **Ngày**: 2026-10-30
 - **Người quyết định**: Tác giả đồ án (cần chốt)
 - **Liên quan**: [ADR-0003](0003-open-concepts-as-finite-parameters.md), [ADR-0006](0006-defer-subject-and-time.md), [ADR-0009](0009-own-finite-class-no-mathlib.md), [ADR-0019](0019-back-translation-renderer.md), [ADR-0020](0020-untrusted-search-kernel-certificate.md), [ADR-0021](0021-integrity-constraint-valid.md), [../situation-model.md](../situation-model.md), [../situation-model-experiment.md](../situation-model-experiment.md), N8, N9
@@ -90,3 +90,26 @@ Proof (`Valuation.nodup_enum`, `Valuation.count_enum`, `Valuation.card_eq`,
 - Các ADR [0003](0003-open-concepts-as-finite-parameters.md), [0009](0009-own-finite-class-no-mathlib.md),
   [0020](0020-untrusted-search-kernel-certificate.md) còn trích trần "2^14" / "2^14 ≈ 7 s" từ phép đo đại diện; theo
   quy ước ADR (không sửa nội dung cũ) chúng giữ nguyên, số đúng nằm ở N8.
+
+## Cập nhật 2026-10-30 (lần 2) — quyết định Accepted cho tầng bổ sung
+
+**Phạm vi được chấp nhận.** Chỉ phần *thêm vào*, không sửa định nghĩa hay định lý nào có sẵn: `AtomTable`/`Valuation`
+(P1–P3), `tableFindings`/`readerFindings`, kiểm theo cặp không ràng buộc (B2, B3, B4) và cửa vào `analyzeP`
+(W1–W4). Lý do: có chứng minh kernel, `#print axioms` ⊆ whitelist, audit tự động bao phủ, có ví dụ `decide`, và đã so
+với `analyze` hiện có (kết quả trùng ở các ca nhỏ và ở cặp 12.3.c × 13.2).
+
+**Bằng chứng, nói thẳng.**
+- `analyzeP`: không phải `.invalid` ⇒ mọi kiểm tra im lặng, miền khác rỗng, bộ đọc trỏ atom có thật (W1);
+  `.consistentOn` ⇒ không có `Conflict` giữa hai norm bất kỳ của danh sách ở `(π, s)` bất kỳ, kể cả cặp khác act và cặp
+  `(n, n)` (W2); `.conflicts` ⇒ mỗi cặp được liệt kê là xung đột thật ở một điểm của miền đầy đủ (W3/W4 soundness);
+  và **mọi** cặp cùng act thật sự xung đột đều được liệt kê (W4 completeness, tương đối với `Conflict` không ràng buộc).
+- Đo B5 (hai cặp, một máy): kiểm theo cặp giữ chi phí gần như hằng khi thêm atom không ai đọc. **Atom thêm là nhân tạo**;
+  lợi ích thật chưa đo được cho đến khi có một bảng thật.
+
+**Khẳng định rộng hơn vẫn mở.**
+- *Ràng buộc toàn vẹn* chưa vào bộ kiểm: B3 chỉ cho trường hợp `valid` mặc định, nên một xung đột được báo có thể nằm ở
+  tình huống không thể xảy ra trong thực tế; nhu cầu còn lại là nâng phép gán thỏa các ràng buộc trên các atom chung.
+- *`Scope`* của `analyze` vẫn báo tích đầy đủ và quét `enum`; `analyzeP` có `ProjScope` riêng nhưng chưa thay thế.
+- *D23* (`coApplyPoint?`) và `resolutionOf?` chưa có bản theo bảng; `analyzeP` không xét ưu tiên ngoài `Norm.resolved`.
+- Chưa có bảng thật của một văn bản; mọi số đo trên hai cặp cấm × cấm.
+- Thay hẳn `Atoms S P` bằng bảng (V-full) **không** được chấp nhận ở đây.

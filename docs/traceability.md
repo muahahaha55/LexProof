@@ -27,7 +27,7 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle` (closure tới điểm bất động), `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, **`cycle_of_validate_finding` + `cycle_finding_of_reaches`** (hai chiều), **`nodup_ids_of_validate_nil`**, **`succsOf_eq_overrideIds_of_validate_nil`**, `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10, 12 | **Implemented** *(chu trình: đúng và đủ; id trùng: có định lý; dangling và `unknownOverride` vẫn chỉ có test)* |
 | FR9 | Tier 4 Phản ví dụ | `Counterexample` (+ `Repr`), `ceOf`, `Result.witness?`, (c) `counterexample_fields_correct` | `smoke_conflict`, `Tests.conflict_reported_with_bad_norm` | Planned *(dữ liệu: Implemented, và (c) chứng minh mọi trường khớp; render tiếng Việt: chưa có)* |
 | FR10 | Tier 4 Báo cáo | `Scope`, `scopeOf` | `smoke_consistent` so khớp nguyên khối `Scope` | Planned |
-| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (1799 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
+| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (2039 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
 | FR12 | Ca chuyên gia | — | — | Planned |
 | FR13 | Tier 4 Phiên bản | `SourceId.docId`, `.docType`, `.effective` | — | Planned |
 
@@ -81,7 +81,7 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.9 | `cycle_of_validate_finding` — chu trình ưu tiên được báo là chu trình **thật** của quan hệ `overrides` (soundness; completeness thì không — mục 3) | Implemented |
 | G1.10 | `singleDocId_isSome_of_validate_nil` — validate sạch ⇒ danh sách thuộc đúng một văn bản, nên `Scope.docId` là câu trả lời thật chứ không phải phỏng đoán | Implemented |
 | G1.11 | `analyze` là điểm vào duy nhất; search nằm trong `LexProof.Internal`, nên không gọi được bộ kiểm mà bỏ qua validator | Implemented |
-| G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 1799 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
+| G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 2039 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
 | G1.6 | `#audit_encapsulation` chạy trong mỗi `lake build`: không khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`, nên không thể gọi bộ kiểm mà bỏ qua validator | **Implemented (tự động)** |
 | G1.12 | `cycle_of_validate_finding` **và** `cycle_finding_of_reaches` — validator báo chu trình ưu tiên cho một norm **đúng khi** norm đó thật nằm trên một chu trình. Hai chiều, không còn trust base | **Implemented** (định lý) |
 | G1.13 | Negative test của audit trong CI (`ci/audit-negative.sh`): một file ngoài thư viện dùng `sorry`, `native_decide` và một `axiom`; CI đỏ nếu audit **không** từ chối cả ba | **Tested** (script + Lean, không phải kernel) |
@@ -90,6 +90,9 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.16 | `card_pos_of_tableFindings`, `readersOk_of_readerFindings` — bảng và bộ đọc không finding ⇒ không gian tình huống **không rỗng** và mọi bộ đọc đọc atom/giá trị có thật. (Phát hiện A0: không gian rỗng làm `analyze` trả `consistentOn` rỗng.) **Chưa nối vào `validate`/`analyze`** | **Implemented** (định lý) — *chưa dùng* |
 | G1.17 | `not_conflict_of_projConsistentT` (B2) — kiểm theo cặp trên các atom cặp đó đọc **sound** ở miền đầy đủ; `exists_conflict_of_not_projConsistentT` (B3) — ứng viên **thành xung đột thật** khi miền khác rỗng và **không có ràng buộc**; `length_projVals` (B4) | **Implemented** (định lý) — *chưa dùng*, chỉ trường hợp không ràng buộc |
 | G1.18 | `Valuation.nodup_enum`/`count_enum`, `Valuation.card_eq`/`card_eq_prod`, `PartialAssign.extend` (P1–P3 của `Core/AtomTable.lean`) | **Implemented** (định lý) |
+| G1.19 | `silent_of_not_invalid` (W1), `not_conflict_of_consistentOnP` (W2) — `analyzeP` trả `.consistentOn` ⇒ không `Conflict` giữa hai norm nào của danh sách ở `(π, s)` nào của miền đầy đủ (cả cặp khác act và `(n, n)`); mọi finding im lặng trước khi tìm kiếm | **Implemented** (định lý) — *chỉ trường hợp không ràng buộc; chưa là cửa vào công khai duy nhất* |
+| G1.20 | `conflicts_sound` (W3/W4) — mỗi cặp được liệt kê là một xung đột thật ở một điểm của miền đầy đủ, mang đúng id/modality/nguồn; **một xung đột báo khi không dùng ràng buộc có thể nằm ở một tình huống không thể xảy ra trong thực tế** | **Implemented** (định lý) |
+| G1.21 | `conflicts_complete` (W4) — mọi cặp cùng act thật sự xung đột đều được liệt kê (tương đối với `Conflict` không ràng buộc) | **Implemented** (định lý) |
 
 **G1 KHÔNG bao phủ**
 
@@ -111,6 +114,7 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
   lần `validate` sạch thì `applies` không bao giờ `none` (G1.7).
 - **Không** bao phủ ngân sách: `UnknownReason` vẫn **không có** `outOfBudget`,
   và không có cơ chế đo hay chặn (N8).
+- **Lưu ý (G1.19–G1.21)**: một xung đột được báo **khi không dùng ràng buộc toàn vẹn có thể nằm ở một tình huống không thể xảy ra trong thực tế**; `consistentOn` thì không bị ảnh hưởng theo chiều đó. **Phép đo B5** (`eval/projected/`) dùng các atom thừa **nhân tạo** để nhân số điểm: lợi ích thật của việc chiếu theo cặp **chưa đo được** cho đến khi có một bảng thật của một văn bản.
 - **Không** bao phủ khẳng định nhất quán trên bảng **có ràng buộc** theo kiểm từng cặp (G1.17 chỉ cho trường hợp `valid` mặc định), `Scope` mới theo `projPoints` và D23; và `tableFindings` chưa nằm trong `validate`.
 - **Không** bao phủ `Atoms.valid`. Mọi định lý nói "trên phần `valid`"; một
   `valid` quá mạnh làm chúng đúng mà vô nghĩa. Xem mục 3.

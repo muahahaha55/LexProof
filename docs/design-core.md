@@ -506,7 +506,7 @@ ngoại lệ; chu trình dài hơn 4.
 | `Norm.resolved_comm`, `Tests.mutual_override_not_resolved` | *không axiom nào* |
 
 Audit nay **tự động**: `LexProof/Cert/Audit.lean` chạy `#audit_axioms` trong mỗi
-`lake build` (1799 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean` và `Verify/ProjectedCheck.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
+`lake build` (2039 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean` và `Verify/AnalyzeProjected.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
 `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, hay `axiom` tự khai. Cùng
 file chạy `#audit_encapsulation` để chặn việc dùng `LexProof.Internal.*` ngoài
 ba module được phép. Chi tiết: [conventions.md](conventions.md) §7. Đề xuất cho
@@ -601,3 +601,30 @@ D23 (`coApplyPoint?`); bộ bọc cho cả danh sách norm; việc nối `tableF
 (cặp này đọc **cả 10 atom**, nên hai bên duyệt cùng 1 536 điểm). Thêm 1/2/3 atom không ai đọc: kiểm theo cặp giữ nguyên
 (wall 5,0–5,2 giây), toàn miền nhân đôi mỗi lần (5,7 → 10,7 → 21,6 → 44,2 giây). Kết quả hai bên trùng nhau ở mọi biến
 thể, kể cả biến thể có xung đột thật.
+
+---
+
+## 12. `Verify/AnalyzeProjected.lean` — `analyzeP`, cửa vào cho cả danh sách norm trên bảng atom
+
+Cộng thêm, không sửa gì có sẵn; `analyze` không đổi và không gọi `analyzeP`. `analyzeP` nhận bảng tình huống, bảng tham số, hai
+danh sách bộ đọc, danh mục tham chiếu và danh sách norm, rồi theo thứ tự, **fail closed**:
+
+1. nếu **bất kỳ** của `validate` (gồm danh sách norm rỗng), `tableFindings` (hai bảng), `readerFindings` (hai phía) khác rỗng
+   thì trả `.invalid` với toàn bộ finding (mỗi finding nêu tên norm/atom/bộ đọc, có nhãn nguồn `norm`/`table`/`reader`);
+2. nếu không, kiểm **mọi cặp không thứ tự `i < j` cùng act** bằng `projConsistentT`; cặp khác act bị bỏ **có chủ ý**;
+3. trả `.conflicts` (một phép gán một phần đầu tiên gây xung đột **cho mỗi cặp** xung đột, nên liệt kê **mọi** cặp, không chỉ cặp đầu)
+   hoặc `.consistentOn`; cả hai mang `ProjScope`: số điểm duyệt mỗi cặp (`projPoints`), số cặp đã kiểm và số cặp bỏ qua do khác act,
+   kích thước miền đầy đủ (tích, không liệt kê), và `constraintsUsed = false`.
+
+| Định lý | Nội dung |
+|---|---|
+| `silent_of_not_invalid` (W1) | không phải `.invalid` ⇒ mọi finding rỗng, danh sách khác rỗng, `NonEmpty` và `ReaderAtomsOk` cho cả hai bảng (giả thiết của B2, B3) |
+| `not_conflict_of_consistentOnP` (W2) | `.consistentOn` ⇒ với mọi `n₁ n₂` thuộc danh sách và mọi `(π, s)` ở miền đầy đủ, không có `Conflict`; bao gồm cặp khác act và cặp `(n, n)` |
+| `conflicts_sound` (W3, W4) | `.conflicts` ⇒ danh sách hit khác rỗng, và **mỗi** cặp được liệt kê có `π`, `s` với `Conflict`, mang đúng id/modality/nguồn của hai norm. **Không dùng ràng buộc** |
+| `conflicts_complete` (W4) | mỗi cặp `(i < j)` cùng act mà thật sự xung đột ở một điểm của miền đầy đủ **đều được liệt kê**. Tương đối với `Conflict` không ràng buộc; dùng được để đếm recall của kiểm tra không ràng buộc, không hơn |
+| `scope_of_consistentOn`, `scope_of_conflicts`, `projScope_points_spec`, `projScope_pairs` | các con số của `ProjScope`: mỗi mục `pointsPerPair` là một cặp cùng act với số phép gán một phần đúng bằng `length (projVals …)`; đã kiểm + bỏ qua = tổng số cặp |
+
+**Lưu ý không thể bỏ**: một xung đột được báo **khi không dùng ràng buộc toàn vẹn** có thể nằm ở một tình huống **không thể xảy ra trong thực tế** (`valid` chỉ là mặc định "nhận mọi điểm"). Kết luận `consistentOn` thì không bị ảnh hưởng theo chiều đó: không có xung đột ở *mọi* điểm thì càng không có ở các điểm thật.
+
+**Chưa có**: ràng buộc toàn vẹn trong bộ kiểm; ưu tiên nâng cao (`Audit.resolutions`, D23); `Scope` mới cho `analyze`; một bảng thật của một văn bản.
+Phép đo B5 dùng các atom thừa **nhân tạo**: lợi ích thật của việc chiếu theo cặp chưa đo được cho đến khi có một bảng thật.
