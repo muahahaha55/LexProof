@@ -268,23 +268,32 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **Phát biểu**: Chi phí liệt kê là `|S| × |P| × số cặp norm`; hệ thống phải giữ
   trong ngân sách và trả `unknown` khi vượt.
 - **Ưu tiên**: Must
-- **Số đo** (máy dev, `decide` trong kernel, quét toàn bộ):
+- **Số đo theo chi phí mỗi điểm** (đo bằng `analyze` thật, `decide +kernel`, Windows, một máy; chi tiết và điều kiện:
+  [situation-model-experiment.md](situation-model-experiment.md)): **2,3 đến 3,5 ms mỗi điểm** của miền
+  `(tham số × tình huống)` của một module (2,3 ms ở cặp 5.5 × 10.6, 7 bit; 3,5 ms ở cặp 12.3.c × 13.2, 10,6 bit),
+  cộng khoảng 0,12–0,15 giây mỗi module. Thời gian tuyến tính theo số điểm trong từng cặp (số mũ ≈ 1,06 từ 1 536
+  đến 6 144 điểm). Quy ra:
 
-  | Kích thước | Thời gian |
+  | Số điểm một module | Thời gian ước tính |
   |---|---|
-  | 2^12 | ~1s |
-  | 2^14 | ~7s |
-  | 2^16 | ~50s |
-  | 2^18 | **thất bại** — `(deterministic) timeout at whnf`, 200000 heartbeats; định lý khi đó mang `sorryAx` |
+  | 2^12 (4 096) | 9 đến 14 giây |
+  | 2^14 (16 384) | 38 đến 57 giây |
+  | 2^16 (65 536) | 150 đến 230 giây |
 
-  *Cách đo*: bằng `(List.range N).all` làm đại diện, **không** phải bằng `check`
-  thật. Số cho `check` trên văn bản thật: **chưa kiểm**.
-- **Trần kế hoạch**: 2^14 toàn cục; nhóm norm theo `act`, ~2^8 mỗi nhóm.
+  *Trần kế hoạch* (theo thời gian, không theo số mũ): **60 giây ≈ 17 000 đến 26 000 điểm cho một module**.
+  Với 75 cặp cùng act của biến thể mặc định (Σ 3 832 điểm), mỗi cặp là một module riêng: ≈ 20–25 giây
+  (≈ 38 giây nếu kèm hệ quả `strong`).
+  *Giới hạn của số đo*: chỉ hai cặp, cả hai cấm × cấm; chi phí mỗi điểm đổi ×1,5 giữa hai cặp, nên là khoảng,
+  không phải hằng số; không đo bộ kiểm chiếu theo cặp; `decide` thường (không `+kernel`) thất bại ở 1 536 điểm
+  với "maximum recursion depth".
+  *Số cũ* ("2^12 ≈ 1 s, 2^14 ≈ 7 s, 2^16 ≈ 50 s, 2^18 thất bại") đo bằng `(List.range N).all` làm **đại diện**
+  (proxy), không phải bằng `check`: nó thấp hơn chi phí thật khoảng 5 đến 8 lần (2^14 ≈ 0,43 ms mỗi điểm so với
+  2,3–3,5 ms). **Không dùng số cũ để lập kế hoạch.**
 - **AC**: Vượt ngân sách → `unknown(outOfBudget)`, không bao giờ im lặng hoặc treo.
 - **Kiểm chứng**: Test
 - **Trạng thái**: **Planned**. `UnknownReason` hiện **không có** `outOfBudget`;
-  không có cơ chế đo hay chặn ngân sách. Khả năng nâng trần bằng
-  `decide +kernel`: **chưa kiểm**.
+  không có cơ chế đo hay chặn ngân sách. `decide +kernel` đã dùng được trong thí nghiệm
+  (đến 12 288 điểm); trần 2^18 với `+kernel` trên `check` thật: **chưa kiểm**.
 
 ### 2.3 Reliability
 

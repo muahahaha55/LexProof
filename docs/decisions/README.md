@@ -47,6 +47,7 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 |---|---|
 | [0019](0019-back-translation-renderer.md) | Dịch ngược bằng LLM hay renderer tất định? Khuynh hướng: **tất định**, vì LLM có lỗi tương quan với bước dịch xuôi |
 | [0020](0020-untrusted-search-kernel-certificate.md) | Cho phép phép tìm kiếm chạy đã biên dịch, nhưng mọi kết luận "đã kiểm chứng" phải có chứng chỉ kernel kiểm. Điểm cốt lõi: **chỉ khẳng định tồn tại có chứng chỉ nhỏ**; khẳng định nhất quán thì không, nên không được lợi gì |
+| [0022](0022-atom-table-valuation-situation.md) | Tình huống là phép gán trị cho **bảng atom** (tên, miền, khoản nguồn); thêm tầng V0 mà không sửa `Atoms`/`Finite`; ràng buộc là cây `Cond`. V0 đã có (`Core/AtomTable.lean`), chưa nối vào bộ kiểm; chưa giải quyết ràng buộc/`Scope`/D23 |
 
 ## Thứ tự phụ thuộc giữa các việc còn lại
 

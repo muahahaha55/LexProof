@@ -488,7 +488,7 @@ ngoại lệ; chu trình dài hơn 4.
 | **Completeness của `Audit.resolutions`** | Soundness đã có (`resolution_has_witness`); không có định lý nói nó liệt kê **đủ** mọi clash đã giải quyết |
 | `danglingFindings`, `unknownOverrideFindings` | Chỉ có ca kiểm thử, không có định lý. (`duplicateIds` **đã có**: `nodup_ids_of_validate_nil`) |
 | Khi nào `unknown` xuất hiện | Không định lý nào nói `unknown` chỉ xảy ra khi thật có norm dị dạng |
-| Ngân sách | `UnknownReason` **không có** `outOfBudget`; không có cơ chế đo hay chặn (N8) |
+| Ngân sách | `UnknownReason` **không có** `outOfBudget`; không có cơ chế đo hay chặn (N8). Trần kế hoạch tính theo **chi phí đo được mỗi điểm: 2,3 đến 3,5 ms** (`analyze` thật, `decide +kernel`; 60 giây ≈ 17 000–26 000 điểm một module). Số cũ "2^14 ≈ 7 s" đến từ phép đo **đại diện** (`(List.range N).all`) và thấp hơn thật khoảng 5–8 lần — xem [situation-model-experiment.md](situation-model-experiment.md) |
 | `Atoms.valid` | Nằm trong trust base; `valid` quá mạnh che xung đột và không định lý nào thấy ([ADR-0021](decisions/0021-integrity-constraint-valid.md)) |
 
 ---
@@ -551,3 +551,23 @@ không nhắc `Atoms` hay `valid`.
 **Không có** trong (S): chiều ngược lại (một phép gán gây xung đột chỉ là *ứng
 viên*, chưa phải xung đột thật), việc dựng điểm `(π, s)` hợp lệ từ phép gán, và
 mọi thứ về `Scope`/`Finite.card`. Chưa đo chi phí chạy trên cặp thật.
+
+---
+
+## 10. `Core/AtomTable.lean` — bảng atom và phép gán (V0, chỉ thêm; chưa nối vào bộ kiểm)
+
+Quyết định đề xuất: [ADR-0022](decisions/0022-atom-table-valuation-situation.md). Không sửa định nghĩa hay định lý
+nào có sẵn. Dữ liệu: `Band` (nhãn + khoản nguồn), `Domain` (`bool` hoặc `enum` các `Band`), `Atom` (tên, miền,
+nguồn), `AtomTable := List Atom`. Phép gán: `Valuation t` (danh sách chỉ số giá trị, kèm `legalVals … = true`).
+Cắm vào API cũ: `instance Finite (Valuation t)`, `atomsOf` (dựng `Atoms (Valuation ts) (Valuation tp)`, `valid` mặc
+định), `readersOk`, `icsEval` (ràng buộc là `List Cond`, chỉ có bộ đánh giá).
+
+| Định lý | Nội dung |
+|---|---|
+| `mem_allVals`, `nodup_allVals`, `length_allVals` | liệt kê thô các danh sách giá trị: đầy đủ, không trùng, độ dài = tích |
+| `Valuation.nodup_enum`, `Valuation.count_enum` (P1) | mỗi phép gán xuất hiện **đúng một lần** trong `Finite.enum` |
+| `Valuation.card_eq`, `card_eq_prod` (P2) | `Finite.card (Valuation t) = tích kích thước miền` (`AtomTable.points`) |
+| `PartialAssign.extend` (P3) | phép gán một phần trong miền, không gán hai giá trị cho một atom, mở rộng được thành phép gán đầy đủ nếu mọi miền khác rỗng — **chưa có ràng buộc** |
+
+**Không có**: nâng phản ví dụ khi có ràng buộc (cần thỏa mãn được ràng buộc trên các atom chung), `Scope`
+(`validExcluded`… vẫn quét `enum`), D23 (`coApplyPoint?`), kiểm bảng/bộ đọc trong `validate`.
