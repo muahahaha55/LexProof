@@ -11,6 +11,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+
+      # The audits only cover modules that LexProof/Cert/Audit.lean imports.
+      # Fail if a module under LexProof/ is missing from its imports.
+      - name: Audit coverage
+        run: bash ci/audit-coverage.sh
+
       # Builds every module and runs the two build-time audits from
       # LexProof/Cert/Audit.lean (#audit_axioms, #audit_encapsulation).
       - uses: leanprover/lean-action@v1

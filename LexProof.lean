@@ -7,4 +7,5 @@ import LexProof.Verify.Validate
 import LexProof.Verify.Conflict
 import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
+import LexProof.Verify.Projection
 import LexProof.Cert.Audit

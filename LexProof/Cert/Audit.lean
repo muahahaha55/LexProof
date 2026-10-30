@@ -1,4 +1,13 @@
 import Lean
+-- Every module under LexProof/ must be imported here, or the audits below do not
+-- see it. `ci/audit-coverage.sh` fails if one is missing.
+import LexProof.Basic
+import LexProof.Core.Finite
+import LexProof.Core.Norm
+import LexProof.Verify.Validate
+import LexProof.Verify.Conflict
+import LexProof.Verify.Projection
+import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
 
 /-!
