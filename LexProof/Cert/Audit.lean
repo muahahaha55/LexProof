@@ -10,6 +10,8 @@ import LexProof.Verify.Conflict
 import LexProof.Verify.Projection
 import LexProof.Verify.ProjectedCheck
 import LexProof.Verify.AnalyzeProjected
+import LexProof.Core.Render
+import LexProof.Laws.AlcoholSale
 import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
 
