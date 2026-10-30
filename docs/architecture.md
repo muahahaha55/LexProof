@@ -248,8 +248,12 @@ nó. Chi tiết và số liệu đo: [ADR-0010](decisions/0010-axiom-whitelist-d
 
 ### 7.4 Ngân sách liệt kê
 
-Chi phí `|S| × |P| × số cặp norm`. Trần kế hoạch 2^14; nhóm norm theo `act` để
-giảm số cặp. Số đo và giới hạn: N8 trong [requirements.md](requirements.md).
+Chi phí `|S| × |P| × số cặp norm`, đo được **2,3 đến 3,5 ms mỗi điểm** (`analyze` thật,
+`decide +kernel`): trần kế hoạch tính theo thời gian, **60 giây ≈ 17 000 đến 26 000 điểm cho một
+module**, không phải "2^14 trong 7 giây" (số cũ đo bằng phép đo đại diện). Nhóm norm theo `act` để
+giảm số cặp; kiểm theo cặp chỉ trên các atom cặp đó đọc (`ProjectedCheck`, chưa nối vào `analyze`) để
+chi phí không còn phụ thuộc atom không liên quan. Số đo và giới hạn: N8 trong
+[requirements.md](requirements.md); thí nghiệm: [situation-model-experiment.md](situation-model-experiment.md).
 
 ## 8. Quyết định kiến trúc
 

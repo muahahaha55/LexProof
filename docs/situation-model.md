@@ -1,5 +1,7 @@
 # LexProof — Mô hình "tình huống là phép gán trị cho các atom có tên"
 
+> **Cập nhật 2026-10-30 — số đo quy mô.** Các số kiểu "2^12 ≈ 1 s … 2^16 ≈ 50 s" trong tài liệu này đến từ phép đo **đại diện** (`(List.range N).all`), thấp hơn chi phí thật khoảng 5–8 lần. Chi phí đo bằng `analyze` thật là **2,3 đến 3,5 ms mỗi điểm** (N8 trong [requirements.md](requirements.md), [situation-model-experiment.md](situation-model-experiment.md)). Phần còn lại của tài liệu giữ nguyên.
+
 > **Trạng thái**: phân tích trên giấy, **không có dòng Lean nào được chạy hay viết**
 > cho tài liệu này. Mọi số dòng là ước lượng và mang nhãn **chưa kiểm**.
 > Số đo về quy mô lấy từ [scaling-analysis.md](scaling-analysis.md) (mô hình

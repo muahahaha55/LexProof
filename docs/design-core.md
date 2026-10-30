@@ -506,7 +506,7 @@ ngoại lệ; chu trình dài hơn 4.
 | `Norm.resolved_comm`, `Tests.mutual_override_not_resolved` | *không axiom nào* |
 
 Audit nay **tự động**: `LexProof/Cert/Audit.lean` chạy `#audit_axioms` trong mỗi
-`lake build` (1356 khai báo, gồm cả `Verify/Projection.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
+`lake build` (1799 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean` và `Verify/ProjectedCheck.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
 `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, hay `axiom` tự khai. Cùng
 file chạy `#audit_encapsulation` để chặn việc dùng `LexProof.Internal.*` ngoài
 ba module được phép. Chi tiết: [conventions.md](conventions.md) §7. Đề xuất cho
@@ -571,3 +571,33 @@ Cắm vào API cũ: `instance Finite (Valuation t)`, `atomsOf` (dựng `Atoms (V
 
 **Không có**: nâng phản ví dụ khi có ràng buộc (cần thỏa mãn được ràng buộc trên các atom chung), `Scope`
 (`validExcluded`… vẫn quét `enum`), D23 (`coApplyPoint?`), kiểm bảng/bộ đọc trong `validate`.
+
+---
+
+## 11. `Verify/ProjectedCheck.lean` — bảng đúng dạng và kiểm theo cặp trên atom (chưa nối vào `analyze`)
+
+Không sửa định nghĩa hay định lý có sẵn; không hàm nào ở đây được `check`/`analyze` gọi.
+
+**A0 (đã đo, `eval/projected/A0_empty_domain.lean`).** Bảng có một atom enum **không có dải nào** làm không
+gian tình huống **rỗng**. `analyze` khi đó trả `consistentOn` với `Scope.situations = 0`, `validTotal = 0`, **kể cả**
+khi hai norm xung đột ở mọi điểm (cùng norm trên bảng có một dải thì trả `conflict`); validator im lặng. Kernel chứng
+minh được cả hai (`decide +kernel`). Đây là kết luận "nhất quán" rỗng, không phải lỗi kernel.
+
+| Định lý / định nghĩa | Nội dung |
+|---|---|
+| `tableFindings`, `readerFindings`, `TableFinding` | tên atom duy nhất; mọi enum khác rỗng; nhãn dải duy nhất trong một atom; mọi chuỗi nguồn (atom và dải) khác rỗng; mọi bộ đọc trỏ tới atom và giá trị có thật. Trả finding **nêu tên** atom/bộ đọc |
+| `card_pos_of_tableFindings` (A2) | bảng không finding ⇒ `0 < Finite.card (Valuation t)` |
+| `readersOk_of_readerFindings` (A2) | bộ đọc không finding ⇒ mọi bộ đọc đọc một atom và một giá trị trong miền |
+| `projConflictT_iff` | kiểm xung đột trên phép gán một phần ⇔ `Conflict` khi phép gán ghi đúng giá trị các atom đã đọc |
+| `not_conflict_of_projConsistentT` (B2) | không phép gán một phần nào gây xung đột ⇒ không có `Conflict` ở **bất kỳ** `(π, s)`. Cần: mọi bộ đọc trỏ tới atom có thật |
+| `exists_conflict_of_not_projConsistentT` (B3) | có phép gán một phần gây xung đột ⇒ tồn tại `π`, `s` hợp lệ có `Conflict`. Cần: mọi miền khác rỗng; **không có ràng buộc** (`valid` mặc định) |
+| `length_projVals` (B4) | số phép gán một phần được duyệt = `projPoints` = tích miền các atom **đã đọc** (hai phía S, P) |
+
+**Không có**: ràng buộc toàn vẹn trong B3 (cần hoàn tất thỏa mãn các ràng buộc trên các atom chung với phép gán);
+`Scope` (vẫn báo tích đầy đủ và quét `enum`; số điểm thật sự duyệt là `projPoints`, chưa có trường nào mang nó);
+D23 (`coApplyPoint?`); bộ bọc cho cả danh sách norm; việc nối `tableFindings` vào `validate`.
+
+**B5 (`eval/projected/`).** Cặp 12.3.c × 13.2 trên bảng thư viện. Kernel: kiểm theo cặp ≈ 4,4 giây, toàn miền ≈ 5,0 giây
+(cặp này đọc **cả 10 atom**, nên hai bên duyệt cùng 1 536 điểm). Thêm 1/2/3 atom không ai đọc: kiểm theo cặp giữ nguyên
+(wall 5,0–5,2 giây), toàn miền nhân đôi mỗi lần (5,7 → 10,7 → 21,6 → 44,2 giây). Kết quả hai bên trùng nhau ở mọi biến
+thể, kể cả biến thể có xung đột thật.

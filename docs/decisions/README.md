@@ -59,7 +59,7 @@ flowchart LR
     REV --> A0018[0018 Scope đầy đủ]
     REV --> A0011[0011 cưỡng chế phê duyệt]
     A0011 --> LAWS
-    A0020[0020 chứng chỉ kernel] --> SCALE[["văn bản vượt trần 2^14"]]
+    A0020[0020 chứng chỉ kernel] --> SCALE[["văn bản vượt trần quy mô (≈ 17–26 nghìn điểm mỗi module, N8)"]]
     CERT[["FR11 Cert tự động"]] --> LAWS
 
     style LAWS fill:#1168bd,stroke:#0b4884,color:#fff

@@ -27,7 +27,7 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle` (closure tới điểm bất động), `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, **`cycle_of_validate_finding` + `cycle_finding_of_reaches`** (hai chiều), **`nodup_ids_of_validate_nil`**, **`succsOf_eq_overrideIds_of_validate_nil`**, `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10, 12 | **Implemented** *(chu trình: đúng và đủ; id trùng: có định lý; dangling và `unknownOverride` vẫn chỉ có test)* |
 | FR9 | Tier 4 Phản ví dụ | `Counterexample` (+ `Repr`), `ceOf`, `Result.witness?`, (c) `counterexample_fields_correct` | `smoke_conflict`, `Tests.conflict_reported_with_bad_norm` | Planned *(dữ liệu: Implemented, và (c) chứng minh mọi trường khớp; render tiếng Việt: chưa có)* |
 | FR10 | Tier 4 Báo cáo | `Scope`, `scopeOf` | `smoke_consistent` so khớp nguyên khối `Scope` | Planned |
-| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (1197 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
+| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (1799 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
 | FR12 | Ca chuyên gia | — | — | Planned |
 | FR13 | Tier 4 Phiên bản | `SourceId.docId`, `.docType`, `.effective` | — | Planned |
 
@@ -42,7 +42,7 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | N5 Evaluability | Tiêm xung đột | — | — | Planned *(không có AC — xem báo cáo)* |
 | N6 Traceability | `SourceId` | `SourceId.article`, `Counterexample.sources`, `Scope.articles` | `smoke_conflict` chứa `srcA`, `srcB` | Implemented *(mức lược đồ)* |
 | N7 Reproducibility | Ghim toolchain | — | `lean-toolchain` = `v4.35.0`; `lake-manifest.json` rỗng | Planned *(log LLM chưa có)* |
-| N8 Scale | Ngân sách liệt kê | `Finite.card`, `Scope.situations`, `Scope.params` | Số đo 2^12…2^18 (**đại diện**, không bằng `check`) | Planned *(`outOfBudget` chưa có)* |
+| N8 Scale | Ngân sách liệt kê | `Finite.card`, `Scope.situations`, `Scope.params` | Số đo bằng `analyze` thật: **2,3–3,5 ms mỗi điểm** ([situation-model-experiment.md](situation-model-experiment.md)); số cũ 2^12…2^18 là phép đo **đại diện** | Planned *(`outOfBudget` chưa có)* |
 | N9 Maintainability | `Core` độc lập văn bản | `Norm` không mang tham số kiểu; `check` nhận `S`, `P` trừu tượng | — *(`Laws/` rỗng nên chưa kiểm được)* | Planned |
 | N10 Usability | Tier 4 | `deriving Repr` | — | Planned |
 | N11 Legal/ethical | Chính sách | — | — | Planned |
@@ -81,12 +81,15 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.9 | `cycle_of_validate_finding` — chu trình ưu tiên được báo là chu trình **thật** của quan hệ `overrides` (soundness; completeness thì không — mục 3) | Implemented |
 | G1.10 | `singleDocId_isSome_of_validate_nil` — validate sạch ⇒ danh sách thuộc đúng một văn bản, nên `Scope.docId` là câu trả lời thật chứ không phải phỏng đoán | Implemented |
 | G1.11 | `analyze` là điểm vào duy nhất; search nằm trong `LexProof.Internal`, nên không gọi được bộ kiểm mà bỏ qua validator | Implemented |
-| G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 1166 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
+| G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 1799 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
 | G1.6 | `#audit_encapsulation` chạy trong mỗi `lake build`: không khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`, nên không thể gọi bộ kiểm mà bỏ qua validator | **Implemented (tự động)** |
 | G1.12 | `cycle_of_validate_finding` **và** `cycle_finding_of_reaches` — validator báo chu trình ưu tiên cho một norm **đúng khi** norm đó thật nằm trên một chu trình. Hai chiều, không còn trust base | **Implemented** (định lý) |
 | G1.13 | Negative test của audit trong CI (`ci/audit-negative.sh`): một file ngoài thư viện dùng `sorry`, `native_decide` và một `axiom`; CI đỏ nếu audit **không** từ chối cả ba | **Tested** (script + Lean, không phải kernel) |
 | G1.14 | `no_priority_cycle_of_consistentOn` / `_conflict` / `_conditionalConflict` — **mọi** kết quả đã quét kèm bảo đảm không norm nào nằm trên chu trình `overrides`, nên hiểm họa XOR-theo-cặp không lọt qua `analyze` | **Implemented** (định lý) |
 | G1.15 | `nodup_ids_of_validate_nil` — validate sạch ⇒ id các norm **đôi một khác nhau**; và `succsOf_eq_overrideIds_of_validate_nil` — khi đó bước của đồ thị ưu tiên **chính là** trường `overrides`, không có nhập nhằng tra cứu | **Implemented** (định lý) |
+| G1.16 | `card_pos_of_tableFindings`, `readersOk_of_readerFindings` — bảng và bộ đọc không finding ⇒ không gian tình huống **không rỗng** và mọi bộ đọc đọc atom/giá trị có thật. (Phát hiện A0: không gian rỗng làm `analyze` trả `consistentOn` rỗng.) **Chưa nối vào `validate`/`analyze`** | **Implemented** (định lý) — *chưa dùng* |
+| G1.17 | `not_conflict_of_projConsistentT` (B2) — kiểm theo cặp trên các atom cặp đó đọc **sound** ở miền đầy đủ; `exists_conflict_of_not_projConsistentT` (B3) — ứng viên **thành xung đột thật** khi miền khác rỗng và **không có ràng buộc**; `length_projVals` (B4) | **Implemented** (định lý) — *chưa dùng*, chỉ trường hợp không ràng buộc |
+| G1.18 | `Valuation.nodup_enum`/`count_enum`, `Valuation.card_eq`/`card_eq_prod`, `PartialAssign.extend` (P1–P3 của `Core/AtomTable.lean`) | **Implemented** (định lý) |
 
 **G1 KHÔNG bao phủ**
 
@@ -108,6 +111,7 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
   lần `validate` sạch thì `applies` không bao giờ `none` (G1.7).
 - **Không** bao phủ ngân sách: `UnknownReason` vẫn **không có** `outOfBudget`,
   và không có cơ chế đo hay chặn (N8).
+- **Không** bao phủ khẳng định nhất quán trên bảng **có ràng buộc** theo kiểm từng cặp (G1.17 chỉ cho trường hợp `valid` mặc định), `Scope` mới theo `projPoints` và D23; và `tableFindings` chưa nằm trong `validate`.
 - **Không** bao phủ `Atoms.valid`. Mọi định lý nói "trên phần `valid`"; một
   `valid` quá mạnh làm chúng đúng mà vô nghĩa. Xem mục 3.
 - Việc audit **biết thất bại** nay có kiểm tự động, nhưng ở **CI** chứ không ở

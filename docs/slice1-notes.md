@@ -1,5 +1,7 @@
 # Ghi chú lát cắt 1 — Điều 2, 5, 10, 12, 13, 19 của Luật 44/2019/QH14
 
+> **Cập nhật 2026-10-30 — số đo quy mô.** Các số kiểu "2^12 ≈ 1 s … 2^16 ≈ 50 s" trong tài liệu này đến từ phép đo **đại diện** (`(List.range N).all`), thấp hơn chi phí thật khoảng 5–8 lần. Chi phí đo bằng `analyze` thật là **2,3 đến 3,5 ms mỗi điểm** (N8 trong [requirements.md](requirements.md), [situation-model-experiment.md](situation-model-experiment.md)). Phần còn lại của tài liệu giữ nguyên.
+
 > ## ⚠ BẢN NHÁP DO AI — DÀNH CHO NGƯỜI DUYỆT, KHÔNG PHẢI SỰ THẬT NỀN
 >
 > Mọi nhận định ở đây (chủ thể, hành vi, loại, điều kiện, ngoại lệ, đa nghĩa,

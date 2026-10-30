@@ -75,3 +75,18 @@ Proof (`Valuation.nodup_enum`, `Valuation.count_enum`, `Valuation.card_eq`,
 
 `LexProof/Core/AtomTable.lean` và hai dòng `import` (`LexProof.lean`,
 `Cert/Audit.lean`). Không file Lean nào khác bị sửa.
+
+## Bằng chứng đã có sau khi đề xuất (2026-10-30) — trạng thái vẫn **Proposed**
+
+- **Đã chứng minh** (không ràng buộc): bảng không finding ⇒ không gian khác rỗng (A2); kiểm theo cặp trên các atom
+  cặp đó đọc là sound (B2) và mọi ứng viên thành xung đột thật khi miền khác rỗng (B3); số điểm duyệt = tích miền
+  các atom đã đọc (B4). Xem [design-core.md](../design-core.md) §10–11, `Verify/ProjectedCheck.lean`.
+- **Phát hiện A0**: bảng có enum rỗng làm `analyze` trả `consistentOn` rỗng mà validator im lặng; `tableFindings` chặn được
+  nhưng **chưa nối** vào `validate`.
+- **Đã đo (B5)**: trên cặp 12.3.c × 13.2, kiểm theo cặp giữ chi phí gần như hằng khi thêm atom không ai đọc, trong khi
+  toàn miền nhân đôi; hai bên cho cùng kết quả (cả khi có xung đột thật).
+- **Vẫn thiếu**: trường hợp có ràng buộc (thỏa mãn được trên các atom chung), `Scope` mới, D23, bộ bọc cho cả danh sách
+  norm, nối vào `analyze`; số đo chỉ từ hai cặp cấm × cấm trên một máy.
+- Các ADR [0003](0003-open-concepts-as-finite-parameters.md), [0009](0009-own-finite-class-no-mathlib.md),
+  [0020](0020-untrusted-search-kernel-certificate.md) còn trích trần "2^14" / "2^14 ≈ 7 s" từ phép đo đại diện; theo
+  quy ước ADR (không sửa nội dung cũ) chúng giữ nguyên, số đúng nằm ở N8.
