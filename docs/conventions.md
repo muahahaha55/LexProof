@@ -182,6 +182,11 @@ Hai điều cần biết:
 > thấy) và đòi audit phải từ chối cả `sorry`, `native_decide` và một `axiom`.
 > Chạy được cục bộ bằng chính lệnh đó.
 
+> **Audit chỉ thấy module mà `Cert/Audit.lean` import.** `Audit.lean` import mọi
+> module dưới `LexProof/` (trừ chính nó); `bash ci/audit-coverage.sh` làm CI đỏ nếu
+> có file `.lean` mới chưa được import ở đó. Thêm module mới thì thêm cả dòng
+> `import` vào `Audit.lean`.
+
 Build một module lẻ khi cần vòng lặp nhanh:
 
 ```powershell

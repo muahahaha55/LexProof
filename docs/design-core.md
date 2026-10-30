@@ -506,7 +506,7 @@ ngoại lệ; chu trình dài hơn 4.
 | `Norm.resolved_comm`, `Tests.mutual_override_not_resolved` | *không axiom nào* |
 
 Audit nay **tự động**: `LexProof/Cert/Audit.lean` chạy `#audit_axioms` trong mỗi
-`lake build` (1166 khai báo) và làm **build đỏ** nếu có axiom ngoài whitelist,
+`lake build` (1356 khai báo, gồm cả `Verify/Projection.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
 `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, hay `axiom` tự khai. Cùng
 file chạy `#audit_encapsulation` để chặn việc dùng `LexProof.Internal.*` ngoài
 ba module được phép. Chi tiết: [conventions.md](conventions.md) §7. Đề xuất cho
@@ -525,3 +525,29 @@ phần quy mô: [ADR-0020](decisions/0020-untrusted-search-kernel-certificate.md
 | `validExcludedOf` quét toàn miền | Riêng việc *báo cáo* scope cũng tốn một lần quét |
 | `Internal` là quy ước ở mức kiểu, nhưng **có audit chặn** | Lean `private` sẽ chặn cả `Tests.lean`. Thay vào đó `#audit_encapsulation` làm build đỏ nếu khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`. Nó quét **tên hằng dùng trong cả type và value**, nên không lách được bằng alias |
 | Build lạnh **30.7s** | Từ 1m04.7s, nhờ hạ n=3 từ kernel `decide` xuống `#eval` (D38) và tính `gnodes` một lần (D39). Trong ngưỡng ~1 phút đã thống nhất |
+
+---
+
+## 9. `Verify/Projection.lean` — thí nghiệm chiếu theo cặp (không dùng bởi `check`/`analyze`)
+
+Thí nghiệm A1 của [scaling-analysis.md](scaling-analysis.md) (design (a)). **Không
+đổi định nghĩa hay định lý nào có sẵn**; `check`, `analyze`, `Result`, `Scope`
+không gọi gì ở đây.
+
+**Cầu nối** giữa các phép đánh giá có sẵn và bản nhận môi trường (`e g : Nat → Option Bool`)
+dùng cho phép chiếu — ba định lý, đều chứng minh bằng quy nạp và `rfl`:
+
+| Định lý | Nội dung |
+|---|---|
+| `Cond.eval_eq_evalE` | `c.eval A π s = c.evalE (A.sitVal s) (A.parVal π)` |
+| `Cond.evalAny_eq_evalAnyE` | `evalAny A π s cs = evalAnyE (A.sitVal s) (A.parVal π) cs` |
+| `Norm.applies_eq_appliesE` | `n.applies A π s = n.appliesE (A.sitVal s) (A.parVal π)` |
+
+(L) tính cục bộ: `Cond.evalE_congr`, `Cond.evalAnyE_congr`, `Cond.eval_congr`,
+`Norm.applies_congr`, `conflict_congr`. (S) tính đúng của tìm kiếm đã chiếu:
+`not_conflict_of_projConsistent` (cần `Norm.wf` cho cả hai norm). `projConsistent`
+không nhắc `Atoms` hay `valid`.
+
+**Không có** trong (S): chiều ngược lại (một phép gán gây xung đột chỉ là *ứng
+viên*, chưa phải xung đột thật), việc dựng điểm `(π, s)` hợp lệ từ phép gán, và
+mọi thứ về `Scope`/`Finite.card`. Chưa đo chi phí chạy trên cặp thật.
