@@ -12,6 +12,8 @@ import LexProof.Verify.Projection
 import LexProof.Verify.ProjectedCheck
 import LexProof.Verify.AnalyzeProjected
 import LexProof.Verify.AnalyzeReport
+import LexProof.Verify.Cases
 import LexProof.Core.Render
 import LexProof.Laws.AlcoholSale
+import LexProof.Laws.AlcoholSaleCases
 import LexProof.Cert.Audit
