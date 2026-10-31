@@ -1,0 +1,41 @@
+CASES 37
+R	C01 | PASS | norm áp dụng: 5.3-ban
+R	C02 | PASS | norm áp dụng: 
+R	C03 | PASS | norm áp dụng: 5.3-ban
+R	C04 | PASS | norm áp dụng: 
+R	C05 | PASS | norm áp dụng: 5.3-cung-cap
+R	C06 | PASS | norm áp dụng: 
+R	C07 | PASS | norm áp dụng: 5.3-cung-cap
+R	C08 | PASS | norm áp dụng: 
+R	C09 | PASS | norm áp dụng: 5.3-khuyen-mai
+R	C10 | PASS | norm áp dụng: 
+R	C11 | PASS | norm áp dụng: 5.3-khuyen-mai
+R	C12 | PASS | norm áp dụng: 
+R	C13 | PASS | norm áp dụng: 5.9-i
+R	C14 | PASS | norm áp dụng: 5.9-i
+R	C15 | PASS | norm áp dụng: 
+R	C16 | PASS | norm áp dụng: 
+R	C17 | PASS | norm áp dụng: 5.3-khuyen-mai, 5.9-i
+R	C18 | PASS | norm áp dụng: 5.9-ii
+R	C19 | PASS | norm áp dụng: 5.9-ii
+R	C20 | PASS | norm áp dụng: 
+R	C21 | PASS | norm áp dụng: 
+R	C22 | PASS | norm áp dụng: 5.11-ii
+R	C23 | PASS | norm áp dụng: 
+R	C24 | FAIL — mô-đun cho noNormApplies (không norm nào CỦA MÔ-ĐUN NÀY áp dụng; KHÔNG có nghĩa là hợp pháp) | norm áp dụng: 
+R	C25 | PASS | norm áp dụng: 19.1
+R	C26 | PASS | norm áp dụng: 
+R	C27 | PASS | norm áp dụng: 19.2
+R	C28 | PASS | norm áp dụng: 
+R	C29 | PASS | norm áp dụng: 19.3
+R	C30 | PASS | norm áp dụng: 
+R	C31 | PASS | norm áp dụng: 19.4
+R	C32 | PASS | norm áp dụng: 19.5
+R	C33 | PASS | norm áp dụng: 19.6
+R	C34 | PASS | norm áp dụng: 
+R	C35 | PASS | norm áp dụng: 
+R	C36 | PASS | norm áp dụng: 5.3-ban, 19.1
+R	C37 | PASS | norm áp dụng: 
+NOTPASSING 1
+N	C24 | FAIL — mô-đun cho noNormApplies (không norm nào CỦA MÔ-ĐUN NÀY áp dụng; KHÔNG có nghĩa là hợp pháp) | norm áp dụng: 
+PASSING C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C25,C26,C27,C28,C29,C30,C31,C32,C33,C34,C35,C36,C37

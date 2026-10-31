@@ -506,7 +506,7 @@ ngoại lệ; chu trình dài hơn 4.
 | `Norm.resolved_comm`, `Tests.mutual_override_not_resolved` | *không axiom nào* |
 
 Audit nay **tự động**: `LexProof/Cert/Audit.lean` chạy `#audit_axioms` trong mỗi
-`lake build` (2286 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean`, `Verify/AnalyzeProjected.lean`, `Core/Render.lean`, `Laws/AlcoholSale.lean` và `Verify/AnalyzeReport.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
+`lake build` (2591 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean`, `Verify/AnalyzeProjected.lean`, `Core/Render.lean`, `Laws/AlcoholSale.lean`, `Verify/AnalyzeReport.lean`, `Verify/Cases.lean` và `Laws/AlcoholSaleCases.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
 `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, hay `axiom` tự khai. Cùng
 file chạy `#audit_encapsulation` để chặn việc dùng `LexProof.Internal.*` ngoài
 ba module được phép. Chi tiết: [conventions.md](conventions.md) §7. Đề xuất cho
@@ -661,3 +661,22 @@ Các trường còn lại:
 
 **Không thay đổi** ý nghĩa của `consistentOn`; không dùng ràng buộc toàn vẹn; không cho biết bản mã hóa có khớp luật. Cột «điểm mù D47–D50 chạm tới và không chạm tới» (một kỳ vọng, không phải phép đo):
 [mutation-results.md](mutation-results.md) mục 8; số đo post-hoc: [mutation-posthoc-analyzereport.md](mutation-posthoc-analyzereport.md).
+
+---
+
+## 15. `Verify/Cases.lean` và `Laws/AlcoholSaleCases.lean` — ca thử cụ thể (đo faithfulness bằng tình huống viết từ luật)
+
+**Cộng thêm, không sửa gì có sẵn. BẢN NHÁP, CHƯA AI DUYỆT.** Một *ca* = một tình huống cụ thể (giá trị atom theo mã atom và nhãn dải), một act, trạng thái mà người đọc khoản kỳ vọng
+(`forbidden | required | explicitlyPermitted | clash | noNormApplies`), khoản nguồn và một đoạn trích nguyên văn. Bộ chạy tính trạng thái mà **mã hóa** cho và so sánh.
+
+| Định nghĩa / định lý | Nội dung |
+|---|---|
+| `applyingNorms`, `mem_applyingNorms` | norm áp dụng được định nghĩa **qua `Norm.applies`**: `n ∈ applyingNorms ↔ n ∈ ns ∧ n.act = act ∧ n.applies A π s = some true` |
+| `hasClash_iff_conflict` | trạng thái `clash` đúng bằng `Conflict` giữa hai norm của act đang thử |
+| `runCase`, `CaseOutcome` | `pass` \| `fail got` \| `underspecified (atom thiếu)` \| `malformed`. **Fail closed**: ca không cố định mọi atom mà norm của act đọc là `underspecified`, kèm tên atom; không bao giờ mặc định giá trị |
+| `runCase_pass_sound` | ca `pass` ⇒ không thiếu atom nào và trạng thái tính từ `Norm.applies` bằng kỳ vọng |
+| `AlcoholSaleCases.pass_set` | kernel (`decide +kernel`) kiểm **đúng tập ca đạt**; ca không đạt do `notPassingNow` liệt kê lúc chạy |
+
+**`noNormApplies` chỉ có nghĩa «không norm nào của mô-đun này áp dụng»**, không bao giờ là «hợp pháp»; văn bản in ra nói rõ như vậy.
+Kết quả (37 ca): 36 đạt, 1 không đạt (C24: nhánh (i) của Điều 5 khoản 11 không được mã hóa). Phiếu cho người: [review/sale-group-cases.md](review/sale-group-cases.md); đáp án và độ phủ:
+[review/sale-group-cases-key.md](review/sale-group-cases-key.md). **Ca, mã hóa và kỳ vọng cùng một nguồn**, nên 36/37 không phải bằng chứng khớp luật.

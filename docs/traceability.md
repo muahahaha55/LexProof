@@ -27,7 +27,7 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle` (closure tới điểm bất động), `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, **`cycle_of_validate_finding` + `cycle_finding_of_reaches`** (hai chiều), **`nodup_ids_of_validate_nil`**, **`succsOf_eq_overrideIds_of_validate_nil`**, `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10, 12 | **Implemented** *(chu trình: đúng và đủ; id trùng: có định lý; dangling và `unknownOverride` vẫn chỉ có test)* |
 | FR9 | Tier 4 Phản ví dụ | `Counterexample` (+ `Repr`), `ceOf`, `Result.witness?`, (c) `counterexample_fields_correct` | `smoke_conflict`, `Tests.conflict_reported_with_bad_norm` | Planned *(dữ liệu: Implemented, và (c) chứng minh mọi trường khớp; render tiếng Việt: chưa có)* |
 | FR10 | Tier 4 Báo cáo | `Scope`, `scopeOf` | `smoke_consistent` so khớp nguyên khối `Scope` | Planned |
-| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (2286 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
+| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (2591 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
 | FR12 | Ca chuyên gia | — | — | Planned |
 | FR13 | Tier 4 Phiên bản | `SourceId.docId`, `.docType`, `.effective` | — | Planned |
 
@@ -81,7 +81,7 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.9 | `cycle_of_validate_finding` — chu trình ưu tiên được báo là chu trình **thật** của quan hệ `overrides` (soundness; completeness thì không — mục 3) | Implemented |
 | G1.10 | `singleDocId_isSome_of_validate_nil` — validate sạch ⇒ danh sách thuộc đúng một văn bản, nên `Scope.docId` là câu trả lời thật chứ không phải phỏng đoán | Implemented |
 | G1.11 | `analyze` là điểm vào duy nhất; search nằm trong `LexProof.Internal`, nên không gọi được bộ kiểm mà bỏ qua validator | Implemented |
-| G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 2286 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
+| G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 2591 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
 | G1.6 | `#audit_encapsulation` chạy trong mỗi `lake build`: không khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`, nên không thể gọi bộ kiểm mà bỏ qua validator | **Implemented (tự động)** |
 | G1.12 | `cycle_of_validate_finding` **và** `cycle_finding_of_reaches` — validator báo chu trình ưu tiên cho một norm **đúng khi** norm đó thật nằm trên một chu trình. Hai chiều, không còn trust base | **Implemented** (định lý) |
 | G1.13 | Negative test của audit trong CI (`ci/audit-negative.sh`): một file ngoài thư viện dùng `sorry`, `native_decide` và một `axiom`; CI đỏ nếu audit **không** từ chối cả ba | **Tested** (script + Lean, không phải kernel) |
@@ -144,6 +144,7 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G2.5 | Mọi norm giữ `source.article` (N6) | Implemented *(mức lược đồ)* |
 | G2.6 | `Core/Render.lean` in `Norm` tất định từ dữ liệu Lean; phiếu [review/sale-group-review.md](review/sale-group-review.md) cho nhóm «bán / cung cấp / khuyến mại» (nguyên văn cắt tự động theo số dòng và đối chiếu bằng script) | **Implemented (công cụ)** — *chưa ai duyệt phiếu; không phải bằng chứng faithfulness* |
 | G2.7 | `ReviewStatus` (D50): mọi `analyzeReport` mang trạng thái duyệt; `render` in «DRAFT, NOT HUMAN REVIEWED» cho bản nháp. **Không có định lý** (chỉ ví dụ `decide`); `reviewed` chỉ ghi tên và ngày, không được kiểm | **Tested (ví dụ)** — *không phải bằng chứng faithfulness* |
+| G2.8 | `Verify/Cases.lean` + `Laws/AlcoholSaleCases.lean`: 37 ca thử viết từ chữ của khoản (ghi trước khi chạy, `eval/cases/RECORD.md`), đo bằng `runCase` (định nghĩa qua `Norm.applies`; `mem_applyingNorms`, `hasClash_iff_conflict`, `runCase_pass_sound`); kernel kiểm tập ca đạt (`pass_set`). Phiếu cho người: `docs/review/sale-group-cases.md` | **Implemented (công cụ)** — *chưa ai trả lời phiếu; ca và mã hóa cùng một nguồn, không phải bằng chứng faithfulness độc lập* |
 
 **G2 KHÔNG bao phủ**
 

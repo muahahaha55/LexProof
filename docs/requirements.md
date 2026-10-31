@@ -166,7 +166,7 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
   `#audit_axioms`, chạy khi `LexProof.lean` import module đó, nên **`lake build`
   trần và CI đều chạy nó**. Audit lấy danh sách khai báo **từ môi trường**
   (mọi module `LexProof.*` cộng file đang elaborate), nên không có danh sách tên
-  viết tay nào để mục ruỗng; lần chạy hiện tại phủ **2286 khai báo**. Nó so
+  viết tay nào để mục ruỗng; lần chạy hiện tại phủ **2591 khai báo**. Nó so
   **tập** axiom với whitelist, không khớp theo tên — điều này thiết yếu vì axiom
   do `native_decide` sinh được đặt tên theo định lý, không theo tiền tố cố định.
   Một `axiom` khai trong module của ta cũng bị từ chối.
