@@ -1,0 +1,60 @@
+ca trong phạm vi mã hóa: 36; OUT OF SCOPE: 1
+C01 | PASS | norm áp dụng: 5.3-ban
+C02 | PASS | norm áp dụng: 
+C03 | PASS | norm áp dụng: 5.3-ban
+C04 | PASS | norm áp dụng: 
+C05 | PASS | norm áp dụng: 5.3-cung-cap
+C06 | PASS | norm áp dụng: 
+C07 | PASS | norm áp dụng: 5.3-cung-cap
+C08 | PASS | norm áp dụng: 
+C09 | PASS | norm áp dụng: 5.3-khuyen-mai
+C10 | PASS | norm áp dụng: 
+C11 | PASS | norm áp dụng: 5.3-khuyen-mai
+C12 | PASS | norm áp dụng: 
+C13 | PASS | norm áp dụng: 5.9-i
+C14 | PASS | norm áp dụng: 5.9-i
+C15 | PASS | norm áp dụng: 
+C16 | PASS | norm áp dụng: 
+C17 | PASS | norm áp dụng: 5.3-khuyen-mai, 5.9-i
+C18 | PASS | norm áp dụng: 5.9-ii
+C19 | PASS | norm áp dụng: 5.9-ii
+C20 | PASS | norm áp dụng: 
+C21 | PASS | norm áp dụng: 
+C22 | PASS | norm áp dụng: 5.11-ii
+C23 | PASS | norm áp dụng: 
+C25 | PASS | norm áp dụng: 19.1
+C26 | PASS | norm áp dụng: 
+C27 | PASS | norm áp dụng: 19.2
+C28 | PASS | norm áp dụng: 
+C29 | PASS | norm áp dụng: 19.3
+C30 | PASS | norm áp dụng: 
+C31 | PASS | norm áp dụng: 19.4
+C32 | PASS | norm áp dụng: 19.5
+C33 | PASS | norm áp dụng: 19.6
+C34 | PASS | norm áp dụng: 
+C35 | PASS | norm áp dụng: 
+C36 | PASS | norm áp dụng: 5.3-ban, 19.1
+C37 | PASS | norm áp dụng: 
+--- 1 ca OUT OF SCOPE: điều khoản không được mã hóa; các ca này không nói gì về luật, không phải PASS ---
+C24 | OUT OF SCOPE — điều khoản «Điều 5 khoản 11 nhánh (i)» KHÔNG được mã hóa; kết quả này không nói gì về luật, và không phải PASS | norm áp dụng: 
+FINDING: điều khoản «Điều 19 (tiêu đề)» không có trong norm đã mã hóa lẫn danh sách notEncoded
+chưa đủ 18 tuổi: cận dưới 0 — assumed, not in the law (thang tuổi bắt đầu từ 0)
+từ đủ 18 tuổi trở lên: cận trên 150 — assumed, not in the law (giới hạn trên của thang tuổi)
+dưới 15 độ: cận dưới 0 — assumed, not in the law (thang độ cồn bắt đầu từ 0)
+từ 15 độ trở lên: cận trên 1000 — assumed, not in the law (giới hạn trên của thang độ cồn)
+[(N-C03, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C04, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C07, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C08, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C11, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C12, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C14, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C15, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C19, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-C20, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-B1, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-B2, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-B3, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-B4, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-B5, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-B6, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-S1, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-S2, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-S3, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass)), (N-S4, LexProof.Laws.AlcoholSaleBands.NumOutcome.ran (LexProof.CaseOutcome.pass))]
+'LexProof.runCaseScoped_outOfScope' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.runCaseScoped_ran' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.outOfScope_not_pass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.scoped_pass_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.tiles_unique_band' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.tiles_bandOf_none' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.Laws.AlcoholSaleBands.age_tiles' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.Laws.AlcoholSaleBands.alcohol_tiles' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.Laws.AlcoholSaleBands.age_labels' depends on axioms: [propext]
+'LexProof.Laws.AlcoholSaleBands.alcohol_labels' depends on axioms: [propext]
+'LexProof.Laws.AlcoholSaleBands.out_of_scope_set' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.Laws.AlcoholSaleBands.scoped_pass_set' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.Laws.AlcoholSaleBands.unmentioned_set' does not depend on any axioms
+'LexProof.Laws.AlcoholSaleBands.num_pass_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LexProof.Laws.AlcoholSaleBands.num_out_of_range' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -680,3 +680,27 @@ Các trường còn lại:
 **`noNormApplies` chỉ có nghĩa «không norm nào của mô-đun này áp dụng»**, không bao giờ là «hợp pháp»; văn bản in ra nói rõ như vậy.
 Kết quả (37 ca): 36 đạt, 1 không đạt (C24: nhánh (i) của Điều 5 khoản 11 không được mã hóa). Phiếu cho người: [review/sale-group-cases.md](review/sale-group-cases.md); đáp án và độ phủ:
 [review/sale-group-cases-key.md](review/sale-group-cases-key.md). **Ca, mã hóa và kỳ vọng cùng một nguồn**, nên 36/37 không phải bằng chứng khớp luật.
+
+## 16. `Verify/CasesScoped.lean`, `Core/NumericBands.lean`, `Laws/AlcoholSaleBands.lean` — phạm vi của ca và ngưỡng số (D51, D52)
+
+**Cộng thêm, không sửa gì có sẵn. BẢN NHÁP, CHƯA AI DUYỆT.**
+
+**D51 — ca có phạm vi.** `runCase` trả `noNormApplies` cả khi điều khoản được mã hóa mà điều kiện sai, lẫn khi điều khoản *không được mã hóa* (ca C24). `runCaseScoped` nhận danh sách điều khoản `notEncoded` của mô-đun:
+
+| Định nghĩa / định lý | Nội dung |
+|---|---|
+| `ScopedOutcome` | `ran (o : CaseOutcome)` \| `outOfScope clause` |
+| `runCaseScoped_outOfScope` | điều khoản của ca có trong danh sách ⇒ kết quả là `outOfScope k`, bất kể `runCase` nói gì |
+| `runCaseScoped_ran` | không có trong danh sách ⇒ kết quả đúng bằng `runCase` |
+| `outOfScope_not_pass`, `scoped_pass_iff` | `outOfScope` không phải pass; chỉ ca trong phạm vi mới pass được |
+| `unmentionedKeys` | điều khoản của ca không có trong norm đã mã hóa (`source.article`) lẫn danh sách `notEncoded` — là **finding** |
+| `scopedReport` | in ca trong phạm vi trước, ca `OUT OF SCOPE` riêng, kèm «không nói gì về luật, không phải PASS», rồi các finding |
+
+`Case.clause` thô hơn mục của `notEncoded` (cả khoản 11 so với nhánh (i)), nên bộ chạy nhận hàm `keyOf`; mô-đun cung cấp bảng ghi đè công khai (`keyOverride`, chỉ C24). So khớp là **bằng chuỗi**, không suy luận.
+Kết quả trên 37 ca: C24 thành `outOfScope`; 36 ca còn lại như cũ (`scoped_pass_set` = `passing`). Finding: C37 viết «Điều 19 (tiêu đề)» còn danh sách viết «Điều 19 tiêu đề» (lệch chuỗi, `unmentioned_set`).
+
+**D52 — dải số.** `NumBand` (cận dưới gồm, cận trên không gồm, nhãn, khoản nguồn của từng cận, cờ «luật có nêu cận này»), `tiles bs a b` (kiểm quyết định được: các dải nối liền phủ `[a,b)`, không hở, không chồng), `bandOf`.
+`tiles_unique_band`: nếu `tiles` đúng thì mọi số trong khoảng có đúng một dải và `bandOf` trả nó; `tiles_bandOf_none`: ngoài khoảng `bandOf = none`. Trong `AlcoholSaleBands`: dải tuổi (năm nguyên) `[0,150)` và độ cồn (phần mười độ) `[0,1000)`; các cận 0, 150 tuổi, 1000 **không có trong luật** và được in là «assumed, not in the law» (`assumedBounds`); `age_labels`/`alcohol_labels` kiểm nhãn dải bằng nhãn trong `tS`; 20 ca số (10 ca ranh giới cũ có số, 6 ca đúng ranh giới, 4 ca ngay trên ranh giới) ánh xạ qua `bandOf` rồi chạy bằng `runCase`, kernel kiểm (`num_pass_all`); ngoài thang cho `outOfRange` (`num_out_of_range`).
+**Bộ kiểm vẫn không biết các con số nghĩa là gì**: không biết 150 là «15 độ», không biết luật tính tuổi theo năm nguyên. Nó chỉ biết các dải nối liền nhau. Ranh giới sai mà vẫn nối liền thì vô hình.
+Ca số cùng nguồn với mã hóa (cùng tác giả), nên «đạt» là đồng thuận với người soạn, không phải với luật.
+

@@ -20,6 +20,8 @@ Graduation thesis project; research follow-up later (ASE / NeurIPS 2027 consider
   unknown. Never claim a whole document is "correct". Always report what was
   encoded and reviewed.
 - Fail closed: if unsure, return unknown. Never silently skip a provision.
+- A case result `noNormApplies` is never shown alone: always with its scope status (clause encoded, or `outOfScope`
+  because the clause is in `notEncoded`). `outOfScope` is not a pass and says nothing about the law.
 - Open-textured concepts ("hợp lý", "nghiêm trọng") are explicit parameters.
   The system never decides them.
 - No `sorry`, no extra axioms, no `native_decide` in anything that backs a
