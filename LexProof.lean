@@ -16,4 +16,7 @@ import LexProof.Verify.Cases
 import LexProof.Core.Render
 import LexProof.Laws.AlcoholSale
 import LexProof.Laws.AlcoholSaleCases
+import LexProof.Verify.CasesScoped
+import LexProof.Core.NumericBands
+import LexProof.Laws.AlcoholSaleBands
 import LexProof.Cert.Audit
