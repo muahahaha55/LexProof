@@ -506,7 +506,7 @@ ngoại lệ; chu trình dài hơn 4.
 | `Norm.resolved_comm`, `Tests.mutual_override_not_resolved` | *không axiom nào* |
 
 Audit nay **tự động**: `LexProof/Cert/Audit.lean` chạy `#audit_axioms` trong mỗi
-`lake build` (2591 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean`, `Verify/AnalyzeProjected.lean`, `Core/Render.lean`, `Laws/AlcoholSale.lean`, `Verify/AnalyzeReport.lean`, `Verify/Cases.lean` và `Laws/AlcoholSaleCases.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
+`lake build` (3118 khai báo, gồm cả `Verify/Projection.lean`, `Core/AtomTable.lean`, `Verify/ProjectedCheck.lean`, `Verify/AnalyzeProjected.lean`, `Core/Render.lean`, `Laws/AlcoholSale.lean`, `Verify/AnalyzeReport.lean`, `Verify/Cases.lean` và `Laws/AlcoholSaleCases.lean`) và làm **build đỏ** nếu có axiom ngoài whitelist,
 `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, hay `axiom` tự khai. Cùng
 file chạy `#audit_encapsulation` để chặn việc dùng `LexProof.Internal.*` ngoài
 ba module được phép. Chi tiết: [conventions.md](conventions.md) §7. Đề xuất cho
@@ -704,3 +704,19 @@ Kết quả trên 37 ca: C24 thành `outOfScope`; 36 ca còn lại như cũ (`sc
 **Bộ kiểm vẫn không biết các con số nghĩa là gì**: không biết 150 là «15 độ», không biết luật tính tuổi theo năm nguyên. Nó chỉ biết các dải nối liền nhau. Ranh giới sai mà vẫn nối liền thì vô hình.
 Ca số cùng nguồn với mã hóa (cùng tác giả), nên «đạt» là đồng thuận với người soạn, không phải với luật.
 
+## 17. `Core/ClauseRef.lean`, `Laws/AlcoholSaleRefs.lean`, `pipeline/segment.py` — tham chiếu có cấu trúc, phạm vi theo tham chiếu, sổ phủ
+
+**Cộng thêm, không sửa gì có sẵn. BẢN NHÁP, CHƯA AI DUYỆT.**
+
+| Định nghĩa | Nội dung |
+|---|---|
+| `ClauseRef` | `article`, `clause?`, `point?` (chữ cái, có `đ`), `part` (`body` \| `heading`), `branch?` — **ký hiệu của dự án, không phải đơn vị pháp lý** («nhánh (i)»); `isProjectNotation` |
+| `parseRef`, `parseEntry` | bộ phân tích tất định trên `List Char`, **từ chối** mọi dạng ngoài văn phạm (ghi ở đầu tệp); `parseEntry` đọc thêm «Điều N khoản a, b, c» |
+| `render`, `normalize` | cách viết chuẩn; `«Điều 19 (tiêu đề)»` và `«Điều 19 tiêu đề»` về cùng một tham chiếu |
+| `isAncestorOf`, `isParentOf` | đường dẫn là tiền tố thực sự; tiêu đề treo dưới điều và không bao giờ là tổ tiên |
+| `runCaseRefScoped` | phạm vi của ca chỉ từ tham chiếu (không bảng ghi đè): tiêu đề không bao giờ đưa ca ra ngoài phạm vi (G1: tiêu đề cho modality và act xuống các khoản); mục `notEncoded` là tổ tiên hoặc bằng ⇒ `outOfScope`; mục là hậu duệ ⇒ trong phạm vi chỉ khi có norm **cùng act** trích dẫn tham chiếu liên quan; còn lại ⇒ đúng bằng `runCase` |
+| `render_parse_allRefs` | **kiểm bằng kernel** (`decide +kernel`) `parse ∘ render = id` trên mọi giá trị tham chiếu xuất hiện trong mô-đun; **không phải** định lý tổng quát |
+
+Kết quả trên 37 ca: C24 ra ngoài phạm vi (khoản 11 có nhánh (i) không mã hóa và không norm nào cùng act); C37 trong phạm vi; **C23 cũng ra ngoài phạm vi** — hệ quả của quy tắc, vì tham chiếu và act không phân biệt được tình huống của C23 có thuộc nhánh (i) hay không (bảng ghi đè cũ để C23 trong phạm vi). Finding: hai chuỗi khác nhau cùng tham chiếu (C37 so với `notEncoded`); norm 5.11-ii trích dẫn cả khoản 11 chứ không riêng nhánh (ii), nên khoản 11 là «encoded một phần». Không có chuỗi nào không phân tích được; không tham chiếu nào ngoài `catalog` (catalog chỉ kiểm số điều, không kiểm sự tồn tại của khoản).
+
+**Phân đoạn và sổ phủ.** `pipeline/segment.py` (Python, **không tin cậy**) ghi `data/segmented/44-2019-QH14.json` (kèm sha256 đầu vào và phiên bản công cụ). Các kiểm tra S1–S5 chỉ chứng minh kết quả nhất quán với chính tệp trích xuất; xóa một dòng nội dung thường không bị S1/S2/S3/S5 phát hiện, chỉ bị ghim sha256 phát hiện (có test). `eval/ledger/make_ledger.py` ghép với đầu ra của `Dump.lean` để lập `docs/review/alcohol-coverage-ledger.md`: mỗi khoản/điểm đúng một trạng thái; «encoded» = có norm nháp chưa duyệt, không nói gì về faithfulness.

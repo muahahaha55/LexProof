@@ -22,6 +22,8 @@ Graduation thesis project; research follow-up later (ASE / NeurIPS 2027 consider
 - Fail closed: if unsure, return unknown. Never silently skip a provision.
 - A case result `noNormApplies` is never shown alone: always with its scope status (clause encoded, or `outOfScope`
   because the clause is in `notEncoded`). `outOfScope` is not a pass and says nothing about the law.
+- In a new `Laws` module a clause is referred to by a `ClauseRef` (`Core/ClauseRef.lean`), never by a free string:
+  strings that do not parse are findings, and scope (`outOfScope`) is decided from references, not from an override table.
 - Open-textured concepts ("hợp lý", "nghiêm trọng") are explicit parameters.
   The system never decides them.
 - No `sorry`, no extra axioms, no `native_decide` in anything that backs a

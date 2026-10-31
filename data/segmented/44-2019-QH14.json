@@ -1,0 +1,4385 @@
+{
+ "tool": "segment.py 1.0",
+ "input": {
+  "path": "data/extracted/44-2019-QH14.txt",
+  "sha256": "e0ca5a521ff91a604523bea006c082e38655855466f7bb2379414d36bf199752",
+  "lines": 655
+ },
+ "line_class_runs": [
+  [
+   "signature",
+   1,
+   4
+  ],
+  [
+   "blank",
+   5,
+   5
+  ],
+  [
+   "running_page",
+   6,
+   6
+  ],
+  [
+   "blank",
+   7,
+   7
+  ],
+  [
+   "preamble",
+   8,
+   9
+  ],
+  [
+   "blank",
+   10,
+   10
+  ],
+  [
+   "preamble",
+   11,
+   12
+  ],
+  [
+   "blank",
+   13,
+   13
+  ],
+  [
+   "preamble",
+   14,
+   15
+  ],
+  [
+   "blank",
+   16,
+   16
+  ],
+  [
+   "chapter_heading",
+   17,
+   18
+  ],
+  [
+   "blank",
+   19,
+   19
+  ],
+  [
+   "article_heading",
+   20,
+   20
+  ],
+  [
+   "body",
+   21,
+   24
+  ],
+  [
+   "article_heading",
+   25,
+   25
+  ],
+  [
+   "body",
+   26,
+   38
+  ],
+  [
+   "running_page",
+   39,
+   39
+  ],
+  [
+   "blank",
+   40,
+   40
+  ],
+  [
+   "body",
+   41,
+   43
+  ],
+  [
+   "blank",
+   44,
+   44
+  ],
+  [
+   "body",
+   45,
+   47
+  ],
+  [
+   "blank",
+   48,
+   48
+  ],
+  [
+   "body",
+   49,
+   50
+  ],
+  [
+   "blank",
+   51,
+   51
+  ],
+  [
+   "body",
+   52,
+   53
+  ],
+  [
+   "blank",
+   54,
+   54
+  ],
+  [
+   "article_heading",
+   55,
+   55
+  ],
+  [
+   "body",
+   56,
+   60
+  ],
+  [
+   "blank",
+   61,
+   61
+  ],
+  [
+   "body",
+   62,
+   64
+  ],
+  [
+   "blank",
+   65,
+   65
+  ],
+  [
+   "body",
+   66,
+   67
+  ],
+  [
+   "blank",
+   68,
+   68
+  ],
+  [
+   "body",
+   69,
+   70
+  ],
+  [
+   "blank",
+   71,
+   71
+  ],
+  [
+   "article_heading",
+   72,
+   73
+  ],
+  [
+   "blank",
+   74,
+   74
+  ],
+  [
+   "body",
+   75,
+   77
+  ],
+  [
+   "blank",
+   78,
+   78
+  ],
+  [
+   "body",
+   79,
+   81
+  ],
+  [
+   "blank",
+   82,
+   82
+  ],
+  [
+   "body",
+   83,
+   83
+  ],
+  [
+   "running_page",
+   84,
+   84
+  ],
+  [
+   "blank",
+   85,
+   85
+  ],
+  [
+   "article_heading",
+   86,
+   87
+  ],
+  [
+   "blank",
+   88,
+   88
+  ],
+  [
+   "body",
+   89,
+   113
+  ],
+  [
+   "blank",
+   114,
+   114
+  ],
+  [
+   "chapter_heading",
+   115,
+   116
+  ],
+  [
+   "blank",
+   117,
+   117
+  ],
+  [
+   "article_heading",
+   118,
+   119
+  ],
+  [
+   "running_page",
+   120,
+   120
+  ],
+  [
+   "blank",
+   121,
+   121
+  ],
+  [
+   "body",
+   122,
+   125
+  ],
+  [
+   "blank",
+   126,
+   126
+  ],
+  [
+   "body",
+   127,
+   128
+  ],
+  [
+   "blank",
+   129,
+   129
+  ],
+  [
+   "body",
+   130,
+   130
+  ],
+  [
+   "blank",
+   131,
+   131
+  ],
+  [
+   "body",
+   132,
+   135
+  ],
+  [
+   "blank",
+   136,
+   136
+  ],
+  [
+   "article_heading",
+   137,
+   138
+  ],
+  [
+   "blank",
+   139,
+   139
+  ],
+  [
+   "body",
+   140,
+   143
+  ],
+  [
+   "blank",
+   144,
+   144
+  ],
+  [
+   "body",
+   145,
+   146
+  ],
+  [
+   "blank",
+   147,
+   147
+  ],
+  [
+   "body",
+   148,
+   150
+  ],
+  [
+   "blank",
+   151,
+   151
+  ],
+  [
+   "body",
+   152,
+   153
+  ],
+  [
+   "blank",
+   154,
+   154
+  ],
+  [
+   "body",
+   155,
+   156
+  ],
+  [
+   "blank",
+   157,
+   157
+  ],
+  [
+   "body",
+   158,
+   159
+  ],
+  [
+   "blank",
+   160,
+   160
+  ],
+  [
+   "body",
+   161,
+   162
+  ],
+  [
+   "blank",
+   163,
+   163
+  ],
+  [
+   "body",
+   164,
+   165
+  ],
+  [
+   "running_page",
+   166,
+   166
+  ],
+  [
+   "blank",
+   167,
+   167
+  ],
+  [
+   "body",
+   168,
+   169
+  ],
+  [
+   "blank",
+   170,
+   170
+  ],
+  [
+   "article_heading",
+   171,
+   172
+  ],
+  [
+   "blank",
+   173,
+   173
+  ],
+  [
+   "body",
+   174,
+   175
+  ],
+  [
+   "blank",
+   176,
+   176
+  ],
+  [
+   "body",
+   177,
+   178
+  ],
+  [
+   "blank",
+   179,
+   179
+  ],
+  [
+   "body",
+   180,
+   184
+  ],
+  [
+   "article_heading",
+   185,
+   186
+  ],
+  [
+   "body",
+   187,
+   191
+  ],
+  [
+   "article_heading",
+   192,
+   192
+  ],
+  [
+   "body",
+   193,
+   203
+  ],
+  [
+   "running_page",
+   204,
+   204
+  ],
+  [
+   "blank",
+   205,
+   205
+  ],
+  [
+   "article_heading",
+   206,
+   206
+  ],
+  [
+   "body",
+   207,
+   208
+  ],
+  [
+   "article_heading",
+   209,
+   209
+  ],
+  [
+   "body",
+   210,
+   236
+  ],
+  [
+   "running_page",
+   237,
+   237
+  ],
+  [
+   "blank",
+   238,
+   238
+  ],
+  [
+   "article_heading",
+   239,
+   240
+  ],
+  [
+   "blank",
+   241,
+   241
+  ],
+  [
+   "body",
+   242,
+   244
+  ],
+  [
+   "blank",
+   245,
+   245
+  ],
+  [
+   "body",
+   246,
+   248
+  ],
+  [
+   "article_heading",
+   249,
+   249
+  ],
+  [
+   "body",
+   250,
+   252
+  ],
+  [
+   "blank",
+   253,
+   253
+  ],
+  [
+   "chapter_heading",
+   254,
+   255
+  ],
+  [
+   "blank",
+   256,
+   256
+  ],
+  [
+   "article_heading",
+   257,
+   257
+  ],
+  [
+   "body",
+   258,
+   271
+  ],
+  [
+   "running_page",
+   272,
+   272
+  ],
+  [
+   "blank",
+   273,
+   273
+  ],
+  [
+   "body",
+   274,
+   275
+  ],
+  [
+   "blank",
+   276,
+   276
+  ],
+  [
+   "body",
+   277,
+   278
+  ],
+  [
+   "blank",
+   279,
+   279
+  ],
+  [
+   "body",
+   280,
+   285
+  ],
+  [
+   "article_heading",
+   286,
+   286
+  ],
+  [
+   "body",
+   287,
+   291
+  ],
+  [
+   "article_heading",
+   292,
+   293
+  ],
+  [
+   "body",
+   294,
+   301
+  ],
+  [
+   "article_heading",
+   302,
+   302
+  ],
+  [
+   "body",
+   303,
+   305
+  ],
+  [
+   "running_page",
+   306,
+   306
+  ],
+  [
+   "blank",
+   307,
+   307
+  ],
+  [
+   "article_heading",
+   308,
+   308
+  ],
+  [
+   "body",
+   309,
+   310
+  ],
+  [
+   "blank",
+   311,
+   311
+  ],
+  [
+   "body",
+   312,
+   313
+  ],
+  [
+   "blank",
+   314,
+   314
+  ],
+  [
+   "body",
+   315,
+   316
+  ],
+  [
+   "blank",
+   317,
+   317
+  ],
+  [
+   "body",
+   318,
+   321
+  ],
+  [
+   "blank",
+   322,
+   322
+  ],
+  [
+   "article_heading",
+   323,
+   324
+  ],
+  [
+   "blank",
+   325,
+   325
+  ],
+  [
+   "body",
+   326,
+   328
+  ],
+  [
+   "blank",
+   329,
+   329
+  ],
+  [
+   "body",
+   330,
+   332
+  ],
+  [
+   "blank",
+   333,
+   333
+  ],
+  [
+   "body",
+   334,
+   337
+  ],
+  [
+   "blank",
+   338,
+   338
+  ],
+  [
+   "chapter_heading",
+   339,
+   340
+  ],
+  [
+   "blank",
+   341,
+   341
+  ],
+  [
+   "article_heading",
+   342,
+   342
+  ],
+  [
+   "body",
+   343,
+   346
+  ],
+  [
+   "running_page",
+   347,
+   347
+  ],
+  [
+   "blank",
+   348,
+   348
+  ],
+  [
+   "body",
+   349,
+   350
+  ],
+  [
+   "blank",
+   351,
+   351
+  ],
+  [
+   "body",
+   352,
+   354
+  ],
+  [
+   "blank",
+   355,
+   355
+  ],
+  [
+   "body",
+   356,
+   358
+  ],
+  [
+   "blank",
+   359,
+   359
+  ],
+  [
+   "article_heading",
+   360,
+   361
+  ],
+  [
+   "blank",
+   362,
+   362
+  ],
+  [
+   "body",
+   363,
+   364
+  ],
+  [
+   "blank",
+   365,
+   365
+  ],
+  [
+   "body",
+   366,
+   367
+  ],
+  [
+   "blank",
+   368,
+   368
+  ],
+  [
+   "body",
+   369,
+   371
+  ],
+  [
+   "blank",
+   372,
+   372
+  ],
+  [
+   "body",
+   373,
+   375
+  ],
+  [
+   "blank",
+   376,
+   376
+  ],
+  [
+   "body",
+   377,
+   378
+  ],
+  [
+   "blank",
+   379,
+   379
+  ],
+  [
+   "body",
+   380,
+   381
+  ],
+  [
+   "blank",
+   382,
+   382
+  ],
+  [
+   "article_heading",
+   383,
+   383
+  ],
+  [
+   "body",
+   384,
+   390
+  ],
+  [
+   "running_page",
+   391,
+   391
+  ],
+  [
+   "blank",
+   392,
+   392
+  ],
+  [
+   "body",
+   393,
+   404
+  ],
+  [
+   "article_heading",
+   405,
+   405
+  ],
+  [
+   "body",
+   406,
+   417
+  ],
+  [
+   "article_heading",
+   418,
+   419
+  ],
+  [
+   "body",
+   420,
+   423
+  ],
+  [
+   "running_page",
+   424,
+   424
+  ],
+  [
+   "blank",
+   425,
+   425
+  ],
+  [
+   "body",
+   426,
+   427
+  ],
+  [
+   "blank",
+   428,
+   428
+  ],
+  [
+   "body",
+   429,
+   431
+  ],
+  [
+   "blank",
+   432,
+   432
+  ],
+  [
+   "body",
+   433,
+   433
+  ],
+  [
+   "blank",
+   434,
+   434
+  ],
+  [
+   "body",
+   435,
+   437
+  ],
+  [
+   "blank",
+   438,
+   438
+  ],
+  [
+   "body",
+   439,
+   440
+  ],
+  [
+   "blank",
+   441,
+   441
+  ],
+  [
+   "chapter_heading",
+   442,
+   443
+  ],
+  [
+   "blank",
+   444,
+   444
+  ],
+  [
+   "chapter_heading",
+   445,
+   445
+  ],
+  [
+   "blank",
+   446,
+   446
+  ],
+  [
+   "article_heading",
+   447,
+   447
+  ],
+  [
+   "body",
+   448,
+   454
+  ],
+  [
+   "article_heading",
+   455,
+   456
+  ],
+  [
+   "body",
+   457,
+   461
+  ],
+  [
+   "running_page",
+   462,
+   462
+  ],
+  [
+   "blank",
+   463,
+   463
+  ],
+  [
+   "article_heading",
+   464,
+   464
+  ],
+  [
+   "blank",
+   465,
+   465
+  ],
+  [
+   "body",
+   466,
+   469
+  ],
+  [
+   "blank",
+   470,
+   470
+  ],
+  [
+   "body",
+   471,
+   473
+  ],
+  [
+   "blank",
+   474,
+   474
+  ],
+  [
+   "body",
+   475,
+   476
+  ],
+  [
+   "blank",
+   477,
+   477
+  ],
+  [
+   "chapter_heading",
+   478,
+   479
+  ],
+  [
+   "blank",
+   480,
+   480
+  ],
+  [
+   "chapter_heading",
+   481,
+   481
+  ],
+  [
+   "blank",
+   482,
+   482
+  ],
+  [
+   "article_heading",
+   483,
+   483
+  ],
+  [
+   "body",
+   484,
+   494
+  ],
+  [
+   "article_heading",
+   495,
+   496
+  ],
+  [
+   "body",
+   497,
+   498
+  ],
+  [
+   "running_page",
+   499,
+   499
+  ],
+  [
+   "blank",
+   500,
+   500
+  ],
+  [
+   "body",
+   501,
+   502
+  ],
+  [
+   "blank",
+   503,
+   503
+  ],
+  [
+   "body",
+   504,
+   505
+  ],
+  [
+   "blank",
+   506,
+   506
+  ],
+  [
+   "body",
+   507,
+   508
+  ],
+  [
+   "blank",
+   509,
+   509
+  ],
+  [
+   "article_heading",
+   510,
+   511
+  ],
+  [
+   "blank",
+   512,
+   512
+  ],
+  [
+   "body",
+   513,
+   519
+  ],
+  [
+   "blank",
+   520,
+   520
+  ],
+  [
+   "body",
+   521,
+   536
+  ],
+  [
+   "running_page",
+   537,
+   537
+  ],
+  [
+   "blank",
+   538,
+   538
+  ],
+  [
+   "body",
+   539,
+   540
+  ],
+  [
+   "blank",
+   541,
+   541
+  ],
+  [
+   "article_heading",
+   542,
+   542
+  ],
+  [
+   "blank",
+   543,
+   543
+  ],
+  [
+   "body",
+   544,
+   547
+  ],
+  [
+   "blank",
+   548,
+   548
+  ],
+  [
+   "body",
+   549,
+   550
+  ],
+  [
+   "blank",
+   551,
+   551
+  ],
+  [
+   "body",
+   552,
+   553
+  ],
+  [
+   "blank",
+   554,
+   554
+  ],
+  [
+   "body",
+   555,
+   556
+  ],
+  [
+   "blank",
+   557,
+   557
+  ],
+  [
+   "body",
+   558,
+   560
+  ],
+  [
+   "blank",
+   561,
+   561
+  ],
+  [
+   "body",
+   562,
+   565
+  ],
+  [
+   "blank",
+   566,
+   566
+  ],
+  [
+   "body",
+   567,
+   569
+  ],
+  [
+   "blank",
+   570,
+   570
+  ],
+  [
+   "article_heading",
+   571,
+   572
+  ],
+  [
+   "blank",
+   573,
+   573
+  ],
+  [
+   "body",
+   574,
+   577
+  ],
+  [
+   "blank",
+   578,
+   578
+  ],
+  [
+   "body",
+   579,
+   581
+  ],
+  [
+   "running_page",
+   582,
+   582
+  ],
+  [
+   "blank",
+   583,
+   583
+  ],
+  [
+   "body",
+   584,
+   585
+  ],
+  [
+   "blank",
+   586,
+   586
+  ],
+  [
+   "body",
+   587,
+   589
+  ],
+  [
+   "blank",
+   590,
+   590
+  ],
+  [
+   "body",
+   591,
+   593
+  ],
+  [
+   "blank",
+   594,
+   594
+  ],
+  [
+   "article_heading",
+   595,
+   596
+  ],
+  [
+   "blank",
+   597,
+   597
+  ],
+  [
+   "body",
+   598,
+   600
+  ],
+  [
+   "blank",
+   601,
+   601
+  ],
+  [
+   "body",
+   602,
+   604
+  ],
+  [
+   "blank",
+   605,
+   605
+  ],
+  [
+   "body",
+   606,
+   607
+  ],
+  [
+   "blank",
+   608,
+   608
+  ],
+  [
+   "chapter_heading",
+   609,
+   610
+  ],
+  [
+   "blank",
+   611,
+   611
+  ],
+  [
+   "article_heading",
+   612,
+   612
+  ],
+  [
+   "blank",
+   613,
+   613
+  ],
+  [
+   "body",
+   614,
+   616
+  ],
+  [
+   "blank",
+   617,
+   617
+  ],
+  [
+   "body",
+   618,
+   619
+  ],
+  [
+   "blank",
+   620,
+   620
+  ],
+  [
+   "body",
+   621,
+   623
+  ],
+  [
+   "running_page",
+   624,
+   624
+  ],
+  [
+   "blank",
+   625,
+   625
+  ],
+  [
+   "body",
+   626,
+   628
+  ],
+  [
+   "blank",
+   629,
+   629
+  ],
+  [
+   "body",
+   630,
+   632
+  ],
+  [
+   "blank",
+   633,
+   633
+  ],
+  [
+   "body",
+   634,
+   635
+  ],
+  [
+   "blank",
+   636,
+   636
+  ],
+  [
+   "body",
+   637,
+   638
+  ],
+  [
+   "blank",
+   639,
+   639
+  ],
+  [
+   "article_heading",
+   640,
+   640
+  ],
+  [
+   "blank",
+   641,
+   641
+  ],
+  [
+   "body",
+   642,
+   642
+  ],
+  [
+   "blank",
+   643,
+   643
+  ],
+  [
+   "body",
+   644,
+   647
+  ],
+  [
+   "blank",
+   648,
+   648
+  ],
+  [
+   "signature",
+   649,
+   650
+  ],
+  [
+   "blank",
+   651,
+   651
+  ],
+  [
+   "signature",
+   652,
+   652
+  ],
+  [
+   "blank",
+   653,
+   653
+  ],
+  [
+   "signature",
+   654,
+   654
+  ],
+  [
+   "blank",
+   655,
+   655
+  ]
+ ],
+ "stray_paragraphs": 2,
+ "chapters": [
+  {
+   "id": "I",
+   "number": 1,
+   "heading_lines": [
+    17,
+    18
+   ],
+   "title": "NHỮNG QUY ĐỊNH CHUNG",
+   "articles": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "id": "II",
+   "number": 2,
+   "heading_lines": [
+    115,
+    116
+   ],
+   "title": "BIỆN PHÁP GIẢM MỨC TIÊU THỤ RƯỢU, BIA",
+   "articles": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "id": "III",
+   "number": 3,
+   "heading_lines": [
+    254,
+    255
+   ],
+   "title": "BIỆN PHÁP QUẢN LÝ VIỆC CUNG CẤP RƯỢU, BIA",
+   "articles": [
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ]
+  },
+  {
+   "id": "IV",
+   "number": 4,
+   "heading_lines": [
+    339,
+    340
+   ],
+   "title": "BIỆN PHÁP GIẢM TÁC HẠI CỦA RƯỢU, BIA",
+   "articles": [
+    21,
+    22,
+    23,
+    24,
+    25
+   ]
+  },
+  {
+   "id": "V",
+   "number": 5,
+   "heading_lines": [
+    442,
+    443,
+    445
+   ],
+   "title": "ĐIỀU KIỆN BẢO ĐẢM CHO HOẠT ĐỘNG PHÒNG, CHỐNG TÁC HẠI CỦA RƯỢU, BIA",
+   "articles": [
+    26,
+    27,
+    28
+   ]
+  },
+  {
+   "id": "VI",
+   "number": 6,
+   "heading_lines": [
+    478,
+    479,
+    481
+   ],
+   "title": "QUẢN LÝ NHÀ NƯỚC VÀ TRÁCH NHIỆM CỦA CƠ QUAN, TỔ CHỨC, CÁ NHÂN TRONG PHÒNG, CHỐNG TÁC HẠI CỦA RƯỢU, BIA",
+   "articles": [
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+   ]
+  },
+  {
+   "id": "VII",
+   "number": 7,
+   "heading_lines": [
+    609,
+    610
+   ],
+   "title": "ĐIỀU KHOẢN THI HÀNH",
+   "articles": [
+    35,
+    36
+   ]
+  }
+ ],
+ "articles": [
+  {
+   "number": 1,
+   "id": "Điều 1",
+   "chapter": "I",
+   "title": "Phạm vi điều chỉnh",
+   "heading_lines": [
+    20
+   ],
+   "lead_in": {
+    "body_lines": [
+     21,
+     22,
+     23,
+     24
+    ],
+    "start": 21,
+    "end": 24,
+    "text": "    Luật này quy định biện pháp giảm mức tiêu thụ rượu, bia; biện pháp quản lý\nviệc cung cấp rượu, bia; biện pháp giảm tác hại của rượu, bia; điều kiện bảo đảm\ncho hoạt động phòng, chống tác hại của rượu, bia; quản lý nhà nước và trách nhiệm\ncủa cơ quan, tổ chức, cá nhân trong phòng, chống tác hại của rượu, bia."
+   },
+   "clauses": []
+  },
+  {
+   "number": 2,
+   "id": "Điều 2",
+   "chapter": "I",
+   "title": "Giải thích từ ngữ",
+   "heading_lines": [
+    25
+   ],
+   "lead_in": {
+    "body_lines": [
+     26
+    ],
+    "start": 26,
+    "end": 26,
+    "text": "    Trong Luật này, các từ ngữ dưới đây được hiểu như sau:"
+   },
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 2 khoản 1",
+     "body_lines": [
+      27,
+      28,
+      29
+     ],
+     "points": [],
+     "start": 27,
+     "end": 29,
+     "text": "    1. Rượu là đồ uống có cồn thực phẩm, được sản xuất từ quá trình lên men từ\nmột hoặc hỗn hợp của các loại nguyên liệu chủ yếu gồm tinh bột của ngũ cốc, dịch\nđường của cây, hoa, củ, quả hoặc là đồ uống được pha chế từ cồn thực phẩm."
+    },
+    {
+     "number": 2,
+     "id": "Điều 2 khoản 2",
+     "body_lines": [
+      30,
+      31,
+      32
+     ],
+     "points": [],
+     "start": 30,
+     "end": 32,
+     "text": "    2. Bia là đồ uống có cồn thực phẩm, được sản xuất từ quá trình lên men từ hỗn\nhợp của các loại nguyên liệu chủ yếu gồm mạch nha (malt), đại mạch, nấm men\nbia, hoa bia (hoa houblon), nước."
+    },
+    {
+     "number": 3,
+     "id": "Điều 2 khoản 3",
+     "body_lines": [
+      33,
+      34,
+      35
+     ],
+     "points": [],
+     "start": 33,
+     "end": 35,
+     "text": "    3. Cồn thực phẩm là hợp chất hữu cơ có công thức phân tử là C2H5OH và có\ntên khoa học là ethanol đã được loại bỏ tạp chất, đạt yêu cầu dùng trong thực phẩm\ntheo quy chuẩn kỹ thuật quốc gia, có khả năng gây nghiện và gây ngộ độc cấp tính."
+    },
+    {
+     "number": 4,
+     "id": "Điều 2 khoản 4",
+     "body_lines": [
+      36,
+      37,
+      38
+     ],
+     "points": [],
+     "start": 36,
+     "end": 38,
+     "text": "    4. Độ cồn là số đo chỉ hàm lượng cồn thực phẩm có trong rượu, bia tính theo\nphần trăm thể tích. Độ cồn được tính bằng số mililít ethanol nguyên chất trong 100 ml\ndung dịch ở 20°C."
+    },
+    {
+     "number": 5,
+     "id": "Điều 2 khoản 5",
+     "body_lines": [
+      41,
+      42,
+      43
+     ],
+     "points": [],
+     "start": 41,
+     "end": 43,
+     "text": "    5. Tác hại của rượu, bia là ảnh hưởng, tác động có hại của rượu, bia đối với\nsức khỏe con người, gia đình, cộng đồng, an toàn giao thông, trật tự, an toàn xã\nhội, kinh tế và các vấn đề xã hội khác."
+    },
+    {
+     "number": 6,
+     "id": "Điều 2 khoản 6",
+     "body_lines": [
+      45,
+      46,
+      47
+     ],
+     "points": [],
+     "start": 45,
+     "end": 47,
+     "text": "    6. Nghiện rượu, bia là tình trạng lệ thuộc vào rượu, bia với biểu hiện đặc trưng\nnhư thường xuyên thèm uống, lượng uống có thể tăng theo thời gian, không thể tự\nkiểm soát lượng uống hay ngừng uống."
+    },
+    {
+     "number": 7,
+     "id": "Điều 2 khoản 7",
+     "body_lines": [
+      49,
+      50
+     ],
+     "points": [],
+     "start": 49,
+     "end": 50,
+     "text": "    7. Sản xuất rượu thủ công là hoạt động sản xuất rượu bằng dụng cụ truyền\nthống, không sử dụng máy móc, thiết bị công nghiệp."
+    },
+    {
+     "number": 8,
+     "id": "Điều 2 khoản 8",
+     "body_lines": [
+      52,
+      53
+     ],
+     "points": [],
+     "start": 52,
+     "end": 53,
+     "text": "    8. Sản xuất rượu công nghiệp là hoạt động sản xuất rượu bằng máy móc,\nthiết bị công nghiệp."
+    }
+   ]
+  },
+  {
+   "number": 3,
+   "id": "Điều 3",
+   "chapter": "I",
+   "title": "Chính sách của Nhà nước trong phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    55
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 3 khoản 1",
+     "body_lines": [
+      56
+     ],
+     "points": [],
+     "start": 56,
+     "end": 56,
+     "text": "    1. Thực hiện đồng bộ các biện pháp phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 2,
+     "id": "Điều 3 khoản 2",
+     "body_lines": [
+      57,
+      58,
+      59,
+      60
+     ],
+     "points": [],
+     "start": 57,
+     "end": 60,
+     "text": "    2. Ưu tiên hoạt động thông tin, giáo dục, truyền thông; giảm tính sẵn có, dễ\ntiếp cận của rượu, bia; giảm tác hại của rượu, bia; tăng cường quản lý sản xuất\nrượu thủ công; thực hiện các biện pháp phòng, chống tác hại của rượu, bia đối với\ntrẻ em, học sinh, sinh viên, thanh niên, phụ nữ mang thai."
+    },
+    {
+     "number": 3,
+     "id": "Điều 3 khoản 3",
+     "body_lines": [
+      62,
+      63,
+      64
+     ],
+     "points": [],
+     "start": 62,
+     "end": 64,
+     "text": "    3. Bảo đảm nguồn lực cho công tác phòng, chống tác hại của rượu, bia; chú\ntrọng các hoạt động phòng, chống tác hại của rượu, bia của y tế cơ sở và ở cộng\nđồng; huy động xã hội hóa các hoạt động phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 4,
+     "id": "Điều 3 khoản 4",
+     "body_lines": [
+      66,
+      67
+     ],
+     "points": [],
+     "start": 66,
+     "end": 67,
+     "text": "    4. Khuyến khích nghiên cứu khoa học, phát triển công nghệ và ứng dụng công\nnghệ cao, công nghệ tiên tiến, công nghệ mới nhằm giảm tác hại của rượu, bia."
+    },
+    {
+     "number": 5,
+     "id": "Điều 3 khoản 5",
+     "body_lines": [
+      69,
+      70
+     ],
+     "points": [],
+     "start": 69,
+     "end": 70,
+     "text": "    5. Khen thưởng tập thể, cá nhân có thành tích trong phòng, chống tác hại của\nrượu, bia."
+    }
+   ]
+  },
+  {
+   "number": 4,
+   "id": "Điều 4",
+   "chapter": "I",
+   "title": "Quyền và nghĩa vụ của cá nhân, tổ chức trong phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    72,
+    73
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 4 khoản 1",
+     "body_lines": [
+      75
+     ],
+     "points": [],
+     "start": 75,
+     "end": 75,
+     "text": "    1. Được sống trong môi trường không chịu ảnh hưởng bởi tác hại của rượu, bia."
+    },
+    {
+     "number": 2,
+     "id": "Điều 4 khoản 2",
+     "body_lines": [
+      76,
+      77
+     ],
+     "points": [],
+     "start": 76,
+     "end": 77,
+     "text": "    2. Được cung cấp thông tin phù hợp, chính xác, khách quan, khoa học, đầy đủ\nvề rượu, bia, nguồn gốc, xuất xứ, chất lượng và tác hại của rượu, bia."
+    },
+    {
+     "number": 3,
+     "id": "Điều 4 khoản 3",
+     "body_lines": [
+      79,
+      80,
+      81
+     ],
+     "points": [],
+     "start": 79,
+     "end": 81,
+     "text": "    3. Phản ánh, tố cáo hành vi vi phạm pháp luật về phòng, chống tác hại của\nrượu, bia; tố cáo việc cơ quan, người có thẩm quyền không xử lý hành vi vi phạm\npháp luật về phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 4,
+     "id": "Điều 4 khoản 4",
+     "body_lines": [
+      83
+     ],
+     "points": [],
+     "start": 83,
+     "end": 83,
+     "text": "    4. Tuân thủ quy định của pháp luật về phòng, chống tác hại của rượu, bia."
+    }
+   ]
+  },
+  {
+   "number": 5,
+   "id": "Điều 5",
+   "chapter": "I",
+   "title": "Các hành vi bị nghiêm cấm trong phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    86,
+    87
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 5 khoản 1",
+     "body_lines": [
+      89
+     ],
+     "points": [],
+     "start": 89,
+     "end": 89,
+     "text": "    1. Xúi giục, kích động, lôi kéo, ép buộc người khác uống rượu, bia."
+    },
+    {
+     "number": 2,
+     "id": "Điều 5 khoản 2",
+     "body_lines": [
+      90
+     ],
+     "points": [],
+     "start": 90,
+     "end": 90,
+     "text": "    2. Người chưa đủ 18 tuổi uống rượu, bia."
+    },
+    {
+     "number": 3,
+     "id": "Điều 5 khoản 3",
+     "body_lines": [
+      91
+     ],
+     "points": [],
+     "start": 91,
+     "end": 91,
+     "text": "    3. Bán, cung cấp, khuyến mại rượu, bia cho người chưa đủ 18 tuổi."
+    },
+    {
+     "number": 4,
+     "id": "Điều 5 khoản 4",
+     "body_lines": [
+      92,
+      93
+     ],
+     "points": [],
+     "start": 92,
+     "end": 93,
+     "text": "    4. Sử dụng lao động là người chưa đủ 18 tuổi trực tiếp tham gia vào việc sản\nxuất, mua bán rượu, bia."
+    },
+    {
+     "number": 5,
+     "id": "Điều 5 khoản 5",
+     "body_lines": [
+      94,
+      95,
+      96,
+      97
+     ],
+     "points": [],
+     "start": 94,
+     "end": 97,
+     "text": "    5. Cán bộ, công chức, viên chức, người lao động trong các cơ quan, tổ chức, sĩ\nquan, hạ sĩ quan, quân nhân chuyên nghiệp, chiến sĩ, người làm việc trong lực lượng\nvũ trang nhân dân, học sinh, sinh viên uống rượu, bia ngay trước, trong giờ làm việc,\nhọc tập và nghỉ giữa giờ làm việc, học tập."
+    },
+    {
+     "number": 6,
+     "id": "Điều 5 khoản 6",
+     "body_lines": [
+      98,
+      99
+     ],
+     "points": [],
+     "start": 98,
+     "end": 99,
+     "text": "    6. Điều khiển phương tiện giao thông mà trong máu hoặc hơi thở có nồng\nđộ cồn."
+    },
+    {
+     "number": 7,
+     "id": "Điều 5 khoản 7",
+     "body_lines": [
+      100
+     ],
+     "points": [],
+     "start": 100,
+     "end": 100,
+     "text": "    7. Quảng cáo rượu có độ cồn từ 15 độ trở lên."
+    },
+    {
+     "number": 8,
+     "id": "Điều 5 khoản 8",
+     "body_lines": [
+      101,
+      102
+     ],
+     "points": [],
+     "start": 101,
+     "end": 102,
+     "text": "    8. Cung cấp thông tin không chính xác, sai sự thật về ảnh hưởng của rượu, bia\nđối với sức khỏe."
+    },
+    {
+     "number": 9,
+     "id": "Điều 5 khoản 9",
+     "body_lines": [
+      103,
+      104
+     ],
+     "points": [],
+     "start": 103,
+     "end": 104,
+     "text": "    9. Khuyến mại trong hoạt động kinh doanh rượu, bia có độ cồn từ 15 độ trở lên; sử\ndụng rượu, bia có độ cồn từ 15 độ trở lên để khuyến mại dưới mọi hình thức."
+    },
+    {
+     "number": 10,
+     "id": "Điều 5 khoản 10",
+     "body_lines": [
+      105,
+      106,
+      107,
+      108
+     ],
+     "points": [],
+     "start": 105,
+     "end": 108,
+     "text": "    10. Sử dụng nguyên liệu, phụ gia, chất hỗ trợ chế biến không được phép dùng\ntrong thực phẩm; nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm\nkhông bảo đảm chất lượng và không rõ nguồn gốc, xuất xứ để sản xuất, pha chế\nrượu, bia."
+    },
+    {
+     "number": 11,
+     "id": "Điều 5 khoản 11",
+     "body_lines": [
+      109,
+      110
+     ],
+     "points": [],
+     "start": 109,
+     "end": 110,
+     "text": "    11. Kinh doanh rượu không có giấy phép hoặc không đăng ký; bán rượu, bia\nbằng máy bán hàng tự động."
+    },
+    {
+     "number": 12,
+     "id": "Điều 5 khoản 12",
+     "body_lines": [
+      111,
+      112
+     ],
+     "points": [],
+     "start": 111,
+     "end": 112,
+     "text": "    12. Kinh doanh, tàng trữ, vận chuyển rượu, bia giả, nhập lậu, không bảo đảm\nchất lượng, không rõ nguồn gốc, xuất xứ; nhập lậu rượu, bia."
+    },
+    {
+     "number": 13,
+     "id": "Điều 5 khoản 13",
+     "body_lines": [
+      113
+     ],
+     "points": [],
+     "start": 113,
+     "end": 113,
+     "text": "    13. Các hành vi bị nghiêm cấm khác liên quan đến rượu, bia do luật định."
+    }
+   ]
+  },
+  {
+   "number": 6,
+   "id": "Điều 6",
+   "chapter": "II",
+   "title": "Mục đích, yêu cầu trong thông tin, giáo dục, truyền thông về phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    118,
+    119
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 6 khoản 1",
+     "body_lines": [
+      122,
+      123,
+      124,
+      125
+     ],
+     "points": [],
+     "start": 122,
+     "end": 125,
+     "text": "    1. Thông tin, giáo dục, truyền thông nhằm nâng cao nhận thức, định hướng\nhành vi, thay đổi thói quen có hại để phòng, chống tác hại của rượu, bia đối với\nsức khỏe con người, gia đình, cộng đồng, an toàn giao thông, trật tự, an toàn xã\nhội, kinh tế và các vấn đề xã hội khác."
+    },
+    {
+     "number": 2,
+     "id": "Điều 6 khoản 2",
+     "body_lines": [
+      127,
+      128
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        130
+       ],
+       "id": "Điều 6 khoản 2 điểm a",
+       "start": 130,
+       "end": 130,
+       "text": "    a) Chính xác, khách quan và khoa học;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        132,
+        133,
+        134,
+        135
+       ],
+       "id": "Điều 6 khoản 2 điểm b",
+       "start": 132,
+       "end": 135,
+       "text": "    b) Thường xuyên; phù hợp, dễ tiếp cận và hiệu quả đối với từng đối tượng,\ntrình độ, lứa tuổi, giới tính; phù hợp với truyền thống, văn hóa, bản sắc dân tộc, tôn\ngiáo và phong tục tập quán; chú trọng đối với học sinh, sinh viên, thanh niên, phụ\nnữ mang thai và cá nhân, tổ chức, hộ gia đình sản xuất rượu thủ công."
+      }
+     ],
+     "start": 127,
+     "end": 128,
+     "text": "    2. Việc thông tin, giáo dục, truyền thông về phòng, chống tác hại của rượu, bia\nphải bảo đảm các yêu cầu sau đây:"
+    }
+   ]
+  },
+  {
+   "number": 7,
+   "id": "Điều 7",
+   "chapter": "II",
+   "title": "Nội dung thông tin, giáo dục, truyền thông về phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    137,
+    138
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 7 khoản 1",
+     "body_lines": [
+      140,
+      141,
+      142,
+      143
+     ],
+     "points": [],
+     "start": 140,
+     "end": 143,
+     "text": "    1. Chính sách, pháp luật của Nhà nước về phòng, chống tác hại của rượu, bia;\ncác hành vi bị nghiêm cấm trong phòng, chống tác hại của rượu, bia; các chế tài xử\nphạt và vận động cá nhân, tổ chức tuân thủ quy định của pháp luật về phòng,\nchống tác hại của rượu, bia."
+    },
+    {
+     "number": 2,
+     "id": "Điều 7 khoản 2",
+     "body_lines": [
+      145,
+      146
+     ],
+     "points": [],
+     "start": 145,
+     "end": 146,
+     "text": "    2. Quyền, nghĩa vụ của cá nhân và trách nhiệm của cơ quan, tổ chức, gia đình,\ncộng đồng trong phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 3,
+     "id": "Điều 7 khoản 3",
+     "body_lines": [
+      148,
+      149,
+      150
+     ],
+     "points": [],
+     "start": 148,
+     "end": 150,
+     "text": "    3. Tác hại của rượu, bia; tác hại của rượu, bia giả, không bảo đảm chất lượng, an\ntoàn thực phẩm; các mức độ nguy cơ khi uống rượu, bia; các biện pháp giảm tác\nhại của rượu, bia."
+    },
+    {
+     "number": 4,
+     "id": "Điều 7 khoản 4",
+     "body_lines": [
+      152,
+      153
+     ],
+     "points": [],
+     "start": 152,
+     "end": 153,
+     "text": "    4. Bệnh, tình trạng sức khỏe, đối tượng không nên uống rượu, bia; độ tuổi\nkhông được uống rượu, bia."
+    },
+    {
+     "number": 5,
+     "id": "Điều 7 khoản 5",
+     "body_lines": [
+      155,
+      156
+     ],
+     "points": [],
+     "start": 155,
+     "end": 156,
+     "text": "    5. Kỹ năng từ chối uống rượu, bia; kỹ năng nhận biết và ứng xử, xử trí khi gặp\nngười say rượu, bia, người nghiện rượu, bia."
+    },
+    {
+     "number": 6,
+     "id": "Điều 7 khoản 6",
+     "body_lines": [
+      158,
+      159
+     ],
+     "points": [],
+     "start": 158,
+     "end": 159,
+     "text": "    6. Vận động hạn chế uống rượu, bia và không điều khiển phương tiện giao\nthông, vận hành máy móc sau khi uống rượu, bia."
+    },
+    {
+     "number": 7,
+     "id": "Điều 7 khoản 7",
+     "body_lines": [
+      161,
+      162
+     ],
+     "points": [],
+     "start": 161,
+     "end": 162,
+     "text": "    7. Hướng dẫn hộ gia đình, cá nhân sản xuất rượu thủ công bảo đảm an toàn\nthực phẩm theo quy định của pháp luật."
+    },
+    {
+     "number": 8,
+     "id": "Điều 7 khoản 8",
+     "body_lines": [
+      164,
+      165,
+      168,
+      169
+     ],
+     "points": [],
+     "start": 164,
+     "end": 169,
+     "text": "    8. Tuyên truyền, vận động, hướng dẫn hộ gia đình, cá nhân sản xuất rượu thủ\ncông làm thủ tục cấp giấy phép sản xuất, đăng ký với Ủy ban nhân dân cấp xã việc\nbán rượu cho cơ sở có giấy phép sản xuất rượu để chế biến lại, kê khai việc sản\nxuất rượu thủ công không nhằm mục đích kinh doanh."
+    }
+   ]
+  },
+  {
+   "number": 8,
+   "id": "Điều 8",
+   "chapter": "II",
+   "title": "Hình thức thông tin, giáo dục, truyền thông về phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    171,
+    172
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 8 khoản 1",
+     "body_lines": [
+      174,
+      175
+     ],
+     "points": [],
+     "start": 174,
+     "end": 175,
+     "text": "    1. Thực hiện trực tiếp; tư vấn, hướng dẫn tìm hiểu pháp luật; cung cấp, phổ\nbiến tài liệu."
+    },
+    {
+     "number": 2,
+     "id": "Điều 8 khoản 2",
+     "body_lines": [
+      177,
+      178
+     ],
+     "points": [],
+     "start": 177,
+     "end": 178,
+     "text": "    2. Thông qua phương tiện thông tin đại chúng, loa truyền thanh, mạng Internet,\npa-nô, áp-phích, tranh cổ động."
+    },
+    {
+     "number": 3,
+     "id": "Điều 8 khoản 3",
+     "body_lines": [
+      180
+     ],
+     "points": [],
+     "start": 180,
+     "end": 180,
+     "text": "    3. Thi tuyên truyền, tìm hiểu."
+    },
+    {
+     "number": 4,
+     "id": "Điều 8 khoản 4",
+     "body_lines": [
+      181
+     ],
+     "points": [],
+     "start": 181,
+     "end": 181,
+     "text": "    4. Chiến dịch truyền thông."
+    },
+    {
+     "number": 5,
+     "id": "Điều 8 khoản 5",
+     "body_lines": [
+      182,
+      183,
+      184
+     ],
+     "points": [],
+     "start": 182,
+     "end": 184,
+     "text": "    5. Lồng ghép trong việc giảng dạy, học tập tại cơ sở giáo dục thuộc hệ thống\ngiáo dục quốc dân; trong hoạt động văn hóa, nghệ thuật, thể thao; trong hoạt động\ncủa cơ quan, tổ chức, cộng đồng và các thiết chế văn hóa, thể thao cơ sở."
+    }
+   ]
+  },
+  {
+   "number": 9,
+   "id": "Điều 9",
+   "chapter": "II",
+   "title": "Trách nhiệm trong thông tin, giáo dục, truyền thông về phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    185,
+    186
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 9 khoản 1",
+     "body_lines": [
+      187,
+      188
+     ],
+     "points": [],
+     "start": 187,
+     "end": 188,
+     "text": "    1. Cơ quan, tổ chức, cá nhân có trách nhiệm thực hiện thông tin, giáo dục,\ntruyền thông quy định tại các điều 6, 7 và 8 của Luật này."
+    },
+    {
+     "number": 2,
+     "id": "Điều 9 khoản 2",
+     "body_lines": [
+      189,
+      190,
+      191
+     ],
+     "points": [],
+     "start": 189,
+     "end": 191,
+     "text": "    2. Chính phủ quy định trách nhiệm thực hiện thông tin, giáo dục, truyền thông\nvề phòng, chống tác hại của rượu, bia và việc hạn chế sử dụng hình ảnh diễn\nviên uống rượu, bia trong tác phẩm điện ảnh, sân khấu, truyền hình."
+    }
+   ]
+  },
+  {
+   "number": 10,
+   "id": "Điều 10",
+   "chapter": "II",
+   "title": "Địa điểm không uống rượu, bia",
+   "heading_lines": [
+    192
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 10 khoản 1",
+     "body_lines": [
+      193
+     ],
+     "points": [],
+     "start": 193,
+     "end": 193,
+     "text": "    1. Cơ sở y tế."
+    },
+    {
+     "number": 2,
+     "id": "Điều 10 khoản 2",
+     "body_lines": [
+      194
+     ],
+     "points": [],
+     "start": 194,
+     "end": 194,
+     "text": "    2. Cơ sở giáo dục trong thời gian giảng dạy, học tập, làm việc."
+    },
+    {
+     "number": 3,
+     "id": "Điều 10 khoản 3",
+     "body_lines": [
+      195,
+      196
+     ],
+     "points": [],
+     "start": 195,
+     "end": 196,
+     "text": "    3. Cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí dành cho người\nchưa đủ 18 tuổi."
+    },
+    {
+     "number": 4,
+     "id": "Điều 10 khoản 4",
+     "body_lines": [
+      197,
+      198
+     ],
+     "points": [],
+     "start": 197,
+     "end": 198,
+     "text": "    4. Cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ\nphạm nhân và cơ sở giam giữ khác."
+    },
+    {
+     "number": 5,
+     "id": "Điều 10 khoản 5",
+     "body_lines": [
+      199
+     ],
+     "points": [],
+     "start": 199,
+     "end": 199,
+     "text": "    5. Cơ sở bảo trợ xã hội."
+    },
+    {
+     "number": 6,
+     "id": "Điều 10 khoản 6",
+     "body_lines": [
+      200,
+      201,
+      202
+     ],
+     "points": [],
+     "start": 200,
+     "end": 202,
+     "text": "    6. Nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã\nhội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập trong thời\ngian làm việc, trừ địa điểm được phép kinh doanh rượu, bia."
+    },
+    {
+     "number": 7,
+     "id": "Điều 10 khoản 7",
+     "body_lines": [
+      203
+     ],
+     "points": [],
+     "start": 203,
+     "end": 203,
+     "text": "    7. Các địa điểm công cộng theo quy định của Chính phủ."
+    }
+   ]
+  },
+  {
+   "number": 11,
+   "id": "Điều 11",
+   "chapter": "II",
+   "title": "Quản lý việc khuyến mại rượu, bia có độ cồn dưới 15 độ",
+   "heading_lines": [
+    206
+   ],
+   "lead_in": {
+    "body_lines": [
+     207,
+     208
+    ],
+    "start": 207,
+    "end": 208,
+    "text": "    Tổ chức, cá nhân thực hiện khuyến mại rượu, bia có độ cồn dưới 15 độ phải\ntuân thủ các quy định của Luật này và quy định khác của pháp luật về khuyến mại."
+   },
+   "clauses": []
+  },
+  {
+   "number": 12,
+   "id": "Điều 12",
+   "chapter": "II",
+   "title": "Quản lý việc quảng cáo rượu, bia có độ cồn dưới 5,5 độ",
+   "heading_lines": [
+    209
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 12 khoản 1",
+     "body_lines": [
+      210,
+      211
+     ],
+     "points": [],
+     "start": 210,
+     "end": 211,
+     "text": "    1. Tổ chức, cá nhân thực hiện quảng cáo rượu, bia phải tuân thủ các quy định\ncủa Luật này và quy định khác của pháp luật về quảng cáo."
+    },
+    {
+     "number": 2,
+     "id": "Điều 12 khoản 2",
+     "body_lines": [
+      212
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        213,
+        214,
+        215
+       ],
+       "id": "Điều 12 khoản 2 điểm a",
+       "start": 213,
+       "end": 215,
+       "text": "    a) Có thông tin, hình ảnh nhằm khuyến khích uống rượu, bia; thông tin rượu, bia\ncó tác dụng tạo sự trưởng thành, thành đạt, thân thiện, hấp dẫn về giới tính; hướng\nđến trẻ em, học sinh, sinh viên, thanh niên, phụ nữ mang thai;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        216,
+        217,
+        218
+       ],
+       "id": "Điều 12 khoản 2 điểm b",
+       "start": 216,
+       "end": 218,
+       "text": "    b) Sử dụng vật dụng, hình ảnh, biểu tượng, âm nhạc, nhân vật trong phim,\nnhãn hiệu sản phẩm dành cho trẻ em, học sinh, sinh viên; sử dụng người chưa đủ\n18 tuổi hoặc hình ảnh của người chưa đủ 18 tuổi trong quảng cáo rượu, bia."
+      }
+     ],
+     "start": 212,
+     "end": 212,
+     "text": "    2. Quảng cáo không thể hiện các nội dung sau đây:"
+    },
+    {
+     "number": 3,
+     "id": "Điều 12 khoản 3",
+     "body_lines": [
+      219,
+      220
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        221,
+        222
+       ],
+       "id": "Điều 12 khoản 3 điểm a",
+       "start": 221,
+       "end": 222,
+       "text": "    a) Sự kiện, phương tiện quảng cáo, sản phẩm dành cho người chưa đủ 18 tuổi,\nhọc sinh, sinh viên, thanh niên, phụ nữ mang thai;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        223
+       ],
+       "id": "Điều 12 khoản 3 điểm b",
+       "start": 223,
+       "end": 223,
+       "text": "    b) Phương tiện giao thông;"
+      },
+      {
+       "letter": "c",
+       "body_lines": [
+        224,
+        225,
+        226,
+        227
+       ],
+       "id": "Điều 12 khoản 3 điểm c",
+       "start": 224,
+       "end": 227,
+       "text": "    c) Báo nói, báo hình ngay trước, trong và ngay sau chương trình dành cho trẻ\nem; trong thời gian từ 18 giờ đến 21 giờ hằng ngày, trừ trường hợp quảng cáo có\nsẵn trong các chương trình thể thao mua bản quyền tiếp sóng trực tiếp từ nước\nngoài và trường hợp khác theo quy định của Chính phủ;"
+      },
+      {
+       "letter": "d",
+       "body_lines": [
+        228,
+        229,
+        230
+       ],
+       "id": "Điều 12 khoản 3 điểm d",
+       "start": 228,
+       "end": 230,
+       "text": "    d) Phương tiện quảng cáo ngoài trời vi phạm quy định về kích thước, khoảng\ncách đặt phương tiện quảng cáo tính từ khuôn viên của cơ sở giáo dục, cơ sở, khu\nvực chăm sóc, nuôi dưỡng, vui chơi, giải trí dành cho người chưa đủ 18 tuổi."
+      }
+     ],
+     "start": 219,
+     "end": 220,
+     "text": "    3. Không thực hiện quảng cáo trên các phương tiện quảng cáo trong trường\nhợp sau đây:"
+    },
+    {
+     "number": 4,
+     "id": "Điều 12 khoản 4",
+     "body_lines": [
+      231
+     ],
+     "points": [],
+     "start": 231,
+     "end": 231,
+     "text": "    4. Quảng cáo phải có cảnh báo để phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 5,
+     "id": "Điều 12 khoản 5",
+     "body_lines": [
+      232,
+      233,
+      234,
+      235
+     ],
+     "points": [],
+     "start": 232,
+     "end": 235,
+     "text": "    5. Quảng cáo trên báo điện tử, trang thông tin điện tử, phương tiện điện tử,\nthiết bị đầu cuối và thiết bị viễn thông khác phải có hệ thống công nghệ chặn lọc,\nphần mềm kiểm soát tuổi của người truy cập để ngăn ngừa người chưa đủ 18 tuổi\ntiếp cận, truy cập, tìm kiếm thông tin về rượu, bia."
+    },
+    {
+     "number": 6,
+     "id": "Điều 12 khoản 6",
+     "body_lines": [
+      236
+     ],
+     "points": [],
+     "start": 236,
+     "end": 236,
+     "text": "    6. Chính phủ quy định chi tiết điểm d khoản 3, khoản 4 và khoản 5 Điều này."
+    }
+   ]
+  },
+  {
+   "number": 13,
+   "id": "Điều 13",
+   "chapter": "II",
+   "title": "Quản lý việc quảng cáo rượu có độ cồn từ 5,5 độ đến dưới 15 độ và bia có độ cồn từ 5,5 độ trở lên",
+   "heading_lines": [
+    239,
+    240
+   ],
+   "lead_in": {
+    "body_lines": [
+     242,
+     243,
+     244
+    ],
+    "start": 242,
+    "end": 244,
+    "text": "    Tổ chức, cá nhân thực hiện quảng cáo rượu có độ cồn từ 5,5 độ đến dưới 15 độ\nvà bia có độ cồn từ 5,5 độ trở lên phải tuân thủ quy định tại Điều 12 của Luật này\nvà không quảng cáo trong trường hợp sau đây:"
+   },
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 13 khoản 1",
+     "body_lines": [
+      246
+     ],
+     "points": [],
+     "start": 246,
+     "end": 246,
+     "text": "    1. Trong các chương trình, hoạt động văn hóa, sân khấu, điện ảnh, thể thao;"
+    },
+    {
+     "number": 2,
+     "id": "Điều 13 khoản 2",
+     "body_lines": [
+      247,
+      248
+     ],
+     "points": [],
+     "start": 247,
+     "end": 248,
+     "text": "    2. Trên các phương tiện quảng cáo ngoài trời, trừ biển hiệu của cơ sở kinh\ndoanh rượu, bia."
+    }
+   ]
+  },
+  {
+   "number": 14,
+   "id": "Điều 14",
+   "chapter": "II",
+   "title": "Quản lý việc tài trợ của tổ chức, cá nhân kinh doanh rượu, bia",
+   "heading_lines": [
+    249
+   ],
+   "lead_in": {
+    "body_lines": [
+     250,
+     251,
+     252
+    ],
+    "start": 250,
+    "end": 252,
+    "text": "    Tổ chức, cá nhân kinh doanh rượu, bia thực hiện tài trợ phải tuân thủ các quy\nđịnh của pháp luật có liên quan đến việc tài trợ và không được tài trợ bằng sản\nphẩm rượu, bia."
+   },
+   "clauses": []
+  },
+  {
+   "number": 15,
+   "id": "Điều 15",
+   "chapter": "III",
+   "title": "Quản lý kinh doanh rượu",
+   "heading_lines": [
+    257
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 15 khoản 1",
+     "body_lines": [
+      258,
+      259
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        260
+       ],
+       "id": "Điều 15 khoản 1 điểm a",
+       "start": 260,
+       "end": 260,
+       "text": "    a) Doanh nghiệp được thành lập theo quy định của pháp luật;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        261,
+        262
+       ],
+       "id": "Điều 15 khoản 1 điểm b",
+       "start": 261,
+       "end": 262,
+       "text": "    b) Có dây chuyền máy móc, thiết bị công nghiệp, quy trình công nghệ sản xuất\nrượu đáp ứng quy mô dự kiến sản xuất;"
+      },
+      {
+       "letter": "c",
+       "body_lines": [
+        263,
+        264
+       ],
+       "id": "Điều 15 khoản 1 điểm c",
+       "start": 263,
+       "end": 264,
+       "text": "    c) Bảo đảm điều kiện về an toàn thực phẩm và bảo vệ môi trường theo quy\nđịnh của pháp luật;"
+      },
+      {
+       "letter": "d",
+       "body_lines": [
+        265,
+        266
+       ],
+       "id": "Điều 15 khoản 1 điểm d",
+       "start": 265,
+       "end": 266,
+       "text": "    d) Có nhân viên kỹ thuật có trình độ, chuyên môn phù hợp với ngành, nghề sản\nxuất rượu."
+      }
+     ],
+     "start": 258,
+     "end": 259,
+     "text": "    1. Điều kiện cấp phép sản xuất rượu công nghiệp có độ cồn từ 5,5 độ trở lên\nbao gồm:"
+    },
+    {
+     "number": 2,
+     "id": "Điều 15 khoản 2",
+     "body_lines": [
+      267,
+      268
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        269,
+        270
+       ],
+       "id": "Điều 15 khoản 2 điểm a",
+       "start": 269,
+       "end": 270,
+       "text": "    a) Doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc hộ kinh doanh được\nthành lập theo quy định của pháp luật;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        271
+       ],
+       "id": "Điều 15 khoản 2 điểm b",
+       "start": 271,
+       "end": 271,
+       "text": "    b) Bảo đảm điều kiện về an toàn thực phẩm theo quy định của pháp luật."
+      }
+     ],
+     "start": 267,
+     "end": 268,
+     "text": "    2. Điều kiện cấp phép sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên nhằm\nmục đích kinh doanh, trừ trường hợp quy định tại khoản 3 Điều này, bao gồm:"
+    },
+    {
+     "number": 3,
+     "id": "Điều 15 khoản 3",
+     "body_lines": [
+      274,
+      275
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        277,
+        278
+       ],
+       "id": "Điều 15 khoản 3 điểm a",
+       "start": 277,
+       "end": 278,
+       "text": "    a) Có hợp đồng mua bán với cơ sở có giấy phép sản xuất rượu và có đăng ký\nvới Ủy ban nhân dân cấp xã nơi có cơ sở sản xuất;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        280
+       ],
+       "id": "Điều 15 khoản 3 điểm b",
+       "start": 280,
+       "end": 280,
+       "text": "    b) Bảo đảm điều kiện về an toàn thực phẩm theo quy định của pháp luật."
+      }
+     ],
+     "start": 274,
+     "end": 275,
+     "text": "    3. Điều kiện đối với hộ gia đình, cá nhân sản xuất rượu thủ công có độ cồn từ\n5,5 độ trở lên bán cho cơ sở có giấy phép sản xuất rượu để chế biến lại bao gồm:"
+    },
+    {
+     "number": 4,
+     "id": "Điều 15 khoản 4",
+     "body_lines": [
+      281
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        282
+       ],
+       "id": "Điều 15 khoản 4 điểm a",
+       "start": 282,
+       "end": 282,
+       "text": "    a) Đăng ký kinh doanh theo quy định của pháp luật;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        283
+       ],
+       "id": "Điều 15 khoản 4 điểm b",
+       "start": 283,
+       "end": 283,
+       "text": "    b) Đáp ứng điều kiện theo từng loại hình mua bán rượu."
+      }
+     ],
+     "start": 281,
+     "end": 281,
+     "text": "    4. Điều kiện cấp phép mua bán rượu có độ cồn từ 5,5 độ trở lên bao gồm:"
+    },
+    {
+     "number": 5,
+     "id": "Điều 15 khoản 5",
+     "body_lines": [
+      284,
+      285
+     ],
+     "points": [],
+     "start": 284,
+     "end": 285,
+     "text": "    5. Chính phủ quy định chi tiết Điều này và quy định việc quản lý kinh doanh\nrượu có độ cồn dưới 5,5 độ."
+    }
+   ]
+  },
+  {
+   "number": 16,
+   "id": "Điều 16",
+   "chapter": "III",
+   "title": "Điều kiện bán rượu, bia theo hình thức thương mại điện tử",
+   "heading_lines": [
+    286
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 16 khoản 1",
+     "body_lines": [
+      287
+     ],
+     "points": [],
+     "start": 287,
+     "end": 287,
+     "text": "    1. Đáp ứng quy định tại khoản 4, khoản 5 Điều 15 và Điều 18 của Luật này."
+    },
+    {
+     "number": 2,
+     "id": "Điều 16 khoản 2",
+     "body_lines": [
+      288
+     ],
+     "points": [],
+     "start": 288,
+     "end": 288,
+     "text": "    2. Đáp ứng điều kiện theo quy định của pháp luật về thương mại điện tử."
+    },
+    {
+     "number": 3,
+     "id": "Điều 16 khoản 3",
+     "body_lines": [
+      289,
+      290
+     ],
+     "points": [],
+     "start": 289,
+     "end": 290,
+     "text": "    3. Thực hiện biện pháp theo quy định của Chính phủ để ngăn ngừa người chưa\nđủ 18 tuổi tiếp cận, truy cập, tìm kiếm thông tin và mua rượu, bia."
+    },
+    {
+     "number": 4,
+     "id": "Điều 16 khoản 4",
+     "body_lines": [
+      291
+     ],
+     "points": [],
+     "start": 291,
+     "end": 291,
+     "text": "    4. Áp dụng hình thức thanh toán không dùng tiền mặt."
+    }
+   ]
+  },
+  {
+   "number": 17,
+   "id": "Điều 17",
+   "chapter": "III",
+   "title": "Biện pháp quản lý đối với sản xuất rượu thủ công không nhằm mục đích kinh doanh",
+   "heading_lines": [
+    292,
+    293
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 17 khoản 1",
+     "body_lines": [
+      294,
+      295,
+      296,
+      297,
+      298
+     ],
+     "points": [],
+     "start": 294,
+     "end": 298,
+     "text": "    1. Hộ gia đình, cá nhân sản xuất rượu thủ công không nhằm mục đích kinh\ndoanh phải có bản kê khai gửi Ủy ban nhân dân cấp xã về lượng rượu được sản\nxuất, phạm vi sử dụng, cam kết bảo đảm an toàn thực phẩm và không bán rượu ra\nthị trường theo mẫu do Bộ trưởng Bộ Công Thương quy định. Việc kê khai không\nphải nộp phí, lệ phí."
+    },
+    {
+     "number": 2,
+     "id": "Điều 17 khoản 2",
+     "body_lines": [
+      299,
+      300,
+      301
+     ],
+     "points": [],
+     "start": 299,
+     "end": 301,
+     "text": "    2. Ủy ban nhân dân các cấp hướng dẫn việc thực hiện các quy định của pháp\nluật về an toàn thực phẩm; báo cáo sản lượng và tình hình bảo đảm an toàn thực\nphẩm đối với sản xuất rượu thủ công không nhằm mục đích kinh doanh trên địa bàn."
+    }
+   ]
+  },
+  {
+   "number": 18,
+   "id": "Điều 18",
+   "chapter": "III",
+   "title": "Bảo đảm chất lượng, an toàn thực phẩm đối với rượu, bia",
+   "heading_lines": [
+    302
+   ],
+   "lead_in": {
+    "body_lines": [
+     303,
+     304,
+     305
+    ],
+    "start": 303,
+    "end": 305,
+    "text": "    Rượu, bia được kinh doanh, lưu hành tại Việt Nam phải bảo đảm tiêu chuẩn,\nquy chuẩn kỹ thuật, chất lượng sản phẩm, hàng hóa và an toàn thực phẩm theo quy\nđịnh của pháp luật."
+   },
+   "clauses": []
+  },
+  {
+   "number": 19,
+   "id": "Điều 19",
+   "chapter": "III",
+   "title": "Địa điểm không bán rượu, bia",
+   "heading_lines": [
+    308
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 19 khoản 1",
+     "body_lines": [
+      309
+     ],
+     "points": [],
+     "start": 309,
+     "end": 309,
+     "text": "    1. Cơ sở y tế."
+    },
+    {
+     "number": 2,
+     "id": "Điều 19 khoản 2",
+     "body_lines": [
+      310
+     ],
+     "points": [],
+     "start": 310,
+     "end": 310,
+     "text": "    2. Cơ sở giáo dục."
+    },
+    {
+     "number": 3,
+     "id": "Điều 19 khoản 3",
+     "body_lines": [
+      312,
+      313
+     ],
+     "points": [],
+     "start": 312,
+     "end": 313,
+     "text": "    3. Cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí dành cho người\nchưa đủ 18 tuổi."
+    },
+    {
+     "number": 4,
+     "id": "Điều 19 khoản 4",
+     "body_lines": [
+      315,
+      316
+     ],
+     "points": [],
+     "start": 315,
+     "end": 316,
+     "text": "    4. Cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ\nphạm nhân và cơ sở giam giữ khác."
+    },
+    {
+     "number": 5,
+     "id": "Điều 19 khoản 5",
+     "body_lines": [
+      318
+     ],
+     "points": [],
+     "start": 318,
+     "end": 318,
+     "text": "    5. Cơ sở bảo trợ xã hội."
+    },
+    {
+     "number": 6,
+     "id": "Điều 19 khoản 6",
+     "body_lines": [
+      319,
+      320,
+      321
+     ],
+     "points": [],
+     "start": 319,
+     "end": 321,
+     "text": "    6. Nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã\nhội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập, trừ địa điểm\nđược phép kinh doanh rượu, bia."
+    }
+   ]
+  },
+  {
+   "number": 20,
+   "id": "Điều 20",
+   "chapter": "III",
+   "title": "Phòng ngừa và xử lý rượu, bia giả, không bảo đảm chất lượng, an toàn thực phẩm; rượu, bia nhập lậu, không rõ nguồn gốc, xuất xứ",
+   "heading_lines": [
+    323,
+    324
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 20 khoản 1",
+     "body_lines": [
+      326,
+      327,
+      328
+     ],
+     "points": [],
+     "start": 326,
+     "end": 328,
+     "text": "    1. Rượu, bia giả, không bảo đảm chất lượng, an toàn thực phẩm và rượu, bia\nnhập lậu, không rõ nguồn gốc, xuất xứ đều bị tịch thu, xử lý theo quy định của\npháp luật."
+    },
+    {
+     "number": 2,
+     "id": "Điều 20 khoản 2",
+     "body_lines": [
+      330,
+      331,
+      332
+     ],
+     "points": [],
+     "start": 330,
+     "end": 332,
+     "text": "    2. Tổ chức, cá nhân có trách nhiệm phối hợp, tham gia với cơ quan có thẩm\nquyền trong phòng, chống rượu, bia giả, không bảo đảm chất lượng, an toàn thực\nphẩm và rượu, bia nhập lậu, không rõ nguồn gốc, xuất xứ."
+    },
+    {
+     "number": 3,
+     "id": "Điều 20 khoản 3",
+     "body_lines": [
+      334,
+      335,
+      336,
+      337
+     ],
+     "points": [],
+     "start": 334,
+     "end": 337,
+     "text": "    3. Bộ Công Thương, Bộ Y tế, trong phạm vi nhiệm vụ, quyền hạn của mình,\nhướng dẫn việc bổ sung chất chỉ thị màu vào các sản phẩm cồn không dùng trong\nthực phẩm để phân biệt với cồn thực phẩm và phòng ngừa pha chế rượu từ sản phẩm\ncồn không được phép dùng trong thực phẩm."
+    }
+   ]
+  },
+  {
+   "number": 21,
+   "id": "Điều 21",
+   "chapter": "IV",
+   "title": "Phòng ngừa tai nạn giao thông liên quan đến sử dụng rượu, bia",
+   "heading_lines": [
+    342
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 21 khoản 1",
+     "body_lines": [
+      343,
+      344
+     ],
+     "points": [],
+     "start": 343,
+     "end": 344,
+     "text": "    1. Người điều khiển phương tiện giao thông không uống rượu, bia trước và\ntrong khi tham gia giao thông."
+    },
+    {
+     "number": 2,
+     "id": "Điều 21 khoản 2",
+     "body_lines": [
+      345,
+      346,
+      349,
+      350
+     ],
+     "points": [],
+     "start": 345,
+     "end": 350,
+     "text": "    2. Người đứng đầu cơ sở kinh doanh vận tải, chủ phương tiện giao thông vận\ntải có trách nhiệm chủ động thực hiện biện pháp phòng ngừa, phát hiện, ngăn chặn\nngười điều khiển phương tiện vận tải uống rượu, bia ngay trước và trong khi tham\ngia giao thông."
+    },
+    {
+     "number": 3,
+     "id": "Điều 21 khoản 3",
+     "body_lines": [
+      352,
+      353,
+      354
+     ],
+     "points": [],
+     "start": 352,
+     "end": 354,
+     "text": "    3. Cơ quan, người có thẩm quyền có trách nhiệm kiểm tra nồng độ cồn trong\nmáu, hơi thở của người điều khiển phương tiện giao thông đang tham gia giao\nthông hoặc gây ra tai nạn giao thông."
+    },
+    {
+     "number": 4,
+     "id": "Điều 21 khoản 4",
+     "body_lines": [
+      356,
+      357,
+      358
+     ],
+     "points": [],
+     "start": 356,
+     "end": 358,
+     "text": "    4. Bộ Giao thông vận tải có trách nhiệm xây dựng nội dung và tổ chức việc\nđào tạo về phòng, chống tác hại của rượu, bia trong chương trình đào tạo cấp bằng,\nchứng chỉ, giấy phép điều khiển phương tiện giao thông thuộc phạm vi quản lý."
+    }
+   ]
+  },
+  {
+   "number": 22,
+   "id": "Điều 22",
+   "chapter": "IV",
+   "title": "Phòng ngừa, can thiệp và giảm tác hại của việc uống rượu, bia đối với sức khỏe",
+   "heading_lines": [
+    360,
+    361
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 22 khoản 1",
+     "body_lines": [
+      363,
+      364
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        366,
+        367
+       ],
+       "id": "Điều 22 khoản 1 điểm a",
+       "start": 366,
+       "end": 367,
+       "text": "    a) Tư vấn về phòng, chống tác hại của rượu, bia cho người đến khám bệnh,\nchữa bệnh tại cơ sở y tế;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        369,
+        370,
+        371
+       ],
+       "id": "Điều 22 khoản 1 điểm b",
+       "start": 369,
+       "end": 371,
+       "text": "    b) Sàng lọc, phát hiện sớm yếu tố nguy cơ đối với sức khỏe của người uống\nrượu, bia; người mắc bệnh, rối loạn chức năng do uống rượu, bia; người nghiện\nrượu, bia;"
+      },
+      {
+       "letter": "c",
+       "body_lines": [
+        373,
+        374,
+        375
+       ],
+       "id": "Điều 22 khoản 1 điểm c",
+       "start": 373,
+       "end": 375,
+       "text": "    c) Can thiệp giảm tác hại cho người có yếu tố nguy cơ đối với sức khỏe, phụ\nnữ mang thai có hội chứng hoặc nguy cơ ngộ độc rượu ở thai nhi; phòng, chống\nnghiện và tái nghiện rượu, bia;"
+      },
+      {
+       "letter": "d",
+       "body_lines": [
+        377,
+        378
+       ],
+       "id": "Điều 22 khoản 1 điểm d",
+       "start": 377,
+       "end": 378,
+       "text": "    d) Chẩn đoán, điều trị, phục hồi chức năng cho người mắc bệnh, rối loạn chức\nnăng có liên quan đến uống rượu, bia."
+      }
+     ],
+     "start": 363,
+     "end": 364,
+     "text": "    1. Các biện pháp phòng ngừa, can thiệp và giảm tác hại của việc uống rượu,\nbia đối với sức khỏe bao gồm:"
+    },
+    {
+     "number": 2,
+     "id": "Điều 22 khoản 2",
+     "body_lines": [
+      380,
+      381
+     ],
+     "points": [],
+     "start": 380,
+     "end": 381,
+     "text": "    2. Cơ sở y tế thực hiện các biện pháp quy định tại khoản 1 Điều này theo\nhướng dẫn chuyên môn, kỹ thuật của Bộ Y tế."
+    }
+   ]
+  },
+  {
+   "number": 23,
+   "id": "Điều 23",
+   "chapter": "IV",
+   "title": "Tư vấn về phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    383
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 23 khoản 1",
+     "body_lines": [
+      384
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        385
+       ],
+       "id": "Điều 23 khoản 1 điểm a",
+       "start": 385,
+       "end": 385,
+       "text": "    a) Thông tin, kiến thức, pháp luật về phòng, chống tác hại của rượu, bia;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        386,
+        387
+       ],
+       "id": "Điều 23 khoản 1 điểm b",
+       "start": 386,
+       "end": 387,
+       "text": "    b) Biện pháp giảm tác hại của rượu, bia; kỹ năng từ chối uống rượu, bia; kỹ năng\nnhận biết và ứng xử, xử trí khi gặp người say rượu, bia, người nghiện rượu, bia."
+      }
+     ],
+     "start": 384,
+     "end": 384,
+     "text": "    1. Tư vấn về phòng, chống tác hại của rượu, bia bao gồm các nội dung sau đây:"
+    },
+    {
+     "number": 2,
+     "id": "Điều 23 khoản 2",
+     "body_lines": [
+      388,
+      389
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        390
+       ],
+       "id": "Điều 23 khoản 2 điểm a",
+       "start": 390,
+       "end": 390,
+       "text": "    a) Người thường xuyên uống rượu, bia;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        393
+       ],
+       "id": "Điều 23 khoản 2 điểm b",
+       "start": 393,
+       "end": 393,
+       "text": "    b) Người nghiện rượu, bia;"
+      },
+      {
+       "letter": "c",
+       "body_lines": [
+        394,
+        395
+       ],
+       "id": "Điều 23 khoản 2 điểm c",
+       "start": 394,
+       "end": 395,
+       "text": "    c) Thành viên gia đình có người thường xuyên uống rượu, bia, người nghiện\nrượu, bia;"
+      },
+      {
+       "letter": "d",
+       "body_lines": [
+        396
+       ],
+       "id": "Điều 23 khoản 2 điểm d",
+       "start": 396,
+       "end": 396,
+       "text": "    d) Trẻ em, học sinh, sinh viên, thanh niên, phụ nữ mang thai;"
+      },
+      {
+       "letter": "đ",
+       "body_lines": [
+        397
+       ],
+       "id": "Điều 23 khoản 2 điểm đ",
+       "start": 397,
+       "end": 397,
+       "text": "    đ) Người bị ảnh hưởng bởi tác hại của rượu, bia."
+      }
+     ],
+     "start": 388,
+     "end": 389,
+     "text": "    2. Việc tư vấn về phòng, chống tác hại của rượu, bia tập trung vào các đối\ntượng sau đây:"
+    },
+    {
+     "number": 3,
+     "id": "Điều 23 khoản 3",
+     "body_lines": [
+      398,
+      399,
+      400
+     ],
+     "points": [],
+     "start": 398,
+     "end": 400,
+     "text": "    3. Ủy ban nhân dân cấp xã chủ trì phối hợp với Ủy ban Mặt trận Tổ quốc Việt\nNam cùng cấp và các tổ chức thành viên của Mặt trận hướng dẫn, tạo điều kiện\ncho hoạt động tư vấn về phòng, chống tác hại của rượu, bia trên địa bàn."
+    },
+    {
+     "number": 4,
+     "id": "Điều 23 khoản 4",
+     "body_lines": [
+      401,
+      402
+     ],
+     "points": [],
+     "start": 401,
+     "end": 402,
+     "text": "    4. Nhà nước tạo điều kiện và khuyến khích tổ chức, cá nhân thực hiện tư vấn về\nphòng, chống tác hại của rượu, bia cho thành viên trong cộng đồng."
+    },
+    {
+     "number": 5,
+     "id": "Điều 23 khoản 5",
+     "body_lines": [
+      403,
+      404
+     ],
+     "points": [],
+     "start": 403,
+     "end": 404,
+     "text": "    5. Cơ quan, tổ chức, cá nhân thực hiện hoạt động tư vấn quy định tại khoản 1 và\nkhoản 2 Điều này phù hợp với chức năng, nhiệm vụ được giao."
+    }
+   ]
+  },
+  {
+   "number": 24,
+   "id": "Điều 24",
+   "chapter": "IV",
+   "title": "Biện pháp phòng ngừa tác hại của rượu, bia tại cộng đồng",
+   "heading_lines": [
+    405
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 24 khoản 1",
+     "body_lines": [
+      406,
+      407,
+      408
+     ],
+     "points": [],
+     "start": 406,
+     "end": 408,
+     "text": "    1. Tuyên truyền, vận động các gia đình, thành viên thuộc tổ chức, cộng đồng\ntham gia tuyên truyền và thực hiện quy định của pháp luật về phòng, chống tác hại\ncủa rượu, bia."
+    },
+    {
+     "number": 2,
+     "id": "Điều 24 khoản 2",
+     "body_lines": [
+      409,
+      410,
+      411
+     ],
+     "points": [],
+     "start": 409,
+     "end": 411,
+     "text": "    2. Lồng ghép hoạt động phòng, chống tác hại của rượu, bia vào các phong trào,\nhoạt động văn hóa, văn nghệ, thể thao, xây dựng đời sống văn hóa và hoạt động\nkhác tại cộng đồng."
+    },
+    {
+     "number": 3,
+     "id": "Điều 24 khoản 3",
+     "body_lines": [
+      412,
+      413
+     ],
+     "points": [],
+     "start": 412,
+     "end": 413,
+     "text": "    3. Vận động, khuyến khích quy định trong hương ước, quy ước việc hạn chế\nhoặc không uống rượu, bia tại đám cưới, đám tang, lễ hội trên địa bàn dân cư."
+    },
+    {
+     "number": 4,
+     "id": "Điều 24 khoản 4",
+     "body_lines": [
+      414,
+      415
+     ],
+     "points": [],
+     "start": 414,
+     "end": 415,
+     "text": "    4. Vận động cá nhân, tổ chức không sử dụng sản phẩm rượu, bia không rõ\nnguồn gốc, xuất xứ, chưa được kiểm nghiệm an toàn thực phẩm."
+    },
+    {
+     "number": 5,
+     "id": "Điều 24 khoản 5",
+     "body_lines": [
+      416,
+      417
+     ],
+     "points": [],
+     "start": 416,
+     "end": 417,
+     "text": "    5. Phát hiện, phản ánh người say rượu, bia, người nghiện rượu, bia để cảnh\nbáo, phòng ngừa, xử lý hành vi gây ảnh hưởng đến trật tự, an toàn xã hội."
+    }
+   ]
+  },
+  {
+   "number": 25,
+   "id": "Điều 25",
+   "chapter": "IV",
+   "title": "Chăm sóc, hỗ trợ, bảo vệ trẻ em, phụ nữ và các đối tượng yếu thế khác để phòng ngừa, giảm tác hại của rượu, bia",
+   "heading_lines": [
+    418,
+    419
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 25 khoản 1",
+     "body_lines": [
+      420,
+      421
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        422,
+        423,
+        426,
+        427
+       ],
+       "id": "Điều 25 khoản 1 điểm a",
+       "start": 422,
+       "end": 427,
+       "text": "    a) Tư vấn cho phụ nữ trong độ tuổi sinh đẻ, phụ nữ mang thai, phụ nữ đang\ncho con bú về tác hại của rượu, bia đối với thai nhi, trẻ em; cho người bị ảnh\nhưởng bởi tác hại của rượu, bia khi sử dụng dịch vụ tại cơ sở y tế, cơ sở trợ giúp xã\nhội, cơ sở hỗ trợ nạn nhân bị bạo lực gia đình;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        429,
+        430,
+        431
+       ],
+       "id": "Điều 25 khoản 1 điểm b",
+       "start": 429,
+       "end": 431,
+       "text": "    b) Can thiệp, hỗ trợ, áp dụng biện pháp cấm tiếp xúc, bảo đảm an toàn theo quy\nđịnh của pháp luật về phòng, chống bạo lực gia đình đối với trẻ em, phụ nữ và các\nđối tượng yếu thế khác để không bị ảnh hưởng bởi tác hại của rượu, bia;"
+      },
+      {
+       "letter": "c",
+       "body_lines": [
+        433
+       ],
+       "id": "Điều 25 khoản 1 điểm c",
+       "start": 433,
+       "end": 433,
+       "text": "    c) Các biện pháp ngăn chặn theo quy định của pháp luật."
+      }
+     ],
+     "start": 420,
+     "end": 421,
+     "text": "    1. Các biện pháp chăm sóc, hỗ trợ, bảo vệ trẻ em, phụ nữ và các đối tượng yếu\nthế khác để phòng ngừa, giảm tác hại của rượu, bia bao gồm:"
+    },
+    {
+     "number": 2,
+     "id": "Điều 25 khoản 2",
+     "body_lines": [
+      435,
+      436,
+      437
+     ],
+     "points": [],
+     "start": 435,
+     "end": 437,
+     "text": "    2. Các biện pháp quy định tại khoản 1 Điều này phải được lồng ghép trong\nchương trình, kế hoạch, hoạt động có liên quan đến trẻ em, phụ nữ và các đối\ntượng yếu thế khác."
+    },
+    {
+     "number": 3,
+     "id": "Điều 25 khoản 3",
+     "body_lines": [
+      439,
+      440
+     ],
+     "points": [],
+     "start": 439,
+     "end": 440,
+     "text": "    3. Cơ quan, tổ chức, gia đình, cá nhân thực hiện quy định tại khoản 1 và khoản 2\nĐiều này phù hợp với chức năng, nhiệm vụ được giao."
+    }
+   ]
+  },
+  {
+   "number": 26,
+   "id": "Điều 26",
+   "chapter": "V",
+   "title": "Kinh phí cho hoạt động phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    447
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 26 khoản 1",
+     "body_lines": [
+      448
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        449
+       ],
+       "id": "Điều 26 khoản 1 điểm a",
+       "start": 449,
+       "end": 449,
+       "text": "    a) Ngân sách nhà nước;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        450
+       ],
+       "id": "Điều 26 khoản 1 điểm b",
+       "start": 450,
+       "end": 450,
+       "text": "    b) Kinh phí hợp pháp khác."
+      }
+     ],
+     "start": 448,
+     "end": 448,
+     "text": "    1. Kinh phí cho hoạt động phòng, chống tác hại của rượu, bia bao gồm:"
+    },
+    {
+     "number": 2,
+     "id": "Điều 26 khoản 2",
+     "body_lines": [
+      451,
+      452
+     ],
+     "points": [],
+     "start": 451,
+     "end": 452,
+     "text": "    2. Kinh phí cho hoạt động phòng, chống tác hại của rượu, bia được phân bổ, quản\nlý, sử dụng đúng mục đích, hiệu quả và theo quy định của pháp luật."
+    },
+    {
+     "number": 3,
+     "id": "Điều 26 khoản 3",
+     "body_lines": [
+      453,
+      454
+     ],
+     "points": [],
+     "start": 453,
+     "end": 454,
+     "text": "    3. Chính phủ quy định nội dung chi, mức chi cho hoạt động phòng, chống tác\nhại của rượu, bia được ngân sách nhà nước bảo đảm."
+    }
+   ]
+  },
+  {
+   "number": 27,
+   "id": "Điều 27",
+   "chapter": "V",
+   "title": "Đào tạo, bồi dưỡng kiến thức chuyên môn, nghiệp vụ cho người làm công tác phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    455,
+    456
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 27 khoản 1",
+     "body_lines": [
+      457,
+      458
+     ],
+     "points": [],
+     "start": 457,
+     "end": 458,
+     "text": "    1. Người làm công tác phòng, chống tác hại của rượu, bia được đào tạo, bồi\ndưỡng kiến thức chuyên môn, nghiệp vụ phù hợp với trách nhiệm được giao."
+    },
+    {
+     "number": 2,
+     "id": "Điều 27 khoản 2",
+     "body_lines": [
+      459,
+      460,
+      461
+     ],
+     "points": [],
+     "start": 459,
+     "end": 461,
+     "text": "    2. Nhân viên y tế cơ sở, cộng tác viên thực hiện phòng, chống tác hại của rượu,\nbia được ưu tiên tham gia các hoạt động bồi dưỡng nâng cao năng lực, kiến thức\nchuyên môn, nghiệp vụ liên quan đến phòng, chống tác hại của rượu, bia."
+    }
+   ]
+  },
+  {
+   "number": 28,
+   "id": "Điều 28",
+   "chapter": "V",
+   "title": "Xử lý vi phạm pháp luật về phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    464
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 28 khoản 1",
+     "body_lines": [
+      466,
+      467,
+      468,
+      469
+     ],
+     "points": [],
+     "start": 466,
+     "end": 469,
+     "text": "    1. Tổ chức, cá nhân có hành vi vi phạm pháp luật về phòng, chống tác hại của\nrượu, bia thì tùy theo tính chất, mức độ vi phạm mà bị xử lý kỷ luật, xử phạt vi\nphạm hành chính hoặc bị truy cứu trách nhiệm hình sự, nếu gây thiệt hại thì phải\nbồi thường theo quy định của pháp luật."
+    },
+    {
+     "number": 2,
+     "id": "Điều 28 khoản 2",
+     "body_lines": [
+      471,
+      472,
+      473
+     ],
+     "points": [],
+     "start": 471,
+     "end": 473,
+     "text": "    2. Cơ quan, người có thẩm quyền được sử dụng phương tiện, thiết bị kỹ thuật\nnghiệp vụ để phát hiện, xử lý kịp thời hành vi vi phạm pháp luật về phòng, chống\ntác hại của rượu, bia."
+    },
+    {
+     "number": 3,
+     "id": "Điều 28 khoản 3",
+     "body_lines": [
+      475,
+      476
+     ],
+     "points": [],
+     "start": 475,
+     "end": 476,
+     "text": "    3. Chính phủ quy định về xử phạt vi phạm hành chính trong phòng, chống tác\nhại của rượu, bia."
+    }
+   ]
+  },
+  {
+   "number": 29,
+   "id": "Điều 29",
+   "chapter": "VI",
+   "title": "Nội dung quản lý nhà nước về phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    483
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 29 khoản 1",
+     "body_lines": [
+      484,
+      485
+     ],
+     "points": [],
+     "start": 484,
+     "end": 485,
+     "text": "    1. Ban hành, trình cấp có thẩm quyền ban hành và tổ chức thực hiện chính\nsách, pháp luật, kế hoạch về phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 2,
+     "id": "Điều 29 khoản 2",
+     "body_lines": [
+      486,
+      487
+     ],
+     "points": [],
+     "start": 486,
+     "end": 487,
+     "text": "    2. Thông tin, tuyên truyền, phổ biến, giáo dục về phòng, chống tác hại của\nrượu, bia."
+    },
+    {
+     "number": 3,
+     "id": "Điều 29 khoản 3",
+     "body_lines": [
+      488
+     ],
+     "points": [],
+     "start": 488,
+     "end": 488,
+     "text": "    3. Đào tạo, bồi dưỡng về công tác phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 4,
+     "id": "Điều 29 khoản 4",
+     "body_lines": [
+      489,
+      490
+     ],
+     "points": [],
+     "start": 489,
+     "end": 490,
+     "text": "    4. Thống kê, sơ kết, tổng kết, định kỳ báo cáo việc thực hiện phòng, chống tác\nhại của rượu, bia."
+    },
+    {
+     "number": 5,
+     "id": "Điều 29 khoản 5",
+     "body_lines": [
+      491,
+      492
+     ],
+     "points": [],
+     "start": 491,
+     "end": 492,
+     "text": "    5. Thanh tra, kiểm tra, xử lý vi phạm pháp luật và giải quyết khiếu nại, tố cáo về\nphòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 6,
+     "id": "Điều 29 khoản 6",
+     "body_lines": [
+      493,
+      494
+     ],
+     "points": [],
+     "start": 493,
+     "end": 494,
+     "text": "    6. Nghiên cứu khoa học và hợp tác quốc tế về phòng, chống tác hại của rượu,\nbia."
+    }
+   ]
+  },
+  {
+   "number": 30,
+   "id": "Điều 30",
+   "chapter": "VI",
+   "title": "Trách nhiệm quản lý nhà nước về phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    495,
+    496
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 30 khoản 1",
+     "body_lines": [
+      497,
+      498
+     ],
+     "points": [],
+     "start": 497,
+     "end": 498,
+     "text": "    1. Chính phủ thống nhất quản lý nhà nước về phòng, chống tác hại của\nrượu, bia."
+    },
+    {
+     "number": 2,
+     "id": "Điều 30 khoản 2",
+     "body_lines": [
+      501,
+      502
+     ],
+     "points": [],
+     "start": 501,
+     "end": 502,
+     "text": "    2. Bộ Y tế là cơ quan đầu mối giúp Chính phủ thực hiện quản lý nhà nước về\nphòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 3,
+     "id": "Điều 30 khoản 3",
+     "body_lines": [
+      504,
+      505
+     ],
+     "points": [],
+     "start": 504,
+     "end": 505,
+     "text": "    3. Bộ, cơ quan ngang Bộ, trong phạm vi nhiệm vụ, quyền hạn của mình, có\ntrách nhiệm thực hiện quản lý nhà nước về phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 4,
+     "id": "Điều 30 khoản 4",
+     "body_lines": [
+      507,
+      508
+     ],
+     "points": [],
+     "start": 507,
+     "end": 508,
+     "text": "    4. Ủy ban nhân dân các cấp, trong phạm vi nhiệm vụ, quyền hạn của mình, thực\nhiện quản lý nhà nước về phòng, chống tác hại của rượu, bia tại địa phương."
+    }
+   ]
+  },
+  {
+   "number": 31,
+   "id": "Điều 31",
+   "chapter": "VI",
+   "title": "Trách nhiệm của Mặt trận Tổ quốc Việt Nam, các tổ chức thành viên của Mặt trận và tổ chức xã hội - nghề nghiệp, tổ chức xã hội",
+   "heading_lines": [
+    510,
+    511
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 31 khoản 1",
+     "body_lines": [
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519
+     ],
+     "points": [],
+     "start": 513,
+     "end": 519,
+     "text": "    1. Mặt trận Tổ quốc Việt Nam và các tổ chức thành viên của Mặt trận, trong\nphạm vi chức năng, nhiệm vụ của mình, có trách nhiệm giáo dục, tuyên truyền,\nvận động nhân dân, đoàn viên, hội viên thực hiện chính sách, pháp luật về phòng,\nchống tác hại của rượu, bia; đưa nội dung phòng, chống tác hại của rượu, bia vào\nnội quy, quy chế của cơ quan, tổ chức; tham gia ý kiến xây dựng pháp luật, thực hiện\ngiám sát, phản biện xã hội trong lĩnh vực phòng, chống tác hại của rượu, bia theo\nquy định của pháp luật."
+    },
+    {
+     "number": 2,
+     "id": "Điều 31 khoản 2",
+     "body_lines": [
+      521
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        522
+       ],
+       "id": "Điều 31 khoản 2 điểm a",
+       "start": 522,
+       "end": 522,
+       "text": "    a) Thực hiện trách nhiệm quy định tại khoản 1 Điều này;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        523,
+        524
+       ],
+       "id": "Điều 31 khoản 2 điểm b",
+       "start": 523,
+       "end": 524,
+       "text": "    b) Tuyên truyền, giáo dục trẻ em, học sinh, sinh viên, thanh niên không uống\nrượu, bia;"
+      },
+      {
+       "letter": "c",
+       "body_lines": [
+        525,
+        526
+       ],
+       "id": "Điều 31 khoản 2 điểm c",
+       "start": 525,
+       "end": 526,
+       "text": "    c) Phối hợp với cơ quan, tổ chức có liên quan để bảo vệ và hỗ trợ trẻ em, học\nsinh, sinh viên, thanh niên bị ảnh hưởng bởi tác hại của rượu, bia;"
+      },
+      {
+       "letter": "d",
+       "body_lines": [
+        527,
+        528
+       ],
+       "id": "Điều 31 khoản 2 điểm d",
+       "start": 527,
+       "end": 528,
+       "text": "    d) Lồng ghép hoạt động phòng, chống tác hại của rượu, bia trong công tác\nđoàn, đội."
+      }
+     ],
+     "start": 521,
+     "end": 521,
+     "text": "    2. Đoàn Thanh niên Cộng sản Hồ Chí Minh có trách nhiệm sau đây:"
+    },
+    {
+     "number": 3,
+     "id": "Điều 31 khoản 3",
+     "body_lines": [
+      529
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        530
+       ],
+       "id": "Điều 31 khoản 3 điểm a",
+       "start": 530,
+       "end": 530,
+       "text": "    a) Thực hiện trách nhiệm quy định tại khoản 1 Điều này;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        531,
+        532
+       ],
+       "id": "Điều 31 khoản 3 điểm b",
+       "start": 531,
+       "end": 532,
+       "text": "    b) Phối hợp với cơ quan, tổ chức có liên quan để bảo vệ và hỗ trợ phụ nữ, trẻ\nem bị ảnh hưởng bởi tác hại của rượu, bia;"
+      },
+      {
+       "letter": "c",
+       "body_lines": [
+        533
+       ],
+       "id": "Điều 31 khoản 3 điểm c",
+       "start": 533,
+       "end": 533,
+       "text": "    c) Lồng ghép hoạt động phòng, chống tác hại của rượu, bia trong công tác hội."
+      }
+     ],
+     "start": 529,
+     "end": 529,
+     "text": "    3. Hội Liên hiệp Phụ nữ Việt Nam có trách nhiệm sau đây:"
+    },
+    {
+     "number": 4,
+     "id": "Điều 31 khoản 4",
+     "body_lines": [
+      534,
+      535,
+      536,
+      539,
+      540
+     ],
+     "points": [],
+     "start": 534,
+     "end": 540,
+     "text": "    4. Tổ chức xã hội - nghề nghiệp, tổ chức xã hội, trong phạm vi chức năng,\nnhiệm vụ của mình, tham gia giáo dục, tuyên truyền, vận động thực hiện chính\nsách, pháp luật về phòng, chống tác hại của rượu, bia; tham gia ý kiến xây dựng\npháp luật về phòng, chống tác hại của rượu, bia; cung cấp thông tin về phòng,\nchống tác hại của rượu, bia theo quy định của pháp luật."
+    }
+   ]
+  },
+  {
+   "number": 32,
+   "id": "Điều 32",
+   "chapter": "VI",
+   "title": "Trách nhiệm của cơ sở kinh doanh rượu, bia",
+   "heading_lines": [
+    542
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 32 khoản 1",
+     "body_lines": [
+      544,
+      545,
+      546,
+      547
+     ],
+     "points": [],
+     "start": 544,
+     "end": 547,
+     "text": "    1. Tuân thủ quy định của pháp luật về điều kiện kinh doanh rượu, bia; về\nquảng cáo, khuyến mại, tài trợ, an toàn thực phẩm, chất lượng, tiêu chuẩn, quy\nchuẩn kỹ thuật, ghi nhãn hàng hóa đối với rượu, bia. Thông tin về sản phẩm rượu,\nbia phải bảo đảm chính xác, khoa học."
+    },
+    {
+     "number": 2,
+     "id": "Điều 32 khoản 2",
+     "body_lines": [
+      549,
+      550
+     ],
+     "points": [],
+     "start": 549,
+     "end": 550,
+     "text": "    2. Cung cấp thông tin đầy đủ, chính xác về hoạt động kinh doanh của cơ sở\ntheo yêu cầu của cơ quan có thẩm quyền."
+    },
+    {
+     "number": 3,
+     "id": "Điều 32 khoản 3",
+     "body_lines": [
+      552,
+      553
+     ],
+     "points": [],
+     "start": 552,
+     "end": 553,
+     "text": "    3. Không sử dụng lao động là người chưa đủ 18 tuổi trực tiếp tham gia vào\nviệc kinh doanh, quảng cáo rượu, bia."
+    },
+    {
+     "number": 4,
+     "id": "Điều 32 khoản 4",
+     "body_lines": [
+      555,
+      556
+     ],
+     "points": [],
+     "start": 555,
+     "end": 556,
+     "text": "    4. Thu hồi và xử lý rượu, bia không bảo đảm chất lượng, an toàn thực phẩm do cơ\nsở mình sản xuất, mua bán theo quy định của pháp luật về an toàn thực phẩm."
+    },
+    {
+     "number": 5,
+     "id": "Điều 32 khoản 5",
+     "body_lines": [
+      558,
+      559,
+      560
+     ],
+     "points": [],
+     "start": 558,
+     "end": 560,
+     "text": "    5. Cơ sở bán rượu, bia phải niêm yết thông báo không bán rượu, bia cho người\nchưa đủ 18 tuổi. Trường hợp nghi ngờ về độ tuổi của người mua rượu, bia thì\nngười bán có quyền yêu cầu người mua xuất trình giấy tờ chứng minh."
+    },
+    {
+     "number": 6,
+     "id": "Điều 32 khoản 6",
+     "body_lines": [
+      562,
+      563,
+      564,
+      565
+     ],
+     "points": [],
+     "start": 562,
+     "end": 565,
+     "text": "    6. Cơ sở bán rượu, bia tiêu dùng tại chỗ nhắc nhở và có hình thức thông tin\nphù hợp đối với khách hàng về việc không điều khiển phương tiện giao thông,\nhỗ trợ khách hàng thuê, sử dụng phương tiện giao thông công cộng sau khi uống\nrượu, bia."
+    },
+    {
+     "number": 7,
+     "id": "Điều 32 khoản 7",
+     "body_lines": [
+      567,
+      568,
+      569
+     ],
+     "points": [],
+     "start": 567,
+     "end": 569,
+     "text": "    7. Kể từ ngày Luật này có hiệu lực, không được mở mới điểm bán rượu, bia để\ntiêu dùng tại chỗ trong bán kính 100 m tính từ khuôn viên của cơ sở y tế, nhà trẻ,\ntrường mẫu giáo, trường mầm non, cơ sở giáo dục phổ thông."
+    }
+   ]
+  },
+  {
+   "number": 33,
+   "id": "Điều 33",
+   "chapter": "VI",
+   "title": "Trách nhiệm của người đứng đầu cơ quan, tổ chức trong phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    571,
+    572
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 33 khoản 1",
+     "body_lines": [
+      574,
+      575,
+      576,
+      577
+     ],
+     "points": [],
+     "start": 574,
+     "end": 577,
+     "text": "    1. Người đứng đầu cơ quan, tổ chức, trong phạm vi nhiệm vụ, quyền hạn của\nmình, có trách nhiệm tổ chức thực hiện các biện pháp phòng, chống tác hại của\nrượu, bia; tổ chức thực hiện nghiêm quy định không uống rượu, bia trong thời gian\nlàm việc, tại nơi làm việc của cơ quan, tổ chức."
+    },
+    {
+     "number": 2,
+     "id": "Điều 33 khoản 2",
+     "body_lines": [
+      579,
+      580,
+      581
+     ],
+     "points": [],
+     "start": 579,
+     "end": 581,
+     "text": "    2. Người đứng đầu tổ dân phố, khu phố, khối phố, thôn, ấp, bản, làng, buôn,\nphum, sóc, tổ chức tại cơ sở, cộng đồng tham gia các hoạt động phòng, chống tác\nhại của rượu, bia quy định tại Điều 24 của Luật này."
+    },
+    {
+     "number": 3,
+     "id": "Điều 33 khoản 3",
+     "body_lines": [
+      584,
+      585
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        587,
+        588,
+        589
+       ],
+       "id": "Điều 33 khoản 3 điểm a",
+       "start": 587,
+       "end": 589,
+       "text": "    a) Nhắc nhở, yêu cầu chấm dứt hành vi vi phạm quy định tại Điều 10 và\nĐiều 19 của Luật này; từ chối cung cấp dịch vụ nếu người vi phạm tiếp tục vi\nphạm sau khi đã được nhắc nhở, yêu cầu;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        591,
+        592,
+        593
+       ],
+       "id": "Điều 33 khoản 3 điểm b",
+       "start": 591,
+       "end": 593,
+       "text": "    b) Tổ chức thực hiện, hướng dẫn, kiểm tra, đôn đốc mọi người thực hiện đúng\nquy định về không được uống, không được bán rượu, bia tại địa điểm thuộc quyền\nquản lý, điều hành."
+      }
+     ],
+     "start": 584,
+     "end": 585,
+     "text": "    3. Người đứng đầu, người quản lý, điều hành địa điểm quy định tại Điều 10 và\nĐiều 19 của Luật này có trách nhiệm sau đây:"
+    }
+   ]
+  },
+  {
+   "number": 34,
+   "id": "Điều 34",
+   "chapter": "VI",
+   "title": "Trách nhiệm của gia đình trong phòng, chống tác hại của rượu, bia",
+   "heading_lines": [
+    595,
+    596
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 34 khoản 1",
+     "body_lines": [
+      598,
+      599,
+      600
+     ],
+     "points": [],
+     "start": 598,
+     "end": 600,
+     "text": "    1. Giáo dục, giám sát, nhắc nhở thành viên chưa đủ 18 tuổi không uống rượu, bia,\ncác thành viên khác trong gia đình hạn chế uống rượu, bia; động viên, giúp đỡ\nngười nghiện rượu, bia trong gia đình cai nghiện rượu, bia."
+    },
+    {
+     "number": 2,
+     "id": "Điều 34 khoản 2",
+     "body_lines": [
+      602,
+      603,
+      604
+     ],
+     "points": [],
+     "start": 602,
+     "end": 604,
+     "text": "    2. Hướng dẫn các thành viên trong gia đình kỹ năng từ chối uống rượu, bia; kỹ\nnăng nhận biết, ứng xử, xử trí khi gặp người say rượu, bia, người nghiện rượu, bia\nvà thực hiện các biện pháp phòng, chống tác hại của rượu, bia."
+    },
+    {
+     "number": 3,
+     "id": "Điều 34 khoản 3",
+     "body_lines": [
+      606,
+      607
+     ],
+     "points": [],
+     "start": 606,
+     "end": 607,
+     "text": "    3. Tham gia với các cơ quan, tổ chức và cộng đồng thực hiện phòng, chống tác\nhại của rượu, bia."
+    }
+   ]
+  },
+  {
+   "number": 35,
+   "id": "Điều 35",
+   "chapter": "VII",
+   "title": "Sửa đổi, bổ sung quy định của một số luật khác",
+   "heading_lines": [
+    612
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 35 khoản 1",
+     "body_lines": [
+      614,
+      615,
+      616,
+      618,
+      619
+     ],
+     "points": [],
+     "start": 614,
+     "end": 619,
+     "text": "    1. Sửa đổi, bổ sung khoản 8 Điều 8 của Luật Giao thông đường bộ số\n23/2008/QH12 đã được sửa đổi, bổ sung một số điều theo Luật số 35/2018/QH14\nnhư sau:\n    “8. Điều khiển phương tiện tham gia giao thông đường bộ mà trong máu hoặc\nhơi thở có nồng độ cồn.”."
+    },
+    {
+     "number": 2,
+     "id": "Điều 35 khoản 2",
+     "body_lines": [
+      621,
+      622,
+      623,
+      626,
+      627,
+      628
+     ],
+     "points": [],
+     "start": 621,
+     "end": 628,
+     "text": "    2. Sửa đổi, bổ sung khoản 8 Điều 8 của Luật Giao thông đường thủy nội địa số\n23/2004/QH11 đã được sửa đổi, bổ sung một số điều theo Luật số 48/2014/QH13,\nLuật số 97/2015/QH13 và Luật số 35/2018/QH14 như sau:\n    “8. Thuyền viên, người lái phương tiện đang làm việc trên phương tiện mà\ntrong máu hoặc hơi thở có nồng độ cồn hoặc có các chất kích thích khác mà\nluật cấm sử dụng.”."
+    },
+    {
+     "number": 3,
+     "id": "Điều 35 khoản 3",
+     "body_lines": [
+      630,
+      631,
+      632
+     ],
+     "points": [
+      {
+       "letter": "a",
+       "body_lines": [
+        634,
+        635
+       ],
+       "id": "Điều 35 khoản 3 điểm a",
+       "start": 634,
+       "end": 635,
+       "text": "    a) Thay thế cụm từ “rượu có độ cồn từ 30 độ trở lên” bằng cụm từ “rượu, bia\ncó độ cồn từ 15 độ trở lên” tại khoản 4 Điều 100;"
+      },
+      {
+       "letter": "b",
+       "body_lines": [
+        637,
+        638
+       ],
+       "id": "Điều 35 khoản 3 điểm b",
+       "start": 637,
+       "end": 638,
+       "text": "    b) Thay thế cụm từ “rượu có độ cồn từ 30 độ trở lên” bằng cụm từ “rượu có độ\ncồn từ 15 độ trở lên” tại khoản 4 Điều 109."
+      }
+     ],
+     "start": 630,
+     "end": 632,
+     "text": "    3. Thay thế một số cụm từ tại một số điều của Luật Thương mại số\n36/2005/QH11 đã được sửa đổi, bổ sung một số điều theo Luật số 05/2017/QH14\nnhư sau:"
+    }
+   ]
+  },
+  {
+   "number": 36,
+   "id": "Điều 36",
+   "chapter": "VII",
+   "title": "Hiệu lực thi hành",
+   "heading_lines": [
+    640
+   ],
+   "lead_in": null,
+   "clauses": [
+    {
+     "number": 1,
+     "id": "Điều 36 khoản 1",
+     "body_lines": [
+      642
+     ],
+     "points": [],
+     "start": 642,
+     "end": 642,
+     "text": "    1. Luật này có hiệu lực thi hành từ ngày 01 tháng 01 năm 2020."
+    },
+    {
+     "number": 2,
+     "id": "Điều 36 khoản 2",
+     "body_lines": [
+      644,
+      645,
+      646,
+      647
+     ],
+     "points": [],
+     "start": 644,
+     "end": 647,
+     "text": "    2. Kể từ ngày Luật này có hiệu lực đến ngày 01 tháng 01 năm 2022, việc cấp\nphép sản xuất rượu thủ công quy định tại khoản 2 Điều 15 của Luật này và việc\nđăng ký sản xuất rượu thủ công quy định tại khoản 3 Điều 15 của Luật này không\nphải nộp phí, lệ phí."
+    }
+   ]
+  }
+ ]
+}

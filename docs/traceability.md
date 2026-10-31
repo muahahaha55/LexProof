@@ -17,7 +17,7 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 
 | YC | Phần tử thiết kế | Khai báo / định lý Lean | Test / eval | Trạng thái |
 |---|---|---|---|---|
-| FR1 | Tier 1 Segmenter | — | — | Planned |
+| FR1 | Tier 1 Segmenter | `pipeline/segment.py`; `Core/ClauseRef.lean` (tham chiếu có cấu trúc) | `pipeline/tests/test_segment.py` (S1, S2, S3, S5, bản hỏng); `ClauseRef.render_parse_allRefs` | **Partial** — một văn bản; chưa phân giải tham chiếu giữa các điều |
 | FR2 | Tier 1 Glossary; [ADR-0004](decisions/0004-act-as-opaque-glossary-id.md) | `Act` (kiểu đích) | — | Planned |
 | FR3 | Tier 2 Translator; lược đồ `Norm` | `Norm`, `Cond`, `SourceId` | `Smoke.normA`, `normB` | Planned *(lược đồ: Implemented)* |
 | FR4 | Tier 2 Loop A | — | — | Planned |
@@ -27,7 +27,7 @@ Cột **Lean** ghi khai báo thật trong code; `—` nghĩa là chưa có.
 | FR8 | Tier 2 Validator; [ADR-0017](decisions/0017-wellformedness-validator-first.md), [ADR-0021](decisions/0021-integrity-constraint-valid.md) | `Finding` (7 nhánh), `validate`, `inPriorityCycle` (closure tới điểm bất động), `duplicateIds`, `singleDocId?`, (f) `wf_of_validate_nil`, **`cycle_of_validate_finding` + `cycle_finding_of_reaches`** (hai chiều), **`nodup_ids_of_validate_nil`**, **`succsOf_eq_overrideIds_of_validate_nil`**, `singleDocId_isSome_of_validate_nil` | `Tests` ca 1–6, 10, 12 | **Implemented** *(chu trình: đúng và đủ; id trùng: có định lý; dangling và `unknownOverride` vẫn chỉ có test)* |
 | FR9 | Tier 4 Phản ví dụ | `Counterexample` (+ `Repr`), `ceOf`, `Result.witness?`, (c) `counterexample_fields_correct` | `smoke_conflict`, `Tests.conflict_reported_with_bad_norm` | Planned *(dữ liệu: Implemented, và (c) chứng minh mọi trường khớp; render tiếng Việt: chưa có)* |
 | FR10 | Tier 4 Báo cáo | `Scope`, `scopeOf` | `smoke_consistent` so khớp nguyên khối `Scope` | Planned |
-| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (2591 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
+| FR11 | `Cert` audit axiom | `Cert.allowedAxioms`, `Cert.auditedDecls`, lệnh `#audit_axioms` | Chạy trong `lake build` (3118 khai báo); negative test cố định trong CI: `ci/audit-negative.sh` + `ci/audit-negative/BadAxioms.lean` | **Implemented** (audit) + **Tested** (negative test, không phải kernel) |
 | FR12 | Ca chuyên gia | — | — | Planned |
 | FR13 | Tier 4 Phiên bản | `SourceId.docId`, `.docType`, `.effective` | — | Planned |
 
@@ -81,7 +81,7 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G1.9 | `cycle_of_validate_finding` — chu trình ưu tiên được báo là chu trình **thật** của quan hệ `overrides` (soundness; completeness thì không — mục 3) | Implemented |
 | G1.10 | `singleDocId_isSome_of_validate_nil` — validate sạch ⇒ danh sách thuộc đúng một văn bản, nên `Scope.docId` là câu trả lời thật chứ không phải phỏng đoán | Implemented |
 | G1.11 | `analyze` là điểm vào duy nhất; search nằm trong `LexProof.Internal`, nên không gọi được bộ kiểm mà bỏ qua validator | Implemented |
-| G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 2591 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
+| G1.5 | `#audit_axioms` chạy trong **mỗi `lake build`**: 3118 khai báo, tất cả ⊆ `{propext, Classical.choice, Quot.sound}`; từ chối `sorryAx`, axiom do `native_decide`/`bv_decide` sinh, và mọi `axiom` tự khai. Danh sách khai báo đọc từ môi trường, không viết tay | **Implemented (tự động)** |
 | G1.6 | `#audit_encapsulation` chạy trong mỗi `lake build`: không khai báo nào ngoài `Verify.{Conflict,Tests,Smoke}` nhắc tới `LexProof.Internal.*`, nên không thể gọi bộ kiểm mà bỏ qua validator | **Implemented (tự động)** |
 | G1.12 | `cycle_of_validate_finding` **và** `cycle_finding_of_reaches` — validator báo chu trình ưu tiên cho một norm **đúng khi** norm đó thật nằm trên một chu trình. Hai chiều, không còn trust base | **Implemented** (định lý) |
 | G1.13 | Negative test của audit trong CI (`ci/audit-negative.sh`): một file ngoài thư viện dùng `sorry`, `native_decide` và một `axiom`; CI đỏ nếu audit **không** từ chối cả ba | **Tested** (script + Lean, không phải kernel) |
@@ -146,6 +146,7 @@ bằng chứng hiện có, và **giới hạn** của bằng chứng đó.
 | G2.7 | `ReviewStatus` (D50): mọi `analyzeReport` mang trạng thái duyệt; `render` in «DRAFT, NOT HUMAN REVIEWED» cho bản nháp. **Không có định lý** (chỉ ví dụ `decide`); `reviewed` chỉ ghi tên và ngày, không được kiểm | **Tested (ví dụ)** — *không phải bằng chứng faithfulness* |
 | G2.8 | `Verify/Cases.lean` + `Laws/AlcoholSaleCases.lean`: 37 ca thử viết từ chữ của khoản (ghi trước khi chạy, `eval/cases/RECORD.md`), đo bằng `runCase` (định nghĩa qua `Norm.applies`; `mem_applyingNorms`, `hasClash_iff_conflict`, `runCase_pass_sound`); kernel kiểm tập ca đạt (`pass_set`). Phiếu cho người: `docs/review/sale-group-cases.md` | **Implemented (công cụ)** — *chưa ai trả lời phiếu; ca và mã hóa cùng một nguồn, không phải bằng chứng faithfulness độc lập* |
 | G2.9 | `Verify/CasesScoped.lean` (D51): `runCaseScoped`, `runCaseScoped_outOfScope`, `runCaseScoped_ran`, `outOfScope_not_pass`; `Core/NumericBands.lean` (D52): `tiles`, `bandOf`, `tiles_unique_band`, `tiles_bandOf_none`; `Laws/AlcoholSaleBands.lean`: `out_of_scope_set` (= ["C24"]), `scoped_pass_set`, `unmentioned_set`, `age_tiles`, `alcohol_tiles`, `age_labels`, `alcohol_labels`, `num_pass_all`, `num_out_of_range` | **Implemented (công cụ)** — *`outOfScope` không phải pass; kernel chỉ biết các dải nối liền, không biết số nghĩa là gì; cận 0, 150 tuổi, 1000 là giả định không có trong luật; so khớp điều khoản bằng chuỗi* |
+| G2.10 | Phân đoạn tất định `pipeline/segment.py` (36 điều, 7 chương, 186 khoản/điểm; S1–S5 đạt) → `data/segmented/44-2019-QH14.json`. `Core/ClauseRef.lean` (`ClauseRef`, `parseRef`, `parseEntry`, `render`, `isAncestorOf`) + `Laws/AlcoholSaleRefs.lean` (`render_parse_allRefs`, `unparsable_none`, `notInCatalog_none`, `sameRef_c37`, `refOutOfScope_set`, `ref_c37_in_scope`, `runCaseRefScoped_heading`, `runCaseRefScoped_covered`). Sổ phủ: `docs/review/alcohol-coverage-ledger.md` | **Implemented (công cụ)** — *bộ tách là Python không tin cậy, kiểm bằng kiểm tra tự nhất quán; quy tắc phạm vi theo tham chiếu là quyết định thiết kế, không phải cách đọc luật; «encoded» trong sổ phủ = bản nháp chưa duyệt* |
 
 **G2 KHÔNG bao phủ**
 
