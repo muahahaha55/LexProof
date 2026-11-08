@@ -8,7 +8,7 @@ Mỗi đơn vị có đúng một trạng thái, xét theo thứ tự: *encoded*
 
 **«Phạm vi mô-đun»** do tôi định nghĩa: các điều mà một norm đã mã hóa hoặc một mục `notEncoded` nhắc tới: Điều 2, Điều 5, Điều 11, Điều 15, Điều 16, Điều 19, Điều 32. Đây là một lựa chọn; nếu hiểu là khoảng từ điều nhỏ nhất đến lớn nhất thì UNACCOUNTED sẽ nhiều hơn rất nhiều.
 
-Tiêu đề điều không được tính là khoản hay điểm. Các đoạn không đánh số (đoạn dẫn, Điều không chia khoản) được liệt kê riêng và không nằm trong tổng khoản/điểm.
+Tiêu đề điều không được tính là khoản hay điểm. Cột «Đoạn không đánh số» đếm **đoạn dẫn**: phần văn bản của một điều đứng trước khoản đầu tiên, hoặc toàn bộ điều không chia khoản (6 điều: 1, 2, 11, 13, 14, 18). Mỗi điều có đoạn dẫn tính một đơn vị, và chúng được liệt kê riêng, không nằm trong tổng khoản/điểm. Con số `stray_paragraphs = 2` trong `data/segmented/44-2019-QH14.json` là **một đại lượng khác**: số dòng thụt đầu dòng, không đánh số, nằm *trong* một khoản hoặc điểm (cả hai ở Điều 35 khoản 1 và 2, dòng 618 và 626, là câu trích khoản mới sửa đổi luật khác). Chúng là một phần văn bản của khoản chứa chúng nên không phải đơn vị riêng ở sổ này.
 
 ## Tổng
 

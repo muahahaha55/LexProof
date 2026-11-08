@@ -195,6 +195,19 @@ lake build LexProof.Verify.Conflict
 
 ---
 
+## 6b. Sinh báo cáo
+
+```powershell
+python pipeline/report.py --module alcohol-sale --status draft
+python pipeline/report.py --module alcohol-sale --status reviewed --by "TÊN" --date 2026-11-01
+python pipeline/report.py --print-module-sha256   # mã để ghi vào mục 3 của phiếu ca thử
+```
+
+Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`
+chưa điền đủ hoặc mô-đun đã đổi (xem `docs/design-core.md` §18). Test: `python -m pytest pipeline/tests` (hoặc
+`python -m unittest discover -s pipeline/tests`); phụ thuộc test được ghim ở `pipeline/requirements-dev.txt`. Sinh lại sổ phủ bằng
+`eval/ledger/make_ledger.py` sẽ ghi đè lời sửa D58 ở `docs/review/alcohol-coverage-ledger.md` nếu `make_ledger.py` chưa được sửa theo.
+
 ## 7. Chạy audit axiom
 
 Whitelist: **`{propext, Classical.choice, Quot.sound}`**. Bất cứ thứ gì khác, và

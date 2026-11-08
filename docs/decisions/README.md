@@ -41,6 +41,7 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 | [0016](0016-reference-catalog-from-segmenter.md) | Danh mục tham chiếu đã là **tham số** của `validate`, và tham chiếu treo đã bị bắt | Danh mục chưa do segmenter sinh, chưa có bước duyệt, chưa ghi vào `Scope`; chưa phân biệt "treo" với "trỏ tới phần chưa mã hóa" |
 | [0018](0018-scope-lists-parameter-names.md) | `Scope.validExcluded`/`validTotal` nói **bao nhiêu** điểm bị loại trên tổng; `Scope.docId` là `Option` và danh sách lẫn văn bản là finding | `Scope` chưa liệt kê **tên** tham số khái niệm mở, chưa nói *điểm nào* bị `valid` loại, chưa có trạng thái duyệt, chưa có danh sách điều khoản bỏ qua |
 | [0022](0022-atom-table-valuation-situation.md) | Bảng atom + phép gán, finding của bảng, kiểm theo cặp không ràng buộc và `analyzeP` (tầng **bổ sung**, không sửa `Atoms`/`Finite`/`analyze`) | Chưa: ràng buộc trong bộ kiểm, `Scope` và D23 mới, bảng thật, thay hẳn `Atoms S P` (khẳng định rộng vẫn mở) |
+| [0023](0023-report-command.md) | Báo cáo chỉ do lệnh sinh; mỗi kết quả chính nêu định lý kernel hoặc «chưa có định lý kernel cho kết quả này» |
 
 ## Chưa quyết định (Open / Proposed)
 

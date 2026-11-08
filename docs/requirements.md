@@ -133,7 +133,9 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **Ưu tiên**: Must
 - **AC**: Từ phản ví dụ, người duyệt tái lập được tình huống mà không cần đọc Lean.
 - **Kiểm chứng**: Demo + Review
-- **Trạng thái**: **Planned**. Phần dữ liệu đã **Implemented**:
+- **Trạng thái**: **Partial (công cụ, chưa duyệt)**. `pipeline/report.py` in các cặp xung đột (id hai norm) ở mục 3 của
+  báo cáo; **chưa** diễn đạt tình huống phản ví dụ bằng tiếng Việt và chưa được thử trên mô-đun nào có xung đột
+  (`alcohol-sale` không có). Phần dữ liệu đã **Implemented**:
   `Counterexample` có `situation`, `params`, hai `NormId`, hai `Modality`, hai
   `SourceId`, và `deriving Repr` nên in được. Phần diễn đạt tiếng Việt chưa có.
 
@@ -143,7 +145,11 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **Ưu tiên**: Must
 - **AC**: Báo cáo luôn có mục scope; không có mục scope thì không phát hành.
 - **Kiểm chứng**: Review
-- **Trạng thái**: **Planned**. `Scope` đã có `docId`, `normIds`, `articles`,
+- **Trạng thái**: **Partial (công cụ, chưa duyệt)**. `pipeline/report.py --module alcohol-sale --status draft|reviewed`
+  (D55) sinh báo cáo tiếng Việt, 7 mục: trạng thái, phạm vi (luôn có), kết quả ba giá trị, phát hiện, ca thử, «báo cáo
+  này KHÔNG nói gì», nguồn gốc. `reviewed` bị từ chối nếu phiếu ca thử chưa điền đủ hoặc mô-đun đã đổi sau khi duyệt
+  (`pipeline/tests/test_report.py`). Chưa có: bước duyệt thật (phiếu còn trống), báo cáo cho văn bản khác,
+  so sánh với bản in. `Scope` đã có `docId`, `normIds`, `articles`,
   `situations`, `params`, `validExcluded`/`validTotal`; chưa có trường "đã
   duyệt"/"đã bỏ qua".
 - **Ràng buộc cho tầng báo cáo (D33)**: `Result.invalid` **không** mang `Scope`,

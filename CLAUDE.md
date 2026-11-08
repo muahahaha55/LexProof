@@ -22,7 +22,10 @@ Graduation thesis project; research follow-up later (ASE / NeurIPS 2027 consider
 - Fail closed: if unsure, return unknown. Never silently skip a provision.
 - A case result `noNormApplies` is never shown alone: always with its scope status (clause encoded, or `outOfScope`
   because the clause is in `notEncoded`). `outOfScope` is not a pass and says nothing about the law.
-- In a new `Laws` module a clause is referred to by a `ClauseRef` (`Core/ClauseRef.lean`), never by a free string:
+- Reports (`reports/`) are produced only by `python pipeline/report.py` and are never edited by hand. A `reviewed` report
+  is refused unless the case review sheet is complete and names the sha256 of the module file it was reviewed against.
+- In a new `Laws` module a clause is referred to at the most specific unit the norm or case tests (e.g. a branch, not the
+  whole clause when only the branch is encoded). A clause is referred to by a `ClauseRef` (`Core/ClauseRef.lean`), never by a free string:
   strings that do not parse are findings, and scope (`outOfScope`) is decided from references, not from an override table.
 - Open-textured concepts ("hợp lý", "nghiêm trọng") are explicit parameters.
   The system never decides them.

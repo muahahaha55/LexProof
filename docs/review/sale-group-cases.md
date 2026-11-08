@@ -11,6 +11,7 @@
 3. Nếu theo khoản trích hành vi này **không** bị cấm, không bị bắt buộc và cũng không được cho phép một cách rõ ràng (khoản không điều chỉnh nó), hãy ghi «**khoản này không điều chỉnh**». Đừng ghi «được phép» chỉ vì không thấy lệnh cấm: luật khác có thể cấm.
 4. Cột «Đúng ý / Sai ý» hỏi về **chính ca thử**: tình huống và câu hỏi có nêu đúng điều khoản muốn kiểm không (Đúng ý), hay đặt câu hỏi sai, mơ hồ, thiếu dữ kiện (Sai ý). Ghi lý do ở «Ghi chú».
 5. Điền «Người duyệt» và «Ngày». Tệp này không ghi sẵn câu trả lời nào.
+6. Sau khi điền xong mọi hàng, ghi ở mục 3 cuối phiếu mã sha256 của tệp mô-đun bạn đã đối chiếu. `pipeline/report.py --status reviewed` từ chối nếu mã này khác tệp mô-đun hiện tại (xem `docs/conventions.md`).
 
 Nguyên văn được cắt tự động theo số dòng từ `data/extracted/44-2019-QH14.txt` (bản trích từ PDF, không phải nguồn chính thức) và `eval/cases/check_cases_sheet.py` đối chiếu lại với file.
 
@@ -70,3 +71,9 @@ Nguyên văn được cắt tự động theo số dòng từ `data/extracted/44
 | Điều 19 khoản 4 | «4. Cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân và cơ sở giam giữ khác.»<br>(dòng 315–316) |
 | Điều 19 khoản 5 | «5. Cơ sở bảo trợ xã hội.»<br>(dòng 318) |
 | Điều 19 khoản 6 | «6. Nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập, trừ địa điểm được phép kinh doanh rượu, bia.»<br>(dòng 319–321) |
+
+## 3. Xác nhận mô-đun đã duyệt
+
+Điền sau khi trả lời xong mọi hàng ở mục 1. Mã là sha256 của `LexProof/Laws/AlcoholSale.lean` khi đọc CRLF như LF (`python pipeline/report.py --print-module-sha256`). Để trống thì báo cáo `reviewed` bị từ chối.
+
+sha256 mô-đun khi duyệt: 

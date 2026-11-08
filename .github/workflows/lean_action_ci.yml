@@ -27,3 +27,15 @@ jobs:
       # requires all three to be rejected.
       - name: Axiom audit negative test
         run: bash ci/audit-negative.sh
+
+      # Python tests (segmenter, report). Runs after the Lean build: the report tests call
+      # `lake env lean --run`. Test dependencies are pinned in pipeline/requirements-dev.txt.
+      # data/extracted is stored with LF in git, while the segmenter pins the sha256 of the CRLF working copy
+      # (Windows, autocrlf), so this step re-materialises that one file with CRLF first.
+      - name: Python tests (segmenter, report)
+        run: |
+          rm data/extracted/44-2019-QH14.txt
+          git -c core.autocrlf=true checkout -- data/extracted/44-2019-QH14.txt
+          python3 -m venv .venv-ci
+          .venv-ci/bin/pip install -r pipeline/requirements-dev.txt
+          .venv-ci/bin/python -m pytest pipeline/tests -q
