@@ -33,7 +33,7 @@
 | C23 | Đúng ý | khoản này không điều chỉnh | trung bình | Ca bán BIA qua quầy. Vế «bằng máy» không áp dụng; vế đầu chỉ nói «kinh doanh RƯỢU», và Điều 2 khoản 1, 2 định nghĩa rượu và bia riêng, nên không áp dụng cho bia. Ca không nói rõ cửa hàng ngoài các địa điểm ở Điều 19. (Bản nháp trước trả lời sai là «không biết».) |
 | C24 | Đúng ý | cấm | trung bình | Câu hỏi coi việc bán là «kinh doanh». Ca không nêu độ cồn hay việc đăng ký; Điều 15 khoản 4, 5 (phiếu không trích) phân biệt rượu từ 5,5 độ và dưới 5,5 độ, nên có thể có trường hợp không cần giấy phép. |
 | C25 | Đúng ý | cấm | cao | Phiếu không trích tiêu đề Điều 19 ở hàng này (nó nằm ở mục 2 của phiếu); «cấm» dựa vào tiêu đề «Địa điểm không bán rượu, bia». |
-| C26 | Đúng ý | khoản này không điều chỉnh | cao | Cửa hàng bên ngoài không phải cơ sở y tế. |
+| C26 | Đúng ý | khoản này không điều chỉnh | thấp | Cửa hàng bên ngoài không phải cơ sở y tế nên Điều 19.1 không áp dụng. Nhưng Điều 32.7 cấm MỞ MỚI điểm bán rượu, bia để tiêu dùng tại chỗ trong bán kính 100 m quanh cơ sở y tế, và 50 m nằm trong ranh giới; ca không nói cửa hàng mới mở hay bán tại chỗ. Phiếu không trích Điều 32. Sửa 2026-11-11: trước đây ghi «cao», sai vì bỏ sót Điều 32.7. |
 | C27 | Đúng ý | cấm | cao | Khoản này không có điều kiện thời gian. Phiếu không trích tiêu đề Điều 19 ở hàng này (nó nằm ở mục 2 của phiếu); «cấm» dựa vào tiêu đề «Địa điểm không bán rượu, bia». |
 | C28 | Đúng ý | khoản này không điều chỉnh | cao | Quán không phải cơ sở giáo dục. Điều 32.7 (không mở MỚI điểm bán tiêu dùng tại chỗ trong bán kính 100 m quanh trường) không áp dụng vì 200 m > 100 m; phiếu không trích điều này. |
 | C29 | Đúng ý | cấm | cao | Phiếu không trích tiêu đề Điều 19 ở hàng này (nó nằm ở mục 2 của phiếu); «cấm» dựa vào tiêu đề «Địa điểm không bán rượu, bia». |
@@ -45,3 +45,5 @@
 | C35 | Đúng ý | khoản này không điều chỉnh | trung bình | Công ty tư nhân không nằm trong danh sách, nếu coi danh sách là đóng. |
 | C36 | Đúng ý | cấm | cao | Điều 5 khoản 3 đã đủ để cấm, không cần tới Điều 19. |
 | C37 | Đúng ý | khoản này không điều chỉnh | thấp | Tiêu đề chỉ nói «không bán»; cho không không phải bán. Nếu «bán» được hiểu rộng hơn thì câu trả lời khác. |
+
+**Sửa 2026-11-11:** C26 hạ độ chắc từ «cao» xuống «thấp» (Điều 32.7). Đáp án không đổi. Thống kê sau sửa: độ chắc cao 27, trung bình 7, thấp 3.
