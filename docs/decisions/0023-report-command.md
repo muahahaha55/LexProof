@@ -18,3 +18,4 @@ Báo cáo tiếng Việt chỉ do `pipeline/report.py` sinh, không sửa tay. N
 - Công cụ không tin cậy: nó có thể trình bày sai; test (`pipeline/tests/test_report.py`) chỉ bắt các sai đã nghĩ tới.
 - `reviewed` chỉ ghi nhận phiếu đủ chữ; không kiểm danh tính hay nội dung.
 - Mã băm tệp phụ thuộc kết thúc dòng (Git LF, Windows CRLF); báo cáo ghi cả hai cách băm.
+- Hàng nào của phiếu có «bản nháp AI» trong cột Ghi chú được coi là câu trả lời lấy theo bản nháp AI: biểu ngữ của báo cáo `reviewed` nêu số hàng đó (vd. 37/37) và nói đây không phải trả lời độc lập. Đây là cách ghi nhận qua cụm từ trong ghi chú; công cụ không kiểm được ghi chú có đúng sự thật hay không.

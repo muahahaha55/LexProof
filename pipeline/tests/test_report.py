@@ -153,9 +153,10 @@ class InjectedFailure(unittest.TestCase):
 
 
 class ReviewedRefusals(unittest.TestCase):
-    def test_real_sheet_is_blank_and_refused(self):
+    def test_blank_sheet_is_refused(self):
+        blank = sheet_text(ids(), EXTRA["module_lf"]).replace("☒", "☐").replace("N. V. A", "").replace("2026-10-31", "")
         with self.assertRaises(SystemExit) as cm:
-            R.make_report(CFG, DATA, "reviewed", "X", "2026-11-01", None, DATE, EXTRA)
+            reviewed(blank)
         self.assertIn("TỪ CHỐI", str(cm.exception))
         self.assertIn("chưa điền", str(cm.exception))
 
@@ -193,6 +194,15 @@ class ReviewedRefusals(unittest.TestCase):
         self.assertIn(hashlib.sha256(text.encode("utf-8")).hexdigest(), t)
         self.assertIn("sha256 mô-đun ghi trong phiếu khi duyệt (bằng tệp mô-đun hiện tại): `%s`" % EXTRA["module_lf"], t)
         self.assertIn("Người Duyệt", t)
+
+    def test_ai_draft_rows_are_disclosed_in_banner(self):
+        text = sheet_text(ids(), EXTRA["module_lf"])
+        self.assertNotIn("không phải trả lời độc lập", section(reviewed(text), 1))
+        marked = text.replace("☒ cấm<br>☐ không biết |  |", "☒ cấm<br>☐ không biết | Đồng thuận với bản nháp AI |")
+        self.assertEqual(R.ai_draft_rows(R.parse_sheet(marked)), sorted(ids()))
+        s1 = section(reviewed(marked), 1)
+        self.assertIn("%d/%d hàng" % (len(ids()), len(ids())), s1)
+        self.assertIn("không phải trả lời độc lập", s1)
 
     def test_answered(self):
         self.assertFalse(R.answered("☐ cấm<br>☐ không biết"))

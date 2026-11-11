@@ -114,6 +114,14 @@ def answered(cell):
     return bool(cell.strip())
 
 
+# A row whose note (column 7) contains this phrase declares that its answer was taken over from the AI draft, not given blind.
+AI_MARK = "bản nháp AI"
+
+
+def ai_draft_rows(sheet):
+    return sorted(cid for cid, cells in sheet["rows"].items() if len(cells) > 7 and AI_MARK in cells[7])
+
+
 def review_problems(sheet, case_ids, module_sha):
     """Reasons to refuse `reviewed`; empty if the sheet is complete and refers to this module file."""
     out = []
@@ -294,6 +302,12 @@ def render(cfg, data, status, review=None, today=None, extra=None):
         w(">")
         w("> Đây là ghi nhận: công cụ chỉ kiểm phiếu đủ hàng, đủ người duyệt và ngày, và mô-đun không đổi từ lúc duyệt. "
           "Công cụ không kiểm danh tính, không kiểm nội dung câu trả lời, và việc này không có nghĩa bản mã hóa khớp luật.")
+        n_ai = len(review.get("ai_rows", []))
+        if n_ai:
+            w(">")
+            w("> **%d/%d hàng của phiếu ghi là câu trả lời lấy theo bản nháp do AI soạn, không phải trả lời độc lập (mù).** "
+              "AI cũng là người viết bản mã hóa và các ca thử, nên việc phiếu khớp kỳ vọng không phải bằng chứng độc lập về "
+              "độ trung thực." % (n_ai, review["n_rows"]))
     w("")
 
     # 2
@@ -535,7 +549,8 @@ def make_report(cfg, data, status, by=None, review_date=None, sheet_path=None, t
             raise SystemExit("TỪ CHỐI `reviewed`:\n  - " + "\n  - ".join(probs))
         reviewers = sorted({cells[8] for cells in sheet["rows"].values()})
         review = {"by": by, "date": review_date, "sheet_sha": hashlib.sha256(text.encode("utf-8")).hexdigest(),
-                  "module_sha": extra["module_lf"], "reviewers": reviewers}
+                  "module_sha": extra["module_lf"], "reviewers": reviewers,
+                  "ai_rows": ai_draft_rows(sheet), "n_rows": len(data["cases"])}
     return render(cfg, data, status, review, today, extra)
 
 
