@@ -22,7 +22,7 @@ ACTTXT = {"ban_ruou_bia": "bán rượu, bia", "cung_cap_ruou_bia": "cung cấp 
           "ban_ruou_bia_bang_may_tu_dong": "bán rượu, bia bằng máy bán hàng tự động",
           "kinh_doanh_ruou_khong_phep_hoac_dang_ky": "kinh doanh rượu không có giấy phép hoặc không đăng ký"}
 # clauses of the module whose norms share the tested act (what a reader needs to look at) - structure only, no answer
-READ = {"ban_ruou_bia": ["5.3", "19.1", "19.2", "19.3", "19.4", "19.5", "19.6"],
+READ = {"ban_ruou_bia": ["5.3", "D19H", "19.1", "19.2", "19.3", "19.4", "19.5", "19.6"],
         "cung_cap_ruou_bia": ["5.3"], "khuyen_mai_ruou_bia": ["5.3", "5.9"], "dung_ruou_bia_lam_qua_khuyen_mai": ["5.9"],
         "ban_ruou_bia_bang_may_tu_dong": ["5.11"], "kinh_doanh_ruou_khong_phep_hoac_dang_ky": ["5.11"]}
 LABEL = {k: v[0] for k, v in KEYR.items()}
@@ -72,6 +72,7 @@ A("2. Các lựa chọn: **cấm** · **bắt buộc** · **được phép** · 
 A("3. Nếu theo khoản trích hành vi này **không** bị cấm, không bị bắt buộc và cũng không được cho phép một cách rõ ràng (khoản không điều chỉnh nó), hãy ghi «**khoản này không điều chỉnh**». Đừng ghi «được phép» chỉ vì không thấy lệnh cấm: luật khác có thể cấm.")
 A("4. Cột «Đúng ý / Sai ý» hỏi về **chính ca thử**: tình huống và câu hỏi có nêu đúng điều khoản muốn kiểm không (Đúng ý), hay đặt câu hỏi sai, mơ hồ, thiếu dữ kiện (Sai ý). Ghi lý do ở «Ghi chú».")
 A("5. Điền «Người duyệt» và «Ngày». Tệp này không ghi sẵn câu trả lời nào.")
+A("6. Sau khi điền xong mọi hàng, ghi ở mục 3 cuối phiếu mã sha256 của tệp mô-đun bạn đã đối chiếu. `pipeline/report.py --status reviewed` từ chối nếu mã này khác tệp mô-đun hiện tại (xem `docs/conventions.md`).")
 A("")
 A("Nguyên văn được cắt tự động theo số dòng từ `data/extracted/44-2019-QH14.txt` (bản trích từ PDF, không phải nguồn chính thức) và `eval/cases/check_cases_sheet.py` đối chiếu lại với file.")
 A("")
@@ -92,6 +93,14 @@ A("| Khoản | Nguyên văn |")
 A("|---|---|")
 for k in ["5.3", "5.9", "5.11", "D19H", "19.1", "19.2", "19.3", "19.4", "19.5", "19.6"]:
     A("| %s | %s |" % (LABEL[k], quote(k)))
+A("")
+A("## 3. Xác nhận mô-đun đã duyệt")
+A("")
+A("Điền sau khi trả lời xong mọi hàng ở mục 1. Hai mã là sha256 của `LexProof/Laws/AlcoholSale.lean` và của `LexProof/Laws/AlcoholSaleCases.lean` (các ca đang được duyệt), khi đọc CRLF như LF; `python pipeline/report.py --print-sheet-hashes` in cả hai dòng. Để trống thì báo cáo `reviewed` bị từ chối.")
+A("")
+A("sha256 mô-đun khi duyệt: ")
+A("")
+A("sha256 tệp ca thử khi duyệt: ")
 A("")
 os.makedirs(OUT_DIR, exist_ok=True)
 io.open(os.path.join(OUT_DIR, "sale-group-cases.md"), "w", encoding="utf-8", newline="\n").write("\n".join(L))
