@@ -143,10 +143,11 @@ theorem unparsable_none : unparsable = [] := by decide +kernel
 theorem notInCatalog_none : notInCatalog = [] := by decide +kernel
 /-- C37 cites the heading «Điều 19 (tiêu đề)»; the not-encoded list spells it «Điều 19 tiêu đề». -/
 theorem sameRef_c37 : sameRef = [("Điều 19 (tiêu đề)", "Điều 19 tiêu đề")] := by decide +kernel
-/-- C24 is out of scope because khoản 11 has the not-encoded branch (i) and no encoded norm of its act cites it.
-C23 is out of scope for the same reason (act `ban_ruou_bia`): references and acts cannot tell whether C23's
-situation falls under branch (i). C22 stays in scope: norm 5.11-ii has its act. -/
-theorem refOutOfScope_set : refOutOfScopeIds = ["C23", "C24"] := by decide +kernel
+/-- C24 is out of scope because it cites the not-encoded branch (i) of khoản 11 and no encoded norm of its act
+cites it. C22 and C23 cite branch (ii) (their quote is «bán rượu, bia bằng máy bán hàng tự động», which only branch
+(ii) says), a sibling of the not-encoded branch (i), so they are in scope. Before the branch-level references
+C23 cited khoản 11 whole and was out of scope only because of that coarse reference (D54). -/
+theorem refOutOfScope_set : refOutOfScopeIds = ["C24"] := by decide +kernel
 theorem ref_c37_in_scope : refScoped.lookup "C37" = some (.ran .pass) := by decide +kernel
 theorem ref_c22_in_scope : refScoped.lookup "C22" = some (.ran .pass) := by decide +kernel
 

@@ -109,7 +109,7 @@ def norms : List Norm :=
   , nrm "5.9-i" "khuyen_mai_ruou_bia" (.sit 3) [] "Điều 5 khoản 9"
   , nrm "5.9-ii" "dung_ruou_bia_lam_qua_khuyen_mai" (.sit 3) [] "Điều 5 khoản 9"
     -- Điều 5 khoản 11 nhánh (ii): bán bằng máy bán hàng tự động (the act carries the condition)
-  , nrm "5.11-ii" "ban_ruou_bia_bang_may_tu_dong" .tt [] "Điều 5 khoản 11"
+  , nrm "5.11-ii" "ban_ruou_bia_bang_may_tu_dong" .tt [] "Điều 5 khoản 11 nhánh (ii)"
     -- Điều 19: địa điểm không bán rượu, bia
   , nrm "19.1" "ban_ruou_bia" (.sit 4) [] "Điều 19 khoản 1"
   , nrm "19.2" "ban_ruou_bia" (.sit 5) [] "Điều 19 khoản 2"

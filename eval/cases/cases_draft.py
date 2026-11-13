@@ -95,12 +95,12 @@ CASES = [
     c("C21", QUA, {"S02": LOW}, "noNormApplies", "negativeControl", "5.9", Q59II,
       "Dùng một thùng bia 4,5 độ làm quà khuyến mại.", "medium", "Như C20.", near=True),
     # ---------------- Điều 5 khoản 11
-    c("C22", MAY, {}, "forbidden", "positive", "5.11", Q511II,
+    c("C22", MAY, {}, "forbidden", "positive", "5.11ii", Q511II,
       "Một máy bán hàng tự động đặt ở sảnh khu chung cư bán bia lon.", "high"),
-    c("C23", BAN, ban(ADULT), "noNormApplies", "negativeControl", "5.11", Q511II,
+    c("C23", BAN, ban(ADULT), "noNormApplies", "negativeControl", "5.11ii", Q511II,
       "Một cửa hàng bán một chai bia cho một người 30 tuổi qua quầy có người bán (không dùng máy tự động).", "medium",
       "Phép thử yếu: phương thức bán nằm trong tên act, không có atom 'bán bằng máy'. Câu hỏi thật là liệu khoản 11 cấm việc này (không).", params=P0),
-    c("C24", KDKP, {}, "forbidden", "positive", "5.11", Q511I,
+    c("C24", KDKP, {}, "forbidden", "positive", "5.11i", Q511I,
       "Một người bán rượu mà không có giấy phép kinh doanh rượu.", "high",
       "Nhánh (i) của khoản 11 thuộc nhóm act khác, mô-đun bán/cung cấp/khuyến mại không mã hóa; dự kiến KHÔNG đạt (lỗ hổng phủ)."),
     # ---------------- Điều 19: địa điểm không bán rượu, bia

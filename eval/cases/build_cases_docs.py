@@ -24,7 +24,7 @@ ACTTXT = {"ban_ruou_bia": "bán rượu, bia", "cung_cap_ruou_bia": "cung cấp 
 # clauses of the module whose norms share the tested act (what a reader needs to look at) - structure only, no answer
 READ = {"ban_ruou_bia": ["5.3", "D19H", "19.1", "19.2", "19.3", "19.4", "19.5", "19.6"],
         "cung_cap_ruou_bia": ["5.3"], "khuyen_mai_ruou_bia": ["5.3", "5.9"], "dung_ruou_bia_lam_qua_khuyen_mai": ["5.9"],
-        "ban_ruou_bia_bang_may_tu_dong": ["5.11"], "kinh_doanh_ruou_khong_phep_hoac_dang_ky": ["5.11"]}
+        "ban_ruou_bia_bang_may_tu_dong": ["5.11ii"], "kinh_doanh_ruou_khong_phep_hoac_dang_ky": ["5.11i"]}
 LABEL = {k: v[0] for k, v in KEYR.items()}
 
 

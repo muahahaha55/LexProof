@@ -65,6 +65,8 @@ ENCODED = [
     clause("5.3", "Điều 5 khoản 3", "3. Bán, cung cấp, khuyến mại", D5),
     clause("5.9", "Điều 5 khoản 9", "9. Khuyến mại trong hoạt động", D5),
     clause("5.11", "Điều 5 khoản 11", "11. Kinh doanh rượu không có giấy phép", D5),
+    clause("5.11i", "Điều 5 khoản 11 nhánh (i)", "11. Kinh doanh rượu không có giấy phép", D5),
+    clause("5.11ii", "Điều 5 khoản 11 nhánh (ii)", "11. Kinh doanh rượu không có giấy phép", D5),
     clause("D19H", "Điều 19 (tiêu đề)", "Điều 19. Địa điểm không bán rượu, bia", D19),
     clause("19.1", "Điều 19 khoản 1", "1. Cơ sở y tế.", D19),
     clause("19.2", "Điều 19 khoản 2", "2. Cơ sở giáo dục.", D19),

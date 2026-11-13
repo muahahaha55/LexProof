@@ -121,9 +121,10 @@ class Always(unittest.TestCase):
         s5 = section(draft(), 5)
         outs = s5.split("### outOfScope")[1].split("### PASS")[0]
         passes = s5.split("### PASS")[1].split("### Ca số")[0]
-        for cid in ("C23", "C24"):
-            self.assertIn("| %s |" % cid, outs)
-            self.assertNotIn("| %s |" % cid, passes)
+        self.assertIn("| C24 |", outs)
+        self.assertNotIn("| C24 |", passes)
+        self.assertNotIn("| C23 |", outs)   # C23 cites branch (ii) since D54: in scope and passing
+        self.assertIn("| C23 |", passes)
         self.assertIn("noNormApplies và outOfScope không nói gì về luật", s5)
 
     def test_every_noNormApplies_row_carries_scope_status(self):

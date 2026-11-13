@@ -33,9 +33,9 @@ Danh sách ca được ghi trước khi chạy (`eval/cases/RECORD.md`, sha256 c
 | C19 | ranh giới | `dung_ruou_bia_lam_qua_khuyen_mai` | forbidden | forbidden | **ĐẠT** | 5.9-ii | high | Điều 5 khoản 9 |
 | C20 | ranh giới (gần giống) | `dung_ruou_bia_lam_qua_khuyen_mai` | noNormApplies | noNormApplies | **ĐẠT** | — | medium | Điều 5 khoản 9 |
 | C21 | đối chứng âm (gần giống) | `dung_ruou_bia_lam_qua_khuyen_mai` | noNormApplies | noNormApplies | **ĐẠT** | — | medium | Điều 5 khoản 9 |
-| C22 | dương | `ban_ruou_bia_bang_may_tu_dong` | forbidden | forbidden | **ĐẠT** | 5.11-ii | high | Điều 5 khoản 11 |
-| C23 | đối chứng âm | `ban_ruou_bia` | noNormApplies | noNormApplies | **ĐẠT** | — | medium | Điều 5 khoản 11 |
-| C24 | dương | `kinh_doanh_ruou_khong_phep_hoac_dang_ky` | forbidden | noNormApplies | **KHÔNG ĐẠT** | — | high | Điều 5 khoản 11 |
+| C22 | dương | `ban_ruou_bia_bang_may_tu_dong` | forbidden | forbidden | **ĐẠT** | 5.11-ii | high | Điều 5 khoản 11 nhánh (ii) |
+| C23 | đối chứng âm | `ban_ruou_bia` | noNormApplies | noNormApplies | **ĐẠT** | — | medium | Điều 5 khoản 11 nhánh (ii) |
+| C24 | dương | `kinh_doanh_ruou_khong_phep_hoac_dang_ky` | forbidden | noNormApplies | **KHÔNG ĐẠT** | — | high | Điều 5 khoản 11 nhánh (i) |
 | C25 | dương | `ban_ruou_bia` | forbidden | forbidden | **ĐẠT** | 19.1 | high | Điều 19 khoản 1 |
 | C26 | đối chứng âm (gần giống) | `ban_ruou_bia` | noNormApplies | noNormApplies | **ĐẠT** | — | medium | Điều 19 khoản 1 |
 | C27 | dương | `ban_ruou_bia` | forbidden | forbidden | **ĐẠT** | 19.2 | medium | Điều 19 khoản 2 |
