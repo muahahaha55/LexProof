@@ -74,6 +74,8 @@ Nguyên văn được cắt tự động theo số dòng từ `data/extracted/44
 
 ## 3. Xác nhận mô-đun đã duyệt
 
-Điền sau khi trả lời xong mọi hàng ở mục 1. Mã là sha256 của `LexProof/Laws/AlcoholSale.lean` khi đọc CRLF như LF (`python pipeline/report.py --print-module-sha256`). Để trống thì báo cáo `reviewed` bị từ chối.
+Điền sau khi trả lời xong mọi hàng ở mục 1. Mã là sha256 của `LexProof/Laws/AlcoholSale.lean` khi đọc CRLF như LF (`python pipeline/report.py --print-module-sha256`), và sha256 của `LexProof/Laws/AlcoholSaleCases.lean` (các ca đang được duyệt; `python pipeline/report.py --print-sheet-hashes` in cả hai dòng). Để trống thì báo cáo `reviewed` bị từ chối.
 
 sha256 mô-đun khi duyệt: 93608d9dfc71d82b3e4f669c39628106a0b2c58016764bfa0f14f4eb0f67e7c0
+
+sha256 tệp ca thử khi duyệt: c8bbe4ba22167e84c41d36bc7737782f8331965978a40c2263c0c1cc23f40bae

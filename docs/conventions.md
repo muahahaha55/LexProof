@@ -201,6 +201,7 @@ lake build LexProof.Verify.Conflict
 python pipeline/report.py --module alcohol-sale --status draft
 python pipeline/report.py --module alcohol-sale --status reviewed --by "TÊN" --date 2026-11-01
 python pipeline/report.py --print-module-sha256   # mã để ghi vào mục 3 của phiếu ca thử
+python pipeline/report.py --print-sheet-hashes   # cả hai dòng mã (mô-đun và tệp ca thử) cho mục 3
 ```
 
 Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`

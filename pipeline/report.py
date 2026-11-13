@@ -88,6 +88,9 @@ def parse_ledger(text):
 SHEET_HASH = re.compile(r"^\s*sha256 mô-đun khi duyệt:\s*`?([0-9a-fA-F]{64})`?\s*$", re.M)
 
 
+CASES_HASH = re.compile(r"^\s*sha256 tệp ca thử khi duyệt:\s*`?([0-9a-fA-F]{64})`?\s*$", re.M)
+
+
 def parse_sheet(text):
     rows = {}
     for line in text.splitlines():
@@ -96,7 +99,9 @@ def parse_sheet(text):
         cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip())[1:-1]]
         rows[cells[0]] = cells
     m = SHEET_HASH.search(text)
-    return {"rows": rows, "module_sha": m.group(1).lower() if m else None}
+    c = CASES_HASH.search(text)
+    return {"rows": rows, "module_sha": m.group(1).lower() if m else None,
+            "cases_sha": c.group(1).lower() if c else None}
 
 
 # columns of the sheet: Đúng ý/Sai ý, Câu trả lời của bạn, Người duyệt, Ngày
@@ -122,7 +127,7 @@ def ai_draft_rows(sheet):
     return sorted(cid for cid, cells in sheet["rows"].items() if len(cells) > 7 and AI_MARK in cells[7])
 
 
-def review_problems(sheet, case_ids, module_sha, by=None, review_date=None):
+def review_problems(sheet, case_ids, module_sha, by=None, review_date=None, cases_sha=None):
     """Reasons to refuse `reviewed`; empty if the sheet is complete and refers to this module file.
     `by` must be a reviewer named in the sheet; each row date must be a real date not later than `review_date`."""
     out = []
@@ -150,6 +155,12 @@ def review_problems(sheet, case_ids, module_sha, by=None, review_date=None):
     elif sheet["module_sha"] != module_sha:
         out.append("sha256 mô-đun trong phiếu (%s…) khác tệp mô-đun hiện tại (%s…): mô-đun đã đổi sau khi duyệt"
                    % (sheet["module_sha"][:12], module_sha[:12]))
+    if cases_sha is not None:
+        if sheet["cases_sha"] is None:
+            out.append("phiếu không có dòng «sha256 tệp ca thử khi duyệt: <64 ký tự hex>»")
+        elif sheet["cases_sha"] != cases_sha:
+            out.append("sha256 tệp ca thử trong phiếu (%s…) khác tệp ca thử hiện tại (%s…): các ca đã đổi sau khi duyệt"
+                       % (sheet["cases_sha"][:12], cases_sha[:12]))
     return out
 
 
@@ -523,6 +534,7 @@ def render(cfg, data, status, review=None, today=None, extra=None):
         w("- Phiếu ca thử `%s`: sha256 (CRLF như LF) `%s`; người duyệt ghi trong phiếu: %s." % (
             cfg["sheet"], review["sheet_sha"], ", ".join(review["reviewers"])))
         w("- sha256 mô-đun ghi trong phiếu khi duyệt (bằng tệp mô-đun hiện tại): `%s`." % review["module_sha"])
+        w("- sha256 tệp ca thử `%s` ghi trong phiếu khi duyệt (bằng tệp hiện tại): `%s`." % (cfg["files"]["Cases"], review["cases_sha"]))
     w("- Ngày tạo báo cáo: %s" % (today or datetime.date.today().isoformat()))
     w("")
     return "\n".join(L)
@@ -537,6 +549,7 @@ def build_extra(cfg):
         "input_raw": sha_raw(cfg["input"]), "input_lf": sha_lf(cfg["input"]),
         "module_lf": sha_lf(cfg["module_file"]), "module_raw": sha_raw(cfg["module_file"]),
         "files_lf": {k: sha_lf(v) for k, v in cfg["files"].items()},
+        "cases_lf": sha_lf(cfg["files"]["Cases"]),
         "ledger_lf": sha_lf(cfg["ledger"]), "dump_lf": sha_lf(cfg["dump"]),
         "toolchain": read_text("lean-toolchain").strip(),
         "git": git_info(),
@@ -556,12 +569,12 @@ def make_report(cfg, data, status, by=None, review_date=None, sheet_path=None, t
             raise SystemExit("--date phải có dạng YYYY-MM-DD")
         text = open(sheet_path, encoding="utf-8").read().replace("\r\n", "\n") if sheet_path else read_text(cfg["sheet"])
         sheet = parse_sheet(text)
-        probs = review_problems(sheet, [c["id"] for c in data["cases"]], extra["module_lf"], by, review_date)
+        probs = review_problems(sheet, [c["id"] for c in data["cases"]], extra["module_lf"], by, review_date, extra["cases_lf"])
         if probs:
             raise SystemExit("TỪ CHỐI `reviewed`:\n  - " + "\n  - ".join(probs))
         reviewers = sorted({cells[8] for cells in sheet["rows"].values()})
         review = {"by": by, "date": review_date, "sheet_sha": hashlib.sha256(text.encode("utf-8")).hexdigest(),
-                  "module_sha": extra["module_lf"], "reviewers": reviewers,
+                  "module_sha": extra["module_lf"], "cases_sha": extra["cases_lf"], "reviewers": reviewers,
                   "ai_rows": ai_draft_rows(sheet), "n_rows": len(data["cases"])}
     return render(cfg, data, status, review, today, extra)
 
@@ -575,6 +588,8 @@ def main(argv=None):
     ap.add_argument("--status", choices=["draft", "reviewed"])
     ap.add_argument("--print-module-sha256", action="store_true",
                     help="print the sha256 (CRLF read as LF) of the module file, for the review sheet, and stop")
+    ap.add_argument("--print-sheet-hashes", action="store_true",
+                    help="print the two hash lines for the end of the review sheet (module and cases file), and stop")
     ap.add_argument("--by")
     ap.add_argument("--date", help="ngày duyệt (YYYY-MM-DD), chỉ với --status reviewed")
     ap.add_argument("--sheet", help="đường dẫn phiếu ca thử (mặc định: phiếu của mô-đun)")
@@ -584,6 +599,10 @@ def main(argv=None):
     cfg = MODULES[a.module]
     if a.print_module_sha256:
         print(sha_lf(cfg["module_file"]))
+        return
+    if a.print_sheet_hashes:
+        print("sha256 mô-đun khi duyệt: %s" % sha_lf(cfg["module_file"]))
+        print("sha256 tệp ca thử khi duyệt: %s" % sha_lf(cfg["files"]["Cases"]))
         return
     if a.status is None:
         ap.error("--status là bắt buộc")

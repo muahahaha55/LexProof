@@ -39,7 +39,7 @@ def section(text, n):
     return m.group(0) if m else ""
 
 
-def sheet_text(ids, module_sha, skip=None):
+def sheet_text(ids, module_sha, skip=None, cases_sha="auto"):
     """A synthetic, fully answered review sheet (the real sheet is blank)."""
     head = "| Mã | Tình huống | Câu hỏi | Khoản chính | Thêm | Đúng ý / Sai ý | Câu trả lời | Ghi chú | Người duyệt | Ngày |\n"
     rows = []
@@ -48,7 +48,10 @@ def sheet_text(ids, module_sha, skip=None):
             rows.append("| %s | t | q | k | m | ☐ Đúng ý<br>☐ Sai ý | ☒ cấm<br>☐ không biết |  | N. V. A | 2026-10-31 |" % cid)
         else:
             rows.append("| %s | t | q | k | m | ☒ Đúng ý<br>☐ Sai ý | ☒ cấm<br>☐ không biết |  | N. V. A | 2026-10-31 |" % cid)
+    cs = EXTRA["cases_lf"] if cases_sha == "auto" else cases_sha
     h = "\nsha256 mô-đun khi duyệt: %s\n" % module_sha if module_sha else "\n"
+    if cs:
+        h += "sha256 tệp ca thử khi duyệt: %s\n" % cs
     return head + "|---|---|---|---|---|---|---|---|---|---|\n" + "\n".join(rows) + "\n" + h
 
 
@@ -175,6 +178,14 @@ class ReviewedRefusals(unittest.TestCase):
         with self.assertRaises(SystemExit) as cm:
             reviewed(sheet_text(ids(), "0" * 64))
         self.assertIn("mô-đun đã đổi", str(cm.exception))
+
+    def test_changed_or_missing_cases_hash_refused(self):
+        with self.assertRaises(SystemExit) as cm:
+            reviewed(sheet_text(ids(), EXTRA["module_lf"], cases_sha="0" * 64))
+        self.assertIn("các ca đã đổi sau khi duyệt", str(cm.exception))
+        with self.assertRaises(SystemExit) as cm:
+            reviewed(sheet_text(ids(), EXTRA["module_lf"], cases_sha=None))
+        self.assertIn("sha256 tệp ca thử khi duyệt", str(cm.exception))
 
     def test_missing_module_hash_refused(self):
         with self.assertRaises(SystemExit) as cm:
