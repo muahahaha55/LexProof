@@ -122,8 +122,9 @@ def ai_draft_rows(sheet):
     return sorted(cid for cid, cells in sheet["rows"].items() if len(cells) > 7 and AI_MARK in cells[7])
 
 
-def review_problems(sheet, case_ids, module_sha):
-    """Reasons to refuse `reviewed`; empty if the sheet is complete and refers to this module file."""
+def review_problems(sheet, case_ids, module_sha, by=None, review_date=None):
+    """Reasons to refuse `reviewed`; empty if the sheet is complete and refers to this module file.
+    `by` must be a reviewer named in the sheet; each row date must be a real date not later than `review_date`."""
     out = []
     for cid in case_ids:
         cells = sheet["rows"].get(cid)
@@ -133,6 +134,17 @@ def review_problems(sheet, case_ids, module_sha):
         miss = [name for i, name in ANSWER_COLS.items() if not answered(cells[i])]
         if miss:
             out.append("ca %s chưa điền: %s" % (cid, ", ".join(miss)))
+        elif by is not None and by.strip().lower() not in {n.strip().lower() for n in cells[8].replace("/", ",").split(",")}:
+            msg = "--by «%s» không có trong cột Người duyệt của phiếu" % by
+            if msg not in out:
+                out.append(msg)
+        if not miss:
+            try:
+                d = datetime.date.fromisoformat(cells[9].strip())
+                if review_date and d > datetime.date.fromisoformat(review_date):
+                    out.append("ca %s: ngày %s muộn hơn --date %s" % (cid, cells[9].strip(), review_date))
+            except ValueError:
+                out.append("ca %s: ngày «%s» không phải YYYY-MM-DD" % (cid, cells[9]))
     if sheet["module_sha"] is None:
         out.append("phiếu không có dòng «sha256 mô-đun khi duyệt: <64 ký tự hex>»")
     elif sheet["module_sha"] != module_sha:
@@ -544,7 +556,7 @@ def make_report(cfg, data, status, by=None, review_date=None, sheet_path=None, t
             raise SystemExit("--date phải có dạng YYYY-MM-DD")
         text = open(sheet_path, encoding="utf-8").read().replace("\r\n", "\n") if sheet_path else read_text(cfg["sheet"])
         sheet = parse_sheet(text)
-        probs = review_problems(sheet, [c["id"] for c in data["cases"]], extra["module_lf"])
+        probs = review_problems(sheet, [c["id"] for c in data["cases"]], extra["module_lf"], by, review_date)
         if probs:
             raise SystemExit("TỪ CHỐI `reviewed`:\n  - " + "\n  - ".join(probs))
         reviewers = sorted({cells[8] for cells in sheet["rows"].values()})

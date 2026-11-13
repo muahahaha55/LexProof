@@ -62,7 +62,7 @@ def write_tmp(text):
 def reviewed(text):
     path = write_tmp(text)
     try:
-        return R.make_report(CFG, DATA, "reviewed", "Người Duyệt", "2026-11-01", path, DATE, EXTRA)
+        return R.make_report(CFG, DATA, "reviewed", "N. V. A", "2026-11-01", path, DATE, EXTRA)
     finally:
         os.remove(path)
 
@@ -193,7 +193,23 @@ class ReviewedRefusals(unittest.TestCase):
         import hashlib
         self.assertIn(hashlib.sha256(text.encode("utf-8")).hexdigest(), t)
         self.assertIn("sha256 mô-đun ghi trong phiếu khi duyệt (bằng tệp mô-đun hiện tại): `%s`" % EXTRA["module_lf"], t)
-        self.assertIn("Người Duyệt", t)
+        self.assertIn("N. V. A", t)
+
+    def test_by_must_be_in_sheet_and_dates_must_be_valid(self):
+        text = sheet_text(ids(), EXTRA["module_lf"])
+        path = write_tmp(text)
+        try:
+            with self.assertRaises(SystemExit) as cm:
+                R.make_report(CFG, DATA, "reviewed", "Người Khác", "2026-11-01", path, DATE, EXTRA)
+            self.assertIn("không có trong cột Người duyệt", str(cm.exception))
+        finally:
+            os.remove(path)
+        with self.assertRaises(SystemExit) as cm:   # review date earlier than the row dates (2026-10-31)
+            R.make_report(CFG, DATA, "reviewed", "N. V. A", "2026-10-01", write_tmp(text), DATE, EXTRA)
+        self.assertIn("muộn hơn --date", str(cm.exception))
+        with self.assertRaises(SystemExit) as cm:
+            reviewed(text.replace("2026-10-31", "31/10/2026"))
+        self.assertIn("không phải YYYY-MM-DD", str(cm.exception))
 
     def test_ai_draft_rows_are_disclosed_in_banner(self):
         text = sheet_text(ids(), EXTRA["module_lf"])
