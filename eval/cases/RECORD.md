@@ -7,7 +7,7 @@
 - Giới hạn trung thực: tôi (cùng một người soạn) đã viết `AlcoholSale.lean` trước đó trong cùng phiên, nên các ca **không độc lập** với hiểu biết của tôi về mã hóa.
   Điều tôi làm được là chốt kỳ vọng từ chữ của khoản luật trước khi chạy và không sửa kỳ vọng sau khi thấy kết quả (xem phần «Sửa sau khi chạy» cuối tệp nếu có).
 
-## D54 — mức chi tiết của nguồn. Lần đầu HOÀN TÁC (quy tắc (d)); làm lại trên nhánh `d54-c23-branch-source` sau khi được phép sửa `AlcoholSaleRefs.lean`
+## D54 — mức chi tiết của nguồn. Lần đầu HOÀN TÁC (quy tắc (d)); làm lại và gộp vào `main` (2026-11-13) sau khi được phép sửa `AlcoholSaleRefs.lean`
 
 Thử: norm `5.11-ii` «Điều 5 khoản 11» → «Điều 5 khoản 11 nhánh (ii)»; C22 và C23 → «… nhánh (ii)» (trích dẫn của cả hai là «bán rượu, bia bằng máy bán hàng tự động», chỉ thuộc nhánh (ii)); C24 → «… nhánh (i)» (trích dẫn «Kinh doanh rượu không có giấy phép hoặc không đăng ký», chỉ thuộc nhánh (i)). Không đổi điều kiện, kỳ vọng hay ngữ nghĩa mã hóa.
 

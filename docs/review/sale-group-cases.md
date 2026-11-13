@@ -76,6 +76,8 @@ Nguyên văn được cắt tự động theo số dòng từ `data/extracted/44
 
 Điền sau khi trả lời xong mọi hàng ở mục 1. Mã là sha256 của `LexProof/Laws/AlcoholSale.lean` khi đọc CRLF như LF (`python pipeline/report.py --print-module-sha256`), và sha256 của `LexProof/Laws/AlcoholSaleCases.lean` (các ca đang được duyệt; `python pipeline/report.py --print-sheet-hashes` in cả hai dòng). Để trống thì báo cáo `reviewed` bị từ chối.
 
-sha256 mô-đun khi duyệt: 93608d9dfc71d82b3e4f669c39628106a0b2c58016764bfa0f14f4eb0f67e7c0
+sha256 mô-đun khi duyệt: e90ad7fa767d1129c85573e9e75ebbb3535e385956029cc4b139277a095f19d8
 
-sha256 tệp ca thử khi duyệt: c8bbe4ba22167e84c41d36bc7737782f8331965978a40c2263c0c1cc23f40bae
+sha256 tệp ca thử khi duyệt: 806625d63738e466ff16893e1fbf711703f4d2785c595effdec750bb0110972a
+
+Ghi chú xác nhận lại (2026-11-13): sau khi D54 đổi mức trích dẫn của C22–C24 sang «nhánh (i)/(ii)» (norm 5.11-ii và các ca; nội dung hàng không đổi) và thêm «Điều 19 (tiêu đề)» vào cột «Khoản cần xét thêm» của 17 hàng, người duyệt Phong đã xác nhận và đồng ý (theo lời người phụ trách dự án chuyển lại; công cụ không kiểm điều này). Hai mã trên được cập nhật theo hai tệp hiện tại. Ngày ở các hàng vẫn là ngày trả lời ban đầu (2026-11-10).
