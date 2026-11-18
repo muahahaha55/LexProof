@@ -16,7 +16,25 @@ Hiện bản chữ dùng trong dự án là **bản trích từ PDF Công báo s
 
 - Toàn văn 36 điều có ở mục 2 của **`docs/review/ban-nhap-ai-phieu-ca-thu.pdf`** (các điều có nền vàng là điều quan trọng nhất), hoặc tệp `data/extracted/44-2019-QH14.txt`.
 - Hãy so với văn bản chính thức (Công báo hoặc Cổng thông tin điện tử Chính phủ), ít nhất các điều: **5, 10, 11, 15, 16, 19, 32, 33, 36**. Ghi lại bất kỳ chỗ nào lệch chữ hoặc lệch số khoản.
-- Kiểm tra luật **còn hiệu lực và chưa được sửa đổi** từ 2019. Có một nguồn bên thứ ba nhắc tới «Nghị quyết số 66.18/2026/NQ-CP» điều chỉnh cách thực hiện Điều 16 khoản 1; số hiệu này **chưa được kiểm chứng**, nhờ bạn xác minh.
+- Kiểm tra luật **còn hiệu lực và chưa được sửa đổi** từ 2019, và xem có văn bản mới thay thế Nghị quyết 66.18/2026/NQ-CP (mục dưới) chưa.
+
+### Nghị quyết 66.18/2026/NQ-CP (đã kiểm tra một phần, ngày 2026-11-18)
+
+Nghị quyết của Chính phủ ngày 18/5/2026 **có thật** (Cổng thông tin điện tử Chính phủ, vanban.chinhphu.vn, số ký hiệu 66.18/2026/NQ-CP). Theo Điều 7 của nghị quyết, nó **chỉ có hiệu lực từ 01/7/2026 đến hết 28/02/2027**; trong thời gian đó, quy định của nghị quyết được ưu tiên hơn văn bản khác nếu hai bên khác nhau, và quy định tương ứng hết hiệu lực khi có văn bản khác về cùng nội dung có hiệu lực.
+
+Ba mục liên quan tới Luật 44/2019/QH14 (chữ đọc được từ PDF chính thức, nguồn máy nhận chữ nên có lỗi chính tả):
+
+1. Không thực hiện quy định «Kinh doanh rượu không có giấy phép hoặc không đăng ký» tại khoản 11 Điều 5.
+2. Không thực hiện điều kiện quy định tại Điều 15.
+3. Không thực hiện quy định «Đáp ứng quy định tại khoản 4, khoản 5 Điều 15» tại khoản 1 Điều 16.
+
+Nhờ bạn **mở PDF gốc và xác nhận** ba điều chưa chắc:
+
+- **Q8.** Ba mục trên nằm ở phụ lục nào, mục nào? (Một bài trên thuvienphapluat.vn nói Phụ lục I.2, Bộ Công Thương; chưa thấy tận mắt trong PDF.)
+- **Q9.** Ngày bắt đầu của ba mục là 01/7/2026, hay 20/5/2026 (Điều 7 khoản 2 nêu một số phần của Phụ lục I.2 có hiệu lực từ 20/5/2026)?
+- **Q10.** Trong thời gian nghị quyết có hiệu lực, một người bán rượu không có giấy phép (ca C24) có còn bị cấm theo khoản 11 Điều 5 vế đầu không? Cách hiểu của người soạn: không còn bị cấm trong thời gian đó (vì điều kiện giấy phép không được thực hiện), nhưng **chưa kiểm tra tác động lên nghị định xử phạt**.
+
+Việc quan hệ giữa luật và một nghị quyết có hiệu lực theo thời gian thuộc phạm vi Level 2, chưa làm trong dự án này. Mọi kết quả của công cụ chỉ xét **văn bản luật gốc**.
 
 ## 2. Quyết cách đọc luật ở các chỗ còn tranh cãi
 
@@ -49,7 +67,7 @@ Tạo tệp `docs/review/ket-qua-doi-chieu-TEN-NGAY.md` (ví dụ `ket-qua-doi-c
 1. Tên người duyệt, ngày.
 2. **Bạn có xem bản nháp của AI trước khi trả lời không?** (có / không / một phần.)
 3. Mục 1: danh sách chỗ lệch chữ (nếu có), tình trạng hiệu lực của luật.
-4. Mục 2: bảng Q1–Q7 với cách đọc, và «chắc» / «không chắc».
+4. Mục 2: bảng Q1–Q7 và Q8–Q10 (mục Nghị quyết 66.18/2026/NQ-CP) với cách đọc, và «chắc» / «không chắc».
 5. Mục 3 (nếu làm): danh sách `C01 cấm`, `C02 khoản này không điều chỉnh`, ...
 
 Gửi lại tệp này cho người giao repo.
