@@ -1,0 +1,136 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 5,
+  "atoms": {
+    "situation": [
+      {
+        "name": "S04 người nhận chưa đủ 18 tuổi",
+        "source": "Điều 5 khoản 3",
+        "domain": "bool"
+      },
+      {
+        "name": "S02 độ cồn từ 15 độ trở lên",
+        "source": "Điều 5 khoản 9",
+        "domain": "bool"
+      }
+    ],
+    "parameters": []
+  },
+  "norms": [
+    {
+      "id": "5.3-ban",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "S04 người nhận chưa đủ 18 tuổi"
+      },
+      "exceptions": [],
+      "source": "Điều 5 khoản 3",
+      "quote": "Bán, cung cấp, khuyến mại rượu, bia cho người chưa đủ 18 tuổi."
+    },
+    {
+      "id": "5.3-cung-cap",
+      "modality": "prohibition",
+      "act": "cung_cap_ruou_bia",
+      "condition": {
+        "sit": "S04 người nhận chưa đủ 18 tuổi"
+      },
+      "exceptions": [],
+      "source": "Điều 5 khoản 3",
+      "quote": "Bán, cung cấp, khuyến mại rượu, bia cho người chưa đủ 18 tuổi."
+    },
+    {
+      "id": "5.3-khuyen-mai",
+      "modality": "prohibition",
+      "act": "khuyen_mai_ruou_bia",
+      "condition": {
+        "sit": "S04 người nhận chưa đủ 18 tuổi"
+      },
+      "exceptions": [],
+      "source": "Điều 5 khoản 3",
+      "quote": "Bán, cung cấp, khuyến mại rượu, bia cho người chưa đủ 18 tuổi."
+    },
+    {
+      "id": "5.9-i",
+      "modality": "prohibition",
+      "act": "khuyen_mai_ruou_bia",
+      "condition": {
+        "sit": "S02 độ cồn từ 15 độ trở lên"
+      },
+      "exceptions": [],
+      "source": "Điều 5 khoản 9 nhánh (i)",
+      "quote": "Khuyến mại trong hoạt động kinh doanh rượu, bia có độ cồn từ 15 độ trở lên"
+    },
+    {
+      "id": "5.9-ii",
+      "modality": "prohibition",
+      "act": "dung_ruou_bia_lam_qua_khuyen_mai",
+      "condition": {
+        "sit": "S02 độ cồn từ 15 độ trở lên"
+      },
+      "exceptions": [],
+      "source": "Điều 5 khoản 9 nhánh (ii)",
+      "quote": "sử dụng rượu, bia có độ cồn từ 15 độ trở lên để khuyến mại dưới mọi hình thức."
+    },
+    {
+      "id": "5.11-ii",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia_bang_may_tu_dong",
+      "condition": "true",
+      "exceptions": [],
+      "source": "Điều 5 khoản 11 nhánh (ii)",
+      "quote": "bán rượu, bia bằng máy bán hàng tự động."
+    }
+  ],
+  "not_encoded": [
+    {
+      "clause": "Điều 5 khoản 1",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 2",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 4",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 5",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 6",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 7",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 8",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 10",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 12",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 13",
+      "reason": "không thuộc nhóm act đã mã hóa tay (chỉ khoản 3, 9 và 11 nhánh (ii))"
+    },
+    {
+      "clause": "Điều 5 khoản 11 nhánh (i)",
+      "reason": "khác nhóm act: kinh doanh rượu không giấy phép"
+    }
+  ],
+  "assumptions": [
+    "BẢN ĐỐI CHIẾU MỘT PHẦN: chép lại các norm Điều 5 của LexProof/Laws/AlcoholSale.lean (khoản 3, 9, 11 nhánh (ii)); S04 và S02 vốn là atom enum trong bản tay, ở đây viết thành bool để so khớp theo nguồn."
+  ]
+}

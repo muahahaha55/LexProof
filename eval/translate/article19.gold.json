@@ -1,0 +1,137 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 19,
+  "atoms": {
+    "situation": [
+      {
+        "name": "S14 địa điểm là cơ sở y tế",
+        "source": "Điều 19 khoản 1",
+        "domain": "bool"
+      },
+      {
+        "name": "S15 địa điểm là cơ sở giáo dục",
+        "source": "Điều 19 khoản 2",
+        "domain": "bool"
+      },
+      {
+        "name": "S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí",
+        "source": "Điều 19 khoản 3",
+        "domain": "bool"
+      },
+      {
+        "name": "S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác",
+        "source": "Điều 19 khoản 4",
+        "domain": "bool"
+      },
+      {
+        "name": "S18 địa điểm là cơ sở bảo trợ xã hội",
+        "source": "Điều 19 khoản 5",
+        "domain": "bool"
+      },
+      {
+        "name": "S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập",
+        "source": "Điều 19 khoản 6",
+        "domain": "bool"
+      },
+      {
+        "name": "S20 địa điểm được phép kinh doanh rượu, bia",
+        "source": "Điều 19 khoản 6",
+        "domain": "bool"
+      }
+    ],
+    "parameters": [
+      {
+        "name": "P14 địa điểm «dành cho» người chưa đủ 18 tuổi",
+        "source": "Điều 19 khoản 3",
+        "domain": "bool"
+      }
+    ]
+  },
+  "norms": [
+    {
+      "id": "19.1",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "S14 địa điểm là cơ sở y tế"
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 1",
+      "quote": "Cơ sở y tế."
+    },
+    {
+      "id": "19.2",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "S15 địa điểm là cơ sở giáo dục"
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 2",
+      "quote": "Cơ sở giáo dục."
+    },
+    {
+      "id": "19.3",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "and": [
+          {
+            "sit": "S16 địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí"
+          },
+          {
+            "param": "P14 địa điểm «dành cho» người chưa đủ 18 tuổi"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 3",
+      "quote": "Cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí dành cho người chưa đủ 18 tuổi."
+    },
+    {
+      "id": "19.4",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "S17 địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác"
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 4",
+      "quote": "Cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân và cơ sở giam giữ khác."
+    },
+    {
+      "id": "19.5",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "S18 địa điểm là cơ sở bảo trợ xã hội"
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 5",
+      "quote": "Cơ sở bảo trợ xã hội."
+    },
+    {
+      "id": "19.6",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "S19 địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập"
+      },
+      "exceptions": [
+        {
+          "sit": "S20 địa điểm được phép kinh doanh rượu, bia"
+        }
+      ],
+      "source": "Điều 19 khoản 6",
+      "quote": "trừ địa điểm được phép kinh doanh rượu, bia."
+    }
+  ],
+  "not_encoded": [],
+  "assumptions": [
+    "G1: tiêu đề Điều 19 «Địa điểm không bán rượu, bia» cho biết mọi khoản dưới nó là lệnh cấm hành vi bán rượu, bia tại địa điểm đó.",
+    "G4: «trừ địa điểm được phép kinh doanh rượu, bia» (khoản 6) là ngoại lệ thu hẹp lệnh cấm, không phải một quyền được phép.",
+    "«dành cho người chưa đủ 18 tuổi» (khoản 3) là khái niệm mở, đặt thành tham số P14."
+  ]
+}

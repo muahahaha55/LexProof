@@ -1,0 +1,53 @@
+Bạn là bộ dịch điều khoản luật Việt Nam thành DỮ LIỆU JSON cho một bộ kiểm tra nhất quán. Kết quả của bạn sẽ được
+kiểm tra tự động rồi được một người đọc đối chiếu với luật; bạn không được tin cậy.
+
+Văn bản: Luật Phòng, chống tác hại của rượu, bia (doc_id 44/2019/QH14). Chỉ dùng chữ dưới đây.
+
+### Điều 5. Các hành vi bị nghiêm cấm trong phòng, chống tác hại của rượu, bia
+[Điều 5 khoản 1] 1. Xúi giục, kích động, lôi kéo, ép buộc người khác uống rượu, bia.
+[Điều 5 khoản 2] 2. Người chưa đủ 18 tuổi uống rượu, bia.
+[Điều 5 khoản 3] 3. Bán, cung cấp, khuyến mại rượu, bia cho người chưa đủ 18 tuổi.
+[Điều 5 khoản 4] 4. Sử dụng lao động là người chưa đủ 18 tuổi trực tiếp tham gia vào việc sản xuất, mua bán rượu, bia.
+[Điều 5 khoản 5] 5. Cán bộ, công chức, viên chức, người lao động trong các cơ quan, tổ chức, sĩ quan, hạ sĩ quan, quân nhân chuyên nghiệp, chiến sĩ, người làm việc trong lực lượng vũ trang nhân dân, học sinh, sinh viên uống rượu, bia ngay trước, trong giờ làm việc, học tập và nghỉ giữa giờ làm việc, học tập.
+[Điều 5 khoản 6] 6. Điều khiển phương tiện giao thông mà trong máu hoặc hơi thở có nồng độ cồn.
+[Điều 5 khoản 7] 7. Quảng cáo rượu có độ cồn từ 15 độ trở lên.
+[Điều 5 khoản 8] 8. Cung cấp thông tin không chính xác, sai sự thật về ảnh hưởng của rượu, bia đối với sức khỏe.
+[Điều 5 khoản 9] 9. Khuyến mại trong hoạt động kinh doanh rượu, bia có độ cồn từ 15 độ trở lên; sử dụng rượu, bia có độ cồn từ 15 độ trở lên để khuyến mại dưới mọi hình thức.
+[Điều 5 khoản 10] 10. Sử dụng nguyên liệu, phụ gia, chất hỗ trợ chế biến không được phép dùng trong thực phẩm; nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm không bảo đảm chất lượng và không rõ nguồn gốc, xuất xứ để sản xuất, pha chế rượu, bia.
+[Điều 5 khoản 11] 11. Kinh doanh rượu không có giấy phép hoặc không đăng ký; bán rượu, bia bằng máy bán hàng tự động.
+[Điều 5 khoản 12] 12. Kinh doanh, tàng trữ, vận chuyển rượu, bia giả, nhập lậu, không bảo đảm chất lượng, không rõ nguồn gốc, xuất xứ; nhập lậu rượu, bia.
+[Điều 5 khoản 13] 13. Các hành vi bị nghiêm cấm khác liên quan đến rượu, bia do luật định.
+
+### Lược đồ JSON
+{
+  "doc_id": "44/2019/QH14", "doc_type": "law", "effective": "YYYY-MM-DD", "article": 19,
+  "atoms": {
+    "situation": [ {"name": "S1 ...", "source": "Điều 19 khoản 1", "domain": "bool"},
+                   {"name": "S2 ...", "source": "Điều 5 khoản 3",
+                    "domain": [ {"label": "...", "source": "Điều 5 khoản 3"}, {"label": "...", "source": "..."} ]} ],
+    "parameters": [ {"name": "P1 ...", "source": "Điều 19 khoản 3", "domain": "bool"} ]
+  },
+  "norms": [
+    {"id": "19.1", "modality": "prohibition | obligation | permission", "act": "ban_ruou_bia",
+     "condition": COND, "exceptions": [COND], "source": "Điều 19 khoản 1", "quote": "chữ nguyên văn trong đơn vị nguồn"}
+  ],
+  "not_encoded": [ {"clause": "Điều 19 khoản 7", "reason": "..."} ],
+  "assumptions": [ "mỗi lựa chọn đọc luật mà bạn đã làm, một câu mỗi mục" ]
+}
+COND ::= "true" | "false"
+       | {"sit": "<tên atom bool>"} | {"sit": "<tên atom enum>", "value": "<nhãn>"} | {"param": "<tên atom tham số>"}
+       | {"not": COND} | {"and": [COND, COND, ...]} | {"or": [COND, COND, ...]}
+
+### Quy tắc
+1. Chỉ trả về MỘT khối JSON đúng lược đồ trên. Không viết mã Lean. Không thêm lời giải thích ngoài JSON.
+2. «source» của norm, atom và nhãn là tham chiếu điều khoản có dạng chính xác «Điều N», «Điều N tiêu đề», «Điều N khoản K»,
+   «Điều N khoản K điểm x» (x là chữ cái thường), hoặc có thêm «nhánh (i)», «nhánh (ii)», «nhánh (iii)»... (số La Mã
+   thường; KHÔNG dùng chữ số như «nhánh (1)») khi một khoản chứa nhiều lệnh cấm. Dùng đơn vị cụ
+   thể nhất mà norm thật sự dựa vào, không dùng cả khoản khi chỉ một điểm hay một nhánh được mã hóa. Không dùng chuỗi tự do.
+3. «quote» phải là đoạn nguyên văn (liền, cùng chính tả) nằm trong đúng đơn vị đã ghi ở «source».
+4. Mọi khoản của điều phải xuất hiện trong «norms» (qua «source») hoặc trong «not_encoded» kèm lý do. Không được bỏ lặng lẽ.
+5. Khái niệm mở («hợp lý», «nghiêm trọng», «dành cho người chưa đủ 18 tuổi»...) là atom trong «parameters»; không tự quyết giá trị.
+6. Nếu không chắc cách đọc, đừng đoán: đưa khoản vào «not_encoded» và nêu lý do, hoặc ghi lựa chọn vào «assumptions».
+7. Nếu tiêu đề điều cho biết tính chất (cấm, bắt buộc, được phép) áp dụng cho các khoản dưới nó, hãy áp dụng và ghi vào «assumptions».
+8. «exceptions» là các điều kiện làm norm không áp dụng («trừ ...»); đó không phải một quyền được phép.
+9. «act» là mã snake_case không dấu, ngắn, cho hành vi bị điều chỉnh; cùng hành vi dùng cùng mã.

@@ -204,6 +204,16 @@ python pipeline/report.py --print-module-sha256   # mã để ghi vào mục 3 c
 python pipeline/report.py --print-sheet-hashes   # cả hai dòng mã (mô-đun và tệp ca thử) cho mục 3
 ```
 
+Bước dịch dán tay (ADR-0024):
+
+```powershell
+python pipeline/translate.py prompt --article 19 -o eval/translate/prompt-article19.txt   # dán tệp vào LLM, lưu câu trả lời JSON; KHÔNG dùng `>` trong PowerShell (làm hỏng dấu tiếng Việt)
+python pipeline/translate.py check  tra-loi.json                  # từ chối nếu bịa trích dẫn, bỏ khoản, atom sai
+python pipeline/translate.py lean   tra-loi.json -o eval/translate/out/Draft.lean
+lake env lean --run eval/translate/out/Draft.lean                 # pfindings + analyzeReport của Lean
+python pipeline/translate.py compare tra-loi.json eval/translate/article19.gold.json
+```
+
 Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`
 chưa điền đủ hoặc mô-đun đã đổi (xem `docs/design-core.md` §18). Test: `python -m pytest pipeline/tests` (hoặc
 `python -m unittest discover -s pipeline/tests`); phụ thuộc test được ghim ở `pipeline/requirements-dev.txt`. Sinh lại sổ phủ bằng

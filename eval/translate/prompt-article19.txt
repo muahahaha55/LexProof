@@ -1,0 +1,46 @@
+Bạn là bộ dịch điều khoản luật Việt Nam thành DỮ LIỆU JSON cho một bộ kiểm tra nhất quán. Kết quả của bạn sẽ được
+kiểm tra tự động rồi được một người đọc đối chiếu với luật; bạn không được tin cậy.
+
+Văn bản: Luật Phòng, chống tác hại của rượu, bia (doc_id 44/2019/QH14). Chỉ dùng chữ dưới đây.
+
+### Điều 19. Địa điểm không bán rượu, bia
+[Điều 19 khoản 1] 1. Cơ sở y tế.
+[Điều 19 khoản 2] 2. Cơ sở giáo dục.
+[Điều 19 khoản 3] 3. Cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí dành cho người chưa đủ 18 tuổi.
+[Điều 19 khoản 4] 4. Cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân và cơ sở giam giữ khác.
+[Điều 19 khoản 5] 5. Cơ sở bảo trợ xã hội.
+[Điều 19 khoản 6] 6. Nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập, trừ địa điểm được phép kinh doanh rượu, bia.
+
+### Lược đồ JSON
+{
+  "doc_id": "44/2019/QH14", "doc_type": "law", "effective": "YYYY-MM-DD", "article": 19,
+  "atoms": {
+    "situation": [ {"name": "S1 ...", "source": "Điều 19 khoản 1", "domain": "bool"},
+                   {"name": "S2 ...", "source": "Điều 5 khoản 3",
+                    "domain": [ {"label": "...", "source": "Điều 5 khoản 3"}, {"label": "...", "source": "..."} ]} ],
+    "parameters": [ {"name": "P1 ...", "source": "Điều 19 khoản 3", "domain": "bool"} ]
+  },
+  "norms": [
+    {"id": "19.1", "modality": "prohibition | obligation | permission", "act": "ban_ruou_bia",
+     "condition": COND, "exceptions": [COND], "source": "Điều 19 khoản 1", "quote": "chữ nguyên văn trong đơn vị nguồn"}
+  ],
+  "not_encoded": [ {"clause": "Điều 19 khoản 7", "reason": "..."} ],
+  "assumptions": [ "mỗi lựa chọn đọc luật mà bạn đã làm, một câu mỗi mục" ]
+}
+COND ::= "true" | "false"
+       | {"sit": "<tên atom bool>"} | {"sit": "<tên atom enum>", "value": "<nhãn>"} | {"param": "<tên atom tham số>"}
+       | {"not": COND} | {"and": [COND, COND, ...]} | {"or": [COND, COND, ...]}
+
+### Quy tắc
+1. Chỉ trả về MỘT khối JSON đúng lược đồ trên. Không viết mã Lean. Không thêm lời giải thích ngoài JSON.
+2. «source» của norm, atom và nhãn là tham chiếu điều khoản có dạng chính xác «Điều N», «Điều N tiêu đề», «Điều N khoản K»,
+   «Điều N khoản K điểm x» (x là chữ cái thường), hoặc có thêm «nhánh (i)», «nhánh (ii)», «nhánh (iii)»... (số La Mã
+   thường; KHÔNG dùng chữ số như «nhánh (1)») khi một khoản chứa nhiều lệnh cấm. Dùng đơn vị cụ
+   thể nhất mà norm thật sự dựa vào, không dùng cả khoản khi chỉ một điểm hay một nhánh được mã hóa. Không dùng chuỗi tự do.
+3. «quote» phải là đoạn nguyên văn (liền, cùng chính tả) nằm trong đúng đơn vị đã ghi ở «source».
+4. Mọi khoản của điều phải xuất hiện trong «norms» (qua «source») hoặc trong «not_encoded» kèm lý do. Không được bỏ lặng lẽ.
+5. Khái niệm mở («hợp lý», «nghiêm trọng», «dành cho người chưa đủ 18 tuổi»...) là atom trong «parameters»; không tự quyết giá trị.
+6. Nếu không chắc cách đọc, đừng đoán: đưa khoản vào «not_encoded» và nêu lý do, hoặc ghi lựa chọn vào «assumptions».
+7. Nếu tiêu đề điều cho biết tính chất (cấm, bắt buộc, được phép) áp dụng cho các khoản dưới nó, hãy áp dụng và ghi vào «assumptions».
+8. «exceptions» là các điều kiện làm norm không áp dụng («trừ ...»); đó không phải một quyền được phép.
+9. «act» là mã snake_case không dấu, ngắn, cho hành vi bị điều chỉnh; cùng hành vi dùng cùng mã.

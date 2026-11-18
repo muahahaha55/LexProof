@@ -53,7 +53,7 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **Ưu tiên**: Must
 - **AC**: Mọi `Norm` truy được về đúng một điều khoản qua `Norm.source.article`.
 - **Kiểm chứng**: Review + Test
-- **Trạng thái**: **Planned** (bước dịch). Lược đồ đích `Norm`/`Cond` đã
+- **Trạng thái**: **Tested** (bước dịch dán tay, ADR-0024: `pipeline/translate.py`, chưa chạy với LLM thật; tự động gọi API vẫn Planned). Lược đồ đích `Norm`/`Cond` đã
   **Implemented** — xem [design-core.md](design-core.md#2-corenormlean).
 
 ### FR4 — Sửa lỗi có giới hạn

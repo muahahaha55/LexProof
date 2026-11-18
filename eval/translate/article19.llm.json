@@ -1,0 +1,95 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 19,
+  "atoms": {
+    "situation": [
+      {"name": "S1 Địa điểm là cơ sở y tế", "source": "Điều 19 khoản 1", "domain": "bool"},
+      {"name": "S2 Địa điểm là cơ sở giáo dục", "source": "Điều 19 khoản 2", "domain": "bool"},
+      {"name": "S3 Địa điểm là cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí", "source": "Điều 19 khoản 3", "domain": "bool"},
+      {"name": "S4 Địa điểm là cơ sở cai nghiện", "source": "Điều 19 khoản 4", "domain": "bool"},
+      {"name": "S5 Địa điểm là cơ sở giáo dục bắt buộc", "source": "Điều 19 khoản 4", "domain": "bool"},
+      {"name": "S6 Địa điểm là trường giáo dưỡng", "source": "Điều 19 khoản 4", "domain": "bool"},
+      {"name": "S7 Địa điểm là cơ sở giam giữ phạm nhân", "source": "Điều 19 khoản 4", "domain": "bool"},
+      {"name": "S8 Địa điểm là cơ sở giam giữ khác", "source": "Điều 19 khoản 4", "domain": "bool"},
+      {"name": "S9 Địa điểm là cơ sở bảo trợ xã hội", "source": "Điều 19 khoản 5", "domain": "bool"},
+      {"name": "S10 Địa điểm là nơi làm việc của cơ quan nhà nước", "source": "Điều 19 khoản 6", "domain": "bool"},
+      {"name": "S11 Địa điểm là nơi làm việc của tổ chức chính trị", "source": "Điều 19 khoản 6", "domain": "bool"},
+      {"name": "S12 Địa điểm là nơi làm việc của tổ chức chính trị - xã hội", "source": "Điều 19 khoản 6", "domain": "bool"},
+      {"name": "S13 Địa điểm là nơi làm việc của tổ chức chính trị xã hội - nghề nghiệp", "source": "Điều 19 khoản 6", "domain": "bool"},
+      {"name": "S14 Địa điểm là nơi làm việc của đơn vị sự nghiệp công lập", "source": "Điều 19 khoản 6", "domain": "bool"},
+      {"name": "S15 Địa điểm là địa điểm được phép kinh doanh rượu, bia", "source": "Điều 19 khoản 6", "domain": "bool"}
+    ],
+    "parameters": [
+      {"name": "P1 Cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí là nơi dành cho người chưa đủ 18 tuổi", "source": "Điều 19 khoản 3", "domain": "bool"}
+    ]
+  },
+  "norms": [
+    {
+      "id": "19.1", "modality": "prohibition", "act": "ban_ruou_bia",
+      "condition": {"sit": "S1 Địa điểm là cơ sở y tế"},
+      "exceptions": [],
+      "source": "Điều 19 khoản 1", "quote": "Cơ sở y tế"
+    },
+    {
+      "id": "19.2", "modality": "prohibition", "act": "ban_ruou_bia",
+      "condition": {"sit": "S2 Địa điểm là cơ sở giáo dục"},
+      "exceptions": [],
+      "source": "Điều 19 khoản 2", "quote": "Cơ sở giáo dục"
+    },
+    {
+      "id": "19.3", "modality": "prohibition", "act": "ban_ruou_bia",
+      "condition": {"and": [
+        {"sit": "S3 Địa điểm là cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí"},
+        {"param": "P1 Cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí là nơi dành cho người chưa đủ 18 tuổi"}
+      ]},
+      "exceptions": [],
+      "source": "Điều 19 khoản 3", "quote": "Cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí dành cho người chưa đủ 18 tuổi"
+    },
+    {
+      "id": "19.4", "modality": "prohibition", "act": "ban_ruou_bia",
+      "condition": {"or": [
+        {"sit": "S4 Địa điểm là cơ sở cai nghiện"},
+        {"sit": "S5 Địa điểm là cơ sở giáo dục bắt buộc"},
+        {"sit": "S6 Địa điểm là trường giáo dưỡng"},
+        {"sit": "S7 Địa điểm là cơ sở giam giữ phạm nhân"},
+        {"sit": "S8 Địa điểm là cơ sở giam giữ khác"}
+      ]},
+      "exceptions": [],
+      "source": "Điều 19 khoản 4", "quote": "Cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân và cơ sở giam giữ khác"
+    },
+    {
+      "id": "19.5", "modality": "prohibition", "act": "ban_ruou_bia",
+      "condition": {"sit": "S9 Địa điểm là cơ sở bảo trợ xã hội"},
+      "exceptions": [],
+      "source": "Điều 19 khoản 5", "quote": "Cơ sở bảo trợ xã hội"
+    },
+    {
+      "id": "19.6", "modality": "prohibition", "act": "ban_ruou_bia",
+      "condition": {"or": [
+        {"sit": "S10 Địa điểm là nơi làm việc của cơ quan nhà nước"},
+        {"sit": "S11 Địa điểm là nơi làm việc của tổ chức chính trị"},
+        {"sit": "S12 Địa điểm là nơi làm việc của tổ chức chính trị - xã hội"},
+        {"sit": "S13 Địa điểm là nơi làm việc của tổ chức chính trị xã hội - nghề nghiệp"},
+        {"sit": "S14 Địa điểm là nơi làm việc của đơn vị sự nghiệp công lập"}
+      ]},
+      "exceptions": [
+        {"sit": "S15 Địa điểm là địa điểm được phép kinh doanh rượu, bia"}
+      ],
+      "source": "Điều 19 khoản 6",
+      "quote": "Nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập, trừ địa điểm được phép kinh doanh rượu, bia"
+    }
+  ],
+  "not_encoded": [],
+  "assumptions": [
+    "Tiêu đề Điều 19 («Địa điểm không bán rượu, bia») được áp dụng cho cả 6 khoản: mỗi khoản là một lệnh cấm (prohibition) đối với hành vi bán rượu, bia tại địa điểm nêu; act dùng chung là ban_ruou_bia.",
+    "Ngày hiệu lực 2020-01-01 không có trong đoạn văn bản được cung cấp; đây là thông tin ngoài văn bản, cần người đối chiếu xác nhận.",
+    "Mỗi khoản được mã hóa thành một norm, các loại địa điểm liệt kê trong cùng khoản được nối bằng «or» (không tách thành nhiều norm bằng «nhánh»).",
+    "Khoản 3: «dành cho người chưa đủ 18 tuổi» là khái niệm mở nên đặt thành tham số P1, không tự quyết giá trị; đọc cụm này bổ nghĩa cho cả bốn loại (chăm sóc, nuôi dưỡng, vui chơi, giải trí), nên điều kiện là S3 và P1.",
+    "Khoản 4: «cơ sở giam giữ phạm nhân» và «cơ sở giam giữ khác» được tách thành hai atom riêng (S7, S8); «cơ sở giáo dục bắt buộc» được hiểu là một loại cơ sở duy nhất.",
+    "Khoản 6: «trừ địa điểm được phép kinh doanh rượu, bia» là ngoại lệ (exceptions), không phải quyền được phép; việc một địa điểm được phép kinh doanh do quy định khác xác định nên được mã hóa là atom tình huống S15 và không suy ra giá trị.",
+    "Khoản 6: ngoại lệ S15 được áp dụng cho toàn bộ danh sách nơi làm việc trong khoản (cơ quan nhà nước, các tổ chức chính trị, đơn vị sự nghiệp công lập), không chỉ cho mục cuối.",
+    "Chỉ mã hóa hành vi «bán» theo tiêu đề điều; không mở rộng sang các hành vi khác như uống hay mang vào."
+  ]
+}
