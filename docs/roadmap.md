@@ -32,6 +32,8 @@ Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Đ�
 
 Sau bước 1 và 2: có hệ thống cơ bản chạy từ đầu đến cuối. Bước 3–5: mở rộng và bằng chứng chất lượng.
 
+Việc đang chờ người duyệt (Phong): `docs/review/HUONG-DAN-TIEP-THEO-cho-Phong.md`.
+
 ## Tạm gác (không chặn lộ trình)
 
 - **Nghị quyết 66.18/2026/NQ-CP và ca C24**: Level 2. Chỉ ghi giới hạn vào báo cáo. Câu hỏi Q8–Q10 đang chờ người đối chiếu (`docs/review/huong-dan-doi-chieu.md`).
