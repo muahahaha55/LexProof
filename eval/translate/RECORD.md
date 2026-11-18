@@ -51,3 +51,18 @@ Khớp ở: modality (cấm), act `ban_ruou_bia` (act này đã có trong câu l
 
 - Chênh lệch có ý nghĩa nhất không nằm trong 6 norm so được mà ở khoản 11 nhánh (i): LLM mã hóa «không có giấy phép hoặc không đăng ký» là chỉ cấm khi thiếu cả hai (xem lần 2); bản tay không mã hóa nhánh này nên không có gì để so. Một người học luật cần quyết cách đọc.
 - Giới hạn: một lần chạy cho mỗi điều; `compare` nhận atom theo nguồn nên bỏ sót trường hợp một atom dùng chung nhiều khoản; 17 norm chỉ ở LLM chưa được ai đối chiếu với luật.
+
+## Ý kiến của người duyệt về bản dịch Điều 5 (2026-11-18)
+
+Nguồn: `docs/review/ket-qua-doi-chieu-Phong-2026-11-18.md` (Vũ Đức Phong; ghi là **không xem bản nháp AI trước khi trả lời**; một người duyệt, chưa có ý kiến thứ hai).
+
+| Điểm trong `article5.llm.json` | Cách đọc của LLM | Ý kiến người duyệt | Kết luận ghi nhận |
+|---|---|---|---|
+| Khoản 11 nhánh (i) «không có giấy phép hoặc không đăng ký» (Q1) | chỉ cấm khi thiếu **cả hai** (`¬(giấy phép ∨ đăng ký)`) | vi phạm khi thiếu **một trong hai**, «chắc» | **Bản dịch của LLM sai theo người duyệt.** LLM đã tự nêu cách đọc này trong `assumptions`, nên không bị giấu |
+| Khoản 10 nhánh (ii) «không bảo đảm chất lượng và không rõ nguồn gốc» (Q2) | cần **cả hai** | cần cả hai, «chắc» | khớp |
+| Khoản 3 «cung cấp» có gồm cho không (Q3) | bản dịch tách `cung_cap_ruou_bia` và dùng chung điều kiện «chưa đủ 18 tuổi» | gồm cả cho không, «chắc» | khớp với cách đọc của bản mã hóa tay và các ca C05, C07 |
+| Khoản 7 và khoản 11 nhánh (i) chỉ nói «rượu» (Q7) | thêm điều kiện «loại = rượu» | bán bia không bị khoản 11 cấm, «chắc» | khớp |
+
+Chưa đối chiếu được với bản dịch: khoản 9 nhánh (ii) (tên act và cách gộp atom), khoản 5 («ngay trước giờ làm việc» thành tham số), vì người duyệt không trả lời các điểm này.
+
+Điều chưa giải quyết (không thuộc bước dịch): người duyệt cho rằng Nghị quyết 66.18/2026/NQ-CP «không thực hiện» quy định ở Điều 5 khoản 11 vế «không có giấy phép hoặc không đăng ký». Chưa kiểm chứng văn bản nghị quyết; quan hệ giữa hai văn bản thuộc Level 2 (CLAUDE.md), nên chưa ảnh hưởng đến việc ghi nhận bản dịch trên.
