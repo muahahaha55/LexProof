@@ -220,6 +220,15 @@ Một lệnh cho đường nháp (ADR-0025): gộp các bản dịch đã qua `c
 python pipeline/run.py eval/translate/article19.llm.json eval/translate/article5.llm.json
 ```
 
+Đưa bản dịch đã duyệt vào thư viện (ADR-0026):
+
+```powershell
+python pipeline/promote.py sheet eval/translate/article19.llm.json -o docs/review/duyet-ban-dich-dieu-19.md   # người duyệt điền phiếu này
+python pipeline/promote.py promote --name Article19 --pair eval/translate/article19.llm.json docs/review/duyet-ban-dich-dieu-19.md
+```
+
+`promote` ghi `LexProof/Laws/<Name>.lean`, thêm import vào `LexProof.lean` và `Cert/Audit.lean`, chạy `lake build`; build hỏng thì hoàn tác.
+
 Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`
 chưa điền đủ hoặc mô-đun đã đổi (xem `docs/design-core.md` §18). Test: `python -m pytest pipeline/tests` (hoặc
 `python -m unittest discover -s pipeline/tests`); phụ thuộc test được ghim ở `pipeline/requirements-dev.txt`. Sinh lại sổ phủ bằng
