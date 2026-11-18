@@ -42,6 +42,7 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 | [0018](0018-scope-lists-parameter-names.md) | `Scope.validExcluded`/`validTotal` nói **bao nhiêu** điểm bị loại trên tổng; `Scope.docId` là `Option` và danh sách lẫn văn bản là finding | `Scope` chưa liệt kê **tên** tham số khái niệm mở, chưa nói *điểm nào* bị `valid` loại, chưa có trạng thái duyệt, chưa có danh sách điều khoản bỏ qua |
 | [0022](0022-atom-table-valuation-situation.md) | Bảng atom + phép gán, finding của bảng, kiểm theo cặp không ràng buộc và `analyzeP` (tầng **bổ sung**, không sửa `Atoms`/`Finite`/`analyze`) | Chưa: ràng buộc trong bộ kiểm, `Scope` và D23 mới, bảng thật, thay hẳn `Atoms S P` (khẳng định rộng vẫn mở) |
 | [0023](0023-report-command.md) | Báo cáo chỉ do lệnh sinh; mỗi kết quả chính nêu định lý kernel hoặc «chưa có định lý kernel cho kết quả này» |
+| [0025](0025-run-command-draft-path.md) | Một lệnh cho đường nháp: gộp bản dịch đã kiểm, chạy Lean, báo cáo nháp vào `eval/run/` |
 | [0024](0024-translation-manual-paste.md) | Bước dịch dán tay: LLM trả JSON, `check` từ chối bịa trích dẫn và khoản bị bỏ, bản nháp Lean nằm ngoài `Laws` |
 
 ## Chưa quyết định (Open / Proposed)

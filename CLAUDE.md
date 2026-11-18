@@ -55,6 +55,7 @@ file and leave this list as pointers only.
 - `docs/decisions/` — one ADR per decision (MADR), `README.md` is the index.
 - `docs/traceability.md` — requirement → design → Lean declaration → test, plus
   the G1/G2/G3 claims table and the **trust base** list.
+- `docs/roadmap.md` — goal, progress estimate (%), roadmap steps, parked items.
 - `docs/conventions.md` — standards, repo layout, review checklists, and how to
   run the build and the axiom audit.
 

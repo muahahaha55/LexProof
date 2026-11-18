@@ -214,6 +214,12 @@ lake env lean --run eval/translate/out/Draft.lean                 # pfindings + 
 python pipeline/translate.py compare tra-loi.json eval/translate/article19.gold.json
 ```
 
+Một lệnh cho đường nháp (ADR-0025): gộp các bản dịch đã qua `check`, chạy Lean, ghi báo cáo nháp vào `eval/run/`:
+
+```powershell
+python pipeline/run.py eval/translate/article19.llm.json eval/translate/article5.llm.json
+```
+
 Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`
 chưa điền đủ hoặc mô-đun đã đổi (xem `docs/design-core.md` §18). Test: `python -m pytest pipeline/tests` (hoặc
 `python -m unittest discover -s pipeline/tests`); phụ thuộc test được ghim ở `pipeline/requirements-dev.txt`. Sinh lại sổ phủ bằng

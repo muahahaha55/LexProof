@@ -310,7 +310,8 @@ def to_lean(data, seg):
     nmax = max(a["number"] for a in seg["articles"])
     acts = sorted({n["act"] for n in data["norms"]})
     L = ["import LexProof.Verify.AnalyzeReport", "import LexProof.Core.Render", "",
-         "/-! DRAFT, NOT HUMAN-REVIEWED. Machine-translated from the text of Điều %d by pipeline/translate.py (LLM answer, pasted by hand)." % data["article"],
+         "/-! DRAFT, NOT HUMAN-REVIEWED. Machine-translated from the text of %s by pipeline/translate.py (LLM answer, pasted by hand)." % (
+             data.get("label") or "Điều %d" % data["article"]),
          "Not part of the library: it is NOT in `LexProof/Laws/`, and moving it there needs a human review first.",
          "Assumptions the translator declared (each is a reading of the law that a reviewer must accept or reject):"]
     L += ["* " + str(a).replace("-/", "- /") for a in data["assumptions"]] or ["* (none declared)"]

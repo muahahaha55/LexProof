@@ -3,3 +3,6 @@
 __pycache__/
 .venv/
 .env
+
+# draft outputs of pipeline/run.py (regenerated on demand)
+/eval/run/
