@@ -2,6 +2,7 @@
 """Translation step (FR3), manual-paste version. UNTRUSTED: nothing here proves anything.
 
     python pipeline/translate.py prompt  --article 19 [-o FILE]       print (or write, UTF-8) the prompt to paste into the LLM
+                                         [--glossary]                 ... listing the document's glossary (ADR-0027)
     python pipeline/translate.py check   FILE.json                    structural and quotation checks (exit 1 on any finding)
     python pipeline/translate.py lean    FILE.json -o FILE.lean       check, then write a Lean DRAFT (outside the library)
     python pipeline/translate.py compare FILE.json GOLD.json          norm-by-norm difference with a hand translation
@@ -109,8 +110,62 @@ RULES = """1. Chỉ trả về MỘT khối JSON đúng lược đồ trên. Kh�
 11. Khi một khoản liệt kê điều kiện («Điều kiện ... bao gồm:» rồi các điểm a, b, c), ghi rõ trong «assumptions» bạn biểu diễn
     nó thế nào (ví dụ: được phép làm việc đó khi đủ mọi điểm, hay bắt buộc phải có từng điểm), vì người duyệt cần thấy lựa chọn này."""
 
+# Glossary mode (ADR-0027 step 2): acts and atoms come from the per-document glossary; new terms are proposals.
+GLOSSARY = {"44/2019/QH14": "data/glossary/44-2019-QH14.json"}
 
-def make_prompt(seg, article):
+SCHEMA_G = """{
+  "doc_id": "44/2019/QH14", "doc_type": "law", "effective": "YYYY-MM-DD", "article": @N@,
+  "glossary": "@G@",
+  "atoms": {"situation": [], "parameters": []},
+  "glossary_proposals": {
+    "acts":  [ {"id": "ten_hanh_vi_moi", "gloss": "giải thích bằng lời", "sources": ["Điều @N@ khoản 1"]} ],
+    "atoms": [ {"id": "ten_atom_moi", "kind": "situation | parameter", "domain": "bool",
+                "gloss": "giải thích bằng lời", "sources": ["Điều @N@ khoản 2"]},
+               {"id": "ten_atom_enum_moi", "kind": "situation", "gloss": "...", "sources": ["Điều @N@ khoản 2"],
+                "domain": [ {"label": "...", "source": "Điều @N@ khoản 2"}, {"label": "...", "note": "vì sao không khoản nào nêu nhãn này"} ]} ]
+  },
+  "norms": [
+    {"id": "@N@.1", "modality": "prohibition | obligation | permission", "act": "<id act của bảng hoặc của đề xuất>",
+     "condition": COND, "exceptions": [COND], "source": "Điều @N@ khoản 1", "quote": "chữ nguyên văn trong đơn vị nguồn",
+     "references": [ "Điều @N@ khoản 3" ]}
+  ],
+  "not_encoded": [ {"clause": "Điều @N@ khoản 4", "reason": "..."} ],
+  "assumptions": [ "mỗi lựa chọn đọc luật mà bạn đã làm, một câu mỗi mục" ]
+}
+COND ::= "true" | "false"
+       | {"sit": "<id atom bool>"} | {"sit": "<id atom enum>", "value": "<nhãn>"} | {"param": "<id atom tham số>"}
+       | {"not": COND} | {"and": [COND, COND, ...]} | {"or": [COND, COND, ...]}"""
+
+RULES_G = """12. Dùng bảng thuật ngữ: «act», «sit», «param» chỉ được là id của bảng ở trên hoặc id bạn đề xuất trong «glossary_proposals».
+    Để «atoms» rỗng. Khi một khái niệm của điều trùng nghĩa với một mục của bảng, PHẢI dùng id đó, kể cả khi điều này viết khác chữ.
+13. Chỉ đề xuất mục mới khi không mục nào của bảng cùng nghĩa. Id mới là snake_case không dấu, không trùng id của bảng; mỗi mục có
+    «gloss» và «sources» là đơn vị có thật. Nhãn enum mà không khoản nào nêu phải có «note» thay cho «source». Không ghi «status».
+14. Không sửa, không mở rộng một mục của bảng (ví dụ thêm nhãn). Nếu miền giá trị của mục có sẵn không đủ cho điều này (ví dụ cần
+    ngưỡng khác), đề xuất một mục mới và ghi lý do vào «assumptions»."""
+
+
+def glossary_rel(doc_id):
+    rel = GLOSSARY.get(doc_id)
+    if rel is None:
+        raise SystemExit("không có bảng thuật ngữ cho doc_id «%s»" % doc_id)
+    return rel
+
+
+def glossary_lines(g, rel):
+    lines = ["### Bảng thuật ngữ (%s); [trạng thái] là trạng thái duyệt của mục" % rel, "Act:"]
+    live = lambda es: [e for e in es if e.get("status") != "rejected"]   # noqa: E731 - rejected entries are not offered
+    for e in live(g["acts"]):
+        lines.append("- %s [%s]: %s (nguồn: %s)" % (e["id"], e["status"], e["gloss"], "; ".join(e["sources"])))
+    for kind, head in (("situation", "Atom tình huống:"), ("parameter", "Tham số (khái niệm mở, không tự quyết giá trị):")):
+        lines.append(head)
+        for e in live(g["atoms"]):
+            if e["kind"] == kind:
+                dom = "bool" if e["domain"] == "bool" else "nhãn " + " | ".join("«%s»" % b["label"] for b in e["domain"])
+                lines.append("- %s [%s], %s: %s (nguồn: %s)" % (e["id"], e["status"], dom, e["gloss"], "; ".join(e["sources"])))
+    return lines
+
+
+def make_prompt(seg, article, glossary=None):
     art = next((a for a in seg["articles"] if a["number"] == article), None)
     if art is None:
         raise SystemExit("văn bản không có Điều %d" % article)
@@ -124,7 +179,19 @@ def make_prompt(seg, article):
         lines.append("[%s] %s" % (c["id"], norm_ws(c["text"])))
         for p in c["points"]:
             lines.append("  [%s] %s" % (p["id"], norm_ws(p["text"])))
-    lines += ["", "### Lược đồ JSON", SCHEMA.replace("@N@", str(article)), "", "### Quy tắc", RULES]
+    if glossary is None:
+        lines += ["", "### Lược đồ JSON", SCHEMA.replace("@N@", str(article)), "", "### Quy tắc", RULES]
+    else:
+        g, rel = glossary
+        lines += [""] + glossary_lines(g, rel)
+        rules = RULES
+        for old, new in (("là atom trong «parameters»;", "là atom «kind»: «parameter» (của bảng hoặc đề xuất);"),
+                         ("9. «act» là mã snake_case không dấu, ngắn, cho hành vi bị điều chỉnh; cùng hành vi dùng cùng mã.",
+                          "9. «act» là id của bảng thuật ngữ hoặc của đề xuất (quy tắc 12).")):
+            assert old in rules
+            rules = rules.replace(old, new)
+        lines += ["", "### Lược đồ JSON", SCHEMA_G.replace("@N@", str(article)).replace("@G@", rel), "",
+                  "### Quy tắc", rules, RULES_G]
     return "\n".join(lines) + "\n"
 
 
@@ -183,6 +250,99 @@ def check_ref(seg, ref_s, where, out, quote=None):
     return ref
 
 
+def cond_atoms(c, acc):
+    if isinstance(c, dict):
+        for k in ("sit", "param"):
+            if isinstance(c.get(k), str):
+                acc.add(c[k])
+        for k in ("not", "and", "or"):
+            for x in (c[k] if isinstance(c.get(k), list) else [c.get(k)]):
+                cond_atoms(x, acc)
+    return acc
+
+
+def used_terms(data):
+    """(acts, atom names) the norms use."""
+    acts, atoms = set(), set()
+    for n in data.get("norms", []):
+        if isinstance(n, dict):
+            if isinstance(n.get("act"), str):
+                acts.add(n["act"])
+            for c in [n.get("condition")] + (n["exceptions"] if isinstance(n.get("exceptions"), list) else []):
+                cond_atoms(c, atoms)
+    return acts, atoms
+
+
+def load_glossary(doc_id):
+    import glossary as G   # noqa: E402 - imported here because glossary.py imports this module
+    rel = glossary_rel(doc_id)
+    return G, G.load(os.path.join(ROOT, *rel.split("/"))), rel
+
+
+def glossary_terms(data, out):
+    """Glossary mode (ADR-0027 step 2): the acts, situation atoms and parameter atoms a norm may use (glossary entries
+    not rejected, plus the translation's own proposals), and the rejected ids. Appends findings to `out`."""
+    G, g, rel = load_glossary(data["doc_id"])
+    if data["glossary"] != rel:
+        out.append("«glossary» phải là «%s» (một bảng cho mỗi văn bản)" % rel)
+    gfs = G.check(g)
+    if gfs:
+        out.append("bảng thuật ngữ %s có %d phát hiện; sửa bảng trước (python pipeline/glossary.py check %s)" % (rel, len(gfs), rel))
+    if data["atoms"].get("situation") or data["atoms"].get("parameters"):
+        out.append("dùng bảng thuật ngữ thì «atoms» phải rỗng; khái niệm mới phải đề xuất trong «glossary_proposals»")
+    props = data.get("glossary_proposals", {})
+    if not isinstance(props, dict) or not all(isinstance(props.get(k, []), list) for k in ("acts", "atoms")):
+        out.append("«glossary_proposals» phải có dạng {\"acts\": [...], \"atoms\": [...]}")
+        props = {}
+    p_acts = [e for e in props.get("acts", []) if isinstance(e, dict)]
+    p_atoms = [e for e in props.get("atoms", []) if isinstance(e, dict)]
+    if len(p_acts) + len(p_atoms) != len(props.get("acts", [])) + len(props.get("atoms", [])):
+        out.append("«glossary_proposals»: mỗi mục phải là một đối tượng JSON")
+    for e in p_acts + p_atoms:
+        if "status" in e:
+            out.append("glossary_proposals «%s»: không ghi «status» (đề xuất luôn là proposed)" % e.get("id"))
+    pg = {"doc_id": data["doc_id"], "acts": [dict(e, status="proposed") for e in p_acts],
+          "atoms": [dict(e, status="proposed") for e in p_atoms]}
+    out += ["glossary_proposals: " + f for f in G.check(pg)]
+    known = {e.get("id") for e in g["acts"] + g["atoms"]}
+    for e in p_acts + p_atoms:
+        if e.get("id") in known:
+            out.append("glossary_proposals «%s»: id đã có trong bảng; dùng mục đó, không đề xuất lại" % e["id"])
+    rejected = {e["id"] for e in g["acts"] + g["atoms"] if e.get("status") == "rejected"}
+    live_acts = [e for e in g["acts"] if e.get("status") != "rejected"]
+    live_atoms = [e for e in g["atoms"] if e.get("status") != "rejected"] + p_atoms
+
+    def as_atom(e):
+        dom = e.get("domain")
+        if dom != "bool" and not (isinstance(dom, list) and all(isinstance(b, dict) for b in dom)):
+            dom = []          # malformed (already a finding): no label can match
+        return {"name": e.get("id"), "domain": dom}
+
+    acts = {e["id"] for e in live_acts} | {e.get("id") for e in p_acts}
+    sit = {e.get("id"): as_atom(e) for e in live_atoms if e.get("kind") == "situation"}
+    par = {e.get("id"): as_atom(e) for e in live_atoms if e.get("kind") == "parameter"}
+    return acts, sit, par, rejected
+
+
+def unapproved_terms(data):
+    """Glossary mode: the acts and atoms the norms use whose status is not `approved` (proposals included), as
+    sorted «id [status]» strings. `promote.py` must refuse a translation while this is not empty (ADR-0027 step 3)."""
+    if "glossary" not in data:
+        return []
+    _, g, _ = load_glossary(data["doc_id"])
+    status = {e["id"]: e.get("status") for e in g["acts"] + g["atoms"]}
+    acts, atoms = used_terms(data)
+    return sorted("%s [%s]" % (t, status.get(t, "đề xuất")) for t in acts | atoms if status.get(t) != "approved")
+
+
+def not_merged_yet(data):
+    """Findings for a step that cannot handle glossary mode yet (Lean draft, merge, review sheet): fail closed."""
+    if "glossary" in data:
+        return ["bản dịch dùng bảng thuật ngữ; gộp atom theo id (ADR-0027 bước 3) chưa làm, nên chưa sinh Lean, chưa gộp"
+                " và chưa lập phiếu được cho tệp này"]
+    return []
+
+
 def check(data):
     """Findings for a translation (a list of strings; empty means no finding, NOT that the translation is right)."""
     out = []
@@ -216,6 +376,11 @@ def check(data):
     if any(a.get("domain") != "bool" for a in par_atoms):
         out.append("parameters: chỉ cho phép atom bool")
     sit, par = atom_index(sit_atoms), atom_index(par_atoms)
+    acts, rejected = None, set()          # acts None: no glossary, any snake_case act
+    if "glossary" in data:
+        acts, sit, par, rejected = glossary_terms(data, out)
+    elif "glossary_proposals" in data:
+        out.append("«glossary_proposals» chỉ dùng cùng «glossary»")
     seen, refs = set(), []
     for n in data["norms"]:
         nid = n.get("id")
@@ -227,6 +392,9 @@ def check(data):
             out.append("%s: modality phải là một trong %s" % (w, sorted(MODALITIES)))
         if not isinstance(n.get("act"), str) or not re.match(r"^[a-z0-9_]+$", n.get("act", "")):
             out.append("%s: act phải là snake_case không dấu" % w)
+        elif acts is not None and n["act"] not in acts:
+            out.append("%s: act «%s» %s" % (w, n["act"], "là mục bị bác của bảng thuật ngữ" if n["act"] in rejected
+                                            else "không có trong bảng thuật ngữ hay «glossary_proposals»"))
         r = check_ref(seg, n.get("source"), w, out, n.get("quote") if isinstance(n.get("quote"), str) and n["quote"] else None)
         if not n.get("quote"):
             out.append("%s: thiếu «quote»" % w)
@@ -254,6 +422,8 @@ def check(data):
         refs.append(r)
     if not isinstance(data["assumptions"], list):
         out.append("assumptions phải là danh sách")
+    for t in sorted(used_terms(data)[1] & rejected):
+        out.append("atom «%s» là mục bị bác của bảng thuật ngữ; không được dùng" % t)
     # fail closed: every clause of the article is accounted for by a norm or a not_encoded entry
     art = next((a for a in seg["articles"] if a["number"] == data["article"]), None)
     if art is None:
@@ -427,6 +597,7 @@ def main(argv=None):
     p.add_argument("--article", type=int, required=True)
     p.add_argument("--doc", default="44/2019/QH14")
     p.add_argument("-o", "--out", help="ghi câu lệnh ra tệp UTF-8 (nên dùng thay cho `>` trong PowerShell, vì `>` làm hỏng dấu tiếng Việt)")
+    p.add_argument("--glossary", action="store_true", help="liệt kê bảng thuật ngữ của văn bản; bản dịch phải dùng id của bảng (ADR-0027)")
     for name in ("check", "lean"):
         p = sub.add_parser(name)
         p.add_argument("file")
@@ -440,7 +611,15 @@ def main(argv=None):
     if a.cmd == "prompt":
         seg = load_segmented(a.doc)
         seg["input"].setdefault("doc_id", a.doc)
-        text = make_prompt(seg, a.article)
+        gl = None
+        if a.glossary:
+            G, g, rel = load_glossary(a.doc)
+            gfs = G.check(g)
+            if gfs:
+                print("TỪ CHỐI: bảng thuật ngữ %s có %d phát hiện; chạy `python pipeline/glossary.py check %s`." % (rel, len(gfs), rel))
+                return 1
+            gl = (g, rel)
+        text = make_prompt(seg, a.article, gl)
         if a.out:
             with open(a.out, "w", encoding="utf-8", newline="\n") as f:
                 f.write(text)
@@ -464,7 +643,14 @@ def main(argv=None):
         return 1
     if a.cmd == "check":
         print("không có phát hiện cấu trúc. Điều này KHÔNG nói bản dịch đúng luật; cần người đối chiếu.")
+        un = unapproved_terms(data)
+        if un:
+            print("dùng %d thuật ngữ chưa duyệt (promote sẽ từ chối cho tới khi bảng duyệt chúng): %s" % (len(un), ", ".join(un)))
         return 0
+    nm = not_merged_yet(data)
+    if nm:
+        print("TỪ CHỐI: " + nm[0])
+        return 1
     seg = load_segmented(data["doc_id"])
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8", newline="\n") as f:

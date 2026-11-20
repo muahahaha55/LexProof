@@ -291,9 +291,9 @@ def promote(name, pairs, build=True):
     accepted, reviews, problems, seen = [], [], [], set()
     for tr, sh in pairs:
         data = json.load(open(tr, encoding="utf-8"))
-        fs = T.check(data)
+        fs = T.check(data) or T.not_merged_yet(data)
         if fs:
-            problems += ["%s: bản dịch có %d phát hiện của `check`" % (RUN.rel(tr), len(fs))]
+            problems += ["%s: bản dịch có %d phát hiện của `check`: %s" % (RUN.rel(tr), len(fs), fs[0])]
             continue
         if data["article"] in seen:
             problems.append("%s: Điều %d có hai bản dịch" % (RUN.rel(tr), data["article"]))
@@ -360,9 +360,9 @@ def main(argv=None):
     a = ap.parse_args(argv)
     if a.cmd == "sheet":
         data = json.load(open(a.translation, encoding="utf-8"))
-        fs = T.check(data)
+        fs = T.check(data) or T.not_merged_yet(data)
         if fs:
-            print("TỪ CHỐI: bản dịch có %d phát hiện; sửa trước khi lập phiếu duyệt." % len(fs))
+            print("TỪ CHỐI: bản dịch có %d phát hiện; sửa trước khi lập phiếu duyệt. Đầu tiên: %s" % (len(fs), fs[0]))
             return 1
         with open(a.out, "w", encoding="utf-8", newline="\n") as f:
             f.write(make_sheet(a.translation, data))

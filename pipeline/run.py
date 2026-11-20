@@ -96,6 +96,8 @@ def admit(files, seg):
             fs = T.check(d)
         except (AttributeError, KeyError, TypeError) as e:   # a shape check.check did not foresee: refuse, never crash
             fs = ["tệp không đúng lược đồ: %r" % e]
+        if not fs:
+            fs = T.not_merged_yet(d)
         if not fs and d["doc_id"] != seg["doc_id"]:
             fs = ["doc_id «%s» khác văn bản đang chạy «%s»" % (d["doc_id"], seg["doc_id"])]
         if not fs and d["article"] in seen:

@@ -1,7 +1,7 @@
 # ADR-0027: Bảng thuật ngữ dùng chung cho act và atom (FR2) — phác thảo
 
 - **Status**: **Accepted** 2026-11-20 (người phụ trách dự án; ba câu hỏi đã trả lời ở mục cuối)
-- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2–5 chưa làm
+- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3–5 chưa làm
 - **Ngày**: 2026-11-20
 - **Liên quan**: FR2, [ADR-0004](0004-act-as-opaque-glossary-id.md) (act là id mờ), [ADR-0024](0024-translation-manual-paste.md), [ADR-0025](0025-run-command-draft-path.md), [ADR-0026](0026-promote-reviewed-translation.md)
 
@@ -65,6 +65,15 @@ Một kiểm tra *trong một văn bản* chỉ có nghĩa khi các điều nói
 - «bán», «cung cấp», «khuyến mại» là **ba act riêng** (giữ G7 của bản mã hóa tay).
 
 Bước 1 thêm một quy tắc chưa có ở trên: một nhãn của enum mà không khoản nào nêu (ví dụ phần bù «từ đủ 18 tuổi trở lên») phải có `note` giải thích, không được thiếu nguồn mà im lặng.
+
+## Bước 2 đã làm (2026-11-20)
+
+- Bản dịch bật chế độ bảng bằng khóa `"glossary": "data/glossary/44-2019-QH14.json"` (đúng một bảng cho mỗi văn bản; đường dẫn khác bị từ chối).
+- Ở chế độ này `atoms` phải rỗng: mọi `act`, `sit`, `param` là id của bảng (trừ mục `rejected`) hoặc id trong `glossary_proposals`. Đề xuất được kiểm như mục của bảng (gloss, nguồn có thật, `note` cho nhãn không nguồn), không được ghi `status`, không được trùng id của bảng.
+- Không có khóa `glossary` thì mọi thứ như trước (Điều 5, 15, 19 đã dịch vẫn qua `check`; câu lệnh mặc định không đổi).
+- `check` in danh sách thuật ngữ đang dùng mà chưa `approved`. Việc **chặn** ở `promote.py` là bước 3.
+- Fail closed cho tới bước 3: `translate.py lean`, `run.py` và `promote.py` (cả `sheet`) từ chối bản dịch dùng bảng, vì chưa gộp atom theo id.
+- Chưa làm: bản dịch không ghim sha256 của bảng. Nếu bảng đổi sau khi dịch, `check` dùng bảng mới; phiếu duyệt (bước 4) phải ghim cả hai.
 
 ## Câu hỏi ban đầu
 
