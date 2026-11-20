@@ -66,6 +66,22 @@ Thêm quy tắc 11: khi khoản liệt kê điều kiện («Điều kiện ... 
 - Câu lệnh của lần 1 và lần 2 giữ nguyên như lúc đã dùng; không sinh lại.
 - **Level 2:** Nghị quyết 66.18/2026/NQ-CP «không thực hiện điều kiện quy định tại Điều 15» từ 01/7/2026 đến hết 28/02/2027. Bản dịch là của văn bản luật gốc; người duyệt cần biết điều này nhưng nó không đổi cách dịch.
 
+## Lần 3: Điều 15, 2026-11-20 (qua `check`, chưa ai duyệt)
+
+- Câu trả lời `article15.llm.json` (sha256 `98241e1293cf2b9b317ffa8915791493b801fe6dae50e8ad69b07ac02545e902`), dán một lần vào chat mới, **qua `check` ngay lần đầu** (không cần vòng sửa). Lean: `pfindings` = 0 khi gộp với Điều 5 và Điều 19; dẫn chiếu «Điều 15 khoản 3» của khoản 2 qua kiểm tra treo (nhờ danh mục đủ khoản và điểm, xem «Chuẩn bị lần 3»). Kết quả gộp: consistentOn, **vẫn 32 cặp được kiểm** như khi chỉ có Điều 5 và 19 (403 cặp bỏ qua do khác act), tức **Điều 15 không thêm cặp nào để kiểm**.
+- Hai quy tắc mới của câu lệnh có tác dụng: LLM điền `references` (khoản 2 → «Điều 15 khoản 3») và ghi trong `assumptions` cách biểu diễn danh sách điều kiện (quy tắc 11).
+- Norm: 4 norm, đều `permission` (khoản 1, 2, 4: «được cấp phép khi đủ mọi điểm»; khoản 3: được sản xuất để bán cho cơ sở chế biến lại khi đủ điểm a và b); khoản 5 vào `not_encoded` (giao Chính phủ). Khái niệm mở thành tham số: P1, P2, P3, P4, P5, P6.
+
+Điểm người duyệt phải quyết (chưa phải kết luận về luật):
+
+1. **«Điều kiện … bao gồm» là điều kiện cần, LLM mã hóa thành điều kiện đủ.** Norm nói «được phép khi đủ MỌI điểm». Chữ «bao gồm» nghĩa là các điểm là những điều kiện phải có; không nói đủ các điểm là được cấp phép (còn điều kiện ở nghị định, khoản 5). LLM tự ghi chiều ngược lại («thiếu một điểm thì không được cấp phép») không được mã hóa, nhưng cách gọi `permission` vẫn khẳng định nhiều hơn chữ của luật.
+2. **Hành vi là «được cấp phép sản xuất…», không phải «sản xuất…».** Act `duoc_cap_phep_san_xuat_ruou_cong_nghiep` khác mọi act ở Điều 5 (`kinh_doanh_ruou_bia`, …), nên không cặp norm nào so được với lệnh cấm «kinh doanh rượu không có giấy phép» (Điều 5 khoản 11). Quan hệ có ý nghĩa (có giấy phép là tiền đề của việc được kinh doanh) **không được biểu diễn**. Muốn biểu diễn cần một atom «có giấy phép» dùng chung giữa hai điều (bảng thuật ngữ, FR2, chưa làm).
+3. **«Điều kiện … theo quy định của pháp luật»** (thành lập, an toàn thực phẩm, đăng ký kinh doanh) thành tham số P1, P3, P4; LLM ghi đúng rằng dẫn chiếu văn bản khác không ghi vào `references`.
+4. **Enum `loai_chu_the`** liệt kê 6 loại; LLM ghi nó không đầy đủ.
+5. **Level 2:** Nghị quyết 66.18/2026/NQ-CP «không thực hiện điều kiện quy định tại Điều 15» từ 01/7/2026 đến hết 28/02/2027; bản dịch là của luật gốc.
+
+Phiếu duyệt đã lập: `docs/review/duyet-ban-dich-dieu-15.md` (sha256 bản dịch trong phiếu).
+
 ## Ý kiến của người duyệt về bản dịch Điều 5 (2026-11-18)
 
 Nguồn: `docs/review/ket-qua-doi-chieu-Phong-2026-11-18.md` (Vũ Đức Phong; ghi là **không xem bản nháp AI trước khi trả lời**; một người duyệt, chưa có ý kiến thứ hai).

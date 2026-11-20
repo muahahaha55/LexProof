@@ -26,11 +26,13 @@ Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Đ�
 |---|---|---|
 | 1 | Một lệnh: bản dịch đã kiểm → bản nháp Lean gộp → kiểm tra Lean → báo cáo nháp (`pipeline/run.py`, ADR-0025) | **xong** (2026-11-18); kết quả Lean là Evaluated, chưa có định lý kernel |
 | 2 | Đường từ bản nháp đã duyệt sang module `LexProof/Laws/` (`pipeline/promote.py`, ADR-0026) | **xong công cụ** (2026-11-18); chưa có module thật: chờ người điền `docs/review/duyet-ban-dich-dieu-19.md`, `...-dieu-5.md` |
-| 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | **đã chuẩn bị** (2026-11-18): câu lệnh `eval/translate/prompt-article15.txt`, công cụ hỗ trợ dẫn chiếu; chờ dán vào LLM |
+| 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | **làm một điều** (2026-11-20): Điều 15 qua `check` lần đầu, Lean 0 finding; còn chờ người duyệt (`docs/review/duyet-ban-dich-dieu-15.md`); chưa làm theo lô nhiều điều |
 | 4 | Bộ ca của người học luật, trả lời độc lập (FR12) | chưa; phụ thuộc người ngoài |
 | 5 | Đóng gói đồ án: báo cáo, demo, phần giới hạn | chưa |
 
 Sau bước 1 và 2: có hệ thống cơ bản chạy từ đầu đến cuối. Bước 3–5: mở rộng và bằng chứng chất lượng.
+
+Bảng thuật ngữ dùng chung (FR2): phác thảo ở ADR-0027 (Proposed); cần quyết trước khi dịch theo lô nhiều điều, vì không có nó các điều không so được với nhau.
 
 Việc đang chờ người duyệt (Phong): `docs/review/HUONG-DAN-TIEP-THEO-cho-Phong.md`.
 
