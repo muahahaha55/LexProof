@@ -26,7 +26,7 @@ Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Đ�
 |---|---|---|
 | 1 | Một lệnh: bản dịch đã kiểm → bản nháp Lean gộp → kiểm tra Lean → báo cáo nháp (`pipeline/run.py`, ADR-0025) | **xong** (2026-11-18); kết quả Lean là Evaluated, chưa có định lý kernel |
 | 2 | Đường từ bản nháp đã duyệt sang module `LexProof/Laws/` (`pipeline/promote.py`, ADR-0026) | **xong công cụ** (2026-11-18); chưa có module thật: chờ người điền `docs/review/duyet-ban-dich-dieu-19.md`, `...-dieu-5.md` |
-| 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | chưa |
+| 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | **đã chuẩn bị** (2026-11-18): câu lệnh `eval/translate/prompt-article15.txt`, công cụ hỗ trợ dẫn chiếu; chờ dán vào LLM |
 | 4 | Bộ ca của người học luật, trả lời độc lập (FR12) | chưa; phụ thuộc người ngoài |
 | 5 | Đóng gói đồ án: báo cáo, demo, phần giới hạn | chưa |
 

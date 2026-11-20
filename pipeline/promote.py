@@ -105,12 +105,34 @@ def parse_sheet(text):
     for line in text.splitlines():
         m = re.match(r"^\|\s*([NAX]):(.+?)\s*\|", line)
         if m:
-            cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip())[1:-1]]
+            body = line.strip()[1:]
+            if body.endswith("|") and not body.endswith("\\|"):
+                body = body[:-1]
+            cells = [c.strip() for c in re.split(r"(?<!\\)\|", body)]   # works with or without the closing «|»
             rows[(m.group(1), m.group(2))] = cells
     fields = dict((k, v.strip()) for k, v in FIELD.findall(text))
     s = SHA_LINE.search(text)
     return {"rows": rows, "sha": s.group(1) if s else None, "reviewer": fields.get("Người duyệt", ""),
             "date": fields.get("Ngày duyệt (YYYY-MM-DD)", "")}
+
+
+def decision(cells, col, what):
+    """(index of the ticked option or None, problem text or None) for one row's decision cell."""
+    if len(cells) <= col:
+        return None, ("%s: hàng bị hỏng định dạng (thiếu cột «Quyết định»; có %d cột, cần ít nhất %d). "
+                      "Đừng xóa hay nối dòng; chỉ đổi ☐ thành ☒." % (what, len(cells), col + 1))
+    t = ticked(cells[col])
+    if t is not None:
+        return t, None
+    n_opts = len([o for o in cells[col].split("<br>") if o.strip()])
+    if n_opts < 2:
+        return None, ("%s: ô quyết định chỉ còn một lựa chọn («%s»): có thể đã xóa lựa chọn kia. "
+                      "Giữ cả hai lựa chọn và đổi ☐ thành ☒ ở đúng một ô." % (what, cells[col].strip()[:40]))
+    return None, "%s: cần đánh dấu đúng một ô" % what
+
+
+def reason_of(cells, col):
+    return cells[col].strip() if len(cells) > col else ""
 
 
 def sheet_problems(data, tr_path, sheet):
@@ -130,25 +152,31 @@ def sheet_problems(data, tr_path, sheet):
         if cells is None:
             out.append("phiếu không có hàng cho norm %s" % n["id"])
             continue
-        t = ticked(cells[7])
-        if t is None:
-            out.append("norm %s: cần đánh dấu đúng một ô" % n["id"])
-        elif t == 1 and not cells[8].strip():
+        t, why = decision(cells, 7, "norm %s" % n["id"])
+        if why:
+            out.append(why)
+        elif t == 1 and not reason_of(cells, 8):
             out.append("norm %s: bác nhưng không ghi lý do" % n["id"])
         else:
-            decisions["accepted" if t == 0 else "rejected"].append((n["id"], cells[8].strip()))
+            decisions["accepted" if t == 0 else "rejected"].append((n["id"], reason_of(cells, 8)))
     for i, a in enumerate(data["assumptions"], 1):
         cells = sheet["rows"].get(("A", str(i)))
-        t = ticked(cells[2]) if cells else None
-        if t is None:
-            out.append("giả định A:%d: cần đánh dấu đúng một ô" % i)
+        if cells is None:
+            out.append("phiếu không có hàng cho giả định A:%d" % i)
+            continue
+        t, why = decision(cells, 2, "giả định A:%d" % i)
+        if why:
+            out.append(why)
         elif t == 1:
             out.append("giả định A:%d bị bác: bản dịch phải làm lại, không đưa vào thư viện" % i)
     for i, e in enumerate(data["not_encoded"], 1):
         cells = sheet["rows"].get(("X", str(i)))
-        t = ticked(cells[3]) if cells else None
-        if t is None:
-            out.append("khoản để ngoài X:%d: cần đánh dấu đúng một ô" % i)
+        if cells is None:
+            out.append("phiếu không có hàng cho khoản để ngoài X:%d" % i)
+            continue
+        t, why = decision(cells, 3, "khoản để ngoài X:%d" % i)
+        if why:
+            out.append(why)
         elif t == 1:
             out.append("không đồng ý để ngoài %s: bản dịch phải làm lại" % e["clause"])
     if not out and not decisions["accepted"]:
@@ -176,7 +204,6 @@ def module_text(name, merged, seg, reviews, consistent):
     rs, sl = T.readers(sit)
     rp, pl = T.readers(par)
     y, m, d = (int(x) for x in merged["effective"].split("-"))
-    nmax = max(a["number"] for a in seg["articles"])
     acts = sorted({n["act"] for n in merged["norms"]})
     reviewer, rdate = reviews[0][4], reviews[0][5]
     ry, rm, rd = (int(x) for x in rdate.split("-"))
@@ -199,14 +226,17 @@ def module_text(name, merged, seg, reviews, consistent):
           "def tP : AtomTable :=", ("  [ " + "\n  , ".join(T.atom_lean(a) for a in par) + " ]") if par else "  []", "",
           "def rS : List ReaderSpec :=", ("  [ " + "\n  , ".join("(%s, %d, %d)" % (q(n), i, j) for n, i, j in rs) + " ]") if rs else "  []", "",
           "def rP : List ReaderSpec :=", ("  [ " + "\n  , ".join("(%s, %d, %d)" % (q(n), i, j) for n, i, j in rp) + " ]") if rp else "  []", "",
-          "def catalog : List String := (List.range %d).map fun i => \"Điều \" ++ toString (i + 1)" % nmax, "",
-          "private def nrm (id : String) (mo : Modality) (act : String) (c : Cond) (ex : List Cond) (art : String) : Norm :=",
+          "/-- Every legal unit of the document (articles, clauses, points), for the dangling-reference check. -/",
+          T.catalog_lean(seg), "",
+          "private def nrm (id : String) (mo : Modality) (act : String) (c : Cond) (ex : List Cond) (art : String)",
+          "    (refs : List String) : Norm :=",
           "  { id := id, modality := mo, act := act, condition := c, exceptions := ex, priority := none",
           "  , source := { docId := %s, docType := %s, effective := ⟨%d, %d, %d⟩, article := art }" % (
               q(merged["doc_id"]), T.DOC_TYPES[merged["doc_type"]], y, m, d),
-          "  , references := [] }", "", "def norms : List Norm :="]
-    ns = ["nrm %s %s %s %s [%s] %s" % (q(n["id"]), T.MODALITIES[n["modality"]], q(n["act"]), T.cond_lean(n["condition"], sl, pl),
-                                       ", ".join(T.cond_lean(e, sl, pl) for e in n["exceptions"]), q(n["source"])) for n in merged["norms"]]
+          "  , references := refs }", "", "def norms : List Norm :="]
+    ns = ["nrm %s %s %s %s [%s] %s %s" % (q(n["id"]), T.MODALITIES[n["modality"]], q(n["act"]), T.cond_lean(n["condition"], sl, pl),
+                                          ", ".join(T.cond_lean(e, sl, pl) for e in n["exceptions"]), q(n["source"]), T.refs_lean(n))
+          for n in merged["norms"]]
     L += ["  [ " + "\n  , ".join(ns) + " ]", "",
           "/-- Clauses not encoded, with the reason (from the translation or from the reviewer). Never a silent skip. -/",
           "def notEncoded : List (String × String) :=",
@@ -216,7 +246,8 @@ def module_text(name, merged, seg, reviews, consistent):
           "def status : ReviewStatus := .reviewed %s ⟨%d, %d, %d⟩" % (q(reviewer), ry, rm, rd), "",
           "/-- Every clause reference of the module, as written. -/",
           "def usedRefs : List String :=",
-          "  norms.map (fun n => n.source.article) ++ notEncoded.map (·.1) ++ (tS ++ tP).map (·.source) ++",
+          "  norms.map (fun n => n.source.article) ++ norms.flatMap (·.references) ++ notEncoded.map (·.1) ++",
+          "  (tS ++ tP).map (·.source) ++",
           "  (tS ++ tP).flatMap fun a => match a.domain with | .bool => [] | .enum vs => vs.map (·.source)", "",
           "def unparsable : List String :=",
           "  usedRefs.filter fun s => match parseEntry s with | .ok _ => false | .error _ => true", "",

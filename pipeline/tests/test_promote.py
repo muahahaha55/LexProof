@@ -112,6 +112,50 @@ class Gate(Base):
         self.assertTrue(any("YYYY-MM-DD" in p for p in ps))
 
 
+class Malformed(Base):
+    """What a real reviewer's editor did to a sheet (2026-11-19): deleted the unchosen option and the closing «|»."""
+
+    def mangle(self, text):
+        out = []
+        for line in text.splitlines():
+            if line.startswith(("| N:", "| A:", "| X:")):
+                line = line.replace("☒ Chấp nhận<br>☐ Bác |  |", "☐ Chấp nhận").replace("☒ Chấp nhận<br>☐ Bác |", "☐ Chấp nhận")
+                line = line.replace("☒ Đồng ý để ngoài<br>☐ Không đồng ý |", "☐ Đồng ý để ngoài")
+            out.append(line)
+        return "\n".join(out)
+
+    def test_row_without_decision_cell_is_refused_with_a_reason_not_a_crash(self):
+        tr, sh = self.files()
+        with open(sh, encoding="utf-8") as f:
+            text = f.read()
+
+        def cut(line):      # keep only the first 7 cells of the 19.3 row
+            return "|".join(line.split("|")[:8]) + "|" if line.startswith("| N:19.3 |") else line
+
+        cut_text = "\n".join(cut(l) for l in text.splitlines())
+        ps, _ = P.sheet_problems(GOLD, tr, P.parse_sheet(cut_text))
+        self.assertTrue(any("norm 19.3" in p and "hỏng định dạng" in p for p in ps), ps)
+
+    def test_deleted_option_and_closing_pipe_get_an_actionable_message(self):
+        ps, _ = self.problems(edit=self.mangle)
+        self.assertTrue(ps)
+        self.assertTrue(any("chỉ còn một lựa chọn" in p for p in ps))
+        self.assertFalse(any("Traceback" in p for p in ps))
+
+    def test_missing_closing_pipe_alone_is_read_correctly(self):
+        ps, dec = self.problems(edit=lambda t: "\n".join(l.rstrip(" |") if l.startswith("| N:19.1 ") else l for l in t.splitlines()))
+        self.assertEqual(ps, [])      # the ticked cell is the last one and still parses
+        self.assertEqual(len(dec["accepted"]), 6)
+
+    def test_missing_rows_are_findings(self):
+        d = copy.deepcopy(GOLD)
+        tr, sh = self.files(d)
+        with open(sh, encoding="utf-8") as f:
+            text = "\n".join(l for l in f.read().splitlines() if not l.startswith(("| A:1 ", "| X:")))
+        ps, _ = P.sheet_problems(d, tr, P.parse_sheet(text))
+        self.assertTrue(any("giả định A:1" in p for p in ps))
+
+
 class Promote(Base):
     def test_name_and_no_overwrite(self):
         tr, sh = self.files()

@@ -1,0 +1,61 @@
+Bạn là bộ dịch điều khoản luật Việt Nam thành DỮ LIỆU JSON cho một bộ kiểm tra nhất quán. Kết quả của bạn sẽ được
+kiểm tra tự động rồi được một người đọc đối chiếu với luật; bạn không được tin cậy.
+
+Văn bản: Luật Phòng, chống tác hại của rượu, bia (doc_id 44/2019/QH14). Chỉ dùng chữ dưới đây.
+
+### Điều 15. Quản lý kinh doanh rượu
+[Điều 15 khoản 1] 1. Điều kiện cấp phép sản xuất rượu công nghiệp có độ cồn từ 5,5 độ trở lên bao gồm:
+  [Điều 15 khoản 1 điểm a] a) Doanh nghiệp được thành lập theo quy định của pháp luật;
+  [Điều 15 khoản 1 điểm b] b) Có dây chuyền máy móc, thiết bị công nghiệp, quy trình công nghệ sản xuất rượu đáp ứng quy mô dự kiến sản xuất;
+  [Điều 15 khoản 1 điểm c] c) Bảo đảm điều kiện về an toàn thực phẩm và bảo vệ môi trường theo quy định của pháp luật;
+  [Điều 15 khoản 1 điểm d] d) Có nhân viên kỹ thuật có trình độ, chuyên môn phù hợp với ngành, nghề sản xuất rượu.
+[Điều 15 khoản 2] 2. Điều kiện cấp phép sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên nhằm mục đích kinh doanh, trừ trường hợp quy định tại khoản 3 Điều này, bao gồm:
+  [Điều 15 khoản 2 điểm a] a) Doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc hộ kinh doanh được thành lập theo quy định của pháp luật;
+  [Điều 15 khoản 2 điểm b] b) Bảo đảm điều kiện về an toàn thực phẩm theo quy định của pháp luật.
+[Điều 15 khoản 3] 3. Điều kiện đối với hộ gia đình, cá nhân sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên bán cho cơ sở có giấy phép sản xuất rượu để chế biến lại bao gồm:
+  [Điều 15 khoản 3 điểm a] a) Có hợp đồng mua bán với cơ sở có giấy phép sản xuất rượu và có đăng ký với Ủy ban nhân dân cấp xã nơi có cơ sở sản xuất;
+  [Điều 15 khoản 3 điểm b] b) Bảo đảm điều kiện về an toàn thực phẩm theo quy định của pháp luật.
+[Điều 15 khoản 4] 4. Điều kiện cấp phép mua bán rượu có độ cồn từ 5,5 độ trở lên bao gồm:
+  [Điều 15 khoản 4 điểm a] a) Đăng ký kinh doanh theo quy định của pháp luật;
+  [Điều 15 khoản 4 điểm b] b) Đáp ứng điều kiện theo từng loại hình mua bán rượu.
+[Điều 15 khoản 5] 5. Chính phủ quy định chi tiết Điều này và quy định việc quản lý kinh doanh rượu có độ cồn dưới 5,5 độ.
+
+### Lược đồ JSON
+{
+  "doc_id": "44/2019/QH14", "doc_type": "law", "effective": "YYYY-MM-DD", "article": 15,
+  "atoms": {
+    "situation": [ {"name": "S1 ...", "source": "Điều 15 khoản 1", "domain": "bool"},
+                   {"name": "S2 ...", "source": "Điều 15 khoản 2",
+                    "domain": [ {"label": "...", "source": "Điều 15 khoản 2"}, {"label": "...", "source": "..."} ]} ],
+    "parameters": [ {"name": "P1 ...", "source": "Điều 15 khoản 3", "domain": "bool"} ]
+  },
+  "norms": [
+    {"id": "15.1", "modality": "prohibition | obligation | permission", "act": "ten_hanh_vi",
+     "condition": COND, "exceptions": [COND], "source": "Điều 15 khoản 1", "quote": "chữ nguyên văn trong đơn vị nguồn",
+     "references": [ "Điều 15 khoản 3" ]}
+  ],
+  "not_encoded": [ {"clause": "Điều 15 khoản 4", "reason": "..."} ],
+  "assumptions": [ "mỗi lựa chọn đọc luật mà bạn đã làm, một câu mỗi mục" ]
+}
+COND ::= "true" | "false"
+       | {"sit": "<tên atom bool>"} | {"sit": "<tên atom enum>", "value": "<nhãn>"} | {"param": "<tên atom tham số>"}
+       | {"not": COND} | {"and": [COND, COND, ...]} | {"or": [COND, COND, ...]}
+
+### Quy tắc
+1. Chỉ trả về MỘT khối JSON đúng lược đồ trên. Không viết mã Lean. Không thêm lời giải thích ngoài JSON.
+2. «source» của norm, atom và nhãn là tham chiếu điều khoản có dạng chính xác «Điều N», «Điều N tiêu đề», «Điều N khoản K»,
+   «Điều N khoản K điểm x» (x là chữ cái thường), hoặc có thêm «nhánh (i)», «nhánh (ii)», «nhánh (iii)»... (số La Mã
+   thường; KHÔNG dùng chữ số như «nhánh (1)») khi một khoản chứa nhiều lệnh cấm. Dùng đơn vị cụ
+   thể nhất mà norm thật sự dựa vào, không dùng cả khoản khi chỉ một điểm hay một nhánh được mã hóa. Không dùng chuỗi tự do.
+3. «quote» phải là đoạn nguyên văn (liền, cùng chính tả) nằm trong đúng đơn vị đã ghi ở «source».
+4. Mọi khoản của điều phải xuất hiện trong «norms» (qua «source») hoặc trong «not_encoded» kèm lý do. Không được bỏ lặng lẽ.
+5. Khái niệm mở («hợp lý», «nghiêm trọng», «dành cho người chưa đủ 18 tuổi»...) là atom trong «parameters»; không tự quyết giá trị.
+6. Nếu không chắc cách đọc, đừng đoán: đưa khoản vào «not_encoded» và nêu lý do, hoặc ghi lựa chọn vào «assumptions».
+7. Nếu tiêu đề điều cho biết tính chất (cấm, bắt buộc, được phép) áp dụng cho các khoản dưới nó, hãy áp dụng và ghi vào «assumptions».
+8. «exceptions» là các điều kiện làm norm không áp dụng («trừ ...»); đó không phải một quyền được phép.
+9. «act» là mã snake_case không dấu, ngắn, cho hành vi bị điều chỉnh; cùng hành vi dùng cùng mã.
+10. «references» (có thể rỗng) liệt kê mọi đơn vị mà chữ của norm dẫn chiếu tới («trừ trường hợp quy định tại khoản 3 Điều này»,
+    «theo quy định tại Điều 18»), viết đầy đủ «Điều N», «Điều N khoản K» hoặc «Điều N khoản K điểm x»; «Điều này» là điều đang
+    dịch. Không ghi dẫn chiếu tới văn bản khác («pháp luật về ...», «Chính phủ quy định»): nêu những chỗ đó trong «assumptions».
+11. Khi một khoản liệt kê điều kiện («Điều kiện ... bao gồm:» rồi các điểm a, b, c), ghi rõ trong «assumptions» bạn biểu diễn
+    nó thế nào (ví dụ: được phép làm việc đó khi đủ mọi điểm, hay bắt buộc phải có từng điểm), vì người duyệt cần thấy lựa chọn này.

@@ -52,6 +52,20 @@ Khớp ở: modality (cấm), act `ban_ruou_bia` (act này đã có trong câu l
 - Chênh lệch có ý nghĩa nhất không nằm trong 6 norm so được mà ở khoản 11 nhánh (i): LLM mã hóa «không có giấy phép hoặc không đăng ký» là chỉ cấm khi thiếu cả hai (xem lần 2); bản tay không mã hóa nhánh này nên không có gì để so. Một người học luật cần quyết cách đọc.
 - Giới hạn: một lần chạy cho mỗi điều; `compare` nhận atom theo nguồn nên bỏ sót trường hợp một atom dùng chung nhiều khoản; 17 norm chỉ ở LLM chưa được ai đối chiếu với luật.
 
+## Chuẩn bị lần 3: Điều 15 (2026-11-18, chưa chạy)
+
+Điều 15 có 5 khoản và 10 điểm (khoản 1: a–d; khoản 2, 3, 4: a–b), một dẫn chiếu trong điều («trừ trường hợp quy định tại khoản 3 Điều này», khoản 2) và một giao quyền cho Chính phủ (khoản 5). Trước khi dán, công cụ được sửa ba chỗ mà Điều 15 sẽ đụng phải:
+
+1. **Lược đồ trong câu lệnh luôn ghi `"article": 19`** và ví dụ «Điều 19 khoản 1», dù dịch điều nào. Lần 1 (Điều 19) không lộ ra; lần 2 (Điều 5) LLM tự sửa đúng. Nay ví dụ dùng số của điều đang dịch.
+2. **Không có chỗ ghi dẫn chiếu.** `Norm.references` có sẵn trong Lean (kiểm dẫn chiếu treo), nhưng lược đồ JSON không có trường này. Nay norm có trường `references` (tùy chọn); `check` đòi mỗi dẫn chiếu là một đơn vị có thật của luật (không «nhánh», không «tiêu đề»).
+3. **Danh mục để kiểm dẫn chiếu treo chỉ có «Điều 1» … «Điều 36»**, nên một dẫn chiếu đúng tới «Điều 15 khoản 3» sẽ bị Lean báo treo. Nay danh mục trong bản nháp và module sinh ra gồm mọi điều, khoản, điểm (222 đơn vị) lấy từ văn bản đã tách; có test cho thấy Lean báo `danglingReference` với «Điều 15 khoản 9».
+
+Thêm quy tắc 11: khi khoản liệt kê điều kiện («Điều kiện ... bao gồm:»), LLM phải ghi trong `assumptions` cách biểu diễn (được phép khi đủ mọi điểm, hay bắt buộc từng điểm). Đây là chỗ thật sự mở: Điều 15 nói điều kiện để **được cấp phép**, không nói thẳng «cấm» hay «bắt buộc».
+
+- Câu lệnh: `prompt-article15.txt` (sha256 `3b41e23bc355f20cf87dfd1fc3c10869738e24620151a267d36a080629b6c1ee`).
+- Câu lệnh của lần 1 và lần 2 giữ nguyên như lúc đã dùng; không sinh lại.
+- **Level 2:** Nghị quyết 66.18/2026/NQ-CP «không thực hiện điều kiện quy định tại Điều 15» từ 01/7/2026 đến hết 28/02/2027. Bản dịch là của văn bản luật gốc; người duyệt cần biết điều này nhưng nó không đổi cách dịch.
+
 ## Ý kiến của người duyệt về bản dịch Điều 5 (2026-11-18)
 
 Nguồn: `docs/review/ket-qua-doi-chieu-Phong-2026-11-18.md` (Vũ Đức Phong; ghi là **không xem bản nháp AI trước khi trả lời**; một người duyệt, chưa có ý kiến thứ hai).

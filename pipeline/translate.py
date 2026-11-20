@@ -72,18 +72,19 @@ def unit_text(seg, ref):
 # ------------------------------------------------------------------ prompt
 
 SCHEMA = """{
-  "doc_id": "44/2019/QH14", "doc_type": "law", "effective": "YYYY-MM-DD", "article": 19,
+  "doc_id": "44/2019/QH14", "doc_type": "law", "effective": "YYYY-MM-DD", "article": @N@,
   "atoms": {
-    "situation": [ {"name": "S1 ...", "source": "Điều 19 khoản 1", "domain": "bool"},
-                   {"name": "S2 ...", "source": "Điều 5 khoản 3",
-                    "domain": [ {"label": "...", "source": "Điều 5 khoản 3"}, {"label": "...", "source": "..."} ]} ],
-    "parameters": [ {"name": "P1 ...", "source": "Điều 19 khoản 3", "domain": "bool"} ]
+    "situation": [ {"name": "S1 ...", "source": "Điều @N@ khoản 1", "domain": "bool"},
+                   {"name": "S2 ...", "source": "Điều @N@ khoản 2",
+                    "domain": [ {"label": "...", "source": "Điều @N@ khoản 2"}, {"label": "...", "source": "..."} ]} ],
+    "parameters": [ {"name": "P1 ...", "source": "Điều @N@ khoản 3", "domain": "bool"} ]
   },
   "norms": [
-    {"id": "19.1", "modality": "prohibition | obligation | permission", "act": "ban_ruou_bia",
-     "condition": COND, "exceptions": [COND], "source": "Điều 19 khoản 1", "quote": "chữ nguyên văn trong đơn vị nguồn"}
+    {"id": "@N@.1", "modality": "prohibition | obligation | permission", "act": "ten_hanh_vi",
+     "condition": COND, "exceptions": [COND], "source": "Điều @N@ khoản 1", "quote": "chữ nguyên văn trong đơn vị nguồn",
+     "references": [ "Điều @N@ khoản 3" ]}
   ],
-  "not_encoded": [ {"clause": "Điều 19 khoản 7", "reason": "..."} ],
+  "not_encoded": [ {"clause": "Điều @N@ khoản 4", "reason": "..."} ],
   "assumptions": [ "mỗi lựa chọn đọc luật mà bạn đã làm, một câu mỗi mục" ]
 }
 COND ::= "true" | "false"
@@ -101,7 +102,12 @@ RULES = """1. Chỉ trả về MỘT khối JSON đúng lược đồ trên. Kh�
 6. Nếu không chắc cách đọc, đừng đoán: đưa khoản vào «not_encoded» và nêu lý do, hoặc ghi lựa chọn vào «assumptions».
 7. Nếu tiêu đề điều cho biết tính chất (cấm, bắt buộc, được phép) áp dụng cho các khoản dưới nó, hãy áp dụng và ghi vào «assumptions».
 8. «exceptions» là các điều kiện làm norm không áp dụng («trừ ...»); đó không phải một quyền được phép.
-9. «act» là mã snake_case không dấu, ngắn, cho hành vi bị điều chỉnh; cùng hành vi dùng cùng mã."""
+9. «act» là mã snake_case không dấu, ngắn, cho hành vi bị điều chỉnh; cùng hành vi dùng cùng mã.
+10. «references» (có thể rỗng) liệt kê mọi đơn vị mà chữ của norm dẫn chiếu tới («trừ trường hợp quy định tại khoản 3 Điều này»,
+    «theo quy định tại Điều 18»), viết đầy đủ «Điều N», «Điều N khoản K» hoặc «Điều N khoản K điểm x»; «Điều này» là điều đang
+    dịch. Không ghi dẫn chiếu tới văn bản khác («pháp luật về ...», «Chính phủ quy định»): nêu những chỗ đó trong «assumptions».
+11. Khi một khoản liệt kê điều kiện («Điều kiện ... bao gồm:» rồi các điểm a, b, c), ghi rõ trong «assumptions» bạn biểu diễn
+    nó thế nào (ví dụ: được phép làm việc đó khi đủ mọi điểm, hay bắt buộc phải có từng điểm), vì người duyệt cần thấy lựa chọn này."""
 
 
 def make_prompt(seg, article):
@@ -118,7 +124,7 @@ def make_prompt(seg, article):
         lines.append("[%s] %s" % (c["id"], norm_ws(c["text"])))
         for p in c["points"]:
             lines.append("  [%s] %s" % (p["id"], norm_ws(p["text"])))
-    lines += ["", "### Lược đồ JSON", SCHEMA, "", "### Quy tắc", RULES]
+    lines += ["", "### Lược đồ JSON", SCHEMA.replace("@N@", str(article)), "", "### Quy tắc", RULES]
     return "\n".join(lines) + "\n"
 
 
@@ -228,6 +234,14 @@ def check(data):
             out.append("%s: nguồn thuộc Điều %d, không phải Điều %d của bản dịch này" % (w, r["article"], data["article"]))
         refs.append(r)
         walk_cond(n.get("condition"), sit, par, w + ".condition", out)
+        refs_n = n.get("references", [])
+        if not isinstance(refs_n, list):
+            out.append("%s: references phải là danh sách" % w)
+        else:
+            for x in refs_n:
+                rr = check_ref(seg, x, "%s, dẫn chiếu" % w, out)
+                if rr is not None and (rr["branch"] or rr["heading"]):
+                    out.append("%s: dẫn chiếu «%s» phải là một đơn vị của luật (không dùng «nhánh» hay «tiêu đề»)" % (w, x))
         if not isinstance(n.get("exceptions"), list):
             out.append("%s: exceptions phải là danh sách" % w)
         else:
@@ -302,12 +316,31 @@ def atom_lean(a):
     return "{ name := %s, source := %s, domain := %s }" % (lq(a["name"]), lq(a["source"]), d)
 
 
+def unit_ids(seg):
+    """Every legal unit of the document, in canonical spelling: «Điều N», «Điều N khoản K», «Điều N khoản K điểm x».
+    This is the catalog the Lean dangling-reference check uses, so a reference to a clause or a point is checked too."""
+    out = []
+    for a in seg["articles"]:
+        out.append(a["id"])
+        for c in a["clauses"]:
+            out.append(c["id"])
+            out += [p["id"] for p in c["points"]]
+    return out
+
+
+def catalog_lean(seg):
+    return "def catalog : List String :=\n  [ " + "\n  , ".join(lq(u) for u in unit_ids(seg)) + " ]"
+
+
+def refs_lean(n):
+    return "[" + ", ".join(lq(r) for r in n.get("references", [])) + "]"
+
+
 def to_lean(data, seg):
     sit, par = data["atoms"]["situation"], data["atoms"]["parameters"]
     rs, sl = readers(sit)
     rp, pl = readers(par)
     y, m, d = (int(x) for x in data["effective"].split("-"))
-    nmax = max(a["number"] for a in seg["articles"])
     acts = sorted({n["act"] for n in data["norms"]})
     L = ["import LexProof.Verify.AnalyzeReport", "import LexProof.Core.Render", "",
          "/-! DRAFT, NOT HUMAN-REVIEWED. Machine-translated from the text of %s by pipeline/translate.py (LLM answer, pasted by hand)." % (
@@ -320,17 +353,18 @@ def to_lean(data, seg):
           "def tP : AtomTable :=", ("  [ " + "\n  , ".join(atom_lean(a) for a in par) + " ]") if par else "  []", "",
           "def rS : List ReaderSpec :=", ("  [ " + "\n  , ".join("(%s, %d, %d)" % (lq(n), i, j) for n, i, j in rs) + " ]") if rs else "  []", "",
           "def rP : List ReaderSpec :=", ("  [ " + "\n  , ".join("(%s, %d, %d)" % (lq(n), i, j) for n, i, j in rp) + " ]") if rp else "  []", "",
-          "def catalog : List String := (List.range %d).map fun i => \"Điều \" ++ toString (i + 1)" % nmax, "",
-          "private def nrm (id : String) (mo : Modality) (act : String) (c : Cond) (ex : List Cond) (art : String) : Norm :=",
+          catalog_lean(seg), "",
+          "private def nrm (id : String) (mo : Modality) (act : String) (c : Cond) (ex : List Cond) (art : String)",
+          "    (refs : List String) : Norm :=",
           "  { id := id, modality := mo, act := act, condition := c, exceptions := ex, priority := none",
           "  , source := { docId := %s, docType := %s, effective := ⟨%d, %d, %d⟩, article := art }" % (
               lq(data["doc_id"]), DOC_TYPES[data["doc_type"]], y, m, d),
-          "  , references := [] }", "", "def norms : List Norm :="]
+          "  , references := refs }", "", "def norms : List Norm :="]
     ns = []
     for n in data["norms"]:
         ex = "[" + ", ".join(cond_lean(e, sl, pl) for e in n["exceptions"]) + "]"
-        ns.append("nrm %s %s %s %s %s %s" % (lq(n["id"]), MODALITIES[n["modality"]], lq(n["act"]),
-                                             cond_lean(n["condition"], sl, pl), ex, lq(n["source"])))
+        ns.append("nrm %s %s %s %s %s %s %s" % (lq(n["id"]), MODALITIES[n["modality"]], lq(n["act"]),
+                                                cond_lean(n["condition"], sl, pl), ex, lq(n["source"]), refs_lean(n)))
     L += [("  [ " + "\n  , ".join(ns) + " ]") if ns else "  []", "",
           "def notEncoded : List (String × String) :=",
           ("  [ " + "\n  , ".join("(%s, %s)" % (lq(e["clause"]), lq(e["reason"])) for e in data["not_encoded"]) + " ]")
