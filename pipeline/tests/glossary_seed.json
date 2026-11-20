@@ -1,0 +1,169 @@
+{
+  "doc_id": "44/2019/QH14",
+  "note": "Bảng hạt giống (2026-11-20), chép từ act và atom của LexProof/Laws/AlcoholSale.lean (bản mã hóa tay, chưa duyệt). Mọi mục đang «proposed»: người duyệt (Phong) phải chấp nhận hoặc bác từng mục. Ba act bán / cung cấp / khuyến mại tách riêng theo quyết định 2026-11-20.",
+  "acts": [
+    {
+      "id": "ban_ruou_bia",
+      "gloss": "bán rượu, bia (trao đổi có trả tiền)",
+      "sources": [
+        "Điều 5 khoản 3",
+        "Điều 19 tiêu đề"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "cung_cap_ruou_bia",
+      "gloss": "cung cấp rượu, bia (gồm cả cho không, tặng — theo ý kiến người duyệt 2026-11-18, Q3)",
+      "sources": [
+        "Điều 5 khoản 3"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "khuyen_mai_ruou_bia",
+      "gloss": "khuyến mại rượu, bia trong hoạt động kinh doanh",
+      "sources": [
+        "Điều 5 khoản 3",
+        "Điều 5 khoản 9 nhánh (i)"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dung_ruou_bia_lam_qua_khuyen_mai",
+      "gloss": "dùng rượu, bia để khuyến mại dưới mọi hình thức (làm quà, hàng tặng)",
+      "sources": [
+        "Điều 5 khoản 9 nhánh (ii)"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "ban_ruou_bia_bang_may_tu_dong",
+      "gloss": "bán rượu, bia bằng máy bán hàng tự động",
+      "sources": [
+        "Điều 5 khoản 11 nhánh (ii)"
+      ],
+      "status": "proposed"
+    }
+  ],
+  "atoms": [
+    {
+      "id": "tuoi_nguoi_nhan",
+      "kind": "situation",
+      "domain": [
+        {
+          "label": "chưa đủ 18 tuổi",
+          "source": "Điều 5 khoản 3"
+        },
+        {
+          "label": "từ đủ 18 tuổi trở lên",
+          "note": "không khoản nào nêu; là phần bù của «chưa đủ 18 tuổi» (Điều 5 khoản 3), giả định của người mã hóa"
+        }
+      ],
+      "gloss": "tuổi của người được bán, cung cấp hoặc khuyến mại rượu, bia",
+      "sources": [
+        "Điều 5 khoản 3"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "do_con",
+      "kind": "situation",
+      "domain": [
+        {
+          "label": "dưới 15 độ",
+          "note": "phần bù của «từ 15 độ trở lên» (Điều 5 khoản 9); Điều 11 có tiêu đề «có độ cồn dưới 15 độ». Chưa tách ngưỡng 5,5 độ của Điều 12, 13, 15"
+        },
+        {
+          "label": "từ 15 độ trở lên",
+          "source": "Điều 5 khoản 9"
+        }
+      ],
+      "gloss": "độ cồn của rượu, bia (Điều 2 khoản 4 định nghĩa độ cồn)",
+      "sources": [
+        "Điều 2 khoản 4",
+        "Điều 5 khoản 9"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_co_so_y_te",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở y tế",
+      "sources": [
+        "Điều 19 khoản 1"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_co_so_giao_duc",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở giáo dục",
+      "sources": [
+        "Điều 19 khoản 2"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_cham_soc_vui_choi",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí",
+      "sources": [
+        "Điều 19 khoản 3"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_cai_nghien_giam_giu",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác",
+      "sources": [
+        "Điều 19 khoản 4"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_bao_tro_xa_hoi",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở bảo trợ xã hội",
+      "sources": [
+        "Điều 19 khoản 5"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_noi_lam_viec_co_quan",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập",
+      "sources": [
+        "Điều 19 khoản 6"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_duoc_phep_kinh_doanh",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm được phép kinh doanh rượu, bia (ngoại lệ của Điều 19 khoản 6)",
+      "sources": [
+        "Điều 19 khoản 6"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "danh_cho_nguoi_chua_du_18",
+      "kind": "parameter",
+      "domain": "bool",
+      "gloss": "địa điểm «dành cho» người chưa đủ 18 tuổi (khái niệm mở, luật không định nghĩa)",
+      "sources": [
+        "Điều 19 khoản 3"
+      ],
+      "status": "proposed"
+    }
+  ]
+}

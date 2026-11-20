@@ -36,6 +36,7 @@ ROOT_FILE = os.path.join(ROOT, "LexProof.lean")
 AUDIT_FILE = os.path.join(ROOT, "LexProof", "Cert", "Audit.lean")
 TICKS = "☑☒✓✔"
 SHA_LINE = re.compile(r"^sha256 bản dịch:\s*`?([0-9a-f]{64})`?\s*$", re.M)
+GSHA_LINE = re.compile(r"^sha256 bảng thuật ngữ:\s*`?([0-9a-f]{64})`?\s*$", re.M)
 FIELD = re.compile(r"^(Người duyệt|Ngày duyệt \(YYYY-MM-DD\)):[ \t]*(.*)$", re.M)
 MOD = {"prohibition": "cấm", "obligation": "bắt buộc", "permission": "được phép"}
 
@@ -72,9 +73,16 @@ def make_sheet(path, data):
          "Đánh dấu **đúng một** ô ở mỗi hàng bằng cách đổi `☐` thành `☒`. Đọc từng norm với chữ của luật (cột «Trích dẫn» và "
          "văn bản gốc). Bác một norm thì phải ghi lý do; norm đó sẽ được ghi là «không mã hóa» kèm lý do của bạn.",
          "Bác một giả định, hoặc không đồng ý để một khoản ngoài phạm vi, thì bản dịch **không** được đưa vào thư viện: phải dịch lại.",
-         "", "Bản dịch: `%s`" % rel, "", "sha256 bản dịch: %s" % sha_lf(path), "",
-         "Người duyệt: ", "", "Ngày duyệt (YYYY-MM-DD): ", "",
-         "## 1. Norm", "",
+         "", "Bản dịch: `%s`" % rel, "", "sha256 bản dịch: %s" % sha_lf(path), ""]
+    if "glossary" in data:
+        m = T.materialize(data)
+        L += ["Bảng thuật ngữ: `%s`" % data["glossary"], "", "sha256 bảng thuật ngữ: %s" % m["glossary_sha256"], "",
+              "## 0. Thuật ngữ bản dịch dùng (chỉ để đọc; duyệt ở phiếu bảng thuật ngữ, trước phiếu này)", ""]
+        L += [("  - " + t.strip()) if t.startswith("  ") else ("- " + t) for t in m["glossary_terms"]]
+        L += ["", "Một id dùng ở nhiều điều là **một** khái niệm. Nếu norm dưới đây dùng id theo nghĩa khác giải thích ở trên, "
+              "hãy bác norm đó và ghi lý do.", ""]
+    L += ["Người duyệt: ", "", "Ngày duyệt (YYYY-MM-DD): ", "",
+          "## 1. Norm", "",
          "| Mã | Nguồn | Trích dẫn | Tính chất | Hành vi | Áp dụng khi | Ngoại lệ | Quyết định | Lý do (bắt buộc nếu bác) |",
          "|---|---|---|---|---|---|---|---|---|"]
     for n in data["norms"]:
@@ -96,21 +104,46 @@ def make_sheet(path, data):
 def ticked(cell):
     """Index of the one ticked option (0, 1, ...) or None if zero or several are ticked."""
     opts = [o.strip() for o in cell.split("<br>")]
-    marks = [i for i, o in enumerate(opts) if o[:1] in TICKS or o.lower().startswith("[x]")]
+    # `o and`: an empty option (a trailing «<br>») is not a tick; "" is a substring of every string
+    marks = [i for i, o in enumerate(opts) if o and (o[:1] in TICKS or o.lower().startswith("[x]"))]
     return marks[0] if len(marks) == 1 else None
 
 
-def parse_sheet(text):
+def parse_sheet(text, kinds="NAX"):
+    """Rows keyed by (kind letter, id); `kinds` are the row prefixes of this kind of sheet (glossary sheets use T)."""
     rows = {}
     for line in text.splitlines():
-        m = re.match(r"^\|\s*([NAX]):(.+?)\s*\|", line)
+        m = re.match(r"^\|\s*([%s]):(.+?)\s*\|" % kinds, line)
         if m:
-            cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip())[1:-1]]
+            body = line.strip()[1:]
+            if body.endswith("|") and not body.endswith("\\|"):
+                body = body[:-1]
+            cells = [c.strip() for c in re.split(r"(?<!\\)\|", body)]   # works with or without the closing «|»
             rows[(m.group(1), m.group(2))] = cells
     fields = dict((k, v.strip()) for k, v in FIELD.findall(text))
     s = SHA_LINE.search(text)
-    return {"rows": rows, "sha": s.group(1) if s else None, "reviewer": fields.get("Người duyệt", ""),
+    gs = GSHA_LINE.search(text)
+    return {"rows": rows, "sha": s.group(1) if s else None, "glossary_sha": gs.group(1) if gs else None, "reviewer": fields.get("Người duyệt", ""),
             "date": fields.get("Ngày duyệt (YYYY-MM-DD)", "")}
+
+
+def decision(cells, col, what):
+    """(index of the ticked option or None, problem text or None) for one row's decision cell."""
+    if len(cells) <= col:
+        return None, ("%s: hàng bị hỏng định dạng (thiếu cột «Quyết định»; có %d cột, cần ít nhất %d). "
+                      "Đừng xóa hay nối dòng; chỉ đổi ☐ thành ☒." % (what, len(cells), col + 1))
+    t = ticked(cells[col])
+    if t is not None:
+        return t, None
+    n_opts = len([o for o in cells[col].split("<br>") if o.strip()])
+    if n_opts < 2:
+        return None, ("%s: ô quyết định chỉ còn một lựa chọn («%s»): có thể đã xóa lựa chọn kia. "
+                      "Giữ cả hai lựa chọn và đổi ☐ thành ☒ ở đúng một ô." % (what, cells[col].strip()[:40]))
+    return None, "%s: cần đánh dấu đúng một ô" % what
+
+
+def reason_of(cells, col):
+    return cells[col].strip() if len(cells) > col else ""
 
 
 def sheet_problems(data, tr_path, sheet):
@@ -118,6 +151,9 @@ def sheet_problems(data, tr_path, sheet):
     out = []
     if sheet["sha"] != sha_lf(tr_path):
         out.append("sha256 trong phiếu khác bản dịch hiện tại (bản dịch đã đổi sau khi lập phiếu, hoặc phiếu của tệp khác)")
+    if "glossary" in data and sheet.get("glossary_sha") != T.glossary_sha(T.glossary_rel(data["doc_id"])):
+        out.append("sha256 bảng thuật ngữ trong phiếu khác bảng hiện tại (bảng đã đổi sau khi lập phiếu, nghĩa của các id có thể "
+                   "đã khác): lập lại phiếu và duyệt lại")
     if not sheet["reviewer"]:
         out.append("chưa ghi người duyệt")
     try:
@@ -130,25 +166,31 @@ def sheet_problems(data, tr_path, sheet):
         if cells is None:
             out.append("phiếu không có hàng cho norm %s" % n["id"])
             continue
-        t = ticked(cells[7])
-        if t is None:
-            out.append("norm %s: cần đánh dấu đúng một ô" % n["id"])
-        elif t == 1 and not cells[8].strip():
+        t, why = decision(cells, 7, "norm %s" % n["id"])
+        if why:
+            out.append(why)
+        elif t == 1 and not reason_of(cells, 8):
             out.append("norm %s: bác nhưng không ghi lý do" % n["id"])
         else:
-            decisions["accepted" if t == 0 else "rejected"].append((n["id"], cells[8].strip()))
+            decisions["accepted" if t == 0 else "rejected"].append((n["id"], reason_of(cells, 8)))
     for i, a in enumerate(data["assumptions"], 1):
         cells = sheet["rows"].get(("A", str(i)))
-        t = ticked(cells[2]) if cells else None
-        if t is None:
-            out.append("giả định A:%d: cần đánh dấu đúng một ô" % i)
+        if cells is None:
+            out.append("phiếu không có hàng cho giả định A:%d" % i)
+            continue
+        t, why = decision(cells, 2, "giả định A:%d" % i)
+        if why:
+            out.append(why)
         elif t == 1:
             out.append("giả định A:%d bị bác: bản dịch phải làm lại, không đưa vào thư viện" % i)
     for i, e in enumerate(data["not_encoded"], 1):
         cells = sheet["rows"].get(("X", str(i)))
-        t = ticked(cells[3]) if cells else None
-        if t is None:
-            out.append("khoản để ngoài X:%d: cần đánh dấu đúng một ô" % i)
+        if cells is None:
+            out.append("phiếu không có hàng cho khoản để ngoài X:%d" % i)
+            continue
+        t, why = decision(cells, 3, "khoản để ngoài X:%d" % i)
+        if why:
+            out.append(why)
         elif t == 1:
             out.append("không đồng ý để ngoài %s: bản dịch phải làm lại" % e["clause"])
     if not out and not decisions["accepted"]:
@@ -176,7 +218,6 @@ def module_text(name, merged, seg, reviews, consistent):
     rs, sl = T.readers(sit)
     rp, pl = T.readers(par)
     y, m, d = (int(x) for x in merged["effective"].split("-"))
-    nmax = max(a["number"] for a in seg["articles"])
     acts = sorted({n["act"] for n in merged["norms"]})
     reviewer, rdate = reviews[0][4], reviews[0][5]
     ry, rm, rd = (int(x) for x in rdate.split("-"))
@@ -186,27 +227,36 @@ def module_text(name, merged, seg, reviews, consistent):
          "Written by `pipeline/%s`. **Reviewed** here means only: a person ticked every row of the sheet(s) below, and" % TOOL,
          "the sheet names the sha256 of the translation it was about. The tool does not check who the person is, nor",
          "whether the answers are right. Faithfulness to the law is not proved by anything in this file.", "",
+         ] + ([
+         "Atoms of the glossary keep their id and are shared by every article that uses them; every term used was",
+         "`approved` in the glossary file named below (ADR-0027). Other atom names, and all norm ids, carry their article.",
+         "A wrong merge (two different concepts under one id) is stopped only by the glossary reviewer."]
+         if merged.get("glossary_terms") else [
          "Atom names and norm ids carry their article («Điều 5 · ...»): two articles never share an atom, so a",
-         "conflict that depends on a concept shared by two articles can be missed (a shared glossary, FR2, is not done).", "",
-         "Review sheets:"]
+         "conflict that depends on a concept shared by two articles can be missed (no translation here uses the glossary)."]
+         ) + ["", "Review sheets:"]
     for tr, tsha, sh, ssha, who, when, acc, rej in reviews:
         L.append("* `%s` (sha256 `%s`), sheet `%s` (sha256 `%s`), %s, %s: accepted %d, rejected %d%s" % (
             tr, tsha, sh, ssha, who.replace("-/", "- /"), when, len(acc), len(rej), (" (" + ", ".join(rej) + ")") if rej else ""))
     L += ["", "Assumptions accepted on the sheets:"]
     L += ["* " + a.replace("-/", "- /") for a in merged["assumptions"]] or ["* (none)"]
+    L += T.glossary_header(merged)
     L += ["-/", "", "namespace LexProof.Laws.%s" % name, "", "open LexProof", "",
           "def tS : AtomTable :=", ("  [ " + "\n  , ".join(T.atom_lean(a) for a in sit) + " ]") if sit else "  []", "",
           "def tP : AtomTable :=", ("  [ " + "\n  , ".join(T.atom_lean(a) for a in par) + " ]") if par else "  []", "",
           "def rS : List ReaderSpec :=", ("  [ " + "\n  , ".join("(%s, %d, %d)" % (q(n), i, j) for n, i, j in rs) + " ]") if rs else "  []", "",
           "def rP : List ReaderSpec :=", ("  [ " + "\n  , ".join("(%s, %d, %d)" % (q(n), i, j) for n, i, j in rp) + " ]") if rp else "  []", "",
-          "def catalog : List String := (List.range %d).map fun i => \"Điều \" ++ toString (i + 1)" % nmax, "",
-          "private def nrm (id : String) (mo : Modality) (act : String) (c : Cond) (ex : List Cond) (art : String) : Norm :=",
+          "/-- Every legal unit of the document (articles, clauses, points), for the dangling-reference check. -/",
+          T.catalog_lean(seg), "",
+          "private def nrm (id : String) (mo : Modality) (act : String) (c : Cond) (ex : List Cond) (art : String)",
+          "    (refs : List String) : Norm :=",
           "  { id := id, modality := mo, act := act, condition := c, exceptions := ex, priority := none",
           "  , source := { docId := %s, docType := %s, effective := ⟨%d, %d, %d⟩, article := art }" % (
               q(merged["doc_id"]), T.DOC_TYPES[merged["doc_type"]], y, m, d),
-          "  , references := [] }", "", "def norms : List Norm :="]
-    ns = ["nrm %s %s %s %s [%s] %s" % (q(n["id"]), T.MODALITIES[n["modality"]], q(n["act"]), T.cond_lean(n["condition"], sl, pl),
-                                       ", ".join(T.cond_lean(e, sl, pl) for e in n["exceptions"]), q(n["source"])) for n in merged["norms"]]
+          "  , references := refs }", "", "def norms : List Norm :="]
+    ns = ["nrm %s %s %s %s [%s] %s %s" % (q(n["id"]), T.MODALITIES[n["modality"]], q(n["act"]), T.cond_lean(n["condition"], sl, pl),
+                                          ", ".join(T.cond_lean(e, sl, pl) for e in n["exceptions"]), q(n["source"]), T.refs_lean(n))
+          for n in merged["norms"]]
     L += ["  [ " + "\n  , ".join(ns) + " ]", "",
           "/-- Clauses not encoded, with the reason (from the translation or from the reviewer). Never a silent skip. -/",
           "def notEncoded : List (String × String) :=",
@@ -216,7 +266,8 @@ def module_text(name, merged, seg, reviews, consistent):
           "def status : ReviewStatus := .reviewed %s ⟨%d, %d, %d⟩" % (q(reviewer), ry, rm, rd), "",
           "/-- Every clause reference of the module, as written. -/",
           "def usedRefs : List String :=",
-          "  norms.map (fun n => n.source.article) ++ notEncoded.map (·.1) ++ (tS ++ tP).map (·.source) ++",
+          "  norms.map (fun n => n.source.article) ++ norms.flatMap (·.references) ++ notEncoded.map (·.1) ++",
+          "  (tS ++ tP).map (·.source) ++",
           "  (tS ++ tP).flatMap fun a => match a.domain with | .bool => [] | .enum vs => vs.map (·.source)", "",
           "def unparsable : List String :=",
           "  usedRefs.filter fun s => match parseEntry s with | .ok _ => false | .error _ => true", "",
@@ -262,7 +313,7 @@ def promote(name, pairs, build=True):
         data = json.load(open(tr, encoding="utf-8"))
         fs = T.check(data)
         if fs:
-            problems += ["%s: bản dịch có %d phát hiện của `check`" % (RUN.rel(tr), len(fs))]
+            problems += ["%s: bản dịch có %d phát hiện của `check`: %s" % (RUN.rel(tr), len(fs), fs[0])]
             continue
         if data["article"] in seen:
             problems.append("%s: Điều %d có hai bản dịch" % (RUN.rel(tr), data["article"]))
@@ -273,7 +324,16 @@ def promote(name, pairs, build=True):
         if ps:
             problems += ["%s: %s" % (RUN.rel(sh), p) for p in ps]
             continue
-        accepted.append(apply_decisions(data, dec, sheet["reviewer"], sheet["date"]))
+        m = T.materialize(apply_decisions(data, dec, sheet["reviewer"], sheet["date"]))
+        if m.get("unapproved"):     # FR2 AC: a term the glossary reviewer has not approved never enters the library
+            problems.append("%s: norm được chấp nhận dùng %d thuật ngữ chưa duyệt trong bảng: %s. Duyệt bảng thuật ngữ trước "
+                            "(ADR-0027), rồi lập lại phiếu" % (RUN.rel(tr), len(m["unapproved"]), ", ".join(m["unapproved"])))
+            continue
+        cs = RUN.shared_conflicts(accepted, m)
+        if cs:
+            problems += ["%s: %s" % (RUN.rel(tr), c) for c in cs]
+            continue
+        accepted.append(m)
         reviews.append((RUN.rel(tr), sha_lf(tr), RUN.rel(sh), sha_lf(sh), sheet["reviewer"], sheet["date"],
                         [i for i, _ in dec["accepted"]], [i for i, _ in dec["rejected"]]))
     if problems:
@@ -331,7 +391,7 @@ def main(argv=None):
         data = json.load(open(a.translation, encoding="utf-8"))
         fs = T.check(data)
         if fs:
-            print("TỪ CHỐI: bản dịch có %d phát hiện; sửa trước khi lập phiếu duyệt." % len(fs))
+            print("TỪ CHỐI: bản dịch có %d phát hiện; sửa trước khi lập phiếu duyệt. Đầu tiên: %s" % (len(fs), fs[0]))
             return 1
         with open(a.out, "w", encoding="utf-8", newline="\n") as f:
             f.write(make_sheet(a.translation, data))

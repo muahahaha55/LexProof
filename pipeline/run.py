@@ -8,8 +8,8 @@ answer), and:
 
 1. checks that the segmented text still matches the extracted file it was made from (else stops);
 2. runs `translate.check` on every file; a file with any finding is REFUSED and listed, never merged;
-3. merges the accepted files into one Lean draft (atom names are prefixed by their article, so two articles never
-   share an atom by accident; see the report for what this costs);
+3. merges the accepted files into one Lean draft: glossary atoms (ADR-0027) keep their id and are one atom across
+   articles; every other atom name is prefixed by its article, so two articles never share it by accident;
 4. runs Lean on the draft (`pfindings`, `analyzeReport`) with `lake env lean --run`;
 5. writes a Markdown report next to the draft.
 
@@ -28,6 +28,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import translate as T   # noqa: E402
+import derived as D     # noqa: E402
 
 ROOT = T.ROOT
 TOOL = "run.py 1.0"
@@ -51,33 +52,100 @@ def prefixed(name, art):
     return "Điều %d · %s" % (art, name)
 
 
-def rename_cond(c, art):
+def rename_cond(c, art, keep=frozenset()):
+    """Prefix every atom name by its article, except the shared (glossary) names in `keep`."""
     if c in ("true", "false"):
         return c
-    if "sit" in c:
-        return dict(c, sit=prefixed(c["sit"], art))
-    if "param" in c:
-        return dict(c, param=prefixed(c["param"], art))
+    for k in ("sit", "param"):
+        if k in c:
+            return dict(c, **{k: c[k] if c[k] in keep else prefixed(c[k], art)})
     if "not" in c:
-        return {"not": rename_cond(c["not"], art)}
+        return {"not": rename_cond(c["not"], art, keep)}
     k = "and" if "and" in c else "or"
-    return {k: [rename_cond(x, art) for x in c[k]]}
+    return {k: [rename_cond(x, art, keep) for x in c[k]]}
+
+
+def shared_atoms(d):
+    """{id: (kind, atom)} for the glossary atoms of a materialized translation."""
+    return {a["name"]: (kind, a) for kind in ("situation", "parameters") for a in d["atoms"][kind] if a.get("shared")}
+
+
+def shared_conflicts(accepted, d):
+    """Reasons why `d` cannot be merged with `accepted`: one glossary id with two kinds or two label lists (two
+    proposals with one id that disagree), or two different glossary files."""
+    out = []
+    for prev in accepted:
+        if "glossary_sha256" in d and "glossary_sha256" in prev and d["glossary_sha256"] != prev["glossary_sha256"]:
+            out.append("Điều %d và Điều %d dùng hai phiên bản khác nhau của bảng thuật ngữ" % (prev["article"], d["article"]))
+        mine, theirs = shared_atoms(d), shared_atoms(prev)
+        for i in sorted(mine.keys() & theirs.keys()):
+            (k1, a1), (k2, a2) = mine[i], theirs[i]
+            if T.shape({"kind": k1, "domain": a1["domain"]}) != T.shape({"kind": k2, "domain": a2["domain"]}):
+                out.append("atom «%s» có định nghĩa khác nhau ở Điều %d và Điều %d; không gộp" % (i, prev["article"], d["article"]))
+    return out
+
+
+def with_derived(merged, m):
+    """`merged` plus the derived norms of `m` (a materialized `derived.as_translation`): glossary atoms are shared by
+    id, so a derived norm speaks of the same atoms as the articles. Returns a new dict; `merged` is unchanged."""
+    out = json.loads(json.dumps(merged))
+    have = {a["name"]: (kind, a) for kind in ("situation", "parameters") for a in out["atoms"][kind]}
+    for kind in ("situation", "parameters"):
+        for a in m["atoms"][kind]:
+            if a["name"] in have:
+                k2, a2 = have[a["name"]]
+                if T.shape({"kind": kind, "domain": a["domain"]}) != T.shape({"kind": k2, "domain": a2["domain"]}):
+                    raise SystemExit("TỪ CHỐI: atom «%s» của norm suy ra khác atom cùng id của bản dịch" % a["name"])
+            else:
+                out["atoms"][kind].append(a)
+    out["norms"] += m["norms"]
+    out["assumptions"] += m["assumptions"]
+    out["glossary_terms"] = out.get("glossary_terms", []) + [t for t in m["glossary_terms"] if t not in out.get("glossary_terms", [])]
+    out["unapproved"] = sorted(set(out.get("unapproved", [])) | set(m["unapproved"]))
+    out["glossary"], out["glossary_sha256"] = m["glossary"], m["glossary_sha256"]
+    out["label"] = merged["label"] + " + norm suy ra"
+    return out
+
+
+PAIR = re.compile(r"^  · (.+) × (.+)$")
+
+
+def conflict_pairs(lean):
+    """The (left, right) pairs of a «XUNG ĐỘT» result, from the rendered report."""
+    if not lean or not lean.get("ok") or lean.get("result") != "XUNG ĐỘT":
+        return []
+    return [m.groups() for m in map(PAIR.match, lean["stdout"].splitlines()) if m]
 
 
 def merge(accepted):
-    """One translation dict from several accepted ones (already checked, one article each)."""
+    """One translation dict from several accepted ones (already checked and materialized, one article each, no
+    `shared_conflicts`). Glossary atoms keep their id and appear once; every other atom is prefixed by its article."""
     first = accepted[0]
     out = {"doc_id": first["doc_id"], "doc_type": first["doc_type"], "effective": first["effective"],
            "atoms": {"situation": [], "parameters": []}, "norms": [], "not_encoded": [], "assumptions": []}
+    seen, terms = set(), []
     for d in accepted:
         art = d["article"]
+        keep = frozenset(shared_atoms(d))
         for kind in ("situation", "parameters"):
-            out["atoms"][kind] += [dict(a, name=prefixed(a["name"], art)) for a in d["atoms"][kind]]
+            for a in d["atoms"][kind]:
+                if a["name"] in keep:
+                    if a["name"] not in seen:
+                        seen.add(a["name"])
+                        out["atoms"][kind].append(a)
+                else:
+                    out["atoms"][kind].append(dict(a, name=prefixed(a["name"], art)))
         for n in d["norms"]:
-            out["norms"].append(dict(n, id="Điều %d:%s" % (art, n["id"]), condition=rename_cond(n["condition"], art),
-                                     exceptions=[rename_cond(e, art) for e in n["exceptions"]]))
+            out["norms"].append(dict(n, id="Điều %d:%s" % (art, n["id"]), condition=rename_cond(n["condition"], art, keep),
+                                     exceptions=[rename_cond(e, art, keep) for e in n["exceptions"]]))
         out["not_encoded"] += d["not_encoded"]
         out["assumptions"] += ["Điều %d: %s" % (art, a) for a in d["assumptions"]]
+        if "glossary" in d:
+            out["glossary"], out["glossary_sha256"] = d["glossary"], d["glossary_sha256"]
+            terms += [t for t in d["glossary_terms"] if t not in terms]
+            out["unapproved"] = sorted(set(out.get("unapproved", [])) | set(d["unapproved"]))
+    if terms:
+        out["glossary_terms"] = terms
     out["label"] = "Điều " + ", ".join(str(d["article"]) for d in accepted)
     return out
 
@@ -96,12 +164,16 @@ def admit(files, seg):
             fs = T.check(d)
         except (AttributeError, KeyError, TypeError) as e:   # a shape check.check did not foresee: refuse, never crash
             fs = ["tệp không đúng lược đồ: %r" % e]
+        if not fs:
+            d = T.materialize(d)
         if not fs and d["doc_id"] != seg["doc_id"]:
             fs = ["doc_id «%s» khác văn bản đang chạy «%s»" % (d["doc_id"], seg["doc_id"])]
         if not fs and d["article"] in seen:
             fs = ["Điều %d đã có ở %s; mỗi điều chỉ một bản dịch" % (d["article"], seen[d["article"]])]
         if not fs and accepted and (d["doc_type"], d["effective"]) != (accepted[0]["doc_type"], accepted[0]["effective"]):
             fs = ["doc_type/effective khác các tệp đã nhận (%s, %s)" % (d["doc_type"], d["effective"])]
+        if not fs:
+            fs = shared_conflicts(accepted, d)
         info.append({"file": p, "sha256": sha_lf(p), "article": d.get("article") if isinstance(d, dict) else None})
         if fs:
             refused.append((p, fs))
@@ -163,7 +235,49 @@ def git_commit():
         return "không có thông tin"
 
 
-def render(doc, seg, extracted_ok, accepted, refused, info, merged, lean, lean_path, today):
+def render_derived(w, dres):
+    """Section 5b: the run with derived norms. Its result is about the readings, never about the law."""
+    w("## 5b. Kiểm thêm với norm suy ra (KHÔNG phải chữ luật)")
+    w("")
+    w("Tệp `%s` (sha256 `%s`). Mỗi norm dưới đây là một **cách đọc** mà luật không viết thẳng (ADR-0028); kết quả mục này "
+      "chỉ nói về các cách đọc đó." % (rel(dres["file"]), dres["sha256"]))
+    w("")
+    for e in dres["entries"]:
+        w("- **%s%s** [%s, đề xuất bởi %s], suy ra từ %s: %s" % (D.PREFIX, e.get("id"), e.get("status"), e.get("proposed_by"),
+                                                             "; ".join(e.get("derived_from") or []), e.get("reading")))
+    w("")
+    if dres["findings"]:
+        w("**KHÔNG BIẾT** — tệp norm suy ra có %d phát hiện, không chạy:" % len(dres["findings"]))
+        for f in dres["findings"]:
+            w("  - %s" % f)
+        w("")
+        return
+    head, why = verdict(dres["lean"], True)
+    w("**%s** (khi thêm norm suy ra) — %s." % (head.upper(), why))
+    w("")
+    pairs = conflict_pairs(dres["lean"])
+    dep = [p for p in pairs if p[0].startswith(D.PREFIX) or p[1].startswith(D.PREFIX)]
+    if pairs:
+        w("Cặp xung đột chỉ có vì một norm suy ra: %d/%d. Mỗi cặp như vậy nghĩa là: **nếu** đọc luật theo cách suy ra đó thì "
+          "hai norm khắc nhau ở một tình huống; đó là lý do để sửa hoặc thêm ngoại lệ cho cách đọc (hoặc bác nó), "
+          "**không** phải bằng chứng luật mâu thuẫn." % (len(dep), len(pairs)))
+        w("")
+        for a, b in pairs:
+            w("- %s × %s%s" % (a, b, "" if (a, b) in dep else " (không dính norm suy ra: xem mục 1)"))
+        w("")
+    w("Bản nháp: `%s`." % rel(dres["lean_path"]))
+    w("")
+    if dres["lean"] is not None:
+        w("```")
+        w((dres["lean"]["stdout"] or "").rstrip() or "(không có đầu ra)")
+        if not dres["lean"]["ok"]:
+            w("--- stderr ---")
+            w((dres["lean"]["stderr"] or "").rstrip()[:4000])
+        w("```")
+        w("")
+
+
+def render(doc, seg, extracted_ok, accepted, refused, info, merged, lean, lean_path, today, dres=None):
     L = []
     w = L.append
     head, why = verdict(lean, bool(accepted) and extracted_ok)
@@ -178,6 +292,9 @@ def render(doc, seg, extracted_ok, accepted, refused, info, merged, lean, lean_p
     w("")
     w("**%s** — %s." % (head.upper(), why))
     w("")
+    if dres:
+        w("Kết quả trên chỉ xét các norm dịch từ chữ luật. Lần kiểm thêm với norm suy ra ở mục 5b và không đổi kết quả này.")
+        w("")
     w("Kết quả chỉ nhận một trong ba giá trị: tìm thấy xung đột / nhất quán trên phần đã mã hóa / không biết. Kết quả Lean ở "
       "đây là **Evaluated** (chạy mã đã biên dịch), không phải định lý kernel.")
     w("")
@@ -238,10 +355,24 @@ def render(doc, seg, extracted_ok, accepted, refused, info, merged, lean, lean_p
             w((lean["stderr"] or "").rstrip()[:4000])
         w("```")
     w("")
-    w("Giới hạn của cách gộp: mỗi atom được gắn tên điều («Điều 5 · ...»), nên hai điều nói cùng một khái niệm vẫn có hai "
-      "atom khác nhau. Nhờ vậy không có gộp nhầm, nhưng xung đột phụ thuộc vào khái niệm dùng chung có thể bị bỏ sót. "
-      "Sửa đúng cách là một bảng thuật ngữ chung (FR2, chưa làm).")
+    if merged and merged.get("glossary_terms"):
+        w("Cách gộp: atom của bảng thuật ngữ (`%s`, sha256 `%s`) giữ id và là **một** atom dù nhiều điều dùng; atom riêng "
+          "của một điều (bản dịch không dùng bảng) được gắn tên điều («Điều 5 · ...»). Gộp nhầm hai khái niệm khác nhau "
+          "dưới một id chỉ người duyệt bảng chặn được." % (merged["glossary"], merged["glossary_sha256"]))
+        w("")
+        un = merged.get("unapproved", [])
+        w("Thuật ngữ đang dùng mà **chưa duyệt** trong bảng: %s. `promote.py` từ chối cho tới khi bảng duyệt hết." % (
+            ", ".join(un) if un else "không có"))
+        w("")
+        for t in merged["glossary_terms"]:
+            w(("  - " + t.strip()) if t.startswith("  ") else ("- " + t))
+    else:
+        w("Giới hạn của cách gộp: mỗi atom được gắn tên điều («Điều 5 · ...»), nên hai điều nói cùng một khái niệm vẫn có hai "
+          "atom khác nhau. Nhờ vậy không có gộp nhầm, nhưng xung đột phụ thuộc vào khái niệm dùng chung có thể bị bỏ sót. "
+          "Bản dịch dùng bảng thuật ngữ (`translate.py prompt --glossary`, ADR-0027) thì dùng chung được atom.")
     w("")
+    if dres:
+        render_derived(w, dres)
     w("## 6. Báo cáo này KHÔNG nói gì")
     w("")
     w("- Không nói bản dịch khớp luật; chỉ người đọc luật kiểm được điều đó.")
@@ -287,8 +418,28 @@ def compact(nums):
 
 # ------------------------------------------------------------------ main
 
-def run(doc, files, out_dir, lean=True, today=None):
-    """Returns (report path, report text, headline)."""
+def run_derived(path, merged, seg, lean_path, lean):
+    """Second run with the derived norms of `path` added (ADR-0028). Returns a dict for `render`."""
+    out = {"file": path, "sha256": sha_lf(path), "findings": [], "lean": None, "lean_path": lean_path, "entries": []}
+    dd = D.load(path)
+    out["entries"] = dd.get("derived", [])
+    try:
+        out["findings"] = D.check(dd)
+    except (AttributeError, KeyError, TypeError) as e:
+        out["findings"] = ["tệp không đúng lược đồ: %r" % e]
+    if out["findings"] or not merged:
+        return out
+    m = T.materialize(D.as_translation(dd, merged["doc_type"], merged["effective"]))
+    with open(lean_path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(T.to_lean(with_derived(merged, m), seg))
+    if lean:
+        out["lean"] = run_lean(lean_path)
+    return out
+
+
+def run(doc, files, out_dir, lean=True, today=None, derived=None):
+    """Returns (report path, report text, headline). The headline is about the text as translated; the derived run
+    (if any) never changes it."""
     today = today or datetime.date.today().isoformat()
     seg = T.load_segmented(doc)
     seg["doc_id"] = doc
@@ -305,7 +456,8 @@ def run(doc, files, out_dir, lean=True, today=None):
             f.write(T.to_lean(merged, seg))
         if lean:
             result = run_lean(lean_path)
-    text = render(doc, seg, extracted_ok, accepted, refused, info, merged, result, lean_path, today)
+    dres = run_derived(derived, merged, seg, os.path.join(out_dir, stem + "-suy-ra.lean"), lean) if derived else None
+    text = render(doc, seg, extracted_ok, accepted, refused, info, merged, result, lean_path, today, dres)
     rep = os.path.join(out_dir, stem + ".md")
     with open(rep, "w", encoding="utf-8", newline="\n") as f:
         f.write(text)
@@ -321,8 +473,9 @@ def main(argv=None):
     ap.add_argument("--doc", default="44/2019/QH14", choices=sorted(DOC_FILES))
     ap.add_argument("--out-dir", default=os.path.join(ROOT, "eval", "run"))
     ap.add_argument("--no-lean", action="store_true")
+    ap.add_argument("--derived", help="tệp norm suy ra (ADR-0028); Lean chạy thêm một lần có các norm đó, báo riêng")
     a = ap.parse_args(argv)
-    rep, _, head = run(a.doc, a.files, a.out_dir, lean=not a.no_lean)
+    rep, _, head = run(a.doc, a.files, a.out_dir, lean=not a.no_lean, derived=a.derived)
     print("%s\nkết quả: %s" % (rep, head))
     return 0
 

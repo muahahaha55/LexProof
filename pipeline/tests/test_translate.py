@@ -68,6 +68,19 @@ class Check(unittest.TestCase):
         del d["assumptions"]
         self.assertTrue(has(T.check(d), "thiếu khóa"))
 
+    def test_references_must_name_existing_legal_units(self):
+        d = copy.deepcopy(GOLD)
+        d["norms"][5]["references"] = ["Điều 15 khoản 4", "Điều 15 khoản 1 điểm a"]
+        self.assertEqual(T.check(d), [])
+        d["norms"][5]["references"] = ["Điều 15 khoản 9"]
+        self.assertTrue(has(T.check(d), "dẫn chiếu", "không tồn tại"))
+        d["norms"][5]["references"] = ["pháp luật về khuyến mại"]
+        self.assertTrue(has(T.check(d), "dẫn chiếu", "không phân tích được"))
+        d["norms"][5]["references"] = ["Điều 5 khoản 11 nhánh (i)"]
+        self.assertTrue(has(T.check(d), "phải là một đơn vị của luật"))
+        d["norms"][5]["references"] = "Điều 15"
+        self.assertTrue(has(T.check(d), "references phải là danh sách"))
+
     def test_parse_ref_grammar(self):
         self.assertEqual(T.parse_ref("Điều 19 khoản 6")["clause"], 6)
         self.assertEqual(T.parse_ref("Điều 5 khoản 11 nhánh (ii)")["branch"], "ii")
@@ -86,6 +99,17 @@ class Outputs(unittest.TestCase):
         self.assertIn("«quote»", p)
         self.assertIn("số La Mã", p)      # a real run wrote «nhánh (1)» and was refused (RECORD.md)
         self.assertIn("not_encoded", p)
+        p15 = T.make_prompt(seg, 15)
+        self.assertIn('"article": 15', p15)    # the schema example used to say 19 whatever the article
+        self.assertNotIn("Điều 19", p15.split("### Lược đồ JSON")[1])
+        self.assertIn("[Điều 15 khoản 1 điểm d]", p15)
+        self.assertIn("«references»", p15)
+
+    def test_catalog_has_every_unit(self):
+        ids = T.unit_ids(T.load_segmented("44/2019/QH14"))
+        self.assertEqual(len(ids), 36 + 141 + 45)
+        self.assertIn("Điều 15 khoản 1 điểm a", ids)
+        self.assertEqual(len(ids), len(set(ids)))
 
     def test_lean_draft_is_marked_and_outside_laws(self):
         seg = T.load_segmented(GOLD["doc_id"])
@@ -143,6 +167,27 @@ class LeanRun(unittest.TestCase):
             self.assertIn("DRAFT, NOT HUMAN REVIEWED", r.stdout)
         finally:
             shutil.rmtree(tmp)
+
+    def run_draft(self, data):
+        tmp = tempfile.mkdtemp()
+        try:
+            out = os.path.join(tmp, "Draft.lean")
+            with open(out, "w", encoding="utf-8") as f:
+                f.write(T.to_lean(data, T.load_segmented(data["doc_id"])))
+            r = subprocess.run(["lake", "env", "lean", "--run", out], cwd=T.ROOT, capture_output=True, text=True, encoding="utf-8")
+            self.assertEqual(r.returncode, 0, r.stderr + r.stdout)
+            return r.stdout
+        finally:
+            shutil.rmtree(tmp)
+
+    def test_lean_checks_references_at_clause_and_point_level(self):
+        d = copy.deepcopy(GOLD)
+        d["norms"][5]["references"] = ["Điều 15 khoản 4", "Điều 15 khoản 1 điểm a"]
+        self.assertIn("pfindings: 0", self.run_draft(d))
+        d["norms"][5]["references"] = ["Điều 15 khoản 9"]     # `check` refuses this; Lean must catch it too
+        out = self.run_draft(d)
+        self.assertIn("pfindings: 1", out)
+        self.assertIn("danglingReference", out)
 
 
 if __name__ == "__main__":

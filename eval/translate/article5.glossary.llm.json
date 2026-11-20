@@ -1,0 +1,184 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 5,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {"situation": [], "parameters": []},
+  "glossary_proposals": {
+    "acts": [
+      {"id": "xui_giuc_ep_buoc_uong_ruou_bia", "gloss": "xúi giục, kích động, lôi kéo, ép buộc người khác uống rượu, bia", "sources": ["Điều 5 khoản 1"]},
+      {"id": "uong_ruou_bia", "gloss": "uống rượu, bia", "sources": ["Điều 5 khoản 2", "Điều 5 khoản 5"]},
+      {"id": "su_dung_lao_dong_truc_tiep_san_xuat_mua_ban_ruou_bia", "gloss": "sử dụng người lao động trực tiếp tham gia vào việc sản xuất, mua bán rượu, bia", "sources": ["Điều 5 khoản 4"]},
+      {"id": "dieu_khien_phuong_tien_giao_thong", "gloss": "điều khiển phương tiện giao thông (mọi loại)", "sources": ["Điều 5 khoản 6"]},
+      {"id": "quang_cao_ruou_bia", "gloss": "quảng cáo rượu, bia", "sources": ["Điều 5 khoản 7"]},
+      {"id": "cung_cap_thong_tin_ve_anh_huong_suc_khoe_cua_ruou_bia", "gloss": "cung cấp thông tin về ảnh hưởng của rượu, bia đối với sức khỏe (khác cung_cap_ruou_bia là cung cấp đồ uống)", "sources": ["Điều 5 khoản 8"]},
+      {"id": "su_dung_nguyen_lieu_san_xuat_pha_che_ruou_bia", "gloss": "sử dụng nguyên liệu, phụ gia, chất hỗ trợ chế biến để sản xuất, pha chế rượu, bia", "sources": ["Điều 5 khoản 10"]},
+      {"id": "kinh_doanh_ruou_bia", "gloss": "kinh doanh rượu, bia", "sources": ["Điều 5 khoản 11 nhánh (i)", "Điều 5 khoản 12 nhánh (i)"]},
+      {"id": "tang_tru_ruou_bia", "gloss": "tàng trữ rượu, bia", "sources": ["Điều 5 khoản 12 nhánh (i)"]},
+      {"id": "van_chuyen_ruou_bia", "gloss": "vận chuyển rượu, bia", "sources": ["Điều 5 khoản 12 nhánh (i)"]},
+      {"id": "nhap_lau_ruou_bia", "gloss": "nhập lậu rượu, bia (bản thân hành vi đưa hàng vào trái phép)", "sources": ["Điều 5 khoản 12 nhánh (ii)"]}
+    ],
+    "atoms": [
+      {"id": "tuoi_nguoi_uong", "kind": "situation", "gloss": "tuổi của người uống rượu, bia", "sources": ["Điều 5 khoản 2"],
+       "domain": [
+         {"label": "chưa đủ 18 tuổi", "source": "Điều 5 khoản 2"},
+         {"label": "từ đủ 18 tuổi trở lên", "note": "nhãn bù để miền đầy đủ; không khoản nào nêu trực tiếp"}
+       ]},
+      {"id": "tuoi_nguoi_lao_dong", "kind": "situation", "gloss": "tuổi của người lao động được sử dụng", "sources": ["Điều 5 khoản 4"],
+       "domain": [
+         {"label": "chưa đủ 18 tuổi", "source": "Điều 5 khoản 4"},
+         {"label": "từ đủ 18 tuổi trở lên", "note": "nhãn bù để miền đầy đủ; không khoản nào nêu trực tiếp"}
+       ]},
+      {"id": "nguoi_uong_thuoc_doi_tuong_dieu_5_khoan_5", "kind": "situation", "domain": "bool",
+       "gloss": "người uống là cán bộ, công chức, viên chức, người lao động trong các cơ quan, tổ chức, sĩ quan, hạ sĩ quan, quân nhân chuyên nghiệp, chiến sĩ, người làm việc trong lực lượng vũ trang nhân dân, học sinh hoặc sinh viên", "sources": ["Điều 5 khoản 5"]},
+      {"id": "ngay_truoc_gio_lam_viec_hoc_tap", "kind": "parameter", "domain": "bool",
+       "gloss": "thời điểm uống là «ngay trước» giờ làm việc, học tập của người đó (khái niệm mở, luật không định lượng)", "sources": ["Điều 5 khoản 5"]},
+      {"id": "trong_gio_lam_viec_hoc_tap", "kind": "situation", "domain": "bool",
+       "gloss": "thời điểm uống nằm trong giờ làm việc, học tập của người đó", "sources": ["Điều 5 khoản 5"]},
+      {"id": "nghi_giua_gio_lam_viec_hoc_tap", "kind": "situation", "domain": "bool",
+       "gloss": "thời điểm uống là lúc nghỉ giữa giờ làm việc, học tập của người đó", "sources": ["Điều 5 khoản 5"]},
+      {"id": "co_nong_do_con_trong_mau_hoac_hoi_tho", "kind": "situation", "domain": "bool",
+       "gloss": "trong máu hoặc hơi thở của người điều khiển có nồng độ cồn", "sources": ["Điều 5 khoản 6"]},
+      {"id": "loai_do_uong", "kind": "situation", "gloss": "đồ uống là rượu hay bia", "sources": ["Điều 5 khoản 7", "Điều 5 khoản 11 nhánh (i)"],
+       "domain": [
+         {"label": "rượu", "source": "Điều 5 khoản 7"},
+         {"label": "bia", "source": "Điều 5 khoản 12 nhánh (ii)"}
+       ]},
+      {"id": "thong_tin_khong_chinh_xac_sai_su_that", "kind": "situation", "domain": "bool",
+       "gloss": "thông tin được cung cấp không chính xác, sai sự thật", "sources": ["Điều 5 khoản 8"]},
+      {"id": "nguyen_lieu_khong_duoc_phep_dung_trong_thuc_pham", "kind": "situation", "domain": "bool",
+       "gloss": "nguyên liệu, phụ gia, chất hỗ trợ chế biến được sử dụng là loại không được phép dùng trong thực phẩm", "sources": ["Điều 5 khoản 10"]},
+      {"id": "nguyen_lieu_khong_bao_dam_chat_luong", "kind": "situation", "domain": "bool",
+       "gloss": "nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm được sử dụng không bảo đảm chất lượng", "sources": ["Điều 5 khoản 10"]},
+      {"id": "nguyen_lieu_khong_ro_nguon_goc_xuat_xu", "kind": "situation", "domain": "bool",
+       "gloss": "nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm được sử dụng không rõ nguồn gốc, xuất xứ", "sources": ["Điều 5 khoản 10"]},
+      {"id": "co_giay_phep_hoac_dang_ky_kinh_doanh_ruou", "kind": "situation", "domain": "bool",
+       "gloss": "người kinh doanh rượu có giấy phép hoặc đã đăng ký theo hình thức mà loại hình kinh doanh đó phải có", "sources": ["Điều 5 khoản 11 nhánh (i)"]},
+      {"id": "ruou_bia_gia", "kind": "situation", "domain": "bool", "gloss": "rượu, bia là hàng giả", "sources": ["Điều 5 khoản 12 nhánh (i)"]},
+      {"id": "ruou_bia_nhap_lau", "kind": "situation", "domain": "bool", "gloss": "rượu, bia là hàng nhập lậu", "sources": ["Điều 5 khoản 12 nhánh (i)"]},
+      {"id": "ruou_bia_khong_bao_dam_chat_luong", "kind": "situation", "domain": "bool", "gloss": "rượu, bia không bảo đảm chất lượng", "sources": ["Điều 5 khoản 12 nhánh (i)"]},
+      {"id": "ruou_bia_khong_ro_nguon_goc_xuat_xu", "kind": "situation", "domain": "bool", "gloss": "rượu, bia không rõ nguồn gốc, xuất xứ", "sources": ["Điều 5 khoản 12 nhánh (i)"]}
+    ]
+  },
+  "norms": [
+    {"id": "5.1", "modality": "prohibition", "act": "xui_giuc_ep_buoc_uong_ruou_bia",
+     "condition": "true", "exceptions": [], "source": "Điều 5 khoản 1",
+     "quote": "Xúi giục, kích động, lôi kéo, ép buộc người khác uống rượu, bia.", "references": []},
+    {"id": "5.2", "modality": "prohibition", "act": "uong_ruou_bia",
+     "condition": {"sit": "tuoi_nguoi_uong", "value": "chưa đủ 18 tuổi"}, "exceptions": [], "source": "Điều 5 khoản 2",
+     "quote": "Người chưa đủ 18 tuổi uống rượu, bia.", "references": []},
+    {"id": "5.3.1", "modality": "prohibition", "act": "ban_ruou_bia",
+     "condition": {"sit": "tuoi_nguoi_nhan", "value": "chưa đủ 18 tuổi"}, "exceptions": [], "source": "Điều 5 khoản 3",
+     "quote": "Bán, cung cấp, khuyến mại rượu, bia cho người chưa đủ 18 tuổi.", "references": []},
+    {"id": "5.3.2", "modality": "prohibition", "act": "cung_cap_ruou_bia",
+     "condition": {"sit": "tuoi_nguoi_nhan", "value": "chưa đủ 18 tuổi"}, "exceptions": [], "source": "Điều 5 khoản 3",
+     "quote": "Bán, cung cấp, khuyến mại rượu, bia cho người chưa đủ 18 tuổi.", "references": []},
+    {"id": "5.3.3", "modality": "prohibition", "act": "khuyen_mai_ruou_bia",
+     "condition": {"sit": "tuoi_nguoi_nhan", "value": "chưa đủ 18 tuổi"}, "exceptions": [], "source": "Điều 5 khoản 3",
+     "quote": "Bán, cung cấp, khuyến mại rượu, bia cho người chưa đủ 18 tuổi.", "references": []},
+    {"id": "5.4", "modality": "prohibition", "act": "su_dung_lao_dong_truc_tiep_san_xuat_mua_ban_ruou_bia",
+     "condition": {"sit": "tuoi_nguoi_lao_dong", "value": "chưa đủ 18 tuổi"}, "exceptions": [], "source": "Điều 5 khoản 4",
+     "quote": "Sử dụng lao động là người chưa đủ 18 tuổi trực tiếp tham gia vào việc sản xuất, mua bán rượu, bia.", "references": []},
+    {"id": "5.5", "modality": "prohibition", "act": "uong_ruou_bia",
+     "condition": {"and": [
+       {"sit": "nguoi_uong_thuoc_doi_tuong_dieu_5_khoan_5"},
+       {"or": [
+         {"param": "ngay_truoc_gio_lam_viec_hoc_tap"},
+         {"sit": "trong_gio_lam_viec_hoc_tap"},
+         {"sit": "nghi_giua_gio_lam_viec_hoc_tap"}
+       ]}
+     ]},
+     "exceptions": [], "source": "Điều 5 khoản 5",
+     "quote": "uống rượu, bia ngay trước, trong giờ làm việc, học tập và nghỉ giữa giờ làm việc, học tập", "references": []},
+    {"id": "5.6", "modality": "prohibition", "act": "dieu_khien_phuong_tien_giao_thong",
+     "condition": {"sit": "co_nong_do_con_trong_mau_hoac_hoi_tho"}, "exceptions": [], "source": "Điều 5 khoản 6",
+     "quote": "Điều khiển phương tiện giao thông mà trong máu hoặc hơi thở có nồng độ cồn.", "references": []},
+    {"id": "5.7", "modality": "prohibition", "act": "quang_cao_ruou_bia",
+     "condition": {"and": [
+       {"sit": "loai_do_uong", "value": "rượu"},
+       {"sit": "do_con", "value": "từ 15 độ trở lên"}
+     ]},
+     "exceptions": [], "source": "Điều 5 khoản 7",
+     "quote": "Quảng cáo rượu có độ cồn từ 15 độ trở lên.", "references": []},
+    {"id": "5.8", "modality": "prohibition", "act": "cung_cap_thong_tin_ve_anh_huong_suc_khoe_cua_ruou_bia",
+     "condition": {"sit": "thong_tin_khong_chinh_xac_sai_su_that"}, "exceptions": [], "source": "Điều 5 khoản 8",
+     "quote": "Cung cấp thông tin không chính xác, sai sự thật về ảnh hưởng của rượu, bia đối với sức khỏe.", "references": []},
+    {"id": "5.9.i", "modality": "prohibition", "act": "khuyen_mai_ruou_bia",
+     "condition": {"sit": "do_con", "value": "từ 15 độ trở lên"}, "exceptions": [], "source": "Điều 5 khoản 9 nhánh (i)",
+     "quote": "Khuyến mại trong hoạt động kinh doanh rượu, bia có độ cồn từ 15 độ trở lên", "references": []},
+    {"id": "5.9.ii", "modality": "prohibition", "act": "dung_ruou_bia_lam_qua_khuyen_mai",
+     "condition": {"sit": "do_con", "value": "từ 15 độ trở lên"}, "exceptions": [], "source": "Điều 5 khoản 9 nhánh (ii)",
+     "quote": "sử dụng rượu, bia có độ cồn từ 15 độ trở lên để khuyến mại dưới mọi hình thức", "references": []},
+    {"id": "5.10", "modality": "prohibition", "act": "su_dung_nguyen_lieu_san_xuat_pha_che_ruou_bia",
+     "condition": {"or": [
+       {"sit": "nguyen_lieu_khong_duoc_phep_dung_trong_thuc_pham"},
+       {"and": [
+         {"sit": "nguyen_lieu_khong_bao_dam_chat_luong"},
+         {"sit": "nguyen_lieu_khong_ro_nguon_goc_xuat_xu"}
+       ]}
+     ]},
+     "exceptions": [], "source": "Điều 5 khoản 10",
+     "quote": "Sử dụng nguyên liệu, phụ gia, chất hỗ trợ chế biến không được phép dùng trong thực phẩm; nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm không bảo đảm chất lượng và không rõ nguồn gốc, xuất xứ để sản xuất, pha chế rượu, bia.",
+     "references": []},
+    {"id": "5.11.i", "modality": "prohibition", "act": "kinh_doanh_ruou_bia",
+     "condition": {"and": [
+       {"sit": "loai_do_uong", "value": "rượu"},
+       {"not": {"sit": "co_giay_phep_hoac_dang_ky_kinh_doanh_ruou"}}
+     ]},
+     "exceptions": [], "source": "Điều 5 khoản 11 nhánh (i)",
+     "quote": "Kinh doanh rượu không có giấy phép hoặc không đăng ký", "references": []},
+    {"id": "5.11.ii", "modality": "prohibition", "act": "ban_ruou_bia_bang_may_tu_dong",
+     "condition": "true", "exceptions": [], "source": "Điều 5 khoản 11 nhánh (ii)",
+     "quote": "bán rượu, bia bằng máy bán hàng tự động", "references": []},
+    {"id": "5.12.i.1", "modality": "prohibition", "act": "kinh_doanh_ruou_bia",
+     "condition": {"or": [
+       {"sit": "ruou_bia_gia"}, {"sit": "ruou_bia_nhap_lau"},
+       {"sit": "ruou_bia_khong_bao_dam_chat_luong"}, {"sit": "ruou_bia_khong_ro_nguon_goc_xuat_xu"}
+     ]},
+     "exceptions": [], "source": "Điều 5 khoản 12 nhánh (i)",
+     "quote": "Kinh doanh, tàng trữ, vận chuyển rượu, bia giả, nhập lậu, không bảo đảm chất lượng, không rõ nguồn gốc, xuất xứ", "references": []},
+    {"id": "5.12.i.2", "modality": "prohibition", "act": "tang_tru_ruou_bia",
+     "condition": {"or": [
+       {"sit": "ruou_bia_gia"}, {"sit": "ruou_bia_nhap_lau"},
+       {"sit": "ruou_bia_khong_bao_dam_chat_luong"}, {"sit": "ruou_bia_khong_ro_nguon_goc_xuat_xu"}
+     ]},
+     "exceptions": [], "source": "Điều 5 khoản 12 nhánh (i)",
+     "quote": "Kinh doanh, tàng trữ, vận chuyển rượu, bia giả, nhập lậu, không bảo đảm chất lượng, không rõ nguồn gốc, xuất xứ", "references": []},
+    {"id": "5.12.i.3", "modality": "prohibition", "act": "van_chuyen_ruou_bia",
+     "condition": {"or": [
+       {"sit": "ruou_bia_gia"}, {"sit": "ruou_bia_nhap_lau"},
+       {"sit": "ruou_bia_khong_bao_dam_chat_luong"}, {"sit": "ruou_bia_khong_ro_nguon_goc_xuat_xu"}
+     ]},
+     "exceptions": [], "source": "Điều 5 khoản 12 nhánh (i)",
+     "quote": "Kinh doanh, tàng trữ, vận chuyển rượu, bia giả, nhập lậu, không bảo đảm chất lượng, không rõ nguồn gốc, xuất xứ", "references": []},
+    {"id": "5.12.ii", "modality": "prohibition", "act": "nhap_lau_ruou_bia",
+     "condition": "true", "exceptions": [], "source": "Điều 5 khoản 12 nhánh (ii)",
+     "quote": "nhập lậu rượu, bia", "references": []}
+  ],
+  "not_encoded": [
+    {"clause": "Điều 5 khoản 13", "reason": "Khoản chỉ dẫn chung tới «các hành vi bị nghiêm cấm khác ... do luật định» ở văn bản khác, không nêu hành vi cụ thể nào để mã hóa."}
+  ],
+  "assumptions": [
+    "Tiêu đề Điều 5 «Các hành vi bị nghiêm cấm» được áp cho mọi khoản, nên mọi norm có modality prohibition (quy tắc 7).",
+    "Giá trị «effective» 2020-01-01 không có trong chữ được cung cấp; nó là ngày hiệu lực đã biết của Luật 44/2019/QH14 và người duyệt cần đối chiếu.",
+    "Khoản 3 là một câu không có dấu chấm phẩy nên không chia nhánh; ba động từ bán, cung cấp, khuyến mại được tách thành ba norm cùng nguồn «Điều 5 khoản 3», dùng ba act của bảng.",
+    "Atom tuoi_nguoi_nhan của bảng chỉ tuổi người được bán, cung cấp, khuyến mại nên không dùng cho người uống (khoản 2) hay người lao động (khoản 4); đề xuất tuoi_nguoi_uong và tuoi_nguoi_lao_dong với cùng hai nhãn.",
+    "Ở khoản 4, «trực tiếp tham gia» được đưa vào nghĩa của act, không tách thành atom riêng.",
+    "Ở khoản 1, cụm «người khác» không đặt thêm điều kiện về tuổi hay tư cách của người bị xúi giục, nên condition là true.",
+    "Ở khoản 5, chữ «và» nối các khoảng thời gian được đọc là «hoặc» (uống vào bất kỳ khoảng nào đều bị cấm); «ngay trước» là tham số mở; giờ làm việc, học tập là giờ của chính người uống.",
+    "Ở khoản 5, cụm «trong các cơ quan, tổ chức» được đọc là bổ nghĩa cho cán bộ, công chức, viên chức, người lao động; toàn bộ danh sách đối tượng gộp vào một atom bool.",
+    "Ở khoản 6, «có nồng độ cồn» được hiểu là bất kỳ nồng độ nào lớn hơn không; ngưỡng đo và cách đo, nếu có, thuộc văn bản khác và không được mã hóa.",
+    "Khoản 7 và khoản 11 nhánh (i) chỉ nói «rượu», không nói bia, nên đề xuất atom loai_do_uong («rượu» | «bia») thay vì act riêng; định nghĩa rượu, bia ở Điều 2 không có trong chữ được cung cấp.",
+    "Khoản 9 nhánh (i) được đọc là khuyến mại chính sản phẩm rượu, bia có độ cồn từ 15 độ trở lên, chứ không phải mọi khuyến mại của cơ sở kinh doanh loại rượu đó; người duyệt cần xem lại cách đọc này.",
+    "Khoản 9 nhánh (ii) dùng dung_ruou_bia_lam_qua_khuyen_mai và không thêm điều kiện, vì «dưới mọi hình thức» bao gồm cả ngoài hoạt động kinh doanh.",
+    "Khoản 10 gộp hai nhóm nguyên liệu (ngăn bởi dấu chấm phẩy) thành một norm vì cả hai cùng mục đích «để sản xuất, pha chế rượu, bia» ở cuối khoản.",
+    "Ở khoản 10, chữ «và» giữa «không bảo đảm chất lượng» và «không rõ nguồn gốc, xuất xứ» được mã hóa đúng chữ là AND; người duyệt cần quyết định có nên đọc là OR như khoản 12 hay không.",
+    "Khoản 11 nhánh (i) «không có giấy phép hoặc không đăng ký» được đọc là không có hình thức cho phép mà loại hình kinh doanh đó phải có; việc loại hình nào cần giấy phép, loại nào cần đăng ký do pháp luật khác quy định và không ghi vào references.",
+    "Khoản 12 nhánh (i) tách ba động từ kinh doanh, tàng trữ, vận chuyển thành ba norm; bốn tính chất giả, nhập lậu, không bảo đảm chất lượng, không rõ nguồn gốc xuất xứ nối bằng OR; «không rõ nguồn gốc, xuất xứ» là một atom.",
+    "Khoản 12 nhánh (ii) «nhập lậu rượu, bia» là hành vi riêng của người nhập lậu, phân biệt với việc kinh doanh hàng đã nhập lậu ở nhánh (i).",
+    "Atom về nguyên liệu (khoản 10) và atom về thành phẩm rượu, bia (khoản 12) được giữ riêng vì chúng nói về hai đối tượng khác nhau.",
+    "Act cung_cap_ruou_bia của bảng là cung cấp đồ uống nên không dùng cho khoản 8; đề xuất act riêng cho việc cung cấp thông tin.",
+    "Không khoản nào của Điều 5 dẫn chiếu tới điều, khoản khác của luật này, nên mọi «references» đều rỗng; khoản 13 dẫn chiếu «do luật định» tới văn bản khác."
+  ]
+}

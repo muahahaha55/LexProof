@@ -1,0 +1,142 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 15,
+  "atoms": {
+    "situation": [
+      {"name": "S1 do_con_tu_5_5_do_tro_len", "source": "Điều 15 khoản 1", "domain": "bool"},
+      {"name": "S2 san_xuat_ruou_cong_nghiep", "source": "Điều 15 khoản 1", "domain": "bool"},
+      {"name": "S3 san_xuat_ruou_thu_cong_nham_muc_dich_kinh_doanh", "source": "Điều 15 khoản 2", "domain": "bool"},
+      {"name": "S4 san_xuat_ruou_thu_cong_ban_cho_co_so_co_giay_phep_de_che_bien_lai", "source": "Điều 15 khoản 3", "domain": "bool"},
+      {"name": "S5 mua_ban_ruou", "source": "Điều 15 khoản 4", "domain": "bool"},
+      {"name": "S6 loai_chu_the", "source": "Điều 15 khoản 2 điểm a",
+       "domain": [
+         {"label": "doanh_nghiep", "source": "Điều 15 khoản 1 điểm a"},
+         {"label": "hop_tac_xa", "source": "Điều 15 khoản 2 điểm a"},
+         {"label": "lien_hiep_hop_tac_xa", "source": "Điều 15 khoản 2 điểm a"},
+         {"label": "ho_kinh_doanh", "source": "Điều 15 khoản 2 điểm a"},
+         {"label": "ho_gia_dinh", "source": "Điều 15 khoản 3"},
+         {"label": "ca_nhan", "source": "Điều 15 khoản 3"}
+       ]},
+      {"name": "S7 co_day_chuyen_may_moc_thiet_bi_quy_trinh_cong_nghe", "source": "Điều 15 khoản 1 điểm b", "domain": "bool"},
+      {"name": "S8 co_nhan_vien_ky_thuat", "source": "Điều 15 khoản 1 điểm d", "domain": "bool"},
+      {"name": "S9 co_hop_dong_mua_ban_voi_co_so_co_giay_phep_san_xuat_ruou", "source": "Điều 15 khoản 3 điểm a", "domain": "bool"},
+      {"name": "S10 co_dang_ky_voi_ubnd_cap_xa_noi_co_co_so_san_xuat", "source": "Điều 15 khoản 3 điểm a", "domain": "bool"},
+      {"name": "S11 co_dang_ky_kinh_doanh", "source": "Điều 15 khoản 4 điểm a", "domain": "bool"}
+    ],
+    "parameters": [
+      {"name": "P1 duoc_thanh_lap_theo_quy_dinh_phap_luat", "source": "Điều 15 khoản 1 điểm a", "domain": "bool"},
+      {"name": "P2 day_chuyen_dap_ung_quy_mo_du_kien_san_xuat", "source": "Điều 15 khoản 1 điểm b", "domain": "bool"},
+      {"name": "P3 bao_dam_dieu_kien_an_toan_thuc_pham", "source": "Điều 15 khoản 1 điểm c", "domain": "bool"},
+      {"name": "P4 bao_dam_dieu_kien_bao_ve_moi_truong", "source": "Điều 15 khoản 1 điểm c", "domain": "bool"},
+      {"name": "P5 trinh_do_chuyen_mon_phu_hop_nganh_nghe_san_xuat_ruou", "source": "Điều 15 khoản 1 điểm d", "domain": "bool"},
+      {"name": "P6 dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", "source": "Điều 15 khoản 4 điểm b", "domain": "bool"}
+    ]
+  },
+  "norms": [
+    {
+      "id": "15.1",
+      "modality": "permission",
+      "act": "duoc_cap_phep_san_xuat_ruou_cong_nghiep",
+      "condition": {"and": [
+        {"sit": "S2 san_xuat_ruou_cong_nghiep"},
+        {"sit": "S1 do_con_tu_5_5_do_tro_len"},
+        {"sit": "S6 loai_chu_the", "value": "doanh_nghiep"},
+        {"param": "P1 duoc_thanh_lap_theo_quy_dinh_phap_luat"},
+        {"sit": "S7 co_day_chuyen_may_moc_thiet_bi_quy_trinh_cong_nghe"},
+        {"param": "P2 day_chuyen_dap_ung_quy_mo_du_kien_san_xuat"},
+        {"param": "P3 bao_dam_dieu_kien_an_toan_thuc_pham"},
+        {"param": "P4 bao_dam_dieu_kien_bao_ve_moi_truong"},
+        {"sit": "S8 co_nhan_vien_ky_thuat"},
+        {"param": "P5 trinh_do_chuyen_mon_phu_hop_nganh_nghe_san_xuat_ruou"}
+      ]},
+      "exceptions": [],
+      "source": "Điều 15 khoản 1",
+      "quote": "Điều kiện cấp phép sản xuất rượu công nghiệp có độ cồn từ 5,5 độ trở lên bao gồm",
+      "references": []
+    },
+    {
+      "id": "15.2",
+      "modality": "permission",
+      "act": "duoc_cap_phep_san_xuat_ruou_thu_cong",
+      "condition": {"and": [
+        {"sit": "S3 san_xuat_ruou_thu_cong_nham_muc_dich_kinh_doanh"},
+        {"sit": "S1 do_con_tu_5_5_do_tro_len"},
+        {"or": [
+          {"sit": "S6 loai_chu_the", "value": "doanh_nghiep"},
+          {"sit": "S6 loai_chu_the", "value": "hop_tac_xa"},
+          {"sit": "S6 loai_chu_the", "value": "lien_hiep_hop_tac_xa"},
+          {"sit": "S6 loai_chu_the", "value": "ho_kinh_doanh"}
+        ]},
+        {"param": "P1 duoc_thanh_lap_theo_quy_dinh_phap_luat"},
+        {"param": "P3 bao_dam_dieu_kien_an_toan_thuc_pham"}
+      ]},
+      "exceptions": [
+        {"and": [
+          {"sit": "S4 san_xuat_ruou_thu_cong_ban_cho_co_so_co_giay_phep_de_che_bien_lai"},
+          {"or": [
+            {"sit": "S6 loai_chu_the", "value": "ho_gia_dinh"},
+            {"sit": "S6 loai_chu_the", "value": "ca_nhan"}
+          ]}
+        ]}
+      ],
+      "source": "Điều 15 khoản 2",
+      "quote": "Điều kiện cấp phép sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên nhằm mục đích kinh doanh, trừ trường hợp quy định tại khoản 3 Điều này",
+      "references": ["Điều 15 khoản 3"]
+    },
+    {
+      "id": "15.3",
+      "modality": "permission",
+      "act": "san_xuat_ruou_thu_cong_ban_cho_co_so_che_bien_lai",
+      "condition": {"and": [
+        {"sit": "S4 san_xuat_ruou_thu_cong_ban_cho_co_so_co_giay_phep_de_che_bien_lai"},
+        {"sit": "S1 do_con_tu_5_5_do_tro_len"},
+        {"or": [
+          {"sit": "S6 loai_chu_the", "value": "ho_gia_dinh"},
+          {"sit": "S6 loai_chu_the", "value": "ca_nhan"}
+        ]},
+        {"sit": "S9 co_hop_dong_mua_ban_voi_co_so_co_giay_phep_san_xuat_ruou"},
+        {"sit": "S10 co_dang_ky_voi_ubnd_cap_xa_noi_co_co_so_san_xuat"},
+        {"param": "P3 bao_dam_dieu_kien_an_toan_thuc_pham"}
+      ]},
+      "exceptions": [],
+      "source": "Điều 15 khoản 3",
+      "quote": "Điều kiện đối với hộ gia đình, cá nhân sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên bán cho cơ sở có giấy phép sản xuất rượu để chế biến lại",
+      "references": []
+    },
+    {
+      "id": "15.4",
+      "modality": "permission",
+      "act": "duoc_cap_phep_mua_ban_ruou",
+      "condition": {"and": [
+        {"sit": "S5 mua_ban_ruou"},
+        {"sit": "S1 do_con_tu_5_5_do_tro_len"},
+        {"sit": "S11 co_dang_ky_kinh_doanh"},
+        {"param": "P6 dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou"}
+      ]},
+      "exceptions": [],
+      "source": "Điều 15 khoản 4",
+      "quote": "Điều kiện cấp phép mua bán rượu có độ cồn từ 5,5 độ trở lên",
+      "references": []
+    }
+  ],
+  "not_encoded": [
+    {"clause": "Điều 15 khoản 5", "reason": "Khoản này giao Chính phủ quy định chi tiết Điều 15 và quy định việc quản lý kinh doanh rượu có độ cồn dưới 5,5 độ; trong văn bản này không có quy phạm cấm, bắt buộc hay cho phép nào có điều kiện cụ thể."}
+  ],
+  "assumptions": [
+    "Ngày hiệu lực 2020-01-01 không có trong đoạn chữ được cung cấp; giá trị này lấy theo hiệu lực chung đã biết của Luật 44/2019/QH14, người duyệt cần đối chiếu lại.",
+    "Tiêu đề «Quản lý kinh doanh rượu» không cho biết tính chất cấm, bắt buộc hay cho phép, nên không áp dụng một tính chất chung nào từ tiêu đề cho các khoản.",
+    "Các khoản 1, 2, 4 («Điều kiện cấp phép ... bao gồm:») được biểu diễn là permission: chủ thể được cấp phép khi đáp ứng ĐỦ MỌI điểm (and); chiều ngược lại (thiếu một điểm thì không được cấp phép) không được mã hóa thành norm riêng.",
+    "Khoản 3 không nhắc tới giấy phép; nó được biểu diễn là permission cho chính hoạt động sản xuất thủ công để bán cho cơ sở chế biến lại khi đủ các điểm a và b, không phải là quyền được cấp phép.",
+    "Điểm a khoản 3 gồm hai yêu cầu nối bằng «và» (có hợp đồng mua bán; có đăng ký với UBND cấp xã), nên được tách thành hai atom S9 và S10 và cả hai đều bắt buộc.",
+    "Điểm c khoản 1 được tách thành hai tham số P3 (an toàn thực phẩm) và P4 (bảo vệ môi trường); P3 được dùng lại cho điểm b khoản 2 và điểm b khoản 3 vì đó là cùng một khái niệm, dù «source» của P3 ghi điểm c khoản 1.",
+    "S1 (độ cồn từ 5,5 độ trở lên) xuất hiện ở các khoản 1 đến 4 và được dùng chung một atom, «source» ghi khoản 1.",
+    "Ngoại lệ ở khoản 2 («trừ trường hợp quy định tại khoản 3 Điều này») được hiểu là trường hợp hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép chế biến lại; trường hợp này loại khỏi phạm vi norm 15.2 chứ không phải là một quyền.",
+    "Enum S6 chỉ liệt kê các loại chủ thể có tên trong Điều 15; nó không đầy đủ cho mọi chủ thể có thể có.",
+    "Các cụm «được thành lập theo quy định của pháp luật» (điểm a khoản 1, điểm a khoản 2), «theo quy định của pháp luật» về an toàn thực phẩm và môi trường (điểm c khoản 1, điểm b khoản 2, điểm b khoản 3) và «Đăng ký kinh doanh theo quy định của pháp luật» (điểm a khoản 4) dẫn chiếu tới văn bản pháp luật khác, nên không ghi vào «references»; các điều kiện phụ thuộc văn bản khác được để là tham số P1, P3, P4.",
+    "S11 (có đăng ký kinh doanh) được xem là một sự kiện kiểm tra được và đặt trong «situation»; phần «theo quy định của pháp luật» của nó không được mã hóa.",
+    "«đáp ứng quy mô dự kiến sản xuất» (P2) và «trình độ, chuyên môn phù hợp» (P5) là khái niệm mở, nên được để là tham số và không tự quyết giá trị.",
+    "«Đáp ứng điều kiện theo từng loại hình mua bán rượu» (điểm b khoản 4) không được Điều 15 định nghĩa, có thể do Chính phủ quy định theo khoản 5, nên được để là tham số P6."
+  ]
+}

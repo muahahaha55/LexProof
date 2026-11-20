@@ -18,6 +18,11 @@ FR3 cần một bước dịch điều khoản thành dữ liệu `Norm`. Gọi 
 5. Kiểm tra cuối cùng là `pfindings` và `analyzeReport` của Lean trên bản nháp, không phải script Python.
 6. `translate.py compare` so từng norm với một bản dịch tay (nhận diện atom theo nguồn và nhãn, không theo tên) để đo độ lệch. Khác tên act cũng được báo.
 
+## Bổ sung 2026-11-18
+
+- Norm có trường tùy chọn `references`; `check` đòi mỗi dẫn chiếu là đơn vị có thật (điều, khoản, điểm), không phải «nhánh» hay «tiêu đề». Danh mục dùng để Lean kiểm dẫn chiếu treo trong bản nháp và module sinh ra gồm mọi điều, khoản, điểm của văn bản đã tách.
+- Ví dụ trong lược đồ của câu lệnh dùng số của điều đang dịch (trước đây luôn là 19).
+
 ## Hệ quả
 
 - `check` sạch **không** nói bản dịch đúng luật. Nó chỉ bắt lỗi máy dễ bắt (bịa trích dẫn, bỏ khoản).

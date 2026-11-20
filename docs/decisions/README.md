@@ -42,6 +42,8 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 | [0018](0018-scope-lists-parameter-names.md) | `Scope.validExcluded`/`validTotal` nói **bao nhiêu** điểm bị loại trên tổng; `Scope.docId` là `Option` và danh sách lẫn văn bản là finding | `Scope` chưa liệt kê **tên** tham số khái niệm mở, chưa nói *điểm nào* bị `valid` loại, chưa có trạng thái duyệt, chưa có danh sách điều khoản bỏ qua |
 | [0022](0022-atom-table-valuation-situation.md) | Bảng atom + phép gán, finding của bảng, kiểm theo cặp không ràng buộc và `analyzeP` (tầng **bổ sung**, không sửa `Atoms`/`Finite`/`analyze`) | Chưa: ràng buộc trong bộ kiểm, `Scope` và D23 mới, bảng thật, thay hẳn `Atoms S P` (khẳng định rộng vẫn mở) |
 | [0023](0023-report-command.md) | Báo cáo chỉ do lệnh sinh; mỗi kết quả chính nêu định lý kernel hoặc «chưa có định lý kernel cho kết quả này» |
+| [0027](0027-glossary-shared-atoms.md) | Bảng thuật ngữ dùng chung cho act và atom (FR2), gộp theo id, chặn thuật ngữ chưa duyệt |
+| [0028](0028-derived-norms.md) | Norm suy ra (cách đọc luật không viết thẳng), kiểm riêng một lần thứ hai, không đổi kết luận về chữ luật |
 | [0026](0026-promote-reviewed-translation.md) | Đưa bản dịch đã duyệt vào `Laws` qua phiếu ghim sha256; module có định lý kernel; build hỏng thì hoàn tác |
 | [0025](0025-run-command-draft-path.md) | Một lệnh cho đường nháp: gộp bản dịch đã kiểm, chạy Lean, báo cáo nháp vào `eval/run/` |
 | [0024](0024-translation-manual-paste.md) | Bước dịch dán tay: LLM trả JSON, `check` từ chối bịa trích dẫn và khoản bị bỏ, bản nháp Lean nằm ngoài `Laws` |
