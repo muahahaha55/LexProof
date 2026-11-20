@@ -7,9 +7,9 @@ Bản dịch: `eval/translate/article15.llm.json`
 
 sha256 bản dịch: 98241e1293cf2b9b317ffa8915791493b801fe6dae50e8ad69b07ac02545e902
 
-Người duyệt: 
+Người duyệt: Vũ Đức Phong
 
-Ngày duyệt (YYYY-MM-DD): 
+Ngày duyệt (YYYY-MM-DD): 2026-11-20
 
 ## 1. Norm
 

@@ -166,6 +166,6 @@ C36. Bán một chai rượu cho một em 16 tuổi tại phòng khám đa khoa
 - «1. Cơ sở y tế.»<br>(dòng 309) | Điều 5 khoản 3; Điều 19 khoản 2; Điều 19 khoản 3; Điều 19 khoản 4; Điều 19 khoản 5; Điều 19 khoản 6 -> **Đúng ý**
 
 C37. Một người cho không (không bán) một chai rượu cho người 30 tuổi tại một phòng khám.
-- **cấm**
+- **không chắc**
 - «Điều 19. Địa điểm không bán rượu, bia»<br>(dòng 308) | Điều 5 khoản 3 -> **Đúng ý**
 

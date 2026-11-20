@@ -9,7 +9,7 @@ sha256 bản dịch: bc5feda9f6e12c89df2959c0427ea681e82ade640e1af5452acb8a206e6
 
 Người duyệt: Vũ Đức Phong
 
-Ngày duyệt (YYYY-MM-DD): 2026-11-19
+Ngày duyệt (YYYY-MM-DD): 2026-11-20
 
 ## 1. Norm
 

@@ -32,7 +32,7 @@ Ngày duyệt (YYYY-MM-DD): 2026-11-19
 | A:4 | Khoản 3: «dành cho người chưa đủ 18 tuổi» là khái niệm mở nên đặt thành tham số P1, không tự quyết giá trị; đọc cụm này bổ nghĩa cho cả bốn loại (chăm sóc, nuôi dưỡng, vui chơi, giải trí), nên điều kiện là S3 và P1. | ☐ Chấp nhận
 | A:5 | Khoản 4: «cơ sở giam giữ phạm nhân» và «cơ sở giam giữ khác» được tách thành hai atom riêng (S7, S8); «cơ sở giáo dục bắt buộc» được hiểu là một loại cơ sở duy nhất. | ☐ Chấp nhận
 | A:6 | Khoản 6: «trừ địa điểm được phép kinh doanh rượu, bia» là ngoại lệ (exceptions), không phải quyền được phép; việc một địa điểm được phép kinh doanh do quy định khác xác định nên được mã hóa là atom tình huống S15 và không suy ra giá trị. | ☐ Chấp nhận
-| A:7 | Khoản 6: ngoại lệ S15 được áp dụng cho toàn bộ danh sách nơi làm việc trong khoản (cơ quan nhà nước, các tổ chức chính trị, đơn vị sự nghiệp công lập), không chỉ cho mục cuối. |☐ Bác 
+| A:7 | Khoản 6: ngoại lệ S15 được áp dụng cho toàn bộ danh sách nơi làm việc trong khoản (cơ quan nhà nước, các tổ chức chính trị, đơn vị sự nghiệp công lập), không chỉ cho mục cuối. |☐ Chấp nhận
 | A:8 | Chỉ mã hóa hành vi «bán» theo tiêu đề điều; không mở rộng sang các hành vi khác như uống hay mang vào. | ☐ Chấp nhận
 
 ## 3. Khoản để ngoài (`not_encoded`)
