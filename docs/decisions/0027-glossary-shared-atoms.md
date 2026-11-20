@@ -1,7 +1,7 @@
 # ADR-0027: Bảng thuật ngữ dùng chung cho act và atom (FR2) — phác thảo
 
 - **Status**: **Accepted** 2026-11-20 (người phụ trách dự án; ba câu hỏi đã trả lời ở mục cuối)
-- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3 **Tested** (`materialize`, `run.merge` theo id, chặn ở `promote.py`; xem «Bước 3 đã làm»); bước 4–5 chưa làm
+- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3 **Tested** (`materialize`, `run.merge` theo id, chặn ở `promote.py`; xem «Bước 3 đã làm»); bước 4 **Tested** (`glossary.py sheet`/`apply`, phiếu trống `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`; xem «Bước 4 đã làm»); bước 5 chưa làm
 - **Ngày**: 2026-11-20
 - **Liên quan**: FR2, [ADR-0004](0004-act-as-opaque-glossary-id.md) (act là id mờ), [ADR-0024](0024-translation-manual-paste.md), [ADR-0025](0025-run-command-draft-path.md), [ADR-0026](0026-promote-reviewed-translation.md)
 
@@ -57,6 +57,19 @@ Một kiểm tra *trong một văn bản* chỉ có nghĩa khi các điều nói
 3. `run.py`/`promote.py` gộp theo id; `promote.py` chặn thuật ngữ chưa duyệt.
 4. Phiếu duyệt thuật ngữ.
 5. Thử lại Điều 5 + Điều 15 với act và atom chung, đo số cặp được kiểm tăng bao nhiêu.
+
+## Bước 4 đã làm (2026-11-20)
+
+- `glossary.py sheet FILE -o SHEET.md`: mỗi mục `proposed` một hàng (`T:act:<id>`, `T:atom:<id>`), ba lựa chọn Chấp nhận / Bác / **Để sau**; lý do bắt buộc khi bác.
+  - Phiếu ghim sha256 của bảng; các mục đã quyết được liệt kê riêng, chỉ để đọc.
+  - Vì phiếu chỉ gồm mục `proposed`, duyệt được theo **từng đợt**: mục mới (ví dụ đề xuất từ bản dịch) vào đợt sau.
+- `glossary.py apply FILE SHEET`: từ chối nếu phiếu thiếu hàng, thiếu người duyệt hoặc ngày, đánh dấu sai, bác không lý do, hoặc sha256 khác bảng hiện tại. Khi từ chối thì không ghi gì vào bảng.
+  - Khi nhận: ghi `status`, `reviewed_by`, `reviewed_on`, và `review_note` nếu có lý do. Mục «Để sau» giữ `proposed`, chỉ thêm `review_note`.
+  - Chạy lại `check` trước khi ghi.
+- Đây là cách duy nhất công cụ đổi trạng thái của một mục. Công cụ không kiểm ai là người duyệt.
+- Trong lúc làm bước này phát hiện một lỗi ở `promote.ticked`: một lựa chọn rỗng (ô kết thúc bằng `<br>`) bị tính là đã đánh dấu.
+  - Ô «☐ Chấp nhận<br>» bị đọc thành «Bác». Đã sửa và có test.
+  - Các phiếu đã nộp (nhánh `phong-review-law`) không có ô như vậy.
 
 ## Câu hỏi đã quyết (2026-11-20)
 

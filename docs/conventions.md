@@ -232,6 +232,9 @@ python pipeline/promote.py promote --name Article19 --pair eval/translate/articl
 Bảng thuật ngữ (ADR-0027): `python pipeline/glossary.py check data/glossary/44-2019-QH14.json`.
 Câu lệnh dịch dùng bảng: `python pipeline/translate.py prompt --article N --glossary -o FILE`; `check` của bản dịch đó
 in thêm các thuật ngữ chưa duyệt.
+Duyệt bảng: `python pipeline/glossary.py sheet data/glossary/44-2019-QH14.json -o docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`,
+người duyệt điền phiếu, rồi `python pipeline/glossary.py apply data/glossary/44-2019-QH14.json docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`.
+Duyệt bảng trước, rồi mới lập phiếu norm cho bản dịch dùng bảng.
 
 Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`
 chưa điền đủ hoặc mô-đun đã đổi (xem `docs/design-core.md` §18). Test: `python -m pytest pipeline/tests` (hoặc

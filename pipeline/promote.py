@@ -104,14 +104,16 @@ def make_sheet(path, data):
 def ticked(cell):
     """Index of the one ticked option (0, 1, ...) or None if zero or several are ticked."""
     opts = [o.strip() for o in cell.split("<br>")]
-    marks = [i for i, o in enumerate(opts) if o[:1] in TICKS or o.lower().startswith("[x]")]
+    # `o and`: an empty option (a trailing «<br>») is not a tick; "" is a substring of every string
+    marks = [i for i, o in enumerate(opts) if o and (o[:1] in TICKS or o.lower().startswith("[x]"))]
     return marks[0] if len(marks) == 1 else None
 
 
-def parse_sheet(text):
+def parse_sheet(text, kinds="NAX"):
+    """Rows keyed by (kind letter, id); `kinds` are the row prefixes of this kind of sheet (glossary sheets use T)."""
     rows = {}
     for line in text.splitlines():
-        m = re.match(r"^\|\s*([NAX]):(.+?)\s*\|", line)
+        m = re.match(r"^\|\s*([%s]):(.+?)\s*\|" % kinds, line)
         if m:
             body = line.strip()[1:]
             if body.endswith("|") and not body.endswith("\\|"):

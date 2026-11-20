@@ -63,6 +63,24 @@ Hai tệp (cùng thư mục `docs/review/`):
 
 Nếu một norm bạn bác mà chỉ vì **cách mã hóa** (không phải vì sai nghĩa luật), vẫn ghi rõ lý do để người sau biết.
 
+### 1.3 Phiếu mới (2026-11-20): bảng thuật ngữ
+
+Tệp: **`docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`**, 15 hàng. Bảng thuật ngữ là danh sách các hành vi (act) và
+khái niệm (atom) mà mọi điều của luật sẽ dùng **chung một tên**. Ví dụ, «cơ sở y tế» ở Điều 19 và ở một điều khác sẽ là
+cùng một khái niệm. Nhờ vậy hệ thống so được các điều với nhau.
+
+- Cách điền giống phiếu norm, nhưng mỗi hàng có **ba** lựa chọn: Chấp nhận / Bác / **Để sau**. Đổi đúng một `☐` thành `☒`;
+  không xóa lựa chọn nào, không xóa dấu `|`. Bác thì phải ghi lý do.
+- **Câu hỏi để quyết mỗi hàng:** mọi khoản ghi ở cột «Nguồn» có nói **cùng một thứ** như cột «Giải thích» không?
+  Nếu một id gộp hai thứ khác nhau (ví dụ «bán» và «kinh doanh»), hãy bác.
+- **Hàng có «KHÔNG có nguồn»:** đó là nhãn mà luật không nêu, do người mã hóa suy ra. Xem ghi chú bên cạnh và quyết
+  xem có chấp nhận cách suy ra đó không.
+- **`atom:do_con` (độ cồn)** hiện mới có hai dải (dưới 15 độ / từ 15 độ trở lên). Các Điều 12, 13, 15 dùng thêm ngưỡng
+  5,5 độ. Nếu bạn thấy cần tách thành ba dải, chọn **Để sau** và ghi lý do.
+- Phiếu này độc lập với ba phiếu norm Điều 5, 19, 15, vì các bản dịch đó chưa dùng bảng. Làm phiếu nào trước cũng được.
+- Ghi chú về thứ tự cho sau này: khi một bản dịch **dùng** bảng, phải duyệt bảng **trước** rồi mới lập phiếu norm, vì
+  phiếu norm ghim sha256 của bảng.
+
 ## 2. Việc 2: các câu hỏi còn treo từ tệp của bạn
 
 Trả lời ngắn vào một tệp mới (xem mục 4) cho các câu sau:

@@ -330,5 +330,85 @@ class MergeById(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
 
+# ---------------------------------------------------------------- step 4: the glossary review sheet
+SEED_PATH = os.path.join(T.ROOT, "data", "glossary", "44-2019-QH14.json")
+
+
+def tick(text, row, option, reason=""):
+    """Tick `option` (0 accept, 1 reject, 2 later) on the row of `row` (e.g. «act:ban_ruou_bia»)."""
+    opts = ["Chấp nhận", "Bác", "Để sau"]
+    new = "<br>".join(("☒ " if i == option else "☐ ") + o for i, o in enumerate(opts))
+    return "\n".join(l.replace(G.OPTIONS + " |  |", new + " | %s |" % reason) if l.startswith("| T:%s |" % row) else l
+                     for l in text.splitlines())
+
+
+class ReviewSheet(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        self.g = os.path.join(self.dir, "g.json")
+        shutil.copy(SEED_PATH, self.g)
+        self.blank = G.make_sheet(self.g, G.load(self.g))
+
+    def tearDown(self):
+        shutil.rmtree(self.dir)
+
+    def filled(self, **other):
+        """Everything accepted, except other[row] = (option, reason); row ids with «:» replaced by «__»."""
+        t = self.blank.replace("Người duyệt: ", "Người duyệt: TEST", 1)
+        t = t.replace("Ngày duyệt (YYYY-MM-DD): ", "Ngày duyệt (YYYY-MM-DD): 2000-01-01", 1)
+        for r, _, _ in G.entries(SEED):
+            t = tick(t, r, *other.get(r.replace(":", "__"), (0,)))
+        return t
+
+    def apply(self, text):
+        sh = os.path.join(self.dir, "s.md")
+        with open(sh, "w", encoding="utf-8") as f:
+            f.write(text)
+        return G.apply_sheet(self.g, sh)
+
+    def test_blank_sheet_lists_every_proposed_entry_and_is_refused(self):
+        self.assertEqual(self.blank.count("| T:"), 15)
+        self.assertIn("sha256 bảng thuật ngữ: " + G.sha_lf(self.g), self.blank)
+        self.assertIn("(KHÔNG có nguồn — ghi chú: không khoản nào nêu", self.blank)
+        ps, _, _ = G.sheet_problems(G.load(self.g), self.g, self.blank)
+        self.assertIn("chưa ghi người duyệt", ps)
+        self.assertTrue(has(ps, "act:ban_ruou_bia", "đúng một ô"))
+        with self.assertRaises(SystemExit):
+            self.apply(self.blank)
+        self.assertEqual(G.load(self.g), SEED)          # nothing written
+
+    def test_apply_writes_decisions_and_the_next_sheet_has_only_what_is_left(self):
+        t = self.filled(atom__do_con=(2, "cần tách ngưỡng 5,5 độ"), act__cung_cap_ruou_bia=(1, "thử: bác"))
+        msg = self.apply(t)
+        self.assertIn("chấp nhận 13, bác 1, để sau 1", msg)
+        g = G.load(self.g)
+        self.assertEqual(G.check(g), [])
+        st = {e["id"]: e for e in g["acts"] + g["atoms"]}
+        self.assertEqual((st["ban_ruou_bia"]["status"], st["ban_ruou_bia"]["reviewed_by"]), ("approved", "TEST"))
+        self.assertEqual((st["cung_cap_ruou_bia"]["status"], st["cung_cap_ruou_bia"]["review_note"]), ("rejected", "thử: bác"))
+        self.assertEqual(st["do_con"]["status"], "proposed")
+        self.assertNotIn("reviewed_by", st["do_con"])
+        nxt = G.make_sheet(self.g, g)
+        self.assertEqual(nxt.count("| T:"), 1)
+        self.assertIn("`act:cung_cap_ruou_bia` (act): **rejected** bởi TEST, 2000-01-01: thử: bác", nxt)
+        with self.assertRaises(SystemExit) as cm:      # the old sheet no longer matches the glossary
+            self.apply(t)
+        self.assertIn("sha256", str(cm.exception))
+
+    def test_rejection_needs_a_reason_and_mangled_rows_get_a_message(self):
+        ps, _, _ = G.sheet_problems(G.load(self.g), self.g, self.filled(atom__do_con=(1,)))
+        self.assertTrue(has(ps, "atom:do_con", "không ghi lý do"))
+        mangled = "\n".join(l.replace("☐ Bác<br>☐ Để sau", "") if l.startswith("| T:act:ban_ruou_bia |") else l
+                            for l in self.blank.splitlines())
+        ps, _, _ = G.sheet_problems(G.load(self.g), self.g, mangled)
+        self.assertTrue(has(ps, "act:ban_ruou_bia", "chỉ còn một lựa chọn"))
+
+    def test_cli_sheet_writes_utf8(self):
+        out = os.path.join(self.dir, "blank.md")
+        self.assertEqual(G.main(["sheet", self.g, "-o", out]), 0)
+        with open(out, encoding="utf-8") as f:
+            self.assertEqual(f.read(), self.blank)
+
+
 if __name__ == "__main__":
     unittest.main()

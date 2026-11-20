@@ -147,6 +147,10 @@ class Malformed(Base):
         self.assertEqual(ps, [])      # the ticked cell is the last one and still parses
         self.assertEqual(len(dec["accepted"]), 6)
 
+    def test_an_empty_option_is_not_a_tick(self):
+        self.assertIsNone(P.ticked("☐ Chấp nhận<br>"))     # was read as «Bác» before 2026-11-20
+        self.assertEqual(P.ticked("☐ Chấp nhận<br>☒ Bác<br>"), 1)
+
     def test_missing_rows_are_findings(self):
         d = copy.deepcopy(GOLD)
         tr, sh = self.files(d)
