@@ -44,7 +44,7 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **AC**: Thuật ngữ chưa có trong glossary bị chặn (không tự suy diễn) cho đến
   khi người duyệt thêm vào.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Planned** (ADR-0027 bước 1–2 xong: lược đồ, `pipeline/glossary.py check`, bảng hạt giống chưa duyệt; `translate.py prompt --glossary` và `check` theo id của bảng, liệt kê thuật ngữ chưa duyệt; AC «chặn thuật ngữ chưa duyệt» ở `promote.py` chưa làm, hiện bản dịch dùng bảng bị từ chối hẳn ở `lean`/`run`/`promote`). Kiểu đích đã có: `Act` là id chuỗi mờ
+- **Trạng thái**: **Partial** (ADR-0027 bước 1–3 xong). Có: lược đồ và `pipeline/glossary.py check`; bảng hạt giống (mọi mục chưa duyệt); `translate.py prompt --glossary` và `check` theo id; gộp theo id ở `run.py`/`promote.py`; `promote.py` **từ chối** bản dịch dùng bảng nếu norm được chấp nhận dùng act/atom chưa `approved` hoặc mới chỉ là đề xuất (test `test_glossary.py`: `test_promote_refuses_unapproved_terms`, `test_promote_refuses_a_proposal_even_with_an_approved_glossary`). **Chưa đạt toàn hệ thống**: bản dịch *không* dùng bảng (kiểu cũ, như Điều 5, 15, 19 đang duyệt) vẫn đi qua `promote.py` với atom riêng của từng điều, không qua bảng; phiếu duyệt bảng (bước 4) chưa có. Kiểu đích đã có: `Act` là id chuỗi mờ
   ([ADR-0004](decisions/0004-act-as-opaque-glossary-id.md)).
 
 ### FR3 — Dịch điều khoản thành dữ liệu Lean

@@ -36,6 +36,7 @@ ROOT_FILE = os.path.join(ROOT, "LexProof.lean")
 AUDIT_FILE = os.path.join(ROOT, "LexProof", "Cert", "Audit.lean")
 TICKS = "☑☒✓✔"
 SHA_LINE = re.compile(r"^sha256 bản dịch:\s*`?([0-9a-f]{64})`?\s*$", re.M)
+GSHA_LINE = re.compile(r"^sha256 bảng thuật ngữ:\s*`?([0-9a-f]{64})`?\s*$", re.M)
 FIELD = re.compile(r"^(Người duyệt|Ngày duyệt \(YYYY-MM-DD\)):[ \t]*(.*)$", re.M)
 MOD = {"prohibition": "cấm", "obligation": "bắt buộc", "permission": "được phép"}
 
@@ -72,9 +73,16 @@ def make_sheet(path, data):
          "Đánh dấu **đúng một** ô ở mỗi hàng bằng cách đổi `☐` thành `☒`. Đọc từng norm với chữ của luật (cột «Trích dẫn» và "
          "văn bản gốc). Bác một norm thì phải ghi lý do; norm đó sẽ được ghi là «không mã hóa» kèm lý do của bạn.",
          "Bác một giả định, hoặc không đồng ý để một khoản ngoài phạm vi, thì bản dịch **không** được đưa vào thư viện: phải dịch lại.",
-         "", "Bản dịch: `%s`" % rel, "", "sha256 bản dịch: %s" % sha_lf(path), "",
-         "Người duyệt: ", "", "Ngày duyệt (YYYY-MM-DD): ", "",
-         "## 1. Norm", "",
+         "", "Bản dịch: `%s`" % rel, "", "sha256 bản dịch: %s" % sha_lf(path), ""]
+    if "glossary" in data:
+        m = T.materialize(data)
+        L += ["Bảng thuật ngữ: `%s`" % data["glossary"], "", "sha256 bảng thuật ngữ: %s" % m["glossary_sha256"], "",
+              "## 0. Thuật ngữ bản dịch dùng (chỉ để đọc; duyệt ở phiếu bảng thuật ngữ, trước phiếu này)", ""]
+        L += [("  - " + t.strip()) if t.startswith("  ") else ("- " + t) for t in m["glossary_terms"]]
+        L += ["", "Một id dùng ở nhiều điều là **một** khái niệm. Nếu norm dưới đây dùng id theo nghĩa khác giải thích ở trên, "
+              "hãy bác norm đó và ghi lý do.", ""]
+    L += ["Người duyệt: ", "", "Ngày duyệt (YYYY-MM-DD): ", "",
+          "## 1. Norm", "",
          "| Mã | Nguồn | Trích dẫn | Tính chất | Hành vi | Áp dụng khi | Ngoại lệ | Quyết định | Lý do (bắt buộc nếu bác) |",
          "|---|---|---|---|---|---|---|---|---|"]
     for n in data["norms"]:
@@ -112,7 +120,8 @@ def parse_sheet(text):
             rows[(m.group(1), m.group(2))] = cells
     fields = dict((k, v.strip()) for k, v in FIELD.findall(text))
     s = SHA_LINE.search(text)
-    return {"rows": rows, "sha": s.group(1) if s else None, "reviewer": fields.get("Người duyệt", ""),
+    gs = GSHA_LINE.search(text)
+    return {"rows": rows, "sha": s.group(1) if s else None, "glossary_sha": gs.group(1) if gs else None, "reviewer": fields.get("Người duyệt", ""),
             "date": fields.get("Ngày duyệt (YYYY-MM-DD)", "")}
 
 
@@ -140,6 +149,9 @@ def sheet_problems(data, tr_path, sheet):
     out = []
     if sheet["sha"] != sha_lf(tr_path):
         out.append("sha256 trong phiếu khác bản dịch hiện tại (bản dịch đã đổi sau khi lập phiếu, hoặc phiếu của tệp khác)")
+    if "glossary" in data and sheet.get("glossary_sha") != T.glossary_sha(T.glossary_rel(data["doc_id"])):
+        out.append("sha256 bảng thuật ngữ trong phiếu khác bảng hiện tại (bảng đã đổi sau khi lập phiếu, nghĩa của các id có thể "
+                   "đã khác): lập lại phiếu và duyệt lại")
     if not sheet["reviewer"]:
         out.append("chưa ghi người duyệt")
     try:
@@ -213,14 +225,20 @@ def module_text(name, merged, seg, reviews, consistent):
          "Written by `pipeline/%s`. **Reviewed** here means only: a person ticked every row of the sheet(s) below, and" % TOOL,
          "the sheet names the sha256 of the translation it was about. The tool does not check who the person is, nor",
          "whether the answers are right. Faithfulness to the law is not proved by anything in this file.", "",
+         ] + ([
+         "Atoms of the glossary keep their id and are shared by every article that uses them; every term used was",
+         "`approved` in the glossary file named below (ADR-0027). Other atom names, and all norm ids, carry their article.",
+         "A wrong merge (two different concepts under one id) is stopped only by the glossary reviewer."]
+         if merged.get("glossary_terms") else [
          "Atom names and norm ids carry their article («Điều 5 · ...»): two articles never share an atom, so a",
-         "conflict that depends on a concept shared by two articles can be missed (a shared glossary, FR2, is not done).", "",
-         "Review sheets:"]
+         "conflict that depends on a concept shared by two articles can be missed (no translation here uses the glossary)."]
+         ) + ["", "Review sheets:"]
     for tr, tsha, sh, ssha, who, when, acc, rej in reviews:
         L.append("* `%s` (sha256 `%s`), sheet `%s` (sha256 `%s`), %s, %s: accepted %d, rejected %d%s" % (
             tr, tsha, sh, ssha, who.replace("-/", "- /"), when, len(acc), len(rej), (" (" + ", ".join(rej) + ")") if rej else ""))
     L += ["", "Assumptions accepted on the sheets:"]
     L += ["* " + a.replace("-/", "- /") for a in merged["assumptions"]] or ["* (none)"]
+    L += T.glossary_header(merged)
     L += ["-/", "", "namespace LexProof.Laws.%s" % name, "", "open LexProof", "",
           "def tS : AtomTable :=", ("  [ " + "\n  , ".join(T.atom_lean(a) for a in sit) + " ]") if sit else "  []", "",
           "def tP : AtomTable :=", ("  [ " + "\n  , ".join(T.atom_lean(a) for a in par) + " ]") if par else "  []", "",
@@ -291,7 +309,7 @@ def promote(name, pairs, build=True):
     accepted, reviews, problems, seen = [], [], [], set()
     for tr, sh in pairs:
         data = json.load(open(tr, encoding="utf-8"))
-        fs = T.check(data) or T.not_merged_yet(data)
+        fs = T.check(data)
         if fs:
             problems += ["%s: bản dịch có %d phát hiện của `check`: %s" % (RUN.rel(tr), len(fs), fs[0])]
             continue
@@ -304,7 +322,16 @@ def promote(name, pairs, build=True):
         if ps:
             problems += ["%s: %s" % (RUN.rel(sh), p) for p in ps]
             continue
-        accepted.append(apply_decisions(data, dec, sheet["reviewer"], sheet["date"]))
+        m = T.materialize(apply_decisions(data, dec, sheet["reviewer"], sheet["date"]))
+        if m.get("unapproved"):     # FR2 AC: a term the glossary reviewer has not approved never enters the library
+            problems.append("%s: norm được chấp nhận dùng %d thuật ngữ chưa duyệt trong bảng: %s. Duyệt bảng thuật ngữ trước "
+                            "(ADR-0027), rồi lập lại phiếu" % (RUN.rel(tr), len(m["unapproved"]), ", ".join(m["unapproved"])))
+            continue
+        cs = RUN.shared_conflicts(accepted, m)
+        if cs:
+            problems += ["%s: %s" % (RUN.rel(tr), c) for c in cs]
+            continue
+        accepted.append(m)
         reviews.append((RUN.rel(tr), sha_lf(tr), RUN.rel(sh), sha_lf(sh), sheet["reviewer"], sheet["date"],
                         [i for i, _ in dec["accepted"]], [i for i, _ in dec["rejected"]]))
     if problems:
@@ -360,7 +387,7 @@ def main(argv=None):
     a = ap.parse_args(argv)
     if a.cmd == "sheet":
         data = json.load(open(a.translation, encoding="utf-8"))
-        fs = T.check(data) or T.not_merged_yet(data)
+        fs = T.check(data)
         if fs:
             print("TỪ CHỐI: bản dịch có %d phát hiện; sửa trước khi lập phiếu duyệt. Đầu tiên: %s" % (len(fs), fs[0]))
             return 1

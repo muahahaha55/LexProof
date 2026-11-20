@@ -1,7 +1,7 @@
 # ADR-0027: Bảng thuật ngữ dùng chung cho act và atom (FR2) — phác thảo
 
 - **Status**: **Accepted** 2026-11-20 (người phụ trách dự án; ba câu hỏi đã trả lời ở mục cuối)
-- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3–5 chưa làm
+- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3 **Tested** (`materialize`, `run.merge` theo id, chặn ở `promote.py`; xem «Bước 3 đã làm»); bước 4–5 chưa làm
 - **Ngày**: 2026-11-20
 - **Liên quan**: FR2, [ADR-0004](0004-act-as-opaque-glossary-id.md) (act là id mờ), [ADR-0024](0024-translation-manual-paste.md), [ADR-0025](0025-run-command-draft-path.md), [ADR-0026](0026-promote-reviewed-translation.md)
 
@@ -72,8 +72,23 @@ Bước 1 thêm một quy tắc chưa có ở trên: một nhãn của enum mà 
 - Ở chế độ này `atoms` phải rỗng: mọi `act`, `sit`, `param` là id của bảng (trừ mục `rejected`) hoặc id trong `glossary_proposals`. Đề xuất được kiểm như mục của bảng (gloss, nguồn có thật, `note` cho nhãn không nguồn), không được ghi `status`, không được trùng id của bảng.
 - Không có khóa `glossary` thì mọi thứ như trước (Điều 5, 15, 19 đã dịch vẫn qua `check`; câu lệnh mặc định không đổi).
 - `check` in danh sách thuật ngữ đang dùng mà chưa `approved`. Việc **chặn** ở `promote.py` là bước 3.
-- Fail closed cho tới bước 3: `translate.py lean`, `run.py` và `promote.py` (cả `sheet`) từ chối bản dịch dùng bảng, vì chưa gộp atom theo id.
-- Chưa làm: bản dịch không ghim sha256 của bảng. Nếu bảng đổi sau khi dịch, `check` dùng bảng mới; phiếu duyệt (bước 4) phải ghim cả hai.
+- (Cho tới bước 3, `lean`, `run.py` và `promote.py` từ chối bản dịch dùng bảng. Bước 3 bỏ chặn này.)
+- Bản dịch không ghim sha256 của bảng: nếu bảng đổi sau khi dịch, `check` dùng bảng mới. Phiếu norm ghim nó (bước 3).
+
+## Bước 3 đã làm (2026-11-20)
+
+- `translate.materialize`: bản dịch dùng bảng thành dạng thường. Chỉ atom mà norm dùng mới vào bảng atom (giữ thứ tự của bảng), tên là id, đánh dấu `shared`.
+  - Lean cần một nguồn đọc được cho mỗi atom và mỗi nhãn, nên lấy nguồn đầu tiên. Nhãn chỉ có `note` thì lấy nguồn đầu tiên của atom.
+  - Phần bị lược (các nguồn khác, ghi chú, giải thích, trạng thái) được in ở đầu bản nháp và đầu module («Glossary terms used», kèm sha256 bảng).
+- `run.merge`: atom `shared` giữ id và chỉ xuất hiện **một lần** dù nhiều điều dùng; atom riêng vẫn gắn tên điều.
+  - `run.admit` và `promote.py` từ chối tệp khi cùng một id có loại hoặc nhãn khác nhau giữa hai điều (hai đề xuất cùng id), hoặc hai điều dùng hai phiên bản bảng.
+- Một đề xuất đã được chép vào bảng (cùng id, cùng loại và nhãn) được thay bằng mục của bảng, nên bản dịch không phải sửa.
+- **Chặn (AC của FR2)**: `promote.py` tính thuật ngữ trên các norm *được chấp nhận*. Còn một act hay atom chưa `approved` (kể cả đề xuất) thì từ chối và liệt kê chúng.
+- Phiếu norm của bản dịch dùng bảng có mục «0. Thuật ngữ bản dịch dùng» (chỉ để đọc) và dòng `sha256 bảng thuật ngữ`. Bảng đổi sau khi lập phiếu thì phiếu bị từ chối.
+  - Hệ quả: duyệt thêm một mục bảng làm mọi phiếu norm đã lập trước đó hết hiệu lực. Vì vậy duyệt bảng trước, rồi mới lập phiếu norm.
+- Test cho thấy tác dụng: «được phép khi KHÔNG phải cơ sở y tế» (Điều 5, thử) và 19.1 «cấm ở cơ sở y tế».
+  - Với atom chung, Lean cho `consistentOn`. Với atom riêng của từng điều, Lean báo xung đột giả (`test_sharing_removes_a_spurious_conflict`).
+- Còn hở: bản dịch không dùng bảng vẫn qua `promote.py` với atom riêng. Chưa bắt buộc dùng bảng, vì sẽ chặn các bản dịch Điều 5, 19 đang chờ duyệt.
 
 ## Câu hỏi ban đầu
 

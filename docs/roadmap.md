@@ -15,7 +15,7 @@ Cách tính: Implemented = 1, Tested = 0.6, Partial = 0.5, Planned/Open = 0.
 | Nhóm | Yêu cầu | Ước lượng |
 |---|---|---|
 | Lõi kiểm tra (tin cậy) | FR6, FR7, FR8, FR11 Implemented; FR9, FR10 Partial | ~83% |
-| Đưa văn bản vào (không tin cậy) | FR1 Partial; FR3 Tested (dán tay); FR2, FR4 Planned; FR5 Open | ~22% |
+| Đưa văn bản vào (không tin cậy) | FR1 Partial; FR3 Tested (dán tay); FR2 Partial (bảng chưa duyệt); FR4 Planned; FR5 Open | ~25% |
 | Tổng | | ~55% (6.1 / 11) |
 
 Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Độ trung thực hầu như chưa có bằng chứng**: 9/141 khoản mã hóa tay; phiếu 37 ca là đồng thuận với bản nháp AI; một người duyệt độc lập (Phong, 2026-11-18); hai lần dịch AI (Điều 19, Điều 5) mới được đối chiếu một phần.
@@ -32,7 +32,7 @@ Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Đ�
 
 Sau bước 1 và 2: có hệ thống cơ bản chạy từ đầu đến cuối. Bước 3–5: mở rộng và bằng chứng chất lượng.
 
-Bảng thuật ngữ dùng chung (FR2, ADR-0027, Accepted 2026-11-20): theo từng văn bản, Phong duyệt, ba act bán / cung cấp / khuyến mại riêng. Bước 1/5 xong (lược đồ, `check`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục chưa duyệt). Bước 2/5 xong (câu lệnh `--glossary`, `glossary_proposals`, `check` theo id); bản dịch dùng bảng chưa sinh Lean được cho tới bước 3. Cần trước khi dịch theo lô, vì không có nó các điều không so được với nhau.
+Bảng thuật ngữ dùng chung (FR2, ADR-0027, Accepted 2026-11-20): theo từng văn bản, Phong duyệt, ba act bán / cung cấp / khuyến mại riêng. Bước 1/5 xong (lược đồ, `check`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục chưa duyệt). Bước 2/5 xong (câu lệnh `--glossary`, `glossary_proposals`, `check` theo id). Bước 3/5 xong (gộp theo id; `promote.py` chặn thuật ngữ chưa duyệt; phiếu norm ghim sha256 của bảng). Còn: phiếu duyệt bảng (bước 4), chạy lại Điều 5 + 15 (bước 5). Cần trước khi dịch theo lô, vì không có nó các điều không so được với nhau.
 
 Việc đang chờ người duyệt (Phong): `docs/review/HUONG-DAN-TIEP-THEO-cho-Phong.md`.
 

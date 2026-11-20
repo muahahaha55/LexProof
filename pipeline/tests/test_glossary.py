@@ -3,6 +3,8 @@
 import copy
 import json
 import os
+import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -159,19 +161,173 @@ class WithGlossary(unittest.TestCase):
         self.assertNotIn("là atom trong «parameters»", p)     # would contradict «atoms» being empty
         self.assertNotIn("bảng thuật ngữ", T.make_prompt(T.load_segmented("44/2019/QH14"), 15))   # default unchanged
 
-    def test_later_steps_refuse_glossary_translations_until_step_3(self):
-        import run as RUN   # noqa: E402
+    def test_a_proposal_moved_into_the_glossary_is_superseded(self):
         d = gold19_with_glossary()
-        self.assertTrue(T.not_merged_yet(d))
-        self.assertEqual(T.not_merged_yet(GOLD19), [])
-        with tempfile.TemporaryDirectory() as tmp:
-            p = os.path.join(tmp, "a19.json")
-            with open(p, "w", encoding="utf-8") as f:
+        d["glossary_proposals"]["atoms"].append(copy.deepcopy(next(a for a in SEED["atoms"] if a["id"] == "do_con")))
+        del d["glossary_proposals"]["atoms"][0]["status"]
+        self.assertEqual(T.check(d), [])
+
+
+# ---------------------------------------------------------------- step 3: merge by id, block unapproved terms
+import run as RUN          # noqa: E402
+import promote as P        # noqa: E402
+
+HAS_LAKE = shutil.which("lake") is not None
+SEG = dict(T.load_segmented("44/2019/QH14"), doc_id="44/2019/QH14")   # as run.run() sets it
+
+
+def article5(modality="permission", condition=None, proposals=None):
+    """A synthetic one-norm Article 5 translation in glossary mode (a fixture, not a reading of the law)."""
+    return {"doc_id": "44/2019/QH14", "doc_type": "law", "effective": GOLD19["effective"], "article": 5,
+            "glossary": "data/glossary/44-2019-QH14.json", "atoms": {"situation": [], "parameters": []},
+            "glossary_proposals": proposals or {"acts": [], "atoms": []},
+            "norms": [{"id": "5.t", "modality": modality, "act": "ban_ruou_bia",
+                       "condition": condition or {"not": {"sit": "dia_diem_co_so_y_te"}}, "exceptions": [],
+                       "source": "Điều 5 khoản 3", "quote": "Bán, cung cấp, khuyến mại rượu, bia", "references": []}],
+            "not_encoded": [{"clause": "Điều 5", "reason": "fixture: chỉ một norm thử"}], "assumptions": []}
+
+
+def only_19_1(d):
+    """Keep norm 19.1 alone (prohibited at a medical facility); the rest of the article is set aside."""
+    d = copy.deepcopy(d)
+    d["norms"] = d["norms"][:1]
+    d["not_encoded"] = [{"clause": "Điều 19", "reason": "fixture: chỉ norm 19.1"}]
+    return d
+
+
+def approved(g):
+    g = copy.deepcopy(g)
+    for e in g["acts"] + g["atoms"]:
+        e.update(status="approved", reviewed_by="TEST", reviewed_on="2000-01-01")
+    return g
+
+
+class MergeById(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+
+    def tearDown(self):
+        shutil.rmtree(self.dir)
+
+    def write(self, name, d):
+        p = os.path.join(self.dir, name)
+        with open(p, "w", encoding="utf-8") as f:
+            if isinstance(d, str):
+                f.write(d)
+            else:
                 json.dump(d, f, ensure_ascii=False)
-            accepted, refused, _ = RUN.admit([p], T.load_segmented("44/2019/QH14"))
-            self.assertEqual(accepted, [])
-            self.assertTrue(has(refused[0][1], "bước 3"))
-            self.assertEqual(T.main(["lean", p, "-o", os.path.join(tmp, "x.lean")]), 1)
+        return p
+
+    def test_materialize_names_atoms_by_id_and_keeps_what_lean_drops(self):
+        d = gold19_with_glossary()
+        d["norms"][0]["condition"] = {"and": [d["norms"][0]["condition"], {"sit": "tuoi_nguoi_nhan", "value": "từ đủ 18 tuổi trở lên"}]}
+        self.assertEqual(T.check(d), [])
+        m = T.materialize(d)
+        names = [a["name"] for a in m["atoms"]["situation"]]
+        self.assertEqual(len(names), 8)                     # only the atoms the norms use, glossary order
+        self.assertNotIn("do_con", names)
+        self.assertTrue(all(a["shared"] for a in m["atoms"]["situation"] + m["atoms"]["parameters"]))
+        age = next(a for a in m["atoms"]["situation"] if a["name"] == "tuoi_nguoi_nhan")
+        self.assertEqual(age["domain"][1], {"label": "từ đủ 18 tuổi trở lên", "source": "Điều 5 khoản 3"})
+        self.assertTrue(any("không có khoản nào nêu" in t and "phần bù" in t for t in m["glossary_terms"]))
+        self.assertEqual(len(m["unapproved"]), 10)
+        self.assertIs(T.materialize(GOLD19), GOLD19)
+
+    def test_one_id_in_two_articles_is_one_atom(self):
+        accepted, refused, _ = RUN.admit([self.write("a19.json", gold19_with_glossary()), self.write("a5.json", article5())], SEG)
+        self.assertEqual(refused, [])
+        m = RUN.merge(accepted)
+        names = [a["name"] for a in m["atoms"]["situation"]]
+        self.assertEqual(names.count("dia_diem_co_so_y_te"), 1)
+        self.assertFalse(any(n.startswith("Điều") for n in names))
+        self.assertIn({"not": {"sit": "dia_diem_co_so_y_te"}}, [n["condition"] for n in m["norms"]])
+        text = T.to_lean(m, SEG)
+        self.assertIn("an id shared by two articles is ONE atom", text)
+
+    @unittest.skipUnless(HAS_LAKE, "lake không có trong PATH")
+    def test_sharing_removes_a_spurious_conflict(self):
+        # «permitted where NOT a medical facility» vs 19.1 «prohibited at a medical facility»: no situation has both,
+        # but only if both speak of the same atom. With per-article atoms (no glossary) Lean finds a conflict.
+        files = [self.write("a19.json", only_19_1(gold19_with_glossary())), self.write("a5.json", article5())]
+        accepted, _, _ = RUN.admit(files, SEG)
+        out = os.path.join(self.dir, "shared.lean")
+        with open(out, "w", encoding="utf-8") as f:
+            f.write(T.to_lean(RUN.merge(accepted), SEG))
+        self.assertEqual(RUN.run_lean(out).get("result"), "consistentOn")
+        local = article5(condition={"not": {"sit": "S14 địa điểm là cơ sở y tế"}})
+        for k in ("glossary", "glossary_proposals"):
+            del local[k]
+        local["atoms"]["situation"] = [copy.deepcopy(GOLD19["atoms"]["situation"][0])]
+        local["atoms"]["situation"][0]["source"] = "Điều 5 khoản 3"
+        accepted, refused, _ = RUN.admit([self.write("b19.json", only_19_1(GOLD19)), self.write("b5.json", local)], SEG)
+        self.assertEqual(refused, [])
+        with open(out, "w", encoding="utf-8") as f:
+            f.write(T.to_lean(RUN.merge(accepted), SEG))
+        self.assertEqual(RUN.run_lean(out).get("result"), "XUNG ĐỘT")
+
+    def test_two_proposals_with_one_id_must_agree(self):
+        prop = lambda labels: {"acts": [], "atoms": [{"id": "hinh_thuc_ban", "kind": "situation", "gloss": "x", "sources": ["Điều 5 khoản 3"],
+                                                      "domain": [{"label": l, "source": "Điều 5 khoản 3"} for l in labels]}]}   # noqa: E731
+        a = article5(condition={"sit": "hinh_thuc_ban", "value": "trực tiếp"}, proposals=prop(["trực tiếp", "trực tuyến"]))
+        b = copy.deepcopy(a)
+        b["article"], b["norms"][0]["source"], b["not_encoded"][0]["clause"] = 19, "Điều 19 khoản 1", "Điều 19"
+        b["norms"][0]["quote"] = "Cơ sở y tế"
+        b["glossary_proposals"] = prop(["trực tiếp", "qua mạng"])
+        self.assertEqual(T.check(b), [])
+        accepted, refused, _ = RUN.admit([self.write("a.json", a), self.write("b.json", b)], SEG)
+        self.assertEqual(len(accepted), 1)
+        self.assertTrue(has(refused[0][1], "hinh_thuc_ban", "định nghĩa khác nhau"))
+
+    def sheet(self, d, g=None):
+        tr = self.write("t%d.json" % d["article"], d)
+        text = P.make_sheet(tr, d)
+        text = text.replace("Người duyệt: ", "Người duyệt: TEST", 1).replace("Ngày duyệt (YYYY-MM-DD): ", "Ngày duyệt (YYYY-MM-DD): 2000-01-01", 1)
+        text = text.replace("☐ Chấp nhận<br>☐ Bác", "☒ Chấp nhận<br>☐ Bác").replace("☐ Đồng ý để ngoài<br>", "☒ Đồng ý để ngoài<br>")
+        sh = self.write("s%d.md" % d["article"], text)
+        return tr, sh
+
+    def with_glossary(self, g):
+        saved = G.load
+        G.load = lambda path: copy.deepcopy(g)
+        self.addCleanup(setattr, G, "load", saved)
+
+    def test_sheet_shows_the_terms_and_pins_the_glossary(self):
+        tr, sh = self.sheet(gold19_with_glossary())
+        text = open(sh, encoding="utf-8").read()
+        self.assertIn("## 0. Thuật ngữ bản dịch dùng", text)
+        self.assertIn("atom dia_diem_co_so_y_te [proposed]", text)
+        sheet = P.parse_sheet(text)
+        self.assertEqual(P.sheet_problems(gold19_with_glossary(), tr, sheet)[0], [])
+        sheet["glossary_sha"] = "0" * 64
+        self.assertTrue(has(P.sheet_problems(gold19_with_glossary(), tr, sheet)[0], "sha256 bảng thuật ngữ"))
+
+    def test_promote_refuses_unapproved_terms(self):
+        with self.assertRaises(SystemExit) as cm:
+            P.promote("TestGlossaryUnapproved", [self.sheet(gold19_with_glossary())], build=False)
+        self.assertIn("thuật ngữ chưa duyệt", str(cm.exception))
+        self.assertIn("ban_ruou_bia [proposed]", str(cm.exception))
+
+    def test_promote_refuses_a_proposal_even_with_an_approved_glossary(self):
+        self.with_glossary(approved(SEED))
+        d = article5(proposals={"acts": [], "atoms": [{"id": "moi", "kind": "situation", "domain": "bool", "gloss": "x",
+                                                       "sources": ["Điều 5 khoản 3"]}]}, condition={"sit": "moi"})
+        with self.assertRaises(SystemExit) as cm:
+            P.promote("TestGlossaryProposal", [self.sheet(d)], build=False)
+        self.assertIn("moi [đề xuất]", str(cm.exception))
+
+    @unittest.skipUnless(HAS_LAKE, "lake không có trong PATH")
+    def test_promote_with_approved_terms_compiles(self):
+        self.with_glossary(approved(SEED))
+        _, text = P.promote("TestGlossaryPromo", [self.sheet(only_19_1(gold19_with_glossary())), self.sheet(article5())], build=False)
+        self.assertIn("Glossary terms used", text)
+        self.assertIn("every term used was", text)
+        self.assertIn("theorem consistent", text)
+        self.assertEqual(text.count('{ name := "dia_diem_co_so_y_te"'), 1)
+        out = os.path.join(self.dir, "TestGlossaryPromo.lean")
+        with open(out, "w", encoding="utf-8") as f:
+            f.write(text)
+        r = subprocess.run(["lake", "env", "lean", out], cwd=T.ROOT, capture_output=True, text=True, encoding="utf-8")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ after review (see CLAUDE.md, trust boundary). Lean's own `pfindings` is the chec
 catches mistakes early (an invented quotation, an unknown atom, a clause nobody accounted for).
 """
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -304,10 +305,16 @@ def glossary_terms(data, out):
     pg = {"doc_id": data["doc_id"], "acts": [dict(e, status="proposed") for e in p_acts],
           "atoms": [dict(e, status="proposed") for e in p_atoms]}
     out += ["glossary_proposals: " + f for f in G.check(pg)]
-    known = {e.get("id") for e in g["acts"] + g["atoms"]}
-    for e in p_acts + p_atoms:
-        if e.get("id") in known:
-            out.append("glossary_proposals «%s»: id đã có trong bảng; dùng mục đó, không đề xuất lại" % e["id"])
+    g_atoms = {e.get("id"): e for e in g["atoms"]}
+    g_acts = {e.get("id") for e in g["acts"]}
+    for e in p_atoms:
+        ge = g_atoms.get(e.get("id"))
+        if ge is not None and shape(ge) != shape(e):
+            out.append("glossary_proposals «%s»: id đã có trong bảng với loại hoặc nhãn khác; dùng mục của bảng, không đề xuất lại"
+                       % e["id"])
+    # a proposal with the id and shape of a glossary entry is superseded by it (it was moved into the glossary)
+    p_acts = [e for e in p_acts if e.get("id") not in g_acts]
+    p_atoms = [e for e in p_atoms if e.get("id") not in g_atoms]
     rejected = {e["id"] for e in g["acts"] + g["atoms"] if e.get("status") == "rejected"}
     live_acts = [e for e in g["acts"] if e.get("status") != "rejected"]
     live_atoms = [e for e in g["atoms"] if e.get("status") != "rejected"] + p_atoms
@@ -324,6 +331,57 @@ def glossary_terms(data, out):
     return acts, sit, par, rejected
 
 
+def shape(e):
+    """What must agree for two entries with one id to be one atom: kind and labels (sources and glosses may differ)."""
+    dom = e.get("domain")
+    return (e.get("kind"), "bool" if dom == "bool" else tuple(b.get("label") for b in dom) if isinstance(dom, list) else None)
+
+
+def glossary_sha(rel):
+    with open(os.path.join(ROOT, *rel.split("/")), "rb") as f:
+        return hashlib.sha256(f.read().replace(b"\r\n", b"\n")).hexdigest()
+
+
+def materialize(data):
+    """Glossary mode (ADR-0027 step 3) to the ordinary shape: the glossary or proposed atoms the norms use become the
+    atom lists, named by their id and marked `shared`, so that `run.merge` gives one atom per id across articles.
+    Call only on a translation `check` accepted. A translation without a glossary is returned unchanged.
+
+    Lean wants one clause per atom and per band that `parseEntry` reads: the first of `sources`; a band that has only
+    a `note` gets the atom's first source. Everything this drops (other sources, notes, glosses, statuses) is kept,
+    in words, in `glossary_terms`, which the draft and the module print in their header."""
+    if "glossary" not in data:
+        return data
+    _, g, rel = load_glossary(data["doc_id"])
+    props = data.get("glossary_proposals", {})
+    gid = {e["id"] for e in g["acts"] + g["atoms"]}
+    atoms = g["atoms"] + [dict(e, status="đề xuất") for e in props.get("atoms", []) if e["id"] not in gid]
+    acts = g["acts"] + [dict(e, status="đề xuất") for e in props.get("acts", []) if e["id"] not in gid]
+    used_acts, used_atoms = used_terms(data)
+    out = dict(data, atoms={"situation": [], "parameters": []}, glossary_sha256=glossary_sha(rel))
+    terms = []
+    for e in acts:
+        if e["id"] in used_acts:
+            terms.append("act %s [%s]: %s (nguồn: %s)" % (e["id"], e["status"], e["gloss"], "; ".join(e["sources"])))
+    for e in atoms:
+        if e["id"] not in used_atoms:
+            continue
+        src = e["sources"][0]
+        if e["domain"] == "bool":
+            dom = "bool"
+        else:
+            dom = [{"label": b["label"], "source": b.get("source") or src} for b in e["domain"]]
+        out["atoms"]["situation" if e["kind"] == "situation" else "parameters"].append(
+            {"name": e["id"], "source": src, "domain": dom, "shared": True})
+        terms.append("atom %s [%s]: %s (nguồn: %s)" % (e["id"], e["status"], e["gloss"], "; ".join(e["sources"])))
+        for b in (e["domain"] if e["domain"] != "bool" else []):
+            if not b.get("source"):
+                terms.append("  nhãn «%s» không có khoản nào nêu; nguồn ghi trong Lean là «%s». Ghi chú: %s" % (b["label"], src, b["note"]))
+    out["glossary_terms"] = terms
+    out["unapproved"] = unapproved_terms(data)
+    return out
+
+
 def unapproved_terms(data):
     """Glossary mode: the acts and atoms the norms use whose status is not `approved` (proposals included), as
     sorted «id [status]» strings. `promote.py` must refuse a translation while this is not empty (ADR-0027 step 3)."""
@@ -333,14 +391,6 @@ def unapproved_terms(data):
     status = {e["id"]: e.get("status") for e in g["acts"] + g["atoms"]}
     acts, atoms = used_terms(data)
     return sorted("%s [%s]" % (t, status.get(t, "đề xuất")) for t in acts | atoms if status.get(t) != "approved")
-
-
-def not_merged_yet(data):
-    """Findings for a step that cannot handle glossary mode yet (Lean draft, merge, review sheet): fail closed."""
-    if "glossary" in data:
-        return ["bản dịch dùng bảng thuật ngữ; gộp atom theo id (ADR-0027 bước 3) chưa làm, nên chưa sinh Lean, chưa gộp"
-                " và chưa lập phiếu được cho tệp này"]
-    return []
 
 
 def check(data):
@@ -506,6 +556,15 @@ def refs_lean(n):
     return "[" + ", ".join(lq(r) for r in n.get("references", [])) + "]"
 
 
+def glossary_header(data):
+    """Header lines (inside a Lean comment) for the glossary terms of a materialized translation or merge."""
+    if not data.get("glossary_terms"):
+        return []
+    return (["", "Glossary terms used (`%s`, sha256 `%s`); an id shared by two articles is ONE atom:" % (
+                 data["glossary"], data["glossary_sha256"])] +
+            ["* " + t.replace("-/", "- /") for t in data["glossary_terms"]])
+
+
 def to_lean(data, seg):
     sit, par = data["atoms"]["situation"], data["atoms"]["parameters"]
     rs, sl = readers(sit)
@@ -518,6 +577,7 @@ def to_lean(data, seg):
          "Not part of the library: it is NOT in `LexProof/Laws/`, and moving it there needs a human review first.",
          "Assumptions the translator declared (each is a reading of the law that a reviewer must accept or reject):"]
     L += ["* " + str(a).replace("-/", "- /") for a in data["assumptions"]] or ["* (none declared)"]
+    L += glossary_header(data)
     L += ["-/", "", "namespace Draft", "open LexProof", "", "def tS : AtomTable :=",
           "  [ " + "\n  , ".join(atom_lean(a) for a in sit) + " ]" if sit else "  []", "",
           "def tP : AtomTable :=", ("  [ " + "\n  , ".join(atom_lean(a) for a in par) + " ]") if par else "  []", "",
@@ -647,14 +707,10 @@ def main(argv=None):
         if un:
             print("dùng %d thuật ngữ chưa duyệt (promote sẽ từ chối cho tới khi bảng duyệt chúng): %s" % (len(un), ", ".join(un)))
         return 0
-    nm = not_merged_yet(data)
-    if nm:
-        print("TỪ CHỐI: " + nm[0])
-        return 1
     seg = load_segmented(data["doc_id"])
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with open(a.out, "w", encoding="utf-8", newline="\n") as f:
-        f.write(to_lean(data, seg))
+        f.write(to_lean(materialize(data), seg))
     print(a.out)
     return 0
 

@@ -8,8 +8,8 @@ answer), and:
 
 1. checks that the segmented text still matches the extracted file it was made from (else stops);
 2. runs `translate.check` on every file; a file with any finding is REFUSED and listed, never merged;
-3. merges the accepted files into one Lean draft (atom names are prefixed by their article, so two articles never
-   share an atom by accident; see the report for what this costs);
+3. merges the accepted files into one Lean draft: glossary atoms (ADR-0027) keep their id and are one atom across
+   articles; every other atom name is prefixed by its article, so two articles never share it by accident;
 4. runs Lean on the draft (`pfindings`, `analyzeReport`) with `lake env lean --run`;
 5. writes a Markdown report next to the draft.
 
@@ -51,33 +51,68 @@ def prefixed(name, art):
     return "Điều %d · %s" % (art, name)
 
 
-def rename_cond(c, art):
+def rename_cond(c, art, keep=frozenset()):
+    """Prefix every atom name by its article, except the shared (glossary) names in `keep`."""
     if c in ("true", "false"):
         return c
-    if "sit" in c:
-        return dict(c, sit=prefixed(c["sit"], art))
-    if "param" in c:
-        return dict(c, param=prefixed(c["param"], art))
+    for k in ("sit", "param"):
+        if k in c:
+            return dict(c, **{k: c[k] if c[k] in keep else prefixed(c[k], art)})
     if "not" in c:
-        return {"not": rename_cond(c["not"], art)}
+        return {"not": rename_cond(c["not"], art, keep)}
     k = "and" if "and" in c else "or"
-    return {k: [rename_cond(x, art) for x in c[k]]}
+    return {k: [rename_cond(x, art, keep) for x in c[k]]}
+
+
+def shared_atoms(d):
+    """{id: (kind, atom)} for the glossary atoms of a materialized translation."""
+    return {a["name"]: (kind, a) for kind in ("situation", "parameters") for a in d["atoms"][kind] if a.get("shared")}
+
+
+def shared_conflicts(accepted, d):
+    """Reasons why `d` cannot be merged with `accepted`: one glossary id with two kinds or two label lists (two
+    proposals with one id that disagree), or two different glossary files."""
+    out = []
+    for prev in accepted:
+        if "glossary_sha256" in d and "glossary_sha256" in prev and d["glossary_sha256"] != prev["glossary_sha256"]:
+            out.append("Điều %d và Điều %d dùng hai phiên bản khác nhau của bảng thuật ngữ" % (prev["article"], d["article"]))
+        mine, theirs = shared_atoms(d), shared_atoms(prev)
+        for i in sorted(mine.keys() & theirs.keys()):
+            (k1, a1), (k2, a2) = mine[i], theirs[i]
+            if T.shape({"kind": k1, "domain": a1["domain"]}) != T.shape({"kind": k2, "domain": a2["domain"]}):
+                out.append("atom «%s» có định nghĩa khác nhau ở Điều %d và Điều %d; không gộp" % (i, prev["article"], d["article"]))
+    return out
 
 
 def merge(accepted):
-    """One translation dict from several accepted ones (already checked, one article each)."""
+    """One translation dict from several accepted ones (already checked and materialized, one article each, no
+    `shared_conflicts`). Glossary atoms keep their id and appear once; every other atom is prefixed by its article."""
     first = accepted[0]
     out = {"doc_id": first["doc_id"], "doc_type": first["doc_type"], "effective": first["effective"],
            "atoms": {"situation": [], "parameters": []}, "norms": [], "not_encoded": [], "assumptions": []}
+    seen, terms = set(), []
     for d in accepted:
         art = d["article"]
+        keep = frozenset(shared_atoms(d))
         for kind in ("situation", "parameters"):
-            out["atoms"][kind] += [dict(a, name=prefixed(a["name"], art)) for a in d["atoms"][kind]]
+            for a in d["atoms"][kind]:
+                if a["name"] in keep:
+                    if a["name"] not in seen:
+                        seen.add(a["name"])
+                        out["atoms"][kind].append(a)
+                else:
+                    out["atoms"][kind].append(dict(a, name=prefixed(a["name"], art)))
         for n in d["norms"]:
-            out["norms"].append(dict(n, id="Điều %d:%s" % (art, n["id"]), condition=rename_cond(n["condition"], art),
-                                     exceptions=[rename_cond(e, art) for e in n["exceptions"]]))
+            out["norms"].append(dict(n, id="Điều %d:%s" % (art, n["id"]), condition=rename_cond(n["condition"], art, keep),
+                                     exceptions=[rename_cond(e, art, keep) for e in n["exceptions"]]))
         out["not_encoded"] += d["not_encoded"]
         out["assumptions"] += ["Điều %d: %s" % (art, a) for a in d["assumptions"]]
+        if "glossary" in d:
+            out["glossary"], out["glossary_sha256"] = d["glossary"], d["glossary_sha256"]
+            terms += [t for t in d["glossary_terms"] if t not in terms]
+            out["unapproved"] = sorted(set(out.get("unapproved", [])) | set(d["unapproved"]))
+    if terms:
+        out["glossary_terms"] = terms
     out["label"] = "Điều " + ", ".join(str(d["article"]) for d in accepted)
     return out
 
@@ -97,13 +132,15 @@ def admit(files, seg):
         except (AttributeError, KeyError, TypeError) as e:   # a shape check.check did not foresee: refuse, never crash
             fs = ["tệp không đúng lược đồ: %r" % e]
         if not fs:
-            fs = T.not_merged_yet(d)
+            d = T.materialize(d)
         if not fs and d["doc_id"] != seg["doc_id"]:
             fs = ["doc_id «%s» khác văn bản đang chạy «%s»" % (d["doc_id"], seg["doc_id"])]
         if not fs and d["article"] in seen:
             fs = ["Điều %d đã có ở %s; mỗi điều chỉ một bản dịch" % (d["article"], seen[d["article"]])]
         if not fs and accepted and (d["doc_type"], d["effective"]) != (accepted[0]["doc_type"], accepted[0]["effective"]):
             fs = ["doc_type/effective khác các tệp đã nhận (%s, %s)" % (d["doc_type"], d["effective"])]
+        if not fs:
+            fs = shared_conflicts(accepted, d)
         info.append({"file": p, "sha256": sha_lf(p), "article": d.get("article") if isinstance(d, dict) else None})
         if fs:
             refused.append((p, fs))
@@ -240,9 +277,21 @@ def render(doc, seg, extracted_ok, accepted, refused, info, merged, lean, lean_p
             w((lean["stderr"] or "").rstrip()[:4000])
         w("```")
     w("")
-    w("Giới hạn của cách gộp: mỗi atom được gắn tên điều («Điều 5 · ...»), nên hai điều nói cùng một khái niệm vẫn có hai "
-      "atom khác nhau. Nhờ vậy không có gộp nhầm, nhưng xung đột phụ thuộc vào khái niệm dùng chung có thể bị bỏ sót. "
-      "Sửa đúng cách là một bảng thuật ngữ chung (FR2, chưa làm).")
+    if merged and merged.get("glossary_terms"):
+        w("Cách gộp: atom của bảng thuật ngữ (`%s`, sha256 `%s`) giữ id và là **một** atom dù nhiều điều dùng; atom riêng "
+          "của một điều (bản dịch không dùng bảng) được gắn tên điều («Điều 5 · ...»). Gộp nhầm hai khái niệm khác nhau "
+          "dưới một id chỉ người duyệt bảng chặn được." % (merged["glossary"], merged["glossary_sha256"]))
+        w("")
+        un = merged.get("unapproved", [])
+        w("Thuật ngữ đang dùng mà **chưa duyệt** trong bảng: %s. `promote.py` từ chối cho tới khi bảng duyệt hết." % (
+            ", ".join(un) if un else "không có"))
+        w("")
+        for t in merged["glossary_terms"]:
+            w(("  - " + t.strip()) if t.startswith("  ") else ("- " + t))
+    else:
+        w("Giới hạn của cách gộp: mỗi atom được gắn tên điều («Điều 5 · ...»), nên hai điều nói cùng một khái niệm vẫn có hai "
+          "atom khác nhau. Nhờ vậy không có gộp nhầm, nhưng xung đột phụ thuộc vào khái niệm dùng chung có thể bị bỏ sót. "
+          "Bản dịch dùng bảng thuật ngữ (`translate.py prompt --glossary`, ADR-0027) thì dùng chung được atom.")
     w("")
     w("## 6. Báo cáo này KHÔNG nói gì")
     w("")
