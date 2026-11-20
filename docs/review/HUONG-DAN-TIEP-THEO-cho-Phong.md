@@ -81,6 +81,26 @@ cùng một khái niệm. Nhờ vậy hệ thống so được các điều vớ
 - Ghi chú về thứ tự cho sau này: khi một bản dịch **dùng** bảng, phải duyệt bảng **trước** rồi mới lập phiếu norm, vì
   phiếu norm ghim sha256 của bảng.
 
+### 1.4 Phiếu mới (2026-11-20): norm suy ra
+
+Tệp: **`docs/review/duyet-norm-suy-ra-44-2019-QH14.md`**, 2 hàng. Một norm suy ra là một câu mà luật **không viết thẳng**,
+nhưng người đọc có thể rút ra từ luật. Ví dụ: «có giấy phép thì được kinh doanh rượu» rút ra từ lệnh cấm ở Điều 5 khoản 11.
+Điều 5 và Điều 15 chỉ so được với nhau qua những câu như vậy (ADR-0028).
+
+- Ba lựa chọn giống phiếu bảng thuật ngữ: Chấp nhận / Bác / Để sau. Bác thì phải ghi lý do.
+- **Câu hỏi để quyết mỗi hàng:** từ các khoản ở cột «Suy ra từ», người đọc luật cẩn thận có rút ra **đúng** câu này không?
+  Phải đúng cả điều kiện và ngoại lệ: không rộng hơn, không hẹp hơn.
+- **Máy đã thấy gì (chỉ để tham khảo; bạn tự quyết):**
+  - D1 «có giấy phép thì được kinh doanh rượu» va chạm với Điều 5 khoản 12. Có giấy phép vẫn không được bán rượu giả,
+    nhập lậu… Nếu bạn thấy D1 đúng nhưng thiếu ngoại lệ, chọn **Bác** và ghi ngoại lệ cần thêm vào cột lý do.
+  - D2 «đủ điều kiện ở Điều 15 khoản 4 thì được kinh doanh» va chạm với Điều 5 khoản 11 trong tình huống đủ điều kiện nhưng
+    **chưa có giấy phép**.
+- **Hai lưu ý:**
+  - Hai mục dùng các thuật ngữ trong bảng (mục 0 của phiếu), nên đọc phiếu bảng thuật ngữ trước.
+  - Nghị quyết 66.18/2026/NQ-CP (từ 01/7/2026 đến hết 28/02/2027) tạm không thực hiện điều kiện của Điều 15 và vế giấy phép
+    của Điều 5 khoản 11. Phiếu này hỏi về **chữ của Luật 44** như khi ban hành; nếu bạn thấy nghị quyết làm câu trả lời
+    khác đi, ghi vào lý do.
+
 ## 2. Việc 2: các câu hỏi còn treo từ tệp của bạn
 
 Trả lời ngắn vào một tệp mới (xem mục 4) cho các câu sau:

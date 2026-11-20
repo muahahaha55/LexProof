@@ -1,7 +1,7 @@
 # ADR-0028: Norm suy ra — kiểm các điều điều chỉnh hai hành vi khác nhau
 
 - **Status**: **Accepted** 2026-11-20 (người phụ trách dự án chọn hướng này thay cho «ràng buộc tình huống» và «ghi thành giới hạn»)
-- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/derived.py`, `run.py --derived`, `pipeline/tests/test_derived.py`, tệp `data/derived/44-2019-QH14.json` với 2 mục `proposed` do AI đề xuất). Phiếu duyệt và đưa vào `promote.py`: chưa làm.
+- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/derived.py`, `run.py --derived`, `pipeline/tests/test_derived.py`, tệp `data/derived/44-2019-QH14.json` với 2 mục `proposed` do AI đề xuất). Bước 2 **Tested**: phiếu duyệt `derived.py sheet`/`apply`; phiếu trống `docs/review/duyet-norm-suy-ra-44-2019-QH14.md`. Đưa vào `promote.py`: chưa làm.
 - **Ngày**: 2026-11-20
 - **Liên quan**: [ADR-0004](0004-act-as-opaque-glossary-id.md), [ADR-0027](0027-glossary-shared-atoms.md) (bước 5, kết quả âm), [ADR-0025](0025-run-command-draft-path.md)
 
@@ -45,8 +45,19 @@ Hai điều chỉ so được với nhau qua một **cách đọc** mà luật k
 - **Cách đọc quá yếu làm mất xung đột.** Chỉ người duyệt nhìn ra được, giống `valid` (trust base).
 - Cách đọc là chỗ ý kiến của người duyệt có trọng lượng lớn nhất; một người duyệt chưa đủ cho các mục gây tranh cãi (như Q5).
 
+## Bước 2: phiếu duyệt (2026-11-20)
+
+- `derived.py sheet FILE -o SHEET.md`: mỗi mục `proposed` một hàng (`D:D1`). Hàng ghi tính chất, hành vi, điều kiện và ngoại lệ bằng lời, «Suy ra từ», cách suy ra và người đề xuất. Ba lựa chọn Chấp nhận / Bác / Để sau; bác thì phải ghi lý do.
+  - Mục 0 liệt kê các thuật ngữ mà norm suy ra dùng, kèm trạng thái duyệt của chúng.
+  - Phiếu ghim sha256 của **cả** tệp norm suy ra **và** bảng thuật ngữ, vì nghĩa của norm phụ thuộc vào nghĩa của các id.
+- `derived.py apply FILE SHEET`: từ chối phiếu thiếu hàng, thiếu tên hoặc ngày, đánh dấu sai, bác không lý do, hoặc khi một trong hai sha256 đã đổi; khi từ chối thì không ghi gì.
+  - Khi nhận, mỗi mục được quyết có thêm `reviewed_content_sha256`: sha256 của nội dung mục lúc duyệt (mọi trường, trừ các trường duyệt).
+- **Khác bảng thuật ngữ:**
+  - `check` báo finding khi một mục `approved` hoặc `rejected` không có `reviewed_content_sha256` (tức trạng thái được ghi tay, không qua phiếu).
+  - `check` cũng báo khi nội dung đã đổi sau khi duyệt, ví dụ thêm ngoại lệ cho D1. Một cách đọc đã sửa không còn là cách đọc đã được duyệt.
+  - Bảng thuật ngữ chưa có chốt này; nên thêm nếu dùng thật.
+
 ## Chưa làm
 
-- Phiếu duyệt norm suy ra (có thể dùng lại `glossary.py sheet`/`apply`).
 - Đưa norm suy ra đã duyệt vào `promote.py`: một module có `derived` riêng và định lý riêng cho `norms ++ derived`.
 - Ngoại lệ cho D1 theo khoản 12, nếu người duyệt chấp nhận hướng đó.

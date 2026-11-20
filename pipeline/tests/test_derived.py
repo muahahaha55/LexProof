@@ -85,5 +85,68 @@ class Run(unittest.TestCase):
         self.assertFalse(os.path.exists(os.path.join(self.dir, "out", "44-2019-QH14-2000-01-01-suy-ra.lean")))
 
 
+def tick(text, did, option, reason=""):
+    opts = ["Chấp nhận", "Bác", "Để sau"]
+    new = "<br>".join(("☒ " if i == option else "☐ ") + o for i, o in enumerate(opts))
+    return "\n".join(l.replace(D.G.OPTIONS + " |  |", new + " | %s |" % reason) if l.startswith("| D:%s |" % did) else l
+                     for l in text.splitlines())
+
+
+class ReviewSheet(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        self.f = os.path.join(self.dir, "d.json")
+        shutil.copy(os.path.join(T.ROOT, "data", "derived", "44-2019-QH14.json"), self.f)
+        self.blank = D.make_sheet(self.f, D.load(self.f))
+
+    def tearDown(self):
+        shutil.rmtree(self.dir)
+
+    def filled(self, **dec):
+        t = self.blank.replace("Người duyệt: ", "Người duyệt: TEST", 1)
+        t = t.replace("Ngày duyệt (YYYY-MM-DD): ", "Ngày duyệt (YYYY-MM-DD): 2000-01-01", 1)
+        for did, (opt, why) in dec.items():
+            t = tick(t, did, opt, why)
+        return t
+
+    def apply(self, text):
+        sh = os.path.join(self.dir, "s.md")
+        with open(sh, "w", encoding="utf-8") as f:
+            f.write(text)
+        return D.apply_sheet(self.f, sh)
+
+    def test_blank_sheet_pins_both_files_and_is_refused(self):
+        self.assertEqual(self.blank.count("| D:"), 2)
+        self.assertIn("sha256 tệp norm suy ra: " + D.G.sha_lf(self.f), self.blank)
+        self.assertIn("sha256 bảng thuật ngữ: " + T.glossary_sha(T.glossary_rel("44/2019/QH14")), self.blank)
+        self.assertIn("atom co_giay_phep_hoac_dang_ky_kinh_doanh_ruou [proposed]", self.blank)
+        ps, _, _ = D.sheet_problems(D.load(self.f), self.f, self.blank)
+        self.assertIn("chưa ghi người duyệt", ps)
+        self.assertTrue(has(ps, "D1", "đúng một ô"))
+        with self.assertRaises(SystemExit):
+            self.apply(self.blank)
+
+    def test_apply_then_an_edit_of_an_approved_reading_is_a_finding(self):
+        msg = self.apply(self.filled(D1=(0, ""), D2=(1, "đủ điều kiện chưa phải là có giấy phép")))
+        self.assertIn("chấp nhận 1, bác 1, để sau 0", msg)
+        dd = D.load(self.f)
+        self.assertEqual(D.check(dd), [])
+        d1, d2 = dd["derived"]
+        self.assertEqual((d1["status"], d1["reviewed_by"], d1["reviewed_content_sha256"]), ("approved", "TEST", D.content_sha(d1)))
+        self.assertEqual((d2["status"], d2["review_note"]), ("rejected", "đủ điều kiện chưa phải là có giấy phép"))
+        self.assertEqual(D.make_sheet(self.f, dd).count("| D:"), 0)
+        d1["exceptions"] = [{"sit": "ruou_bia_gia"}]                       # someone adds an exception afterwards
+        self.assertTrue(has(D.check(dd), "D1", "nội dung đã đổi sau khi duyệt"))
+
+    def test_approval_by_hand_or_with_a_changed_glossary_is_refused(self):
+        dd = D.load(self.f)
+        dd["derived"][0].update(status="approved", reviewed_by="X", reviewed_on="2000-01-01")
+        self.assertTrue(has(D.check(dd), "derived.py apply"))
+        _, _, sheet = D.sheet_problems(D.load(self.f), self.f, self.filled(D1=(0, ""), D2=(2, "")))
+        text = self.filled(D1=(0, ""), D2=(2, "")).replace(sheet["glossary_sha"], "0" * 64)
+        ps, _, _ = D.sheet_problems(D.load(self.f), self.f, text)
+        self.assertTrue(has(ps, "bảng thuật ngữ"))
+
+
 if __name__ == "__main__":
     unittest.main()

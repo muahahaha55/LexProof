@@ -238,6 +238,9 @@ Duyệt bảng trước, rồi mới lập phiếu norm cho bản dịch dùng b
 Norm suy ra (ADR-0028): `python pipeline/derived.py check data/derived/44-2019-QH14.json`; kiểm cùng bản dịch:
 `python pipeline/run.py TR1.json TR2.json --derived data/derived/44-2019-QH14.json`. Kết luận chính (mục 1) chỉ đến từ
 chữ luật; kết quả có norm suy ra ở mục 5b.
+Duyệt norm suy ra: `python pipeline/derived.py sheet data/derived/44-2019-QH14.json -o docs/review/duyet-norm-suy-ra-44-2019-QH14.md`,
+người duyệt điền, rồi `python pipeline/derived.py apply data/derived/44-2019-QH14.json docs/review/duyet-norm-suy-ra-44-2019-QH14.md`.
+Không ghi `approved` bằng tay: `check` đòi `reviewed_content_sha256` do `apply` ghi.
 
 Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`
 chưa điền đủ hoặc mô-đun đã đổi (xem `docs/design-core.md` §18). Test: `python -m pytest pipeline/tests` (hoặc
