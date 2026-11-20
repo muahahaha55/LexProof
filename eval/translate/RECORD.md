@@ -96,3 +96,66 @@ Nguồn: `docs/review/ket-qua-doi-chieu-Phong-2026-11-18.md` (Vũ Đức Phong; 
 Chưa đối chiếu được với bản dịch: khoản 9 nhánh (ii) (tên act và cách gộp atom), khoản 5 («ngay trước giờ làm việc» thành tham số), vì người duyệt không trả lời các điểm này.
 
 Điều chưa giải quyết (không thuộc bước dịch): người duyệt cho rằng Nghị quyết 66.18/2026/NQ-CP «không thực hiện» quy định ở Điều 5 khoản 11 vế «không có giấy phép hoặc không đăng ký». Chưa kiểm chứng văn bản nghị quyết; quan hệ giữa hai văn bản thuộc Level 2 (CLAUDE.md), nên chưa ảnh hưởng đến việc ghi nhận bản dịch trên.
+
+## Lần 4 (chuẩn bị): Điều 5 + Điều 15 dùng bảng thuật ngữ (ADR-0027 bước 5), 2026-11-20
+
+Mục đích: đo xem act và atom dùng chung có làm tăng số cặp norm được kiểm không.
+
+**Số đo gốc, không dùng bảng** (`run.py eval/translate/article5.llm.json eval/translate/article15.llm.json`): `pfindings` = 0;
+consistentOn, **5 cặp đã kiểm, 271 cặp bỏ qua do khác act**, và **rỗng về xung đột modality** (không act nào vừa có norm
+cấm vừa có norm được phép), nên kết quả không nói gì về điều kiện.
+
+Cách làm (thứ tự quan trọng, vì hai điều dịch riêng sẽ tự đặt hai tên khác nhau cho cùng một khái niệm mới):
+
+1. Dịch Điều 5 với bảng: câu lệnh `prompt-article5.glossary.txt` (sha256 `e3e24de3d80b89ecef3facf36da9f92c0b353488e46ddac6e43363c5e1e1498a`),
+   bảng `data/glossary/44-2019-QH14.json` lúc đó có 5 act, 10 atom, mọi mục `proposed`. Câu trả lời lưu ở `article5.glossary.llm.json`.
+2. `glossary.py adopt` chép các đề xuất của Điều 5 vào bảng (vẫn `proposed`, có `proposed_in`).
+3. Sinh câu lệnh Điều 15 với bảng đã mở rộng; câu trả lời lưu ở `article15.glossary.llm.json`.
+4. `run.py` trên hai tệp; so số cặp đã kiểm và có hay không act có modality khắc nhau.
+
+Bản dịch Điều 5 cũ (`article5.llm.json`) và phiếu duyệt của nó giữ nguyên; lần này là một thí nghiệm riêng, chưa ai duyệt.
+
+### Lần 4, bước 1–2: Điều 5 với bảng (qua `check` lần đầu, chưa ai duyệt)
+
+- Câu trả lời `article5.glossary.llm.json`, **qua `check` ngay lần đầu**. 19 norm (đều cấm), khoản 13 vào `not_encoded`.
+- **Dùng lại mục của bảng đúng chỗ:** act `ban_ruou_bia`, `cung_cap_ruou_bia`, `khuyen_mai_ruou_bia`, `dung_ruou_bia_lam_qua_khuyen_mai`, `ban_ruou_bia_bang_may_tu_dong`; atom `tuoi_nguoi_nhan`, `do_con`.
+- **Không dùng lại mục của bảng khi nghĩa khác, và nêu lý do:** người uống ở khoản 2 và người lao động ở khoản 4 không phải «người nhận», nên LLM đề xuất `tuoi_nguoi_uong` và `tuoi_nguoi_lao_dong`; act `cung_cap_ruou_bia` là cung cấp đồ uống, nên khoản 8 (cung cấp thông tin) có act riêng.
+- Đề xuất 11 act và 17 atom.
+- Lean: `pfindings` = 0; consistentOn, 3 cặp đã kiểm, 168 cặp bỏ qua do khác act; rỗng về xung đột modality (một điều cấm thì không tự mâu thuẫn).
+- Điểm người duyệt phải xem:
+  1. **Khoản 11 nhánh (i)** thành một atom `co_giay_phep_hoac_dang_ky_kinh_doanh_ruou` («có hình thức cho phép mà loại hình đó phải có»). Đây là cách đọc thứ ba, khác bản dịch cũ (`¬(giấy phép ∨ đăng ký)`, Phong cho là sai) và khác ý Phong (thiếu một trong hai là vi phạm). LLM đã ghi điều này trong `assumptions`.
+  2. Khoản 10: «và» giữa hai tính chất của nguyên liệu được giữ là AND (khớp ý Phong ở Q2). LLM vẫn hỏi lại người duyệt.
+  3. Khoản 9 nhánh (i): hiểu là khuyến mại chính sản phẩm từ 15 độ trở lên.
+- `glossary.py adopt`: chép 28 đề xuất vào bảng (`proposed`, có `proposed_in`). Bảng nay có 16 act, 27 atom, chưa mục nào duyệt; sha256 `f8fe949abfd978128a7bc6ef058ab1361145f1b32926d387ed1e90be36ac79ab`. Bản dịch Điều 5 vẫn qua `check` với bảng mới, vì đề xuất trùng mục của bảng được thay bằng mục đó.
+- Câu lệnh Điều 15 với bảng mở rộng: `prompt-article15.glossary.txt` (sha256 `1354ee7a0dea515e1a3eb824b92b5fc1b9214e745117e91035eb16587038d69b`). Câu lệnh liệt kê `kinh_doanh_ruou_bia` và `co_giay_phep_hoac_dang_ky_kinh_doanh_ruou`.
+
+### Lần 4, bước 3–4: Điều 15 với bảng, và kết quả đo (2026-11-20, chưa ai duyệt)
+
+- Câu trả lời `article15.glossary.llm.json` (sha256 `15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709`), **qua `check` ngay lần đầu**. 4 norm, khoản 5 vào `not_encoded`.
+- Sự cố lưu tệp: lần lưu đầu, tệp Điều 5 bị đổi tên thành tên của Điều 15 (nội dung giữ nguyên, sha256 sau khi chuẩn hóa xuống dòng vẫn `54004e89…`). Đã đổi tên lại; câu trả lời Điều 15 được lưu riêng sau đó.
+- **Đổi cách đọc «Điều kiện … bao gồm» so với lần 3.** Lần 3 coi danh sách là điều kiện đủ (`permission`), lần này coi là điều kiện cần (quy tắc 11): **cấm cấp phép khi thiếu một điểm**. Act là việc *cấp phép*, do cơ quan có thẩm quyền làm, không phải việc kinh doanh. Riêng khoản 3 (luật không nói giấy phép) thì act là việc sản xuất của hộ gia đình, cá nhân.
+- **Không dùng lại mục nào của bảng, và nêu lý do cho từng chỗ:**
+  - `kinh_doanh_ruou_bia` rộng hơn «mua bán»;
+  - `co_giay_phep_hoac_dang_ky_kinh_doanh_ruou` khác «đăng ký kinh doanh» chung ở khoản 4 điểm a;
+  - `do_con` có ngưỡng 15 độ, nên đề xuất `do_con_nguong_5_5` (quy tắc 14).
+- Đề xuất 4 act và 14 atom.
+
+**Kết quả đo** (`run.py` trên hai tệp):
+
+| | Không dùng bảng (`article5.llm.json` + `article15.llm.json`) | Dùng bảng (`article5.glossary.llm.json` + `article15.glossary.llm.json`) |
+|---|---|---|
+| `pfindings` | 0 | 0 |
+| Cặp đã kiểm / bỏ qua do khác act | 5 / 271 | **3 / 250** |
+| Có act vừa cấm vừa được phép | không (rỗng về thông tin) | **không (rỗng về thông tin)** |
+| Act chung giữa Điều 5 và Điều 15 | 0 | **0** |
+
+**Bảng thuật ngữ không làm tăng số cặp giữa hai điều.** Đây là kết quả âm; ghi nhận như vậy, không diễn giải thành thành công. Nguyên nhân thấy được:
+
+1. Hai điều điều chỉnh **hai hành vi khác nhau**: Điều 5 khoản 11 cấm *người kinh doanh* kinh doanh rượu khi không có giấy phép; Điều 15 đặt điều kiện để *cơ quan* cấp giấy phép. Chúng liên quan qua một quan hệ («được cấp phép» kéo theo «có giấy phép»), không phải qua một act chung. Core chỉ so hai norm cùng act (ADR-0004), nên quan hệ này không biểu diễn được, có bảng hay không.
+2. Cả hai điều **chỉ có lệnh cấm**: hai lệnh cấm không bao giờ khắc nhau về modality, nên cặp «được kiểm» cũng không thể ra xung đột.
+3. **Hai atom cho một đại lượng:** `do_con` (ngưỡng 15) và `do_con_nguong_5_5` là hai atom độc lập. Vì vậy Lean xét cả những tình huống không thể có, ví dụ «từ 15 độ trở lên» mà «dưới 5,5 độ». Muốn sửa phải có một atom `do_con` với ba dải. Đó là quyết định của người duyệt bảng (ADR-0027, rủi ro «ngưỡng số»).
+
+Điều bảng **có** làm được (thấy ở Điều 5): dùng lại đúng các act và atom của bản mã hóa tay, và tách đúng khi nghĩa khác (tuổi người uống khác tuổi người nhận). Lợi ích về số cặp chỉ có khi nhiều điều điều chỉnh **cùng một hành vi**, ví dụ Điều 5 khoản 3 và Điều 19 (cùng `ban_ruou_bia`).
+
+- `glossary.py adopt`: chép 18 đề xuất của Điều 15. Bảng nay có 20 act, 41 atom, cả 61 mục `proposed`; sha256 `65f3dc9f47036fd2315d7e2b094d78c0c061da87a1ef70b93a911aab48aba020`. Cả hai bản dịch vẫn qua `check` với bảng mới.
+- Phiếu duyệt bảng lập lại: `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`, 61 hàng.

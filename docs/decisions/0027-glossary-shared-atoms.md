@@ -1,7 +1,7 @@
 # ADR-0027: Bảng thuật ngữ dùng chung cho act và atom (FR2) — phác thảo
 
 - **Status**: **Accepted** 2026-11-20 (người phụ trách dự án; ba câu hỏi đã trả lời ở mục cuối)
-- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3 **Tested** (`materialize`, `run.merge` theo id, chặn ở `promote.py`; xem «Bước 3 đã làm»); bước 4 **Tested** (`glossary.py sheet`/`apply`, phiếu trống `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`; xem «Bước 4 đã làm»); bước 5 chưa làm
+- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3 **Tested** (`materialize`, `run.merge` theo id, chặn ở `promote.py`; xem «Bước 3 đã làm»); bước 4 **Tested** (`glossary.py sheet`/`apply`, phiếu trống `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`; xem «Bước 4 đã làm»); bước 5 **đã đo, kết quả âm** (xem «Bước 5: kết quả» và `eval/translate/RECORD.md` «Lần 4»)
 - **Ngày**: 2026-11-20
 - **Liên quan**: FR2, [ADR-0004](0004-act-as-opaque-glossary-id.md) (act là id mờ), [ADR-0024](0024-translation-manual-paste.md), [ADR-0025](0025-run-command-draft-path.md), [ADR-0026](0026-promote-reviewed-translation.md)
 
@@ -70,6 +70,15 @@ Một kiểm tra *trong một văn bản* chỉ có nghĩa khi các điều nói
 - Trong lúc làm bước này phát hiện một lỗi ở `promote.ticked`: một lựa chọn rỗng (ô kết thúc bằng `<br>`) bị tính là đã đánh dấu.
   - Ô «☐ Chấp nhận<br>» bị đọc thành «Bác». Đã sửa và có test.
   - Các phiếu đã nộp (nhánh `phong-review-law`) không có ô như vậy.
+
+## Bước 5: kết quả (2026-11-20)
+
+- Quy trình: dịch Điều 5 với bảng; `glossary.py adopt` chép đề xuất vào bảng (vẫn `proposed`); dịch Điều 15 với bảng đã mở rộng; chạy `run.py` trên hai tệp. Cả hai bản dịch qua `check` ngay lần đầu.
+- **Số cặp được kiểm không tăng:** 5 cặp khi không dùng bảng, **3 cặp** khi dùng bảng. Hai điều không có act chung, và kết quả vẫn rỗng về thông tin.
+- Lý do: Điều 5 khoản 11 (cấm kinh doanh khi không có giấy phép) và Điều 15 (điều kiện để cơ quan *cấp* giấy phép) điều chỉnh hai hành vi khác nhau. Chúng nối với nhau qua một quan hệ giữa các mệnh đề, không qua một act chung.
+- Bảng thuật ngữ đúng là không giải quyết được việc này. Đây là giới hạn «quan hệ giữa act» đã ghi ở mục Rủi ro.
+- Bảng có tác dụng khi nhiều điều điều chỉnh cùng một hành vi (Điều 5 khoản 3 và Điều 19, cùng `ban_ruou_bia`). Bảng cũng làm lộ ra một rủi ro có thật: hai atom độc lập cho cùng độ cồn (`do_con`, `do_con_nguong_5_5`).
+- Hệ quả cho lộ trình: muốn kiểm Điều 5 với Điều 15 thì cần **quy tắc nối** giữa các mệnh đề, ví dụ «được cấp phép ⇒ có giấy phép». Đó là thay đổi ở `Core`, chưa đề xuất ở đây; nếu làm thì cần một ADR riêng.
 
 ## Câu hỏi đã quyết (2026-11-20)
 

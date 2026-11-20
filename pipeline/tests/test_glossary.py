@@ -13,7 +13,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
 import glossary as G   # noqa: E402
 
-SEED = G.load(os.path.join(G.T.ROOT, "data", "glossary", "44-2019-QH14.json"))
+# A frozen copy of the seed glossary (2026-11-20, before any proposal was adopted): the live file grows as articles are
+# translated, the tests must not. Tests that call `translate.check` still read the live file, which contains the seed.
+SEED_PATH = os.path.join(HERE, "glossary_seed.json")
+SEED = G.load(SEED_PATH)
 
 
 def has(fs, *words):
@@ -331,7 +334,6 @@ class MergeById(unittest.TestCase):
 
 
 # ---------------------------------------------------------------- step 4: the glossary review sheet
-SEED_PATH = os.path.join(T.ROOT, "data", "glossary", "44-2019-QH14.json")
 
 
 def tick(text, row, option, reason=""):
@@ -402,6 +404,33 @@ class ReviewSheet(unittest.TestCase):
                             for l in self.blank.splitlines())
         ps, _, _ = G.sheet_problems(G.load(self.g), self.g, mangled)
         self.assertTrue(has(ps, "act:ban_ruou_bia", "chỉ còn một lựa chọn"))
+
+    def test_adopt_copies_proposals_as_proposed_and_approves_nothing(self):
+        d = article5(proposals={"acts": [], "atoms": [{"id": "co_giay_phep_kinh_doanh_ruou", "kind": "situation", "domain": "bool",
+                                                       "gloss": "x", "sources": ["Điều 5 khoản 11 nhánh (i)"]}]},
+                     condition={"sit": "co_giay_phep_kinh_doanh_ruou"})
+        tr = os.path.join(self.dir, "t5.json")
+        with open(tr, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False)
+        self.assertIn("đã chép 1 đề xuất", G.adopt(self.g, tr))
+        g = G.load(self.g)
+        e = next(a for a in g["atoms"] if a["id"] == "co_giay_phep_kinh_doanh_ruou")
+        self.assertEqual(e["status"], "proposed")
+        self.assertIn("t5.json (sha256 ", e["proposed_in"])
+        self.assertEqual(G.check(g), [])
+        self.assertIn("đã chép 0 đề xuất", G.adopt(self.g, tr))       # idempotent
+        saved = G.load
+        G.load = lambda p: saved(self.g)                                # the translation still passes against it
+        try:
+            self.assertEqual(T.check(d), [])
+            self.assertIn("co_giay_phep_kinh_doanh_ruou [proposed]", T.unapproved_terms(d))
+        finally:
+            G.load = saved
+        tr2 = os.path.join(self.dir, "t19.json")
+        with open(tr2, "w", encoding="utf-8") as f:
+            json.dump(GOLD19, f, ensure_ascii=False)
+        with self.assertRaises(SystemExit):
+            G.adopt(self.g, tr2)
 
     def test_cli_sheet_writes_utf8(self):
         out = os.path.join(self.dir, "blank.md")

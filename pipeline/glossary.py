@@ -4,6 +4,7 @@
     python pipeline/glossary.py check data/glossary/44-2019-QH14.json
     python pipeline/glossary.py sheet data/glossary/44-2019-QH14.json -o SHEET.md    review sheet for the `proposed` entries
     python pipeline/glossary.py apply data/glossary/44-2019-QH14.json SHEET.md       write a complete sheet's decisions
+    python pipeline/glossary.py adopt data/glossary/44-2019-QH14.json TR.json        copy a translation's proposals in (proposed)
 
 A glossary is data reviewed by a person: every act and atom has an id, a gloss (what it means, in plain words), the
 clauses it comes from, and a status (`proposed` until a reviewer approves it). This step only defines the file and
@@ -232,6 +233,37 @@ def apply_sheet(path, sheet_path):
             % (rel(path), n["approved"], n["rejected"], n["proposed"]))
 
 
+def adopt(path, tr_path):
+    """Copies the `glossary_proposals` of a translation `check` accepts into the glossary, as `proposed` entries that
+    record where they came from, so that the next article is translated with them (ADR-0027 step 5). It approves
+    nothing. A proposal the glossary already holds with the same shape is skipped. Returns a summary line."""
+    g = load(path)
+    with open(tr_path, encoding="utf-8") as f:
+        data = json.load(f)
+    if "glossary" not in data:
+        raise SystemExit("TỪ CHỐI: bản dịch không dùng bảng thuật ngữ (không có khóa «glossary»)")
+    fs = T.check(data)
+    if fs:
+        raise SystemExit("TỪ CHỐI: bản dịch có %d phát hiện của `check`; không chép đề xuất nào" % len(fs))
+    origin = "%s (sha256 %s)" % (rel(tr_path), sha_lf(tr_path))
+    have = {e["id"] for e in g["acts"] + g["atoms"]}
+    added = []
+    for kind in ("acts", "atoms"):
+        for e in data.get("glossary_proposals", {}).get(kind, []):
+            if e["id"] in have:
+                continue
+            g[kind].append(dict(e, status="proposed", proposed_in=origin))
+            added.append(e["id"])
+    fs = check(g)
+    if fs:
+        raise SystemExit("TỪ CHỐI: sau khi chép, bảng có phát hiện (không ghi): %s" % fs)
+    if added:
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
+            json.dump(g, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+    return "đã chép %d đề xuất vào %s (trạng thái proposed): %s" % (len(added), rel(path), ", ".join(added) or "—")
+
+
 def main(argv=None):
     for s in (sys.stdout, sys.stderr):
         if hasattr(s, "reconfigure"):
@@ -246,9 +278,15 @@ def main(argv=None):
     p = sub.add_parser("apply")
     p.add_argument("file")
     p.add_argument("sheet")
+    p = sub.add_parser("adopt")
+    p.add_argument("file")
+    p.add_argument("translation")
     a = ap.parse_args(argv)
     if a.cmd == "apply":
         print(apply_sheet(a.file, a.sheet))
+        return 0
+    if a.cmd == "adopt":
+        print(adopt(a.file, a.translation))
         return 0
     g = load(a.file)
     if a.cmd == "sheet":
