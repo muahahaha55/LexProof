@@ -235,6 +235,9 @@ in thêm các thuật ngữ chưa duyệt.
 Duyệt bảng: `python pipeline/glossary.py sheet data/glossary/44-2019-QH14.json -o docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`,
 người duyệt điền phiếu, rồi `python pipeline/glossary.py apply data/glossary/44-2019-QH14.json docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`.
 Duyệt bảng trước, rồi mới lập phiếu norm cho bản dịch dùng bảng.
+Norm suy ra (ADR-0028): `python pipeline/derived.py check data/derived/44-2019-QH14.json`; kiểm cùng bản dịch:
+`python pipeline/run.py TR1.json TR2.json --derived data/derived/44-2019-QH14.json`. Kết luận chính (mục 1) chỉ đến từ
+chữ luật; kết quả có norm suy ra ở mục 5b.
 
 Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`
 chưa điền đủ hoặc mô-đun đã đổi (xem `docs/design-core.md` §18). Test: `python -m pytest pipeline/tests` (hoặc

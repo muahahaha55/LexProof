@@ -159,3 +159,19 @@ Bản dịch Điều 5 cũ (`article5.llm.json`) và phiếu duyệt của nó g
 
 - `glossary.py adopt`: chép 18 đề xuất của Điều 15. Bảng nay có 20 act, 41 atom, cả 61 mục `proposed`; sha256 `65f3dc9f47036fd2315d7e2b094d78c0c061da87a1ef70b93a911aab48aba020`. Cả hai bản dịch vẫn qua `check` với bảng mới.
 - Phiếu duyệt bảng lập lại: `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`, 61 hàng.
+
+### Lần 4, bước 5: Điều 5 + 15 với norm suy ra (ADR-0028), 2026-11-20
+
+`run.py eval/translate/article5.glossary.llm.json eval/translate/article15.glossary.llm.json --derived data/derived/44-2019-QH14.json`. Tệp norm suy ra có sha256 `be6ea9d2eb6ffaa453fa0e341acdc9a955bee29892933d0ecb5fedc0709379cb`, gồm 2 mục `proposed` do AI đề xuất.
+
+| | Chỉ chữ luật | Có norm suy ra D1, D2 |
+|---|---|---|
+| Cặp cùng act đã kiểm | 3 | 8 |
+| Kết quả | consistentOn, rỗng về thông tin | **XUNG ĐỘT, 3 cặp, cả 3 dính norm suy ra** |
+
+- D1 («có giấy phép thì được kinh doanh rượu») × 5.11.i: **không xung đột**. Đây là phép kiểm có nghĩa đầu tiên giữa hai điều.
+- D1 × 5.12.i.1: D1 thiếu ngoại lệ cho rượu giả, nhập lậu, không bảo đảm chất lượng, không rõ nguồn gốc.
+- D2 («đủ điều kiện Điều 15 khoản 4 thì được kinh doanh») × 5.11.i: có tình huống đủ điều kiện mà chưa có giấy phép. Cách đọc «điều kiện đủ» của lần 3 bị bác.
+- D2 × 5.12.i.1: cùng lý do với D1.
+
+Cả bản dịch lẫn các cách đọc đều chưa ai duyệt.
