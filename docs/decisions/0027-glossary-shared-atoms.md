@@ -1,6 +1,7 @@
 # ADR-0027: Bảng thuật ngữ dùng chung cho act và atom (FR2) — phác thảo
 
-- **Status**: **Proposed** (chưa quyết, chưa có code)
+- **Status**: **Accepted** 2026-11-20 (người phụ trách dự án; ba câu hỏi đã trả lời ở mục cuối)
+- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2–5 chưa làm
 - **Ngày**: 2026-11-20
 - **Liên quan**: FR2, [ADR-0004](0004-act-as-opaque-glossary-id.md) (act là id mờ), [ADR-0024](0024-translation-manual-paste.md), [ADR-0025](0025-run-command-draft-path.md), [ADR-0026](0026-promote-reviewed-translation.md)
 
@@ -57,7 +58,15 @@ Một kiểm tra *trong một văn bản* chỉ có nghĩa khi các điều nói
 4. Phiếu duyệt thuật ngữ.
 5. Thử lại Điều 5 + Điều 15 với act và atom chung, đo số cặp được kiểm tăng bao nhiêu.
 
-## Câu hỏi để quyết
+## Câu hỏi đã quyết (2026-11-20)
+
+- Bảng **theo từng văn bản**.
+- Người duyệt bảng: **Phong** (cùng người duyệt norm).
+- «bán», «cung cấp», «khuyến mại» là **ba act riêng** (giữ G7 của bản mã hóa tay).
+
+Bước 1 thêm một quy tắc chưa có ở trên: một nhãn của enum mà không khoản nào nêu (ví dụ phần bù «từ đủ 18 tuổi trở lên») phải có `note` giải thích, không được thiếu nguồn mà im lặng.
+
+## Câu hỏi ban đầu
 
 - Bảng theo **văn bản** (đề xuất) hay dùng chung **nhiều văn bản** (gần Level 2)?
 - Ai duyệt bảng: cùng người duyệt norm hay người khác?

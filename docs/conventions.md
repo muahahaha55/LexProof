@@ -229,6 +229,8 @@ python pipeline/promote.py promote --name Article19 --pair eval/translate/articl
 
 `promote` ghi `LexProof/Laws/<Name>.lean`, thêm import vào `LexProof.lean` và `Cert/Audit.lean`, chạy `lake build`; build hỏng thì hoàn tác.
 
+Bảng thuật ngữ (ADR-0027): `python pipeline/glossary.py check data/glossary/44-2019-QH14.json`.
+
 Báo cáo (`reports/`) chỉ do lệnh này tạo, **không sửa tay**. `reviewed` bị từ chối nếu phiếu `docs/review/sale-group-cases.md`
 chưa điền đủ hoặc mô-đun đã đổi (xem `docs/design-core.md` §18). Test: `python -m pytest pipeline/tests` (hoặc
 `python -m unittest discover -s pipeline/tests`); phụ thuộc test được ghim ở `pipeline/requirements-dev.txt`. Sinh lại sổ phủ bằng

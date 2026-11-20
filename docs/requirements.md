@@ -44,7 +44,7 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **AC**: Thuật ngữ chưa có trong glossary bị chặn (không tự suy diễn) cho đến
   khi người duyệt thêm vào.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Planned**. Kiểu đích đã có: `Act` là id chuỗi mờ
+- **Trạng thái**: **Planned** (ADR-0027 bước 1 xong: lược đồ, `pipeline/glossary.py check`, bảng hạt giống chưa duyệt; AC «chặn thuật ngữ chưa duyệt» chưa làm). Kiểu đích đã có: `Act` là id chuỗi mờ
   ([ADR-0004](decisions/0004-act-as-opaque-glossary-id.md)).
 
 ### FR3 — Dịch điều khoản thành dữ liệu Lean

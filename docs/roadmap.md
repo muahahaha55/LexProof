@@ -32,7 +32,7 @@ Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Đ�
 
 Sau bước 1 và 2: có hệ thống cơ bản chạy từ đầu đến cuối. Bước 3–5: mở rộng và bằng chứng chất lượng.
 
-Bảng thuật ngữ dùng chung (FR2): phác thảo ở ADR-0027 (Proposed); cần quyết trước khi dịch theo lô nhiều điều, vì không có nó các điều không so được với nhau.
+Bảng thuật ngữ dùng chung (FR2, ADR-0027, Accepted 2026-11-20): theo từng văn bản, Phong duyệt, ba act bán / cung cấp / khuyến mại riêng. Bước 1/5 xong (lược đồ, `check`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục chưa duyệt). Cần trước khi dịch theo lô, vì không có nó các điều không so được với nhau.
 
 Việc đang chờ người duyệt (Phong): `docs/review/HUONG-DAN-TIEP-THEO-cho-Phong.md`.
 
