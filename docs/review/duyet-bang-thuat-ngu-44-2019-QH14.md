@@ -62,7 +62,7 @@ Ngày duyệt (YYYY-MM-DD): 2026-11-20
 | T:atom:nguyen_lieu_khong_duoc_phep_dung_trong_thuc_pham | tình huống | nguyên liệu, phụ gia, chất hỗ trợ chế biến được sử dụng là loại không được phép dùng trong thực phẩm | đúng / sai | Điều 5 khoản 10 | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
 | T:atom:nguyen_lieu_khong_bao_dam_chat_luong | tình huống | nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm được sử dụng không bảo đảm chất lượng | đúng / sai | Điều 5 khoản 10 | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
 | T:atom:nguyen_lieu_khong_ro_nguon_goc_xuat_xu | tình huống | nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm được sử dụng không rõ nguồn gốc, xuất xứ | đúng / sai | Điều 5 khoản 10 | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
-| T:atom:co_giay_phep_hoac_dang_ky_kinh_doanh_ruou | tình huống | người kinh doanh rượu có giấy phép hoặc đã đăng ký theo hình thức mà loại hình kinh doanh đó phải có | đúng / sai | Điều 5 khoản 11 nhánh (i) | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
+| T:atom:co_giay_phep_hoac_dang_ky_kinh_doanh_ruou | tình huống | người kinh doanh rượu có giấy phép hoặc đã đăng ký theo hình thức mà loại hình kinh doanh đó phải có | đúng / sai | Điều 5 khoản 11 nhánh (i) | ☐ Chấp nhận<br>[x] ☐ Bác<br>☐ Để sau |thiếu một trong hai đã vi phạm |
 | T:atom:ruou_bia_gia | tình huống | rượu, bia là hàng giả | đúng / sai | Điều 5 khoản 12 nhánh (i) | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
 | T:atom:ruou_bia_nhap_lau | tình huống | rượu, bia là hàng nhập lậu | đúng / sai | Điều 5 khoản 12 nhánh (i) | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
 | T:atom:ruou_bia_khong_bao_dam_chat_luong | tình huống | rượu, bia không bảo đảm chất lượng | đúng / sai | Điều 5 khoản 12 nhánh (i) | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
