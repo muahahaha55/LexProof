@@ -805,6 +805,28 @@
       "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)",
       "reviewed_by": "Vũ Đức Phong",
       "reviewed_on": "2026-11-20"
+    },
+    {
+      "id": "co_giay_phep_kinh_doanh_ruou",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "người kinh doanh rượu có giấy phép (yêu cầu «có giấy phép» của Điều 5 khoản 11 nhánh (i), xét riêng, không gộp với việc đăng ký)",
+      "sources": [
+        "Điều 5 khoản 11 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary-2.llm.json (sha256 562ae1bbc708f0f0eb55297673ee67898c3f0bb5ca5dfb49be9a58e65931536e)"
+    },
+    {
+      "id": "co_dang_ky_kinh_doanh_ruou",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "người kinh doanh rượu đã đăng ký (yêu cầu ngược với «không đăng ký» của Điều 5 khoản 11 nhánh (i), xét riêng, không gộp với giấy phép; khác co_dang_ky_kinh_doanh là đăng ký kinh doanh chung)",
+      "sources": [
+        "Điều 5 khoản 11 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary-2.llm.json (sha256 562ae1bbc708f0f0eb55297673ee67898c3f0bb5ca5dfb49be9a58e65931536e)"
     }
   ]
 }

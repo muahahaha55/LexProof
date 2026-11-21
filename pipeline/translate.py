@@ -142,7 +142,10 @@ RULES_G = """12. Dùng bảng thuật ngữ: «act», «sit», «param» chỉ �
 13. Chỉ đề xuất mục mới khi không mục nào của bảng cùng nghĩa. Id mới là snake_case không dấu, không trùng id của bảng; mỗi mục có
     «gloss» và «sources» là đơn vị có thật. Nhãn enum mà không khoản nào nêu phải có «note» thay cho «source». Không ghi «status».
 14. Không sửa, không mở rộng một mục của bảng (ví dụ thêm nhãn). Nếu miền giá trị của mục có sẵn không đủ cho điều này (ví dụ cần
-    ngưỡng khác), đề xuất một mục mới và ghi lý do vào «assumptions»."""
+    ngưỡng khác), đề xuất một mục mới và ghi lý do vào «assumptions».
+15. Mục «ĐÃ BÁC» là cách hiểu mà người duyệt không chấp nhận, kèm lý do. Không dùng id đó và không đề xuất mục mới cùng nghĩa
+    với nó dưới id khác; mã hóa theo lý do của người duyệt. Nếu chữ luật vẫn khiến bạn phải đọc như mục đã bác, ghi rõ điều đó
+    vào «assumptions»."""
 
 
 def glossary_rel(doc_id):
@@ -163,6 +166,14 @@ def glossary_lines(g, rel):
             if e["kind"] == kind:
                 dom = "bool" if e["domain"] == "bool" else "nhãn " + " | ".join("«%s»" % b["label"] for b in e["domain"])
                 lines.append("- %s [%s], %s: %s (nguồn: %s)" % (e["id"], e["status"], dom, e["gloss"], "; ".join(e["sources"])))
+    # rejected entries are not offered, but they are shown with the reviewer's reason: without it a translator is likely
+    # to propose the same reading again under a new id (quy tắc 15)
+    gone = [(k, e) for k, es in (("act", g["acts"]), ("atom", g["atoms"])) for e in es if e.get("status") == "rejected"]
+    if gone:
+        lines.append("Mục ĐÃ BÁC (không dùng; không đề xuất lại cùng nghĩa, quy tắc 15):")
+        for k, e in gone:
+            lines.append("- ĐÃ BÁC %s (%s, nguồn: %s): %s. Lý do của người duyệt: %s"
+                         % (e["id"], k, "; ".join(e["sources"]), e["gloss"], e.get("review_note") or "(không ghi)"))
     return lines
 
 

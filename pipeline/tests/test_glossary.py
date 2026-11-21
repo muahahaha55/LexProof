@@ -164,6 +164,8 @@ class WithGlossary(unittest.TestCase):
         for e in g["acts"] + g["atoms"]:
             if e["id"] in ("ban_ruou_bia", "dia_diem_co_so_y_te"):
                 e.update(status="rejected", reviewed_by="TEST", reviewed_on="2000-01-01")
+                if e["id"] == "dia_diem_co_so_y_te":
+                    e["review_note"] = "lý do thử"
         saved = G.load
         G.load = lambda path: copy.deepcopy(g)
         try:
@@ -173,7 +175,11 @@ class WithGlossary(unittest.TestCase):
             G.load = saved
         self.assertTrue(has(fs, "ban_ruou_bia", "bị bác"))
         self.assertTrue(has(fs, "dia_diem_co_so_y_te", "bị bác"))
-        self.assertNotIn("- ban_ruou_bia ", prompt)
+        self.assertNotIn("- ban_ruou_bia ", prompt)                       # not offered ...
+        self.assertIn("- ĐÃ BÁC ban_ruou_bia (act, nguồn: ", prompt)       # ... but shown, with the reviewer's reason
+        self.assertIn("Lý do của người duyệt: (không ghi)", prompt)
+        self.assertIn("địa điểm là cơ sở y tế. Lý do của người duyệt: lý do thử", prompt)
+        self.assertIn("15. Mục «ĐÃ BÁC»", prompt)
 
     def test_prompt_lists_the_glossary_and_its_rules(self):
         p = T.make_prompt(T.load_segmented("44/2019/QH14"), 15, (SEED, "data/glossary/44-2019-QH14.json"))
@@ -181,6 +187,7 @@ class WithGlossary(unittest.TestCase):
                   "- danh_cho_nguoi_chua_du_18 [proposed], bool", '"glossary": "data/glossary/44-2019-QH14.json"',
                   "glossary_proposals", "12. Dùng bảng thuật ngữ", "14. Không sửa"):
             self.assertIn(s, p)
+        self.assertNotIn("Mục ĐÃ BÁC (", p)                    # nothing rejected in the seed: no such section
         self.assertNotIn("cùng hành vi dùng cùng mã", p)
         self.assertNotIn("là atom trong «parameters»", p)     # would contradict «atoms» being empty
         self.assertNotIn("bảng thuật ngữ", T.make_prompt(T.load_segmented("44/2019/QH14"), 15))   # default unchanged
