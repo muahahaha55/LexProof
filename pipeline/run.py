@@ -252,6 +252,10 @@ def render_derived(w, dres):
             w("  - %s" % f)
         w("")
         return
+    if not D.live({"derived": dres["entries"]}):
+        w("Không chạy: mọi norm suy ra trong tệp đều đã bị bác. Mục này không thêm gì vào kết quả.")
+        w("")
+        return
     head, why = verdict(dres["lean"], True)
     w("**%s** (khi thêm norm suy ra) — %s." % (head.upper(), why))
     w("")
@@ -427,7 +431,7 @@ def run_derived(path, merged, seg, lean_path, lean):
         out["findings"] = D.check(dd)
     except (AttributeError, KeyError, TypeError) as e:
         out["findings"] = ["tệp không đúng lược đồ: %r" % e]
-    if out["findings"] or not merged:
+    if out["findings"] or not merged or not D.live(dd):
         return out
     m = T.materialize(D.as_translation(dd, merged["doc_type"], merged["effective"]))
     with open(lean_path, "w", encoding="utf-8", newline="\n") as f:

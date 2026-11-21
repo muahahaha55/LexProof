@@ -1,0 +1,687 @@
+{
+  "doc_id": "44/2019/QH14",
+  "note": "Bảng hạt giống (2026-11-20), chép từ act và atom của LexProof/Laws/AlcoholSale.lean (bản mã hóa tay, chưa duyệt). Mọi mục đang «proposed»: người duyệt (Phong) phải chấp nhận hoặc bác từng mục. Ba act bán / cung cấp / khuyến mại tách riêng theo quyết định 2026-11-20.",
+  "acts": [
+    {
+      "id": "ban_ruou_bia",
+      "gloss": "bán rượu, bia (trao đổi có trả tiền)",
+      "sources": [
+        "Điều 5 khoản 3",
+        "Điều 19 tiêu đề"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "cung_cap_ruou_bia",
+      "gloss": "cung cấp rượu, bia (gồm cả cho không, tặng — theo ý kiến người duyệt 2026-11-18, Q3)",
+      "sources": [
+        "Điều 5 khoản 3"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "khuyen_mai_ruou_bia",
+      "gloss": "khuyến mại rượu, bia trong hoạt động kinh doanh",
+      "sources": [
+        "Điều 5 khoản 3",
+        "Điều 5 khoản 9 nhánh (i)"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dung_ruou_bia_lam_qua_khuyen_mai",
+      "gloss": "dùng rượu, bia để khuyến mại dưới mọi hình thức (làm quà, hàng tặng)",
+      "sources": [
+        "Điều 5 khoản 9 nhánh (ii)"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "ban_ruou_bia_bang_may_tu_dong",
+      "gloss": "bán rượu, bia bằng máy bán hàng tự động",
+      "sources": [
+        "Điều 5 khoản 11 nhánh (ii)"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "xui_giuc_ep_buoc_uong_ruou_bia",
+      "gloss": "xúi giục, kích động, lôi kéo, ép buộc người khác uống rượu, bia",
+      "sources": [
+        "Điều 5 khoản 1"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "uong_ruou_bia",
+      "gloss": "uống rượu, bia",
+      "sources": [
+        "Điều 5 khoản 2",
+        "Điều 5 khoản 5"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "su_dung_lao_dong_truc_tiep_san_xuat_mua_ban_ruou_bia",
+      "gloss": "sử dụng người lao động trực tiếp tham gia vào việc sản xuất, mua bán rượu, bia",
+      "sources": [
+        "Điều 5 khoản 4"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "dieu_khien_phuong_tien_giao_thong",
+      "gloss": "điều khiển phương tiện giao thông (mọi loại)",
+      "sources": [
+        "Điều 5 khoản 6"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "quang_cao_ruou_bia",
+      "gloss": "quảng cáo rượu, bia",
+      "sources": [
+        "Điều 5 khoản 7"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "cung_cap_thong_tin_ve_anh_huong_suc_khoe_cua_ruou_bia",
+      "gloss": "cung cấp thông tin về ảnh hưởng của rượu, bia đối với sức khỏe (khác cung_cap_ruou_bia là cung cấp đồ uống)",
+      "sources": [
+        "Điều 5 khoản 8"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "su_dung_nguyen_lieu_san_xuat_pha_che_ruou_bia",
+      "gloss": "sử dụng nguyên liệu, phụ gia, chất hỗ trợ chế biến để sản xuất, pha chế rượu, bia",
+      "sources": [
+        "Điều 5 khoản 10"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "kinh_doanh_ruou_bia",
+      "gloss": "kinh doanh rượu, bia",
+      "sources": [
+        "Điều 5 khoản 11 nhánh (i)",
+        "Điều 5 khoản 12 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "tang_tru_ruou_bia",
+      "gloss": "tàng trữ rượu, bia",
+      "sources": [
+        "Điều 5 khoản 12 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "van_chuyen_ruou_bia",
+      "gloss": "vận chuyển rượu, bia",
+      "sources": [
+        "Điều 5 khoản 12 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "nhap_lau_ruou_bia",
+      "gloss": "nhập lậu rượu, bia (bản thân hành vi đưa hàng vào trái phép)",
+      "sources": [
+        "Điều 5 khoản 12 nhánh (ii)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "cap_phep_san_xuat_ruou_cong_nghiep",
+      "gloss": "cấp giấy phép sản xuất rượu công nghiệp",
+      "sources": [
+        "Điều 15 khoản 1"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "cap_phep_san_xuat_ruou_thu_cong",
+      "gloss": "cấp giấy phép sản xuất rượu thủ công nhằm mục đích kinh doanh",
+      "sources": [
+        "Điều 15 khoản 2"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "san_xuat_ruou_thu_cong",
+      "gloss": "sản xuất rượu thủ công (bản thân hành vi sản xuất, không phải việc cấp phép)",
+      "sources": [
+        "Điều 15 khoản 3"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "cap_phep_mua_ban_ruou",
+      "gloss": "cấp giấy phép mua bán rượu (mua bán hẹp hơn kinh_doanh_ruou_bia, vốn gồm cả sản xuất)",
+      "sources": [
+        "Điều 15 khoản 4"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    }
+  ],
+  "atoms": [
+    {
+      "id": "tuoi_nguoi_nhan",
+      "kind": "situation",
+      "domain": [
+        {
+          "label": "chưa đủ 18 tuổi",
+          "source": "Điều 5 khoản 3"
+        },
+        {
+          "label": "từ đủ 18 tuổi trở lên",
+          "note": "không khoản nào nêu; là phần bù của «chưa đủ 18 tuổi» (Điều 5 khoản 3), giả định của người mã hóa"
+        }
+      ],
+      "gloss": "tuổi của người được bán, cung cấp hoặc khuyến mại rượu, bia",
+      "sources": [
+        "Điều 5 khoản 3"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "do_con",
+      "kind": "situation",
+      "domain": [
+        {
+          "label": "dưới 15 độ",
+          "note": "phần bù của «từ 15 độ trở lên» (Điều 5 khoản 9); Điều 11 có tiêu đề «có độ cồn dưới 15 độ». Chưa tách ngưỡng 5,5 độ của Điều 12, 13, 15"
+        },
+        {
+          "label": "từ 15 độ trở lên",
+          "source": "Điều 5 khoản 9"
+        }
+      ],
+      "gloss": "độ cồn của rượu, bia (Điều 2 khoản 4 định nghĩa độ cồn)",
+      "sources": [
+        "Điều 2 khoản 4",
+        "Điều 5 khoản 9"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_co_so_y_te",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở y tế",
+      "sources": [
+        "Điều 19 khoản 1"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_co_so_giao_duc",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở giáo dục",
+      "sources": [
+        "Điều 19 khoản 2"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_cham_soc_vui_choi",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở hoặc khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí",
+      "sources": [
+        "Điều 19 khoản 3"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_cai_nghien_giam_giu",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân hoặc cơ sở giam giữ khác",
+      "sources": [
+        "Điều 19 khoản 4"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_bao_tro_xa_hoi",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là cơ sở bảo trợ xã hội",
+      "sources": [
+        "Điều 19 khoản 5"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_noi_lam_viec_co_quan",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm là nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập",
+      "sources": [
+        "Điều 19 khoản 6"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "dia_diem_duoc_phep_kinh_doanh",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "địa điểm được phép kinh doanh rượu, bia (ngoại lệ của Điều 19 khoản 6)",
+      "sources": [
+        "Điều 19 khoản 6"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "danh_cho_nguoi_chua_du_18",
+      "kind": "parameter",
+      "domain": "bool",
+      "gloss": "địa điểm «dành cho» người chưa đủ 18 tuổi (khái niệm mở, luật không định nghĩa)",
+      "sources": [
+        "Điều 19 khoản 3"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "tuoi_nguoi_uong",
+      "kind": "situation",
+      "gloss": "tuổi của người uống rượu, bia",
+      "sources": [
+        "Điều 5 khoản 2"
+      ],
+      "domain": [
+        {
+          "label": "chưa đủ 18 tuổi",
+          "source": "Điều 5 khoản 2"
+        },
+        {
+          "label": "từ đủ 18 tuổi trở lên",
+          "note": "nhãn bù để miền đầy đủ; không khoản nào nêu trực tiếp"
+        }
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "tuoi_nguoi_lao_dong",
+      "kind": "situation",
+      "gloss": "tuổi của người lao động được sử dụng",
+      "sources": [
+        "Điều 5 khoản 4"
+      ],
+      "domain": [
+        {
+          "label": "chưa đủ 18 tuổi",
+          "source": "Điều 5 khoản 4"
+        },
+        {
+          "label": "từ đủ 18 tuổi trở lên",
+          "note": "nhãn bù để miền đầy đủ; không khoản nào nêu trực tiếp"
+        }
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "nguoi_uong_thuoc_doi_tuong_dieu_5_khoan_5",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "người uống là cán bộ, công chức, viên chức, người lao động trong các cơ quan, tổ chức, sĩ quan, hạ sĩ quan, quân nhân chuyên nghiệp, chiến sĩ, người làm việc trong lực lượng vũ trang nhân dân, học sinh hoặc sinh viên",
+      "sources": [
+        "Điều 5 khoản 5"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "ngay_truoc_gio_lam_viec_hoc_tap",
+      "kind": "parameter",
+      "domain": "bool",
+      "gloss": "thời điểm uống là «ngay trước» giờ làm việc, học tập của người đó (khái niệm mở, luật không định lượng)",
+      "sources": [
+        "Điều 5 khoản 5"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "trong_gio_lam_viec_hoc_tap",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "thời điểm uống nằm trong giờ làm việc, học tập của người đó",
+      "sources": [
+        "Điều 5 khoản 5"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "nghi_giua_gio_lam_viec_hoc_tap",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "thời điểm uống là lúc nghỉ giữa giờ làm việc, học tập của người đó",
+      "sources": [
+        "Điều 5 khoản 5"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "co_nong_do_con_trong_mau_hoac_hoi_tho",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "trong máu hoặc hơi thở của người điều khiển có nồng độ cồn",
+      "sources": [
+        "Điều 5 khoản 6"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "loai_do_uong",
+      "kind": "situation",
+      "gloss": "đồ uống là rượu hay bia",
+      "sources": [
+        "Điều 5 khoản 7",
+        "Điều 5 khoản 11 nhánh (i)"
+      ],
+      "domain": [
+        {
+          "label": "rượu",
+          "source": "Điều 5 khoản 7"
+        },
+        {
+          "label": "bia",
+          "source": "Điều 5 khoản 12 nhánh (ii)"
+        }
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "thong_tin_khong_chinh_xac_sai_su_that",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "thông tin được cung cấp không chính xác, sai sự thật",
+      "sources": [
+        "Điều 5 khoản 8"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "nguyen_lieu_khong_duoc_phep_dung_trong_thuc_pham",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "nguyên liệu, phụ gia, chất hỗ trợ chế biến được sử dụng là loại không được phép dùng trong thực phẩm",
+      "sources": [
+        "Điều 5 khoản 10"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "nguyen_lieu_khong_bao_dam_chat_luong",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm được sử dụng không bảo đảm chất lượng",
+      "sources": [
+        "Điều 5 khoản 10"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "nguyen_lieu_khong_ro_nguon_goc_xuat_xu",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "nguyên liệu, phụ gia thực phẩm, chất hỗ trợ chế biến thực phẩm được sử dụng không rõ nguồn gốc, xuất xứ",
+      "sources": [
+        "Điều 5 khoản 10"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "co_giay_phep_hoac_dang_ky_kinh_doanh_ruou",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "người kinh doanh rượu có giấy phép hoặc đã đăng ký theo hình thức mà loại hình kinh doanh đó phải có",
+      "sources": [
+        "Điều 5 khoản 11 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "ruou_bia_gia",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "rượu, bia là hàng giả",
+      "sources": [
+        "Điều 5 khoản 12 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "ruou_bia_nhap_lau",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "rượu, bia là hàng nhập lậu",
+      "sources": [
+        "Điều 5 khoản 12 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "ruou_bia_khong_bao_dam_chat_luong",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "rượu, bia không bảo đảm chất lượng",
+      "sources": [
+        "Điều 5 khoản 12 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "ruou_bia_khong_ro_nguon_goc_xuat_xu",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "rượu, bia không rõ nguồn gốc, xuất xứ",
+      "sources": [
+        "Điều 5 khoản 12 nhánh (i)"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article5.glossary.llm.json (sha256 54004e899c278bdb51d3e721dd0c4a8080fec30848fa3fa37c97618c807ce6f3)"
+    },
+    {
+      "id": "do_con_nguong_5_5",
+      "kind": "situation",
+      "gloss": "độ cồn của rượu so với ngưỡng 5,5 độ",
+      "sources": [
+        "Điều 15 khoản 1",
+        "Điều 15 khoản 5"
+      ],
+      "domain": [
+        {
+          "label": "dưới 5,5 độ",
+          "source": "Điều 15 khoản 5"
+        },
+        {
+          "label": "từ 5,5 độ trở lên",
+          "source": "Điều 15 khoản 1"
+        }
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "chu_the_la_doanh_nghiep_thanh_lap_hop_phap",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "chủ thể là doanh nghiệp được thành lập theo quy định của pháp luật",
+      "sources": [
+        "Điều 15 khoản 1 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien",
+      "kind": "parameter",
+      "domain": "bool",
+      "gloss": "có dây chuyền máy móc, thiết bị công nghiệp, quy trình công nghệ sản xuất rượu «đáp ứng quy mô dự kiến sản xuất» (khái niệm mở, luật không định lượng)",
+      "sources": [
+        "Điều 15 khoản 1 điểm b"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "bao_dam_dieu_kien_an_toan_thuc_pham",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "bảo đảm điều kiện về an toàn thực phẩm theo quy định của pháp luật",
+      "sources": [
+        "Điều 15 khoản 1 điểm c",
+        "Điều 15 khoản 2 điểm b",
+        "Điều 15 khoản 3 điểm b"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "bao_dam_dieu_kien_bao_ve_moi_truong",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "bảo đảm điều kiện về bảo vệ môi trường theo quy định của pháp luật",
+      "sources": [
+        "Điều 15 khoản 1 điểm c"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "nhan_vien_ky_thuat_trinh_do_phu_hop",
+      "kind": "parameter",
+      "domain": "bool",
+      "gloss": "có nhân viên kỹ thuật có trình độ, chuyên môn «phù hợp» với ngành, nghề sản xuất rượu (khái niệm mở)",
+      "sources": [
+        "Điều 15 khoản 1 điểm d"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "muc_dich_kinh_doanh",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "việc sản xuất rượu nhằm mục đích kinh doanh",
+      "sources": [
+        "Điều 15 khoản 2"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "chủ thể là doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc hộ kinh doanh được thành lập theo quy định của pháp luật",
+      "sources": [
+        "Điều 15 khoản 2 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "chu_the_la_ho_gia_dinh_ca_nhan",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "chủ thể sản xuất là hộ gia đình hoặc cá nhân (khác hộ kinh doanh)",
+      "sources": [
+        "Điều 15 khoản 3"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "ban_cho_co_so_co_giay_phep_de_che_bien_lai",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "rượu sản xuất ra được bán cho cơ sở có giấy phép sản xuất rượu để chế biến lại",
+      "sources": [
+        "Điều 15 khoản 3"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "co_hop_dong_mua_ban_voi_co_so_co_giay_phep",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "có hợp đồng mua bán với cơ sở có giấy phép sản xuất rượu",
+      "sources": [
+        "Điều 15 khoản 3 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "co_dang_ky_voi_ubnd_cap_xa",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "có đăng ký với Ủy ban nhân dân cấp xã nơi có cơ sở sản xuất",
+      "sources": [
+        "Điều 15 khoản 3 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "co_dang_ky_kinh_doanh",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "đã đăng ký kinh doanh theo quy định của pháp luật (đăng ký kinh doanh chung, khác co_giay_phep_hoac_dang_ky_kinh_doanh_ruou)",
+      "sources": [
+        "Điều 15 khoản 4 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    },
+    {
+      "id": "dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "đáp ứng điều kiện theo từng loại hình mua bán rượu (nội dung điều kiện do văn bản khác quy định)",
+      "sources": [
+        "Điều 15 khoản 4 điểm b"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary.llm.json (sha256 15600a813f61ac8d4d39d62f1ce5e34c5b6394afe044e76d0b80f12c6eee5709)"
+    }
+  ]
+}

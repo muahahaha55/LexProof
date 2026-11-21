@@ -14,9 +14,21 @@ sys.path.insert(0, HERE)
 import derived as D     # noqa: E402
 import run as RUN       # noqa: E402
 import translate as T   # noqa: E402
-from test_glossary import gold19_with_glossary, only_19_1, has   # noqa: E402
+from test_glossary import gold19_with_glossary, only_19_1, has, frozen_glossary, GREL   # noqa: E402
 
-REAL = D.load(os.path.join(T.ROOT, "data", "derived", "44-2019-QH14.json"))
+# A frozen copy of data/derived/44-2019-QH14.json before review (both readings proposed), its «glossary» pointed at the
+# frozen glossary of test_glossary: the live files change when a reviewer decides, the tests must not.
+FROZEN_PATH = os.path.join(HERE, "derived_before_review.json")
+FROZEN = D.load(FROZEN_PATH)
+_patch = frozen_glossary()
+
+
+def setUpModule():
+    _patch.start()
+
+
+def tearDownModule():
+    _patch.stop()
 HAS_LAKE = shutil.which("lake") is not None
 
 
@@ -24,13 +36,28 @@ def one(**kw):
     e = {"id": "D1", "modality": "permission", "act": "ban_ruou_bia", "condition": {"sit": "dia_diem_co_so_y_te"},
          "exceptions": [], "derived_from": ["Điều 19 khoản 1"], "reading": "thử", "proposed_by": "TEST", "status": "proposed"}
     e.update(kw)
-    return {"doc_id": "44/2019/QH14", "glossary": "data/glossary/44-2019-QH14.json", "derived": [e]}
+    return {"doc_id": "44/2019/QH14", "glossary": GREL, "derived": [e]}
+
+
+def rejected(**kw):
+    """`one` decided as rejected, the way `apply` writes it."""
+    dd = one(**kw)
+    e = dd["derived"][0]
+    e.update(status="rejected", reviewed_by="TEST", reviewed_on="2000-01-01")
+    e["reviewed_content_sha256"] = D.content_sha(e)
+    return dd
 
 
 class Check(unittest.TestCase):
-    def test_real_file_has_no_finding_and_nothing_is_approved(self):
-        self.assertEqual(D.check(REAL), [])
-        self.assertTrue(all(e["status"] == "proposed" for e in REAL["derived"]))
+    def test_frozen_file_has_no_finding_and_nothing_is_approved(self):
+        self.assertEqual(D.check(FROZEN), [])
+        self.assertTrue(all(e["status"] == "proposed" for e in FROZEN["derived"]))
+
+    def test_a_rejected_reading_is_a_record_only_its_terms_are_not_checked_and_it_is_not_run(self):
+        dd = rejected(condition={"sit": "khong_co"})          # e.g. rejected because its term was rejected
+        self.assertEqual(D.check(dd), [])
+        self.assertEqual(D.as_translation(dd, "law", "2020-01-01")["norms"], [])
+        self.assertTrue(has(D.check(rejected(derived_from=[])), "derived_from"))   # the record itself is still checked
 
     def test_terms_must_come_from_the_glossary(self):
         self.assertTrue(has(D.check(one(act="kinh_doanh_bat_ky")), "không có trong bảng thuật ngữ"))
@@ -84,6 +111,13 @@ class Run(unittest.TestCase):
         self.assertIn("**KHÔNG BIẾT** — tệp norm suy ra có 1 phát hiện, không chạy", text)
         self.assertFalse(os.path.exists(os.path.join(self.dir, "out", "44-2019-QH14-2000-01-01-suy-ra.lean")))
 
+    def test_a_file_of_rejected_readings_is_not_run(self):
+        tr = self.write("a19.json", only_19_1(gold19_with_glossary()))
+        dv = self.write("d.json", rejected())
+        _, text, _ = RUN.run("44/2019/QH14", [tr], os.path.join(self.dir, "out"), lean=False, derived=dv, today="2000-01-01")
+        self.assertIn("Không chạy: mọi norm suy ra trong tệp đều đã bị bác", text)
+        self.assertFalse(os.path.exists(os.path.join(self.dir, "out", "44-2019-QH14-2000-01-01-suy-ra.lean")))
+
 
 def tick(text, did, option, reason=""):
     opts = ["Chấp nhận", "Bác", "Để sau"]
@@ -96,7 +130,7 @@ class ReviewSheet(unittest.TestCase):
     def setUp(self):
         self.dir = tempfile.mkdtemp()
         self.f = os.path.join(self.dir, "d.json")
-        shutil.copy(os.path.join(T.ROOT, "data", "derived", "44-2019-QH14.json"), self.f)
+        shutil.copy(FROZEN_PATH, self.f)
         self.blank = D.make_sheet(self.f, D.load(self.f))
 
     def tearDown(self):

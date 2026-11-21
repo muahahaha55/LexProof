@@ -1,7 +1,7 @@
 # ADR-0028: Norm suy ra — kiểm các điều điều chỉnh hai hành vi khác nhau
 
 - **Status**: **Accepted** 2026-11-20 (người phụ trách dự án chọn hướng này thay cho «ràng buộc tình huống» và «ghi thành giới hạn»)
-- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/derived.py`, `run.py --derived`, `pipeline/tests/test_derived.py`, tệp `data/derived/44-2019-QH14.json` với 2 mục `proposed` do AI đề xuất). Bước 2 **Tested**: phiếu duyệt `derived.py sheet`/`apply`; phiếu trống `docs/review/duyet-norm-suy-ra-44-2019-QH14.md`. Đưa vào `promote.py`: chưa làm.
+- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/derived.py`, `run.py --derived`, `pipeline/tests/test_derived.py`, tệp `data/derived/44-2019-QH14.json` với 2 mục `proposed` do AI đề xuất). Bước 2 **Tested**: phiếu duyệt `derived.py sheet`/`apply`; phiếu trống `docs/review/duyet-norm-suy-ra-44-2019-QH14.md`. Đã duyệt 2026-11-21: cả D1 và D2 bị bác (xem «Kết quả duyệt»). Đưa vào `promote.py`: chưa làm.
 - **Ngày**: 2026-11-20
 - **Liên quan**: [ADR-0004](0004-act-as-opaque-glossary-id.md), [ADR-0027](0027-glossary-shared-atoms.md) (bước 5, kết quả âm), [ADR-0025](0025-run-command-draft-path.md)
 
@@ -61,3 +61,16 @@ Hai điều chỉ so được với nhau qua một **cách đọc** mà luật k
 
 - Đưa norm suy ra đã duyệt vào `promote.py`: một module có `derived` riêng và định lý riêng cho `norms ++ derived`.
 - Ngoại lệ cho D1 theo khoản 12, nếu người duyệt chấp nhận hướng đó.
+
+## Kết quả duyệt (2026-11-21)
+
+Phong bác cả hai cách đọc qua `derived.py apply`:
+
+- **D1** («có giấy phép hoặc đăng ký thì được kinh doanh rượu»), lý do: «phải có cả đăng ký kinh doanh và giấy phép kinh doanh rượu thì mới được phép». Atom D1 dùng cũng bị bác ở bảng thuật ngữ.
+- **D2** («đủ điều kiện ở Điều 15 khoản 4 thì được kinh doanh»), lý do: «đủ điều kiện chỉ là đủ để xin cấp phép, chưa có giấy phép thì chưa được kinh doanh». Lần chạy thứ hai của công cụ đã cho thấy D2 khắc với Điều 5 khoản 11 (mục «Kết quả đầu tiên»), và người duyệt bác nó với cùng lý do.
+
+**Sửa công cụ.** Một mục bị bác chỉ còn là bản ghi của quyết định:
+- `check` vẫn kiểm id, nguồn, cách đọc, người đề xuất và dấu duyệt của mục đó, nhưng không kiểm thuật ngữ của nó. Lý do: thuật ngữ bị bác thường chính là lý do mục bị bác.
+- `as_translation` và `run.py --derived` bỏ qua mục bị bác. Khi mọi mục đều bị bác, mục 5b ghi «Không chạy» và không có lần chạy Lean thứ hai.
+
+Hiện tệp không còn norm suy ra nào dùng được, nên Điều 5 và Điều 15 vẫn chưa có phép kiểm chéo nào. Một cách đọc mới, ví dụ «có cả giấy phép và đăng ký thì được kinh doanh rượu, trừ các trường hợp của khoản 12», phải được đề xuất và duyệt lại từ đầu.

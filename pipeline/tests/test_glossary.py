@@ -8,15 +8,36 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
 import glossary as G   # noqa: E402
 
 # A frozen copy of the seed glossary (2026-11-20, before any proposal was adopted): the live file grows as articles are
-# translated, the tests must not. Tests that call `translate.check` still read the live file, which contains the seed.
+# translated, the tests must not.
 SEED_PATH = os.path.join(HERE, "glossary_seed.json")
 SEED = G.load(SEED_PATH)
+
+# Tests that go through `translate.check` read the glossary that `translate.GLOSSARY` names. They read a frozen copy of
+# the live file as it was before review (sha256 65f3dc9f..., 61 entries, all proposed), so that a reviewer approving
+# or rejecting terms in the live file does not change what the tests see.
+GREL = "pipeline/tests/glossary_before_review.json"
+
+
+def frozen_glossary():
+    return mock.patch.dict(G.T.GLOSSARY, {"44/2019/QH14": GREL})
+
+
+_patch = frozen_glossary()
+
+
+def setUpModule():
+    _patch.start()
+
+
+def tearDownModule():
+    _patch.stop()
 
 
 def has(fs, *words):
@@ -95,7 +116,7 @@ def gold19_with_glossary():
         n["condition"] = rename(n["condition"], m)
         n["exceptions"] = [rename(e, m) for e in n["exceptions"]]
     d["atoms"] = {"situation": [], "parameters": []}
-    d["glossary"] = "data/glossary/44-2019-QH14.json"
+    d["glossary"] = GREL
     d["glossary_proposals"] = {"acts": [], "atoms": []}
     return d
 
@@ -182,7 +203,7 @@ SEG = dict(T.load_segmented("44/2019/QH14"), doc_id="44/2019/QH14")   # as run.r
 def article5(modality="permission", condition=None, proposals=None):
     """A synthetic one-norm Article 5 translation in glossary mode (a fixture, not a reading of the law)."""
     return {"doc_id": "44/2019/QH14", "doc_type": "law", "effective": GOLD19["effective"], "article": 5,
-            "glossary": "data/glossary/44-2019-QH14.json", "atoms": {"situation": [], "parameters": []},
+            "glossary": GREL, "atoms": {"situation": [], "parameters": []},
             "glossary_proposals": proposals or {"acts": [], "atoms": []},
             "norms": [{"id": "5.t", "modality": modality, "act": "ban_ruou_bia",
                        "condition": condition or {"not": {"sit": "dia_diem_co_so_y_te"}}, "exceptions": [],
