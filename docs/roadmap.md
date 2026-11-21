@@ -1,6 +1,6 @@
 # Lộ trình và tiến độ
 
-Cập nhật: 2026-11-18. Con số % dưới đây là **ước lượng theo kế hoạch của repo**, không phải theo đề bài môn học (chưa có rubric).
+Cập nhật: 2026-11-21. Con số % dưới đây là **ước lượng theo kế hoạch của repo**, không phải theo đề bài môn học (chưa có rubric).
 
 ## Mục tiêu
 
@@ -25,8 +25,8 @@ Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Đ�
 | Bước | Việc | Trạng thái |
 |---|---|---|
 | 1 | Một lệnh: bản dịch đã kiểm → bản nháp Lean gộp → kiểm tra Lean → báo cáo nháp (`pipeline/run.py`, ADR-0025) | **xong** (2026-11-18); kết quả Lean là Evaluated, chưa có định lý kernel |
-| 2 | Đường từ bản nháp đã duyệt sang module `LexProof/Laws/` (`pipeline/promote.py`, ADR-0026) | **xong công cụ** (2026-11-18); chưa có module thật: chờ người điền `docs/review/duyet-ban-dich-dieu-19.md`, `...-dieu-5.md` |
-| 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | **làm một điều** (2026-11-20): Điều 15 qua `check` lần đầu, Lean 0 finding; còn chờ người duyệt (`docs/review/duyet-ban-dich-dieu-15.md`); chưa làm theo lô nhiều điều |
+| 2 | Đường từ bản nháp đã duyệt sang module `LexProof/Laws/` (`pipeline/promote.py`, ADR-0026) | **xong** (2026-11-21): hai module thật đầu tiên, `LexProof/Laws/Article19.lean` và `Article15.lean`, từ phiếu của Phong; kernel chứng minh `no_conflict`, nhưng cả hai **rỗng về xung đột modality** (Điều 19 chỉ có cấm, Điều 15 chỉ có cho phép). Điều 5 bị bác (N:5.11.1, A:13): phải dịch lại |
+| 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | **làm một điều** (2026-11-20): Điều 15 qua `check` lần đầu, Lean 0 finding; đã duyệt và vào thư viện (2026-11-21); chưa làm theo lô nhiều điều |
 | 4 | Bộ ca của người học luật, trả lời độc lập (FR12) | chưa; phụ thuộc người ngoài |
 | 5 | Đóng gói đồ án: báo cáo, demo, phần giới hạn | chưa |
 

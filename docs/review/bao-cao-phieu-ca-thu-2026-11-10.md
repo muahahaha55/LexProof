@@ -1,3 +1,5 @@
+> Ghi chú (2026-11-21): tệp do người duyệt đưa vào nhánh `phong-review-law`, nguồn chưa xác nhận. Đây **không** phải đầu ra của `pipeline/report.py`; cột «Kết quả bộ kiểm» không có giá trị như một báo cáo trong `reports/`.
+
 
 | Ca | Tình huống rút gọn | Trả lời trong PDF | Điều khoản được viện dẫn / liên quan | Kết quả bộ kiểm |
 |---|---|---|---|---|
