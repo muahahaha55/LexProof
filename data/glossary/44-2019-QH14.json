@@ -814,8 +814,10 @@
       "sources": [
         "Điều 5 khoản 11 nhánh (i)"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article5.glossary-2.llm.json (sha256 562ae1bbc708f0f0eb55297673ee67898c3f0bb5ca5dfb49be9a58e65931536e)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article5.glossary-2.llm.json (sha256 562ae1bbc708f0f0eb55297673ee67898c3f0bb5ca5dfb49be9a58e65931536e)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-21"
     },
     {
       "id": "co_dang_ky_kinh_doanh_ruou",
@@ -825,8 +827,11 @@
       "sources": [
         "Điều 5 khoản 11 nhánh (i)"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article5.glossary-2.llm.json (sha256 562ae1bbc708f0f0eb55297673ee67898c3f0bb5ca5dfb49be9a58e65931536e)"
+      "status": "rejected",
+      "proposed_in": "eval/translate/article5.glossary-2.llm.json (sha256 562ae1bbc708f0f0eb55297673ee67898c3f0bb5ca5dfb49be9a58e65931536e)",
+      "review_note": "trùng với co_dang_ky_kinh_doanh",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-21"
     }
   ]
 }
