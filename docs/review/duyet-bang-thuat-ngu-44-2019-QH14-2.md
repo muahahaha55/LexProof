@@ -12,16 +12,16 @@ Bảng thuật ngữ: `data/glossary/44-2019-QH14.json`
 
 sha256 bảng thuật ngữ: 64232e3a838fccaf65f99fa47d6179a65d16a16711da8486a93c262343830f12
 
-Người duyệt: 
+Người duyệt: Vũ Đức Phong
 
-Ngày duyệt (YYYY-MM-DD): 
+Ngày duyệt (YYYY-MM-DD): 2026-11-21
 
 ## 1. Mục chờ duyệt
 
 | Mã | Loại | Giải thích | Giá trị | Nguồn | Quyết định | Lý do (bắt buộc nếu bác) |
 |---|---|---|---|---|---|---|
-| T:atom:co_giay_phep_kinh_doanh_ruou | tình huống | người kinh doanh rượu có giấy phép (yêu cầu «có giấy phép» của Điều 5 khoản 11 nhánh (i), xét riêng, không gộp với việc đăng ký) | đúng / sai | Điều 5 khoản 11 nhánh (i) | ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
-| T:atom:co_dang_ky_kinh_doanh_ruou | tình huống | người kinh doanh rượu đã đăng ký (yêu cầu ngược với «không đăng ký» của Điều 5 khoản 11 nhánh (i), xét riêng, không gộp với giấy phép; khác co_dang_ky_kinh_doanh là đăng ký kinh doanh chung) | đúng / sai | Điều 5 khoản 11 nhánh (i) | ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
+| T:atom:co_giay_phep_kinh_doanh_ruou | tình huống | người kinh doanh rượu có giấy phép (yêu cầu «có giấy phép» của Điều 5 khoản 11 nhánh (i), xét riêng, không gộp với việc đăng ký) | đúng / sai | Điều 5 khoản 11 nhánh (i) | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
+| T:atom:co_dang_ky_kinh_doanh_ruou | tình huống | người kinh doanh rượu đã đăng ký (yêu cầu ngược với «không đăng ký» của Điều 5 khoản 11 nhánh (i), xét riêng, không gộp với giấy phép; khác co_dang_ky_kinh_doanh là đăng ký kinh doanh chung) | đúng / sai | Điều 5 khoản 11 nhánh (i) | ☐ Chấp nhận<br>[x] ☐ Bác<br>☐ Để sau |trùng với co_dang_ky_kinh_doanh |
 
 ## 2. Đã quyết trước đây (chỉ để đọc)
 
