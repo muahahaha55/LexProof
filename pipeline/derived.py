@@ -58,15 +58,18 @@ def check(dd):
             out.append("%s: id phải có dạng D1, D2, ..." % w)
         if e.get("modality") not in T.MODALITIES:
             out.append("%s: modality phải là một trong %s" % (w, sorted(T.MODALITIES)))
-        if e.get("act") not in acts:
-            out.append("%s: act «%s» %s" % (w, e.get("act"), "là mục bị bác" if e.get("act") in rejected
-                                            else "không có trong bảng thuật ngữ"))
-        T.walk_cond(e.get("condition"), sit, par, w + ".condition", out)
-        if not isinstance(e.get("exceptions"), list):
-            out.append("%s: exceptions phải là danh sách" % w)
-        else:
-            for i, c in enumerate(e["exceptions"]):
-                T.walk_cond(c, sit, par, "%s.exceptions[%d]" % (w, i), out)
+        # a rejected reading is kept only as a record of the decision: never run, so its terms are not checked
+        # (a term rejected in the glossary is often the very reason the reading was rejected)
+        if e.get("status") != "rejected":
+            if e.get("act") not in acts:
+                out.append("%s: act «%s» %s" % (w, e.get("act"), "là mục bị bác" if e.get("act") in rejected
+                                                else "không có trong bảng thuật ngữ"))
+            T.walk_cond(e.get("condition"), sit, par, w + ".condition", out)
+            if not isinstance(e.get("exceptions"), list):
+                out.append("%s: exceptions phải là danh sách" % w)
+            else:
+                for i, c in enumerate(e["exceptions"]):
+                    T.walk_cond(c, sit, par, "%s.exceptions[%d]" % (w, i), out)
         src = e.get("derived_from")
         if not isinstance(src, list) or not src:
             out.append("%s: «derived_from» phải là danh sách không rỗng các đơn vị suy ra từ đó" % w)
@@ -211,9 +214,14 @@ def apply_sheet(path, sheet_path):
     return "đã ghi %s: chấp nhận %d, bác %d, để sau %d." % (G.rel(path), n["approved"], n["rejected"], n["proposed"])
 
 
+def live(dd):
+    """The entries that take part in a run: every entry not rejected (proposed ones run too, marked as such)."""
+    return [e for e in dd.get("derived", []) if e.get("status") != "rejected"]
+
+
 def cond_terms(dd):
     atoms = set()
-    for e in dd.get("derived", []):
+    for e in live(dd):
         for c in [e.get("condition")] + (e["exceptions"] if isinstance(e.get("exceptions"), list) else []):
             T.cond_atoms(c, atoms)
     return atoms
@@ -225,13 +233,13 @@ def as_translation(dd, doc_type, effective):
     the id («SUY RA D1») and the header say it is not the text. Call only on a file `check` accepted."""
     norms = [{"id": PREFIX + e["id"], "modality": e["modality"], "act": e["act"], "condition": e["condition"],
               "exceptions": e["exceptions"], "source": e["derived_from"][0], "quote": "", "references": []}
-             for e in dd["derived"]]
+             for e in live(dd)]
     return {"doc_id": dd["doc_id"], "doc_type": doc_type, "effective": effective, "article": 0,
             "glossary": dd["glossary"], "atoms": {"situation": [], "parameters": []}, "glossary_proposals": {},
             "norms": norms, "not_encoded": [],
             "assumptions": ["%s%s [%s, đề xuất bởi %s] suy ra từ %s: %s" % (PREFIX, e["id"], e["status"], e["proposed_by"],
                                                                         "; ".join(e["derived_from"]), e["reading"])
-                            for e in dd["derived"]]}
+                            for e in live(dd)]}
 
 
 def main(argv=None):

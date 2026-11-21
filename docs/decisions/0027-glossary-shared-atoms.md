@@ -1,7 +1,7 @@
 # ADR-0027: Bảng thuật ngữ dùng chung cho act và atom (FR2) — phác thảo
 
 - **Status**: **Accepted** 2026-11-20 (người phụ trách dự án; ba câu hỏi đã trả lời ở mục cuối)
-- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3 **Tested** (`materialize`, `run.merge` theo id, chặn ở `promote.py`; xem «Bước 3 đã làm»); bước 4 **Tested** (`glossary.py sheet`/`apply`, phiếu trống `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`; xem «Bước 4 đã làm»); bước 5 **đã đo, kết quả âm** (xem «Bước 5: kết quả» và `eval/translate/RECORD.md` «Lần 4»)
+- **Trạng thái cài đặt**: bước 1 **Tested** (`pipeline/glossary.py`, `pipeline/tests/test_glossary.py`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục `proposed`); bước 2 **Tested** (`translate.py prompt --glossary`, `check` chế độ bảng, `unapproved_terms`; xem «Bước 2 đã làm»); bước 3 **Tested** (`materialize`, `run.merge` theo id, chặn ở `promote.py`; xem «Bước 3 đã làm»); bước 4 **Tested** (`glossary.py sheet`/`apply`, phiếu trống `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`; xem «Bước 4 đã làm»); bước 5 **đã đo, kết quả âm** (xem «Bước 5: kết quả» và `eval/translate/RECORD.md` «Lần 4»). Bảng đã được duyệt 2026-11-21 (xem «Kết quả duyệt»)
 - **Ngày**: 2026-11-20
 - **Liên quan**: FR2, [ADR-0004](0004-act-as-opaque-glossary-id.md) (act là id mờ), [ADR-0024](0024-translation-manual-paste.md), [ADR-0025](0025-run-command-draft-path.md), [ADR-0026](0026-promote-reviewed-translation.md)
 
@@ -117,3 +117,13 @@ Bước 1 thêm một quy tắc chưa có ở trên: một nhãn của enum mà 
 - Bảng theo **văn bản** (đề xuất) hay dùng chung **nhiều văn bản** (gần Level 2)?
 - Ai duyệt bảng: cùng người duyệt norm hay người khác?
 - Mức chi tiết act: «bán», «cung cấp», «khuyến mại» là ba act (như bản tay, G7) hay một act với atom «hình thức»?
+
+## Kết quả duyệt (2026-11-21)
+
+Phong duyệt cả 61 mục qua `glossary.py apply`: chấp nhận 60, bác 1.
+
+- Bác `co_giay_phep_hoac_dang_ky_kinh_doanh_ruou` («có giấy phép **hoặc** đã đăng ký»), lý do: «thiếu một trong hai đã vi phạm». Quyết định này khớp với việc Phong bác N:5.11.1 và A:13 ở phiếu Điều 5. Ở lần điền đầu, Phong chấp nhận mục này; khi được hỏi lại về chỗ mâu thuẫn, Phong đổi thành bác.
+- Hệ quả: bản dịch Điều 5 lần 4 (`eval/translate/article5.glossary.llm.json`) không còn qua `check`, vì norm 5.11.i dùng mục đã bị bác. Điều 5 phải dịch lại, có hay không có bảng.
+- Câu lệnh `prompt --glossary` giờ liệt kê thêm các mục bị bác, dưới tiêu đề «Mục ĐÃ BÁC», kèm lý do của người duyệt (`review_note`). Quy tắc 15 cấm dùng lại id đó và cấm đề xuất lại cùng nghĩa dưới id khác. Trước đây mục bị bác chỉ bị ẩn đi, nên người dịch không biết lý do và dễ đề xuất lại đúng cách đọc ấy. Câu lệnh dịch lại Điều 5: `eval/translate/prompt-article5.glossary-2.txt`.
+- Bản dịch lại (`eval/translate/article5.glossary-2.llm.json`, máy kiểm, chưa ai đối chiếu) qua `check` và không dùng mục đã bác. Nó tách khoản 11 nhánh (i) thành hai atom đề xuất, `co_giay_phep_kinh_doanh_ruou` và `co_dang_ky_kinh_doanh_ruou`, và cấm khi thiếu một trong hai; 18 norm còn lại giống lần 4. Hai đề xuất đã được chép vào bảng bằng `glossary.py adopt` (trạng thái proposed) và chờ duyệt ở `docs/review/duyet-bang-thuat-ngu-44-2019-QH14-2.md`. Câu hỏi cho người duyệt: chữ «đăng ký» ở Điều 5 khoản 11 có cùng nghĩa với `co_dang_ky_kinh_doanh` (Điều 15 khoản 4) hay không.
+- «Đã duyệt» nghĩa là một người đã tick đủ phiếu. Nó không chứng minh các giải thích đúng luật, và một người duyệt chưa đủ cho các mục gây tranh cãi như mục bị bác ở trên.

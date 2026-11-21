@@ -20,6 +20,8 @@ import LexProof.Core.NumericBands
 import LexProof.Laws.AlcoholSaleBands
 import LexProof.Core.ClauseRef
 import LexProof.Laws.AlcoholSaleRefs
+import LexProof.Laws.Article19
+import LexProof.Laws.Article15
 import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
 

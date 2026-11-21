@@ -1,6 +1,6 @@
 # Lộ trình và tiến độ
 
-Cập nhật: 2026-11-18. Con số % dưới đây là **ước lượng theo kế hoạch của repo**, không phải theo đề bài môn học (chưa có rubric).
+Cập nhật: 2026-11-21. Con số % dưới đây là **ước lượng theo kế hoạch của repo**, không phải theo đề bài môn học (chưa có rubric).
 
 ## Mục tiêu
 
@@ -25,14 +25,14 @@ Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Đ�
 | Bước | Việc | Trạng thái |
 |---|---|---|
 | 1 | Một lệnh: bản dịch đã kiểm → bản nháp Lean gộp → kiểm tra Lean → báo cáo nháp (`pipeline/run.py`, ADR-0025) | **xong** (2026-11-18); kết quả Lean là Evaluated, chưa có định lý kernel |
-| 2 | Đường từ bản nháp đã duyệt sang module `LexProof/Laws/` (`pipeline/promote.py`, ADR-0026) | **xong công cụ** (2026-11-18); chưa có module thật: chờ người điền `docs/review/duyet-ban-dich-dieu-19.md`, `...-dieu-5.md` |
-| 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | **làm một điều** (2026-11-20): Điều 15 qua `check` lần đầu, Lean 0 finding; còn chờ người duyệt (`docs/review/duyet-ban-dich-dieu-15.md`); chưa làm theo lô nhiều điều |
+| 2 | Đường từ bản nháp đã duyệt sang module `LexProof/Laws/` (`pipeline/promote.py`, ADR-0026) | **xong** (2026-11-21): hai module thật đầu tiên, `LexProof/Laws/Article19.lean` và `Article15.lean`, từ phiếu của Phong; kernel chứng minh `no_conflict`, nhưng cả hai **rỗng về xung đột modality** (Điều 19 chỉ có cấm, Điều 15 chỉ có cho phép). Điều 5 bị bác (N:5.11.1, A:13): phải dịch lại |
+| 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | **làm một điều** (2026-11-20): Điều 15 qua `check` lần đầu, Lean 0 finding; đã duyệt và vào thư viện (2026-11-21); chưa làm theo lô nhiều điều |
 | 4 | Bộ ca của người học luật, trả lời độc lập (FR12) | chưa; phụ thuộc người ngoài |
 | 5 | Đóng gói đồ án: báo cáo, demo, phần giới hạn | chưa |
 
 Sau bước 1 và 2: có hệ thống cơ bản chạy từ đầu đến cuối. Bước 3–5: mở rộng và bằng chứng chất lượng.
 
-Bảng thuật ngữ dùng chung (FR2, ADR-0027, Accepted 2026-11-20): theo từng văn bản, Phong duyệt, ba act bán / cung cấp / khuyến mại riêng. Bước 1/5 xong (lược đồ, `check`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục chưa duyệt). Bước 2/5 xong (câu lệnh `--glossary`, `glossary_proposals`, `check` theo id). Bước 3/5 xong (gộp theo id; `promote.py` chặn thuật ngữ chưa duyệt; phiếu norm ghim sha256 của bảng). Bước 4/5 xong (`glossary.py sheet`/`apply`; phiếu trống cho Phong `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`, 15 mục). Bước 5/5 đã đo, kết quả âm: Điều 5 + 15 với bảng có 3 cặp được kiểm (không dùng bảng là 5), không act chung, vẫn rỗng về thông tin, vì hai điều điều chỉnh hai hành vi khác nhau (ADR-0027 «Bước 5: kết quả»). Còn: Phong duyệt bảng (61 mục). Kiểm Điều 5 với Điều 15 qua **norm suy ra** (ADR-0028, Accepted 2026-11-20). Bước 1 xong: `derived.py check`, `run.py --derived` chạy Lean thêm một lần và báo riêng ở mục 5b. Kết quả đầu tiên: 3 cặp xung đột, cả 3 dính norm suy ra; công cụ bác được cách đọc «đủ điều kiện cấp phép thì được kinh doanh». Bước 2 xong: phiếu duyệt `derived.py sheet`/`apply` (ghim sha256 tệp suy ra và bảng thuật ngữ; sửa mục đã duyệt thì `check` báo); phiếu trống cho Phong `docs/review/duyet-norm-suy-ra-44-2019-QH14.md`. Còn: đưa norm suy ra đã duyệt vào `promote.py`. Cần trước khi dịch theo lô, vì không có nó các điều không so được với nhau.
+Bảng thuật ngữ dùng chung (FR2, ADR-0027, Accepted 2026-11-20): theo từng văn bản, Phong duyệt, ba act bán / cung cấp / khuyến mại riêng. Bước 1/5 xong (lược đồ, `check`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục chưa duyệt). Bước 2/5 xong (câu lệnh `--glossary`, `glossary_proposals`, `check` theo id). Bước 3/5 xong (gộp theo id; `promote.py` chặn thuật ngữ chưa duyệt; phiếu norm ghim sha256 của bảng). Bước 4/5 xong (`glossary.py sheet`/`apply`; phiếu trống cho Phong `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`, 15 mục). Bước 5/5 đã đo, kết quả âm: Điều 5 + 15 với bảng có 3 cặp được kiểm (không dùng bảng là 5), không act chung, vẫn rỗng về thông tin, vì hai điều điều chỉnh hai hành vi khác nhau (ADR-0027 «Bước 5: kết quả»). Phong đã duyệt bảng (2026-11-21): 60 chấp nhận, 1 bác (`co_giay_phep_hoac_dang_ky_kinh_doanh_ruou`). Kiểm Điều 5 với Điều 15 qua **norm suy ra** (ADR-0028, Accepted 2026-11-20). Bước 1 xong: `derived.py check`, `run.py --derived` chạy Lean thêm một lần và báo riêng ở mục 5b. Kết quả đầu tiên: 3 cặp xung đột, cả 3 dính norm suy ra; công cụ bác được cách đọc «đủ điều kiện cấp phép thì được kinh doanh». Bước 2 xong: phiếu duyệt `derived.py sheet`/`apply` (ghim sha256 tệp suy ra và bảng thuật ngữ; sửa mục đã duyệt thì `check` báo); phiếu trống cho Phong `docs/review/duyet-norm-suy-ra-44-2019-QH14.md`. Phong đã duyệt (2026-11-21): bác cả D1 và D2; mục bị bác không còn được chạy. Còn: đề xuất cách đọc mới, rồi đưa norm suy ra đã duyệt vào `promote.py`. Cần trước khi dịch theo lô, vì không có nó các điều không so được với nhau.
 
 Việc đang chờ người duyệt (Phong): `docs/review/HUONG-DAN-TIEP-THEO-cho-Phong.md`.
 

@@ -8,15 +8,36 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
 import glossary as G   # noqa: E402
 
 # A frozen copy of the seed glossary (2026-11-20, before any proposal was adopted): the live file grows as articles are
-# translated, the tests must not. Tests that call `translate.check` still read the live file, which contains the seed.
+# translated, the tests must not.
 SEED_PATH = os.path.join(HERE, "glossary_seed.json")
 SEED = G.load(SEED_PATH)
+
+# Tests that go through `translate.check` read the glossary that `translate.GLOSSARY` names. They read a frozen copy of
+# the live file as it was before review (sha256 65f3dc9f..., 61 entries, all proposed), so that a reviewer approving
+# or rejecting terms in the live file does not change what the tests see.
+GREL = "pipeline/tests/glossary_before_review.json"
+
+
+def frozen_glossary():
+    return mock.patch.dict(G.T.GLOSSARY, {"44/2019/QH14": GREL})
+
+
+_patch = frozen_glossary()
+
+
+def setUpModule():
+    _patch.start()
+
+
+def tearDownModule():
+    _patch.stop()
 
 
 def has(fs, *words):
@@ -95,7 +116,7 @@ def gold19_with_glossary():
         n["condition"] = rename(n["condition"], m)
         n["exceptions"] = [rename(e, m) for e in n["exceptions"]]
     d["atoms"] = {"situation": [], "parameters": []}
-    d["glossary"] = "data/glossary/44-2019-QH14.json"
+    d["glossary"] = GREL
     d["glossary_proposals"] = {"acts": [], "atoms": []}
     return d
 
@@ -143,6 +164,8 @@ class WithGlossary(unittest.TestCase):
         for e in g["acts"] + g["atoms"]:
             if e["id"] in ("ban_ruou_bia", "dia_diem_co_so_y_te"):
                 e.update(status="rejected", reviewed_by="TEST", reviewed_on="2000-01-01")
+                if e["id"] == "dia_diem_co_so_y_te":
+                    e["review_note"] = "lý do thử"
         saved = G.load
         G.load = lambda path: copy.deepcopy(g)
         try:
@@ -152,7 +175,11 @@ class WithGlossary(unittest.TestCase):
             G.load = saved
         self.assertTrue(has(fs, "ban_ruou_bia", "bị bác"))
         self.assertTrue(has(fs, "dia_diem_co_so_y_te", "bị bác"))
-        self.assertNotIn("- ban_ruou_bia ", prompt)
+        self.assertNotIn("- ban_ruou_bia ", prompt)                       # not offered ...
+        self.assertIn("- ĐÃ BÁC ban_ruou_bia (act, nguồn: ", prompt)       # ... but shown, with the reviewer's reason
+        self.assertIn("Lý do của người duyệt: (không ghi)", prompt)
+        self.assertIn("địa điểm là cơ sở y tế. Lý do của người duyệt: lý do thử", prompt)
+        self.assertIn("15. Mục «ĐÃ BÁC»", prompt)
 
     def test_prompt_lists_the_glossary_and_its_rules(self):
         p = T.make_prompt(T.load_segmented("44/2019/QH14"), 15, (SEED, "data/glossary/44-2019-QH14.json"))
@@ -160,6 +187,7 @@ class WithGlossary(unittest.TestCase):
                   "- danh_cho_nguoi_chua_du_18 [proposed], bool", '"glossary": "data/glossary/44-2019-QH14.json"',
                   "glossary_proposals", "12. Dùng bảng thuật ngữ", "14. Không sửa"):
             self.assertIn(s, p)
+        self.assertNotIn("Mục ĐÃ BÁC (", p)                    # nothing rejected in the seed: no such section
         self.assertNotIn("cùng hành vi dùng cùng mã", p)
         self.assertNotIn("là atom trong «parameters»", p)     # would contradict «atoms» being empty
         self.assertNotIn("bảng thuật ngữ", T.make_prompt(T.load_segmented("44/2019/QH14"), 15))   # default unchanged
@@ -182,7 +210,7 @@ SEG = dict(T.load_segmented("44/2019/QH14"), doc_id="44/2019/QH14")   # as run.r
 def article5(modality="permission", condition=None, proposals=None):
     """A synthetic one-norm Article 5 translation in glossary mode (a fixture, not a reading of the law)."""
     return {"doc_id": "44/2019/QH14", "doc_type": "law", "effective": GOLD19["effective"], "article": 5,
-            "glossary": "data/glossary/44-2019-QH14.json", "atoms": {"situation": [], "parameters": []},
+            "glossary": GREL, "atoms": {"situation": [], "parameters": []},
             "glossary_proposals": proposals or {"acts": [], "atoms": []},
             "norms": [{"id": "5.t", "modality": modality, "act": "ban_ruou_bia",
                        "condition": condition or {"not": {"sit": "dia_diem_co_so_y_te"}}, "exceptions": [],

@@ -7,24 +7,63 @@
       "id": "D1",
       "modality": "permission",
       "act": "kinh_doanh_ruou_bia",
-      "condition": {"and": [{"sit": "loai_do_uong", "value": "rượu"}, {"sit": "co_giay_phep_hoac_dang_ky_kinh_doanh_ruou"}]},
+      "condition": {
+        "and": [
+          {
+            "sit": "loai_do_uong",
+            "value": "rượu"
+          },
+          {
+            "sit": "co_giay_phep_hoac_dang_ky_kinh_doanh_ruou"
+          }
+        ]
+      },
       "exceptions": [],
-      "derived_from": ["Điều 5 khoản 11 nhánh (i)", "Điều 15 khoản 4"],
+      "derived_from": [
+        "Điều 5 khoản 11 nhánh (i)",
+        "Điều 15 khoản 4"
+      ],
       "reading": "Suy ngược từ Điều 5 khoản 11 nhánh (i): kinh doanh rượu bị cấm khi không có giấy phép hoặc không đăng ký, nên khi có thì được kinh doanh; Điều 15 khoản 4 cho thấy giấy phép mua bán rượu là cách có được quyền đó. Luật không viết câu «được kinh doanh» này.",
       "proposed_by": "Claude (AI), 2026-11-20",
-      "status": "proposed"
+      "status": "rejected",
+      "review_note": "phải có cả đăng ký kinh doanh và giấy phép kinh doanh rượu thì mới được phép, thiếu một trong hai đều không được",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-20",
+      "reviewed_content_sha256": "c16a0173c565357e17de11c6acce4fd0c3d97a73d5eeed6cc1d30a699dad6ab1"
     },
     {
       "id": "D2",
       "modality": "permission",
       "act": "kinh_doanh_ruou_bia",
-      "condition": {"and": [{"sit": "loai_do_uong", "value": "rượu"}, {"sit": "do_con_nguong_5_5", "value": "từ 5,5 độ trở lên"},
-                            {"sit": "co_dang_ky_kinh_doanh"}, {"sit": "dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou"}]},
+      "condition": {
+        "and": [
+          {
+            "sit": "loai_do_uong",
+            "value": "rượu"
+          },
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "sit": "co_dang_ky_kinh_doanh"
+          },
+          {
+            "sit": "dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou"
+          }
+        ]
+      },
       "exceptions": [],
-      "derived_from": ["Điều 15 khoản 4"],
+      "derived_from": [
+        "Điều 15 khoản 4"
+      ],
       "reading": "Đọc danh sách «Điều kiện cấp phép mua bán rượu ... bao gồm» (Điều 15 khoản 4) là điều kiện đủ, như bản dịch lần 3: đủ các điểm a, b thì được kinh doanh (mua bán) rượu từ 5,5 độ trở lên. Bản dịch lần 4 không chọn cách đọc này (coi là điều kiện cần); ghi ra để kiểm hệ quả của nó.",
       "proposed_by": "Claude (AI), 2026-11-20",
-      "status": "proposed"
+      "status": "rejected",
+      "review_note": "đủ điều kiện chỉ là đủ để xin cấp phép, chưa có giấy phép thì chưa được kinh doanh",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-20",
+      "reviewed_content_sha256": "74c2727e27c3d379ae0693761ab8a98ddbf09134904b9c2861004de327c87415"
     }
   ]
 }
