@@ -22,6 +22,7 @@ import LexProof.Core.ClauseRef
 import LexProof.Laws.AlcoholSaleRefs
 import LexProof.Laws.Article19
 import LexProof.Laws.Article15
+import LexProof.Laws.Article5
 import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
 
