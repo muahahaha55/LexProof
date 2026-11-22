@@ -1,0 +1,112 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 13,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {"situation": [], "parameters": []},
+  "glossary_proposals": {
+    "acts": [],
+    "atoms": [
+      {
+        "id": "do_con_bia_nguong_5_5",
+        "kind": "situation",
+        "gloss": "độ cồn của bia so với ngưỡng 5,5 độ (tương ứng với do_con_nguong_5_5 nhưng dành cho bia, vì mục đó chỉ nói về rượu)",
+        "sources": ["Điều 13"],
+        "domain": [
+          {"label": "dưới 5,5 độ", "note": "Điều 13 chỉ nêu bia «có độ cồn từ 5,5 độ trở lên»; nhãn này là phần bù để miền giá trị đầy đủ"},
+          {"label": "từ 5,5 độ trở lên", "source": "Điều 13"}
+        ]
+      },
+      {
+        "id": "quang_cao_trong_chuong_trinh_hoat_dong_van_hoa_san_khau_dien_anh_the_thao",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "việc quảng cáo diễn ra trong các chương trình, hoạt động văn hóa, sân khấu, điện ảnh, thể thao",
+        "sources": ["Điều 13 khoản 1"]
+      },
+      {
+        "id": "quang_cao_tren_phuong_tien_quang_cao_ngoai_troi",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "việc quảng cáo được thực hiện trên phương tiện quảng cáo ngoài trời",
+        "sources": ["Điều 13 khoản 2"]
+      },
+      {
+        "id": "la_bien_hieu_cua_co_so_kinh_doanh_ruou_bia",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "phương tiện quảng cáo là biển hiệu của cơ sở kinh doanh rượu, bia",
+        "sources": ["Điều 13 khoản 2"]
+      }
+    ]
+  },
+  "norms": [
+    {
+      "id": "13.1",
+      "modality": "prohibition",
+      "act": "quang_cao_ruou_bia",
+      "condition": {"and": [
+        {"or": [
+          {"and": [
+            {"sit": "loai_do_uong", "value": "rượu"},
+            {"sit": "do_con_nguong_5_5", "value": "từ 5,5 độ trở lên"},
+            {"sit": "do_con", "value": "dưới 15 độ"}
+          ]},
+          {"and": [
+            {"sit": "loai_do_uong", "value": "bia"},
+            {"sit": "do_con_bia_nguong_5_5", "value": "từ 5,5 độ trở lên"}
+          ]}
+        ]},
+        {"sit": "quang_cao_trong_chuong_trinh_hoat_dong_van_hoa_san_khau_dien_anh_the_thao"}
+      ]},
+      "exceptions": [],
+      "source": "Điều 13 khoản 1",
+      "quote": "Trong các chương trình, hoạt động văn hóa, sân khấu, điện ảnh, thể thao",
+      "references": []
+    },
+    {
+      "id": "13.2",
+      "modality": "prohibition",
+      "act": "quang_cao_ruou_bia",
+      "condition": {"and": [
+        {"or": [
+          {"and": [
+            {"sit": "loai_do_uong", "value": "rượu"},
+            {"sit": "do_con_nguong_5_5", "value": "từ 5,5 độ trở lên"},
+            {"sit": "do_con", "value": "dưới 15 độ"}
+          ]},
+          {"and": [
+            {"sit": "loai_do_uong", "value": "bia"},
+            {"sit": "do_con_bia_nguong_5_5", "value": "từ 5,5 độ trở lên"}
+          ]}
+        ]},
+        {"sit": "quang_cao_tren_phuong_tien_quang_cao_ngoai_troi"}
+      ]},
+      "exceptions": [
+        {"sit": "la_bien_hieu_cua_co_so_kinh_doanh_ruou_bia"}
+      ],
+      "source": "Điều 13 khoản 2",
+      "quote": "Trên các phương tiện quảng cáo ngoài trời, trừ biển hiệu của cơ sở kinh doanh rượu, bia",
+      "references": []
+    }
+  ],
+  "not_encoded": [
+    {
+      "clause": "Điều 13",
+      "reason": "Phần «phải tuân thủ quy định tại Điều 12 của Luật này» trong đoạn dẫn chỉ dẫn chiếu sang Điều 12, không tự đặt ra nội dung nghĩa vụ. Nghĩa vụ đó thuộc phần mã hóa Điều 12, nên ở đây không tạo norm riêng."
+    }
+  ],
+  "assumptions": [
+    "Tính chất cấm của cả hai khoản lấy từ cụm «không quảng cáo trong trường hợp sau đây» của đoạn dẫn, vì các khoản 1 và 2 chỉ là phần nêu trường hợp.",
+    "Phạm vi của đoạn dẫn được lặp lại trong condition của từng norm: rượu từ 5,5 độ đến dưới 15 độ, hoặc bia từ 5,5 độ trở lên.",
+    "Với rượu, dùng do_con_nguong_5_5 «từ 5,5 độ trở lên» cùng do_con «dưới 15 độ» để biểu diễn «từ 5,5 độ đến dưới 15 độ».",
+    "Mục do_con_nguong_5_5 của bảng được định nghĩa là «độ cồn của rượu» nên không dùng cho bia. Quy tắc 14 không cho mở rộng mục đó, vì vậy đề xuất do_con_bia_nguong_5_5 riêng cho bia.",
+    "Với bia, điều luật không đặt giới hạn trên, nên không dùng do_con trong nhánh bia.",
+    "Ở khoản 1, cụm «chương trình, hoạt động văn hóa, sân khấu, điện ảnh, thể thao» được biểu diễn bằng một atom bool duy nhất, không tách riêng từng lĩnh vực hay tách «chương trình» với «hoạt động».",
+    "Chữ «trừ biển hiệu của cơ sở kinh doanh rượu, bia» ở khoản 2 được mã hóa là exception: nó làm lệnh cấm không áp dụng chứ không tạo ra quyền được phép quảng cáo.",
+    "Biển hiệu của cơ sở kinh doanh được hiểu là một loại phương tiện quảng cáo ngoài trời, nên exception chỉ có tác dụng khi quang_cao_tren_phuong_tien_quang_cao_ngoai_troi đúng.",
+    "Đoạn dẫn có dẫn chiếu tới Điều 12, nhưng chữ của chính khoản 1 và khoản 2 không dẫn chiếu tới đơn vị nào khác, nên «references» của hai norm để rỗng.",
+    "Ngày hiệu lực 2020-01-01 không có trong đoạn văn được cung cấp mà lấy từ hiểu biết chung về Luật 44/2019/QH14; người duyệt cần đối chiếu lại."
+  ]
+}
