@@ -23,6 +23,10 @@ import LexProof.Laws.AlcoholSaleRefs
 import LexProof.Laws.Article19
 import LexProof.Laws.Article15
 import LexProof.Laws.Article5
+import LexProof.Laws.Article10
+import LexProof.Laws.Article12
+import LexProof.Laws.Article13
+import LexProof.Laws.Article14
 import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
 

@@ -1,0 +1,324 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 32,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {
+    "situation": [],
+    "parameters": []
+  },
+  "glossary_proposals": {
+    "acts": [
+      {
+        "id": "cung_cap_thong_tin_hoat_dong_kinh_doanh_cho_co_quan",
+        "gloss": "cơ sở kinh doanh cung cấp thông tin đầy đủ, chính xác về hoạt động kinh doanh của mình cho cơ quan có thẩm quyền (khác cung_cap_thong_tin_ve_anh_huong_suc_khoe_cua_ruou_bia và cung_cap_ruou_bia)",
+        "sources": [
+          "Điều 32 khoản 2"
+        ]
+      },
+      {
+        "id": "su_dung_lao_dong_truc_tiep_kinh_doanh_quang_cao_ruou_bia",
+        "gloss": "sử dụng lao động trực tiếp tham gia vào việc kinh doanh, quảng cáo rượu, bia (rộng hơn su_dung_lao_dong_truc_tiep_san_xuat_mua_ban_ruou_bia vì gồm cả quảng cáo)",
+        "sources": [
+          "Điều 32 khoản 3"
+        ]
+      },
+      {
+        "id": "thu_hoi_xu_ly_ruou_bia",
+        "gloss": "thu hồi và xử lý rượu, bia",
+        "sources": [
+          "Điều 32 khoản 4"
+        ]
+      },
+      {
+        "id": "niem_yet_thong_bao_khong_ban_cho_nguoi_chua_du_18",
+        "gloss": "niêm yết thông báo không bán rượu, bia cho người chưa đủ 18 tuổi",
+        "sources": [
+          "Điều 32 khoản 5 nhánh (i)"
+        ]
+      },
+      {
+        "id": "yeu_cau_nguoi_mua_xuat_trinh_giay_to_chung_minh_tuoi",
+        "gloss": "người bán yêu cầu người mua rượu, bia xuất trình giấy tờ chứng minh độ tuổi",
+        "sources": [
+          "Điều 32 khoản 5 nhánh (ii)"
+        ]
+      },
+      {
+        "id": "nhac_nho_thong_tin_khach_hang_khong_dieu_khien_phuong_tien",
+        "gloss": "nhắc nhở và có hình thức thông tin phù hợp đối với khách hàng về việc không điều khiển phương tiện giao thông",
+        "sources": [
+          "Điều 32 khoản 6 nhánh (i)"
+        ]
+      },
+      {
+        "id": "ho_tro_khach_hang_su_dung_phuong_tien_cong_cong",
+        "gloss": "hỗ trợ khách hàng thuê, sử dụng phương tiện giao thông công cộng",
+        "sources": [
+          "Điều 32 khoản 6 nhánh (ii)"
+        ]
+      },
+      {
+        "id": "mo_moi_diem_ban_ruou_bia_tieu_dung_tai_cho",
+        "gloss": "mở mới điểm bán rượu, bia để tiêu dùng tại chỗ",
+        "sources": [
+          "Điều 32 khoản 7"
+        ]
+      }
+    ],
+    "atoms": [
+      {
+        "id": "co_yeu_cau_cua_co_quan_co_tham_quyen",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "cơ quan có thẩm quyền đã yêu cầu cơ sở cung cấp thông tin về hoạt động kinh doanh",
+        "sources": [
+          "Điều 32 khoản 2"
+        ]
+      },
+      {
+        "id": "ruou_bia_khong_bao_dam_an_toan_thuc_pham",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "rượu, bia không bảo đảm an toàn thực phẩm (khác ruou_bia_khong_bao_dam_chat_luong)",
+        "sources": [
+          "Điều 32 khoản 4"
+        ]
+      },
+      {
+        "id": "ruou_bia_do_co_so_minh_san_xuat_mua_ban",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "rượu, bia do chính cơ sở sản xuất hoặc mua bán",
+        "sources": [
+          "Điều 32 khoản 4"
+        ]
+      },
+      {
+        "id": "co_so_ban_ruou_bia",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "chủ thể là cơ sở bán rượu, bia",
+        "sources": [
+          "Điều 32 khoản 5 nhánh (i)"
+        ]
+      },
+      {
+        "id": "nghi_ngo_ve_do_tuoi_nguoi_mua",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "người bán nghi ngờ về độ tuổi của người mua rượu, bia",
+        "sources": [
+          "Điều 32 khoản 5 nhánh (ii)"
+        ]
+      },
+      {
+        "id": "co_so_ban_ruou_bia_tieu_dung_tai_cho",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "chủ thể là cơ sở bán rượu, bia để tiêu dùng tại chỗ",
+        "sources": [
+          "Điều 32 khoản 6"
+        ]
+      },
+      {
+        "id": "khach_hang_da_uong_ruou_bia",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "khách hàng đã uống rượu, bia (thời điểm «sau khi uống rượu, bia»)",
+        "sources": [
+          "Điều 32 khoản 6 nhánh (ii)"
+        ]
+      },
+      {
+        "id": "mo_moi_ke_tu_ngay_luat_co_hieu_luc",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "việc mở mới điểm bán diễn ra kể từ ngày Luật này có hiệu lực",
+        "sources": [
+          "Điều 32 khoản 7"
+        ]
+      },
+      {
+        "id": "trong_ban_kinh_100m_tu_khuon_vien_co_so_y_te",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "điểm bán nằm trong bán kính 100 m tính từ khuôn viên của cơ sở y tế (khác dia_diem_co_so_y_te là địa điểm chính là cơ sở y tế)",
+        "sources": [
+          "Điều 32 khoản 7"
+        ]
+      },
+      {
+        "id": "trong_ban_kinh_100m_tu_khuon_vien_co_so_mam_non_pho_thong",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "điểm bán nằm trong bán kính 100 m tính từ khuôn viên của nhà trẻ, trường mẫu giáo, trường mầm non hoặc cơ sở giáo dục phổ thông (hẹp hơn dia_diem_co_so_giao_duc và đo theo khoảng cách)",
+        "sources": [
+          "Điều 32 khoản 7"
+        ]
+      }
+    ]
+  },
+  "norms": [
+    {
+      "id": "32.2",
+      "modality": "obligation",
+      "act": "cung_cap_thong_tin_hoat_dong_kinh_doanh_cho_co_quan",
+      "condition": {
+        "sit": "co_yeu_cau_cua_co_quan_co_tham_quyen"
+      },
+      "exceptions": [],
+      "source": "Điều 32 khoản 2",
+      "quote": "Cung cấp thông tin đầy đủ, chính xác về hoạt động kinh doanh của cơ sở theo yêu cầu của cơ quan có thẩm quyền",
+      "references": []
+    },
+    {
+      "id": "32.3",
+      "modality": "prohibition",
+      "act": "su_dung_lao_dong_truc_tiep_kinh_doanh_quang_cao_ruou_bia",
+      "condition": {
+        "sit": "tuoi_nguoi_lao_dong",
+        "value": "chưa đủ 18 tuổi"
+      },
+      "exceptions": [],
+      "source": "Điều 32 khoản 3",
+      "quote": "Không sử dụng lao động là người chưa đủ 18 tuổi trực tiếp tham gia vào việc kinh doanh, quảng cáo rượu, bia",
+      "references": []
+    },
+    {
+      "id": "32.4",
+      "modality": "obligation",
+      "act": "thu_hoi_xu_ly_ruou_bia",
+      "condition": {
+        "and": [
+          {
+            "sit": "ruou_bia_do_co_so_minh_san_xuat_mua_ban"
+          },
+          {
+            "or": [
+              {
+                "sit": "ruou_bia_khong_bao_dam_chat_luong"
+              },
+              {
+                "sit": "ruou_bia_khong_bao_dam_an_toan_thuc_pham"
+              }
+            ]
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 32 khoản 4",
+      "quote": "Thu hồi và xử lý rượu, bia không bảo đảm chất lượng, an toàn thực phẩm do cơ sở mình sản xuất, mua bán",
+      "references": []
+    },
+    {
+      "id": "32.5.i",
+      "modality": "obligation",
+      "act": "niem_yet_thong_bao_khong_ban_cho_nguoi_chua_du_18",
+      "condition": {
+        "sit": "co_so_ban_ruou_bia"
+      },
+      "exceptions": [],
+      "source": "Điều 32 khoản 5 nhánh (i)",
+      "quote": "Cơ sở bán rượu, bia phải niêm yết thông báo không bán rượu, bia cho người chưa đủ 18 tuổi",
+      "references": []
+    },
+    {
+      "id": "32.5.ii",
+      "modality": "permission",
+      "act": "yeu_cau_nguoi_mua_xuat_trinh_giay_to_chung_minh_tuoi",
+      "condition": {
+        "sit": "nghi_ngo_ve_do_tuoi_nguoi_mua"
+      },
+      "exceptions": [],
+      "source": "Điều 32 khoản 5 nhánh (ii)",
+      "quote": "Trường hợp nghi ngờ về độ tuổi của người mua rượu, bia thì người bán có quyền yêu cầu người mua xuất trình giấy tờ chứng minh",
+      "references": []
+    },
+    {
+      "id": "32.6.i",
+      "modality": "obligation",
+      "act": "nhac_nho_thong_tin_khach_hang_khong_dieu_khien_phuong_tien",
+      "condition": {
+        "and": [
+          {
+            "sit": "co_so_ban_ruou_bia_tieu_dung_tai_cho"
+          },
+          {
+            "sit": "khach_hang_da_uong_ruou_bia"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 32 khoản 6 nhánh (i)",
+      "quote": "nhắc nhở và có hình thức thông tin phù hợp đối với khách hàng về việc không điều khiển phương tiện giao thông",
+      "references": []
+    },
+    {
+      "id": "32.6.ii",
+      "modality": "obligation",
+      "act": "ho_tro_khach_hang_su_dung_phuong_tien_cong_cong",
+      "condition": {
+        "and": [
+          {
+            "sit": "co_so_ban_ruou_bia_tieu_dung_tai_cho"
+          },
+          {
+            "sit": "khach_hang_da_uong_ruou_bia"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 32 khoản 6 nhánh (ii)",
+      "quote": "hỗ trợ khách hàng thuê, sử dụng phương tiện giao thông công cộng sau khi uống rượu, bia",
+      "references": []
+    },
+    {
+      "id": "32.7",
+      "modality": "prohibition",
+      "act": "mo_moi_diem_ban_ruou_bia_tieu_dung_tai_cho",
+      "condition": {
+        "and": [
+          {
+            "sit": "mo_moi_ke_tu_ngay_luat_co_hieu_luc"
+          },
+          {
+            "or": [
+              {
+                "sit": "trong_ban_kinh_100m_tu_khuon_vien_co_so_y_te"
+              },
+              {
+                "sit": "trong_ban_kinh_100m_tu_khuon_vien_co_so_mam_non_pho_thong"
+              }
+            ]
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 32 khoản 7",
+      "quote": "không được mở mới điểm bán rượu, bia để tiêu dùng tại chỗ trong bán kính 100 m tính từ khuôn viên của cơ sở y tế, nhà trẻ, trường mẫu giáo, trường mầm non, cơ sở giáo dục phổ thông",
+      "references": []
+    }
+  ],
+  "not_encoded": [
+    {
+      "clause": "Điều 32 khoản 1",
+      "reason": "Câu đầu chỉ dẫn chiếu tới các văn bản pháp luật khác (điều kiện kinh doanh, quảng cáo, khuyến mại, tài trợ, an toàn thực phẩm, chất lượng, tiêu chuẩn, quy chuẩn, ghi nhãn) nên không có nội dung để mã hóa trong điều này. Câu sau («phải bảo đảm chính xác, khoa học») dùng chuẩn mở «khoa học», không trùng nghĩa với atom thong_tin_khong_chinh_xac_sai_su_that, và bảng không có act «cung cấp thông tin về sản phẩm» (cung_cap_thong_tin_ve_anh_huong_suc_khoe_cua_ruou_bia chỉ nói về ảnh hưởng sức khỏe). Để người duyệt quyết định cách đọc, không đoán."
+    }
+  ],
+  "assumptions": [
+    "Ngày hiệu lực 2020-01-01 không có trong đoạn chữ được cung cấp; giá trị này lấy theo điều khoản thi hành của Luật 44/2019/QH14 và cần đối chiếu lại.",
+    "Theo quy tắc 7, tiêu đề «Trách nhiệm của cơ sở kinh doanh rượu, bia» làm các khoản mang tính nghĩa vụ (obligation); riêng khoản 3 («Không sử dụng») và khoản 7 («không được mở mới») mã hóa là prohibition, còn câu «có quyền» ở khoản 5 mã hóa là permission.",
+    "Chủ thể của các khoản 2, 3, 4 là cơ sở kinh doanh rượu, bia (theo tiêu đề điều), nên điều kiện không có atom chủ thể; khoản 5 và khoản 6 tự thu hẹp chủ thể nên dùng atom co_so_ban_ruou_bia và co_so_ban_ruou_bia_tieu_dung_tai_cho.",
+    "Khoản 5 và khoản 6 mỗi khoản có hai norm (không phải lệnh cấm), nhưng vẫn tách thành «nhánh (i)», «nhánh (ii)» để source chỉ đúng đơn vị được mã hóa.",
+    "Khoản 3: act su_dung_lao_dong_truc_tiep_san_xuat_mua_ban_ruou_bia của bảng không gồm «quảng cáo», nên đề xuất act mới; tuổi dùng atom có sẵn tuoi_nguoi_lao_dong với nhãn «chưa đủ 18 tuổi».",
+    "Khoản 4: «không bảo đảm chất lượng, an toàn thực phẩm» được đọc là thiếu một trong hai (or); phần «chất lượng» dùng atom có sẵn ruou_bia_khong_bao_dam_chat_luong, phần an toàn thực phẩm là atom mới. Cụm «theo quy định của pháp luật về an toàn thực phẩm» dẫn chiếu văn bản khác, nên không ghi vào references.",
+    "Khoản 5 nhánh (ii): «nghi ngờ» được coi là một tình huống thực tế về nhận thức của người bán (situation), không phải khái niệm mở cần tham số; người duyệt có thể đổi sang parameter.",
+    "Khoản 6 nhánh (i): chữ «phù hợp» là chuẩn mở về cách thực hiện nghĩa vụ chứ không phải điều kiện để nghĩa vụ áp dụng, nên không đưa vào condition và không tự quyết; nó vẫn nằm trong gloss của act.",
+    "Khoản 6: cụm «sau khi uống rượu, bia» được đọc là gắn cho cả hai nghĩa vụ (nhánh (i) và (ii)), theo ý kiến người duyệt (Phong, 2026-11-23) khi bác cách đọc trước, vốn chỉ gắn cụm đó vào nhánh (ii); vì vậy cả hai norm đều có điều kiện khach_hang_da_uong_ruou_bia.",
+    "Khoản 7: «Kể từ ngày Luật này có hiệu lực» được hiểu là chỉ cấm việc mở mới sau ngày hiệu lực; điểm bán đã mở trước đó không bị điều này điều chỉnh. «Luật này» là cả văn bản, không phải một đơn vị điều khoản, nên không ghi vào references.",
+    "Khoản 7: không dùng dia_diem_co_so_y_te và dia_diem_co_so_giao_duc vì hai atom đó nói địa điểm chính là cơ sở, còn khoản này nói khoảng cách 100 m tính từ khuôn viên; ngoài ra danh sách cơ sở giáo dục ở đây (nhà trẻ, mẫu giáo, mầm non, phổ thông) hẹp hơn «cơ sở giáo dục». Vì vậy đề xuất atom mới theo quy tắc 14.",
+    "Không khoản nào của Điều 32 dẫn chiếu tới một điều khoản khác trong cùng Luật, nên mọi references đều rỗng."
+  ]
+}
