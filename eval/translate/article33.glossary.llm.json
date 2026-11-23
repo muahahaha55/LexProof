@@ -1,0 +1,169 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 33,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {
+    "situation": [],
+    "parameters": []
+  },
+  "glossary_proposals": {
+    "acts": [
+      {
+        "id": "to_chuc_thuc_hien_bien_phap_phong_chong_tac_hai_ruou_bia",
+        "gloss": "tổ chức thực hiện các biện pháp phòng, chống tác hại của rượu, bia trong phạm vi nhiệm vụ, quyền hạn của người đứng đầu",
+        "sources": [
+          "Điều 33 khoản 1"
+        ]
+      },
+      {
+        "id": "to_chuc_thuc_hien_nghiem_quy_dinh_khong_uong_ruou_bia_trong_gio_lam_viec_tai_noi_lam_viec",
+        "gloss": "tổ chức thực hiện nghiêm quy định không uống rượu, bia trong thời gian làm việc, tại nơi làm việc của cơ quan, tổ chức",
+        "sources": [
+          "Điều 33 khoản 1"
+        ]
+      },
+      {
+        "id": "tham_gia_hoat_dong_phong_chong_tac_hai_ruou_bia_tai_cong_dong_theo_dieu_24",
+        "gloss": "tham gia các hoạt động phòng, chống tác hại của rượu, bia tại cơ sở, cộng đồng quy định tại Điều 24",
+        "sources": [
+          "Điều 33 khoản 2"
+        ]
+      },
+      {
+        "id": "nhac_nho_yeu_cau_cham_dut_vi_pham_dieu_10_va_19",
+        "gloss": "nhắc nhở, yêu cầu chấm dứt hành vi vi phạm quy định tại Điều 10 và Điều 19 tại địa điểm thuộc quyền quản lý",
+        "sources": [
+          "Điều 33 khoản 3 điểm a"
+        ]
+      },
+      {
+        "id": "tu_choi_cung_cap_dich_vu_cho_nguoi_tiep_tuc_vi_pham",
+        "gloss": "từ chối cung cấp dịch vụ cho người tiếp tục vi phạm Điều 10, Điều 19 sau khi đã được nhắc nhở, yêu cầu",
+        "sources": [
+          "Điều 33 khoản 3 điểm a"
+        ]
+      },
+      {
+        "id": "to_chuc_huong_dan_kiem_tra_don_doc_khong_uong_khong_ban_ruou_bia_tai_dia_diem",
+        "gloss": "tổ chức thực hiện, hướng dẫn, kiểm tra, đôn đốc mọi người thực hiện đúng quy định không được uống, không được bán rượu, bia tại địa điểm thuộc quyền quản lý, điều hành",
+        "sources": [
+          "Điều 33 khoản 3 điểm b"
+        ]
+      }
+    ],
+    "atoms": [
+      {
+        "id": "co_hanh_vi_vi_pham_dieu_10_hoac_19_tai_dia_diem",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "tại địa điểm thuộc quyền quản lý đang có người vi phạm quy định tại Điều 10 hoặc Điều 19",
+        "sources": [
+          "Điều 33 khoản 3 điểm a"
+        ]
+      },
+      {
+        "id": "nguoi_vi_pham_tiep_tuc_vi_pham_sau_khi_duoc_nhac_nho_yeu_cau",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "người vi phạm Điều 10, Điều 19 tiếp tục vi phạm sau khi đã được nhắc nhở, yêu cầu chấm dứt",
+        "sources": [
+          "Điều 33 khoản 3 điểm a"
+        ]
+      }
+    ]
+  },
+  "norms": [
+    {
+      "id": "33.1.i",
+      "modality": "obligation",
+      "act": "to_chuc_thuc_hien_bien_phap_phong_chong_tac_hai_ruou_bia",
+      "condition": "true",
+      "exceptions": [],
+      "source": "Điều 33 khoản 1 nhánh (i)",
+      "quote": "có trách nhiệm tổ chức thực hiện các biện pháp phòng, chống tác hại của rượu, bia",
+      "references": []
+    },
+    {
+      "id": "33.1.ii",
+      "modality": "obligation",
+      "act": "to_chuc_thuc_hien_nghiem_quy_dinh_khong_uong_ruou_bia_trong_gio_lam_viec_tai_noi_lam_viec",
+      "condition": "true",
+      "exceptions": [],
+      "source": "Điều 33 khoản 1 nhánh (ii)",
+      "quote": "tổ chức thực hiện nghiêm quy định không uống rượu, bia trong thời gian làm việc, tại nơi làm việc của cơ quan, tổ chức",
+      "references": []
+    },
+    {
+      "id": "33.2",
+      "modality": "obligation",
+      "act": "tham_gia_hoat_dong_phong_chong_tac_hai_ruou_bia_tai_cong_dong_theo_dieu_24",
+      "condition": "true",
+      "exceptions": [],
+      "source": "Điều 33 khoản 2",
+      "quote": "tham gia các hoạt động phòng, chống tác hại của rượu, bia quy định tại Điều 24 của Luật này",
+      "references": [
+        "Điều 24"
+      ]
+    },
+    {
+      "id": "33.3.a.i",
+      "modality": "obligation",
+      "act": "nhac_nho_yeu_cau_cham_dut_vi_pham_dieu_10_va_19",
+      "condition": {
+        "sit": "co_hanh_vi_vi_pham_dieu_10_hoac_19_tai_dia_diem"
+      },
+      "exceptions": [],
+      "source": "Điều 33 khoản 3 điểm a nhánh (i)",
+      "quote": "Nhắc nhở, yêu cầu chấm dứt hành vi vi phạm quy định tại Điều 10 và Điều 19 của Luật này",
+      "references": [
+        "Điều 10",
+        "Điều 19"
+      ]
+    },
+    {
+      "id": "33.3.a.ii",
+      "modality": "obligation",
+      "act": "tu_choi_cung_cap_dich_vu_cho_nguoi_tiep_tuc_vi_pham",
+      "condition": {
+        "sit": "nguoi_vi_pham_tiep_tuc_vi_pham_sau_khi_duoc_nhac_nho_yeu_cau"
+      },
+      "exceptions": [],
+      "source": "Điều 33 khoản 3 điểm a nhánh (ii)",
+      "quote": "từ chối cung cấp dịch vụ nếu người vi phạm tiếp tục vi phạm sau khi đã được nhắc nhở, yêu cầu",
+      "references": [
+        "Điều 10",
+        "Điều 19"
+      ]
+    },
+    {
+      "id": "33.3.b",
+      "modality": "obligation",
+      "act": "to_chuc_huong_dan_kiem_tra_don_doc_khong_uong_khong_ban_ruou_bia_tai_dia_diem",
+      "condition": "true",
+      "exceptions": [],
+      "source": "Điều 33 khoản 3 điểm b",
+      "quote": "Tổ chức thực hiện, hướng dẫn, kiểm tra, đôn đốc mọi người thực hiện đúng quy định về không được uống, không được bán rượu, bia tại địa điểm thuộc quyền quản lý, điều hành",
+      "references": [
+        "Điều 10",
+        "Điều 19"
+      ]
+    }
+  ],
+  "not_encoded": [
+    {
+      "clause": "Điều 33 khoản 3",
+      "reason": "Câu dẫn của khoản xác định chủ thể là người đứng đầu, người quản lý, điều hành địa điểm quy định tại Điều 10 và Điều 19; chủ thể không được mã hóa thành atom, nên các norm của khoản này dùng điều kiện true hoặc điều kiện về hành vi vi phạm."
+    }
+  ],
+  "assumptions": [
+    "«effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu.",
+    "Tiêu đề «Trách nhiệm của người đứng đầu...» và chữ «có trách nhiệm» cho biết các khoản là nghĩa vụ (quy tắc 7).",
+    "Chủ thể (người đứng đầu cơ quan, tổ chức; người quản lý địa điểm) không được mã hóa thành atom vì bảng thuật ngữ không có atom chủ thể loại này; điều kiện của phần lớn norm là true.",
+    "Khoản 1 có hai nghĩa vụ ngăn bằng dấu chấm phẩy, tách thành nhánh (i) và (ii).",
+    "Khoản 3 điểm a có hai nghĩa vụ ngăn bằng dấu chấm phẩy: nhắc nhở và từ chối dịch vụ, tách thành nhánh (i) và (ii); nghĩa vụ thứ hai có điều kiện «tiếp tục vi phạm sau khi đã được nhắc nhở».",
+    "Nội dung Điều 10 và Điều 19 không lặp lại ở đây; «references» ghi nơi dẫn chiếu. Điều 24 chỉ có «vận động», «tuyên truyền» nên không mã hóa, norm 33.2 dẫn chiếu tới nó mà không dựng lại nội dung.",
+    "Các nghĩa vụ ở đây là nghĩa vụ làm một việc (tổ chức, nhắc nhở, từ chối), không trùng hành vi nào của các điều cấm trong bảng, nên không tạo cặp phương thức khắc nhau."
+  ]
+}

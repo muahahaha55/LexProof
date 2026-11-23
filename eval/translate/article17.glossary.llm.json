@@ -1,0 +1,70 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 17,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {
+    "situation": [],
+    "parameters": []
+  },
+  "glossary_proposals": {
+    "acts": [],
+    "atoms": [
+      {
+        "id": "co_ban_ke_khai_gui_ubnd_cap_xa_ve_san_xuat_ruou_thu_cong",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "có bản kê khai gửi Ủy ban nhân dân cấp xã về lượng rượu được sản xuất, phạm vi sử dụng, cam kết bảo đảm an toàn thực phẩm và không bán rượu ra thị trường, theo mẫu do Bộ trưởng Bộ Công Thương quy định",
+        "sources": [
+          "Điều 17 khoản 1"
+        ]
+      }
+    ]
+  },
+  "norms": [
+    {
+      "id": "17.1",
+      "modality": "prohibition",
+      "act": "san_xuat_ruou_thu_cong",
+      "condition": {
+        "and": [
+          {
+            "sit": "chu_the_la_ho_gia_dinh_ca_nhan"
+          },
+          {
+            "not": {
+              "sit": "muc_dich_kinh_doanh"
+            }
+          },
+          {
+            "not": {
+              "sit": "co_ban_ke_khai_gui_ubnd_cap_xa_ve_san_xuat_ruou_thu_cong"
+            }
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 17 khoản 1",
+      "quote": "phải có bản kê khai gửi Ủy ban nhân dân cấp xã về lượng rượu được sản xuất, phạm vi sử dụng, cam kết bảo đảm an toàn thực phẩm và không bán rượu ra thị trường theo mẫu do Bộ trưởng Bộ Công Thương quy định",
+      "references": []
+    }
+  ],
+  "not_encoded": [
+    {
+      "clause": "Điều 17 khoản 1",
+      "reason": "Câu sau «Việc kê khai không phải nộp phí, lệ phí» chỉ miễn phí, không đặt nghĩa vụ hay cấm đoán về hành vi nào trong bảng thuật ngữ, nên không mã hóa."
+    },
+    {
+      "clause": "Điều 17 khoản 2",
+      "reason": "Nghĩa vụ của Ủy ban nhân dân các cấp (hướng dẫn, báo cáo) là việc của cơ quan nhà nước, không có hành vi tương ứng trong bảng thuật ngữ. Quy tắc nhất quán của bản dịch này: nghĩa vụ của cơ quan nhà nước (hướng dẫn, kiểm tra, báo cáo, tịch thu) không được mã hóa, vì bảng thuật ngữ chỉ có hành vi của chủ thể tư nhân; những khoản đó vào «not_encoded» để người duyệt quyết định."
+    }
+  ],
+  "assumptions": [
+    "«effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu.",
+    "Nghĩa vụ «phải có bản kê khai» được biểu diễn là lệnh cấm sản xuất rượu thủ công khi hộ gia đình, cá nhân không nhằm mục đích kinh doanh mà chưa có bản kê khai; không biểu diễn là nghĩa vụ sản xuất.",
+    "Act san_xuat_ruou_thu_cong trùng act của Điều 15 khoản 3; đây là cùng hành vi sản xuất, nên hai điều có thể gặp nhau trong cùng tình huống và người duyệt cần xem đây có phải xung đột thật hay chỉ do mức hạt của act.",
+    "Dùng lại chu_the_la_ho_gia_dinh_ca_nhan và muc_dich_kinh_doanh của bảng; «không nhằm mục đích kinh doanh» là phủ định của muc_dich_kinh_doanh.",
+    "Mẫu bản kê khai do Bộ trưởng Bộ Công Thương quy định (văn bản khác); chỉ có atom bool «có bản kê khai», không mã hóa nội dung mẫu."
+  ]
+}

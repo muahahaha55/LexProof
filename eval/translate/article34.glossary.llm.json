@@ -1,0 +1,82 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 34,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {
+    "situation": [],
+    "parameters": []
+  },
+  "glossary_proposals": {
+    "acts": [
+      {
+        "id": "giao_duc_giam_sat_nhac_nho_thanh_vien_chua_du_18_khong_uong_ruou_bia",
+        "gloss": "giáo dục, giám sát, nhắc nhở thành viên gia đình chưa đủ 18 tuổi không uống rượu, bia",
+        "sources": [
+          "Điều 34 khoản 1"
+        ]
+      },
+      {
+        "id": "huong_dan_thanh_vien_gia_dinh_ky_nang_tu_choi_uong_ung_xu_nguoi_say_nghien",
+        "gloss": "hướng dẫn các thành viên trong gia đình kỹ năng từ chối uống rượu, bia; kỹ năng nhận biết, ứng xử, xử trí khi gặp người say rượu, bia, người nghiện rượu, bia và thực hiện các biện pháp phòng, chống tác hại",
+        "sources": [
+          "Điều 34 khoản 2"
+        ]
+      },
+      {
+        "id": "gia_dinh_tham_gia_cung_co_quan_to_chuc_cong_dong_phong_chong_tac_hai_ruou_bia",
+        "gloss": "gia đình tham gia với các cơ quan, tổ chức và cộng đồng thực hiện phòng, chống tác hại của rượu, bia",
+        "sources": [
+          "Điều 34 khoản 3"
+        ]
+      }
+    ],
+    "atoms": []
+  },
+  "norms": [
+    {
+      "id": "34.1.i",
+      "modality": "obligation",
+      "act": "giao_duc_giam_sat_nhac_nho_thanh_vien_chua_du_18_khong_uong_ruou_bia",
+      "condition": "true",
+      "exceptions": [],
+      "source": "Điều 34 khoản 1 nhánh (i)",
+      "quote": "Giáo dục, giám sát, nhắc nhở thành viên chưa đủ 18 tuổi không uống rượu, bia",
+      "references": []
+    },
+    {
+      "id": "34.2",
+      "modality": "obligation",
+      "act": "huong_dan_thanh_vien_gia_dinh_ky_nang_tu_choi_uong_ung_xu_nguoi_say_nghien",
+      "condition": "true",
+      "exceptions": [],
+      "source": "Điều 34 khoản 2",
+      "quote": "Hướng dẫn các thành viên trong gia đình kỹ năng từ chối uống rượu, bia; kỹ năng nhận biết, ứng xử, xử trí khi gặp người say rượu, bia, người nghiện rượu, bia và thực hiện các biện pháp phòng, chống tác hại của rượu, bia",
+      "references": []
+    },
+    {
+      "id": "34.3",
+      "modality": "obligation",
+      "act": "gia_dinh_tham_gia_cung_co_quan_to_chuc_cong_dong_phong_chong_tac_hai_ruou_bia",
+      "condition": "true",
+      "exceptions": [],
+      "source": "Điều 34 khoản 3",
+      "quote": "Tham gia với các cơ quan, tổ chức và cộng đồng thực hiện phòng, chống tác hại của rượu, bia",
+      "references": []
+    }
+  ],
+  "not_encoded": [
+    {
+      "clause": "Điều 34 khoản 1",
+      "reason": "Hai phần sau của khoản («các thành viên khác trong gia đình hạn chế uống rượu, bia»; «động viên, giúp đỡ người nghiện rượu, bia trong gia đình cai nghiện») dùng chuẩn mở «hạn chế», «động viên, giúp đỡ» không có mức đo; không đoán, để người duyệt quyết định."
+    }
+  ],
+  "assumptions": [
+    "«effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu.",
+    "Tiêu đề «Trách nhiệm của gia đình...» cho biết các khoản là nghĩa vụ của gia đình (quy tắc 7).",
+    "Chủ thể «gia đình» không được mã hóa thành atom; điều kiện là true.",
+    "Khoản 1 chỉ mã hóa phần giáo dục, giám sát, nhắc nhở thành viên chưa đủ 18 tuổi (nhánh (i)); hai phần còn lại ở not_encoded.",
+    "Các nghĩa vụ là làm một việc, không trùng hành vi của các điều cấm trong bảng, nên không tạo cặp phương thức khắc nhau."
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 16,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {
+    "situation": [],
+    "parameters": []
+  },
+  "glossary_proposals": {
+    "acts": [],
+    "atoms": [
+      {
+        "id": "ban_theo_hinh_thuc_thuong_mai_dien_tu",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "việc bán rượu, bia được thực hiện theo hình thức thương mại điện tử",
+        "sources": [
+          "Điều 16 tiêu đề"
+        ]
+      },
+      {
+        "id": "dap_ung_quy_dinh_dieu_15_khoan_4_5_va_dieu_18",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "đáp ứng quy định tại khoản 4, khoản 5 Điều 15 và Điều 18 của Luật",
+        "sources": [
+          "Điều 16 khoản 1"
+        ]
+      },
+      {
+        "id": "dap_ung_dieu_kien_phap_luat_thuong_mai_dien_tu",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "đáp ứng điều kiện theo quy định của pháp luật về thương mại điện tử (nội dung do văn bản khác quy định)",
+        "sources": [
+          "Điều 16 khoản 2"
+        ]
+      },
+      {
+        "id": "thuc_hien_bien_phap_ngan_nguoi_chua_du_18_tiep_can_mua_ruou_bia",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "thực hiện biện pháp theo quy định của Chính phủ để ngăn người chưa đủ 18 tuổi tiếp cận, truy cập, tìm kiếm thông tin và mua rượu, bia (nội dung biện pháp do Chính phủ quy định)",
+        "sources": [
+          "Điều 16 khoản 3"
+        ]
+      },
+      {
+        "id": "ap_dung_thanh_toan_khong_dung_tien_mat",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "áp dụng hình thức thanh toán không dùng tiền mặt",
+        "sources": [
+          "Điều 16 khoản 4"
+        ]
+      }
+    ]
+  },
+  "norms": [
+    {
+      "id": "16.1",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "and": [
+          {
+            "sit": "ban_theo_hinh_thuc_thuong_mai_dien_tu"
+          },
+          {
+            "not": {
+              "sit": "dap_ung_quy_dinh_dieu_15_khoan_4_5_va_dieu_18"
+            }
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 16 khoản 1",
+      "quote": "Đáp ứng quy định tại khoản 4, khoản 5 Điều 15 và Điều 18 của Luật này",
+      "references": [
+        "Điều 15 khoản 4",
+        "Điều 15 khoản 5",
+        "Điều 18"
+      ]
+    },
+    {
+      "id": "16.2",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "and": [
+          {
+            "sit": "ban_theo_hinh_thuc_thuong_mai_dien_tu"
+          },
+          {
+            "not": {
+              "sit": "dap_ung_dieu_kien_phap_luat_thuong_mai_dien_tu"
+            }
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 16 khoản 2",
+      "quote": "Đáp ứng điều kiện theo quy định của pháp luật về thương mại điện tử",
+      "references": []
+    },
+    {
+      "id": "16.3",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "and": [
+          {
+            "sit": "ban_theo_hinh_thuc_thuong_mai_dien_tu"
+          },
+          {
+            "not": {
+              "sit": "thuc_hien_bien_phap_ngan_nguoi_chua_du_18_tiep_can_mua_ruou_bia"
+            }
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 16 khoản 3",
+      "quote": "Thực hiện biện pháp theo quy định của Chính phủ để ngăn ngừa người chưa đủ 18 tuổi tiếp cận, truy cập, tìm kiếm thông tin và mua rượu, bia",
+      "references": []
+    },
+    {
+      "id": "16.4",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "and": [
+          {
+            "sit": "ban_theo_hinh_thuc_thuong_mai_dien_tu"
+          },
+          {
+            "not": {
+              "sit": "ap_dung_thanh_toan_khong_dung_tien_mat"
+            }
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 16 khoản 4",
+      "quote": "Áp dụng hình thức thanh toán không dùng tiền mặt",
+      "references": []
+    }
+  ],
+  "not_encoded": [],
+  "assumptions": [
+    "«effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu.",
+    "Tiêu đề «Điều kiện bán rượu, bia theo hình thức thương mại điện tử» cho biết các khoản là điều kiện của việc bán; áp dụng quy tắc 7 và 11: bốn khoản là bốn điều kiện cùng phải đủ.",
+    "Mỗi điều kiện được biểu diễn là một lệnh cấm bán rượu, bia theo hình thức thương mại điện tử khi thiếu điều kiện đó (điều kiện: bán qua thương mại điện tử và không đáp ứng điều kiện); không biểu diễn là nghĩa vụ phải bán, vì nghĩa vụ đó sai nghĩa.",
+    "Không dùng quyền được phép: luật nêu điều kiện, không trao quyền bán nào ngoài các điều khác.",
+    "Khoản 1 dẫn chiếu Điều 15 khoản 4, khoản 5 và Điều 18; nội dung các đơn vị đó không được lặp lại ở đây, chỉ có một atom «đáp ứng» và «references» ghi nơi dẫn chiếu.",
+    "Khoản 2 dẫn chiếu pháp luật về thương mại điện tử (văn bản khác), nên là một atom bool không có nội dung điều kiện; không ghi vào «references».",
+    "Khoản 3 dẫn chiếu quy định của Chính phủ (văn bản khác); nội dung biện pháp không được mã hóa, chỉ có atom bool «thực hiện biện pháp».",
+    "Chữ «hình thức thanh toán không dùng tiền mặt» ở khoản 4 giữ nguyên là atom bool, không định nghĩa thêm."
+  ]
+}

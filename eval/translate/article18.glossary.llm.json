@@ -1,0 +1,62 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 18,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {
+    "situation": [],
+    "parameters": []
+  },
+  "glossary_proposals": {
+    "acts": [],
+    "atoms": [
+      {
+        "id": "ruou_bia_khong_bao_dam_tieu_chuan_quy_chuan_ky_thuat",
+        "kind": "situation",
+        "domain": "bool",
+        "gloss": "rượu, bia không bảo đảm tiêu chuẩn, quy chuẩn kỹ thuật (nội dung tiêu chuẩn do văn bản khác quy định)",
+        "sources": [
+          "Điều 18"
+        ]
+      }
+    ]
+  },
+  "norms": [
+    {
+      "id": "18.1",
+      "modality": "prohibition",
+      "act": "kinh_doanh_ruou_bia",
+      "condition": {
+        "or": [
+          {
+            "sit": "ruou_bia_khong_bao_dam_tieu_chuan_quy_chuan_ky_thuat"
+          },
+          {
+            "sit": "ruou_bia_khong_bao_dam_chat_luong"
+          },
+          {
+            "sit": "ruou_bia_khong_bao_dam_an_toan_thuc_pham"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 18",
+      "quote": "Rượu, bia được kinh doanh, lưu hành tại Việt Nam phải bảo đảm tiêu chuẩn, quy chuẩn kỹ thuật, chất lượng sản phẩm, hàng hóa và an toàn thực phẩm",
+      "references": []
+    }
+  ],
+  "not_encoded": [
+    {
+      "clause": "Điều 18",
+      "reason": "Chữ «lưu hành» không có act tương ứng trong bảng thuật ngữ (bảng chỉ có kinh_doanh_ruou_bia); phần «lưu hành» của nghĩa vụ chưa được mã hóa. Để người duyệt quyết định có thêm act mới hay không."
+    }
+  ],
+  "assumptions": [
+    "«effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu.",
+    "Điều 18 chỉ có một đoạn, không chia khoản, nên «source» là «Điều 18».",
+    "Nghĩa vụ «phải bảo đảm» được biểu diễn là lệnh cấm kinh doanh khi rượu, bia không bảo đảm một trong ba yêu cầu (tiêu chuẩn, quy chuẩn kỹ thuật; chất lượng; an toàn thực phẩm), tức đủ cả ba mới được kinh doanh.",
+    "Dùng lại ruou_bia_khong_bao_dam_chat_luong và ruou_bia_khong_bao_dam_an_toan_thuc_pham của bảng; chữ «chất lượng sản phẩm, hàng hóa» được coi là cùng nghĩa với «chất lượng».",
+    "Cụm «theo quy định của pháp luật» dẫn chiếu văn bản khác nên không ghi vào «references»."
+  ]
+}
