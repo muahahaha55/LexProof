@@ -28,4 +28,5 @@ import LexProof.Laws.Article10
 import LexProof.Laws.Article12
 import LexProof.Laws.Article13
 import LexProof.Laws.Article14
+import LexProof.Laws.Article32
 import LexProof.Cert.Audit

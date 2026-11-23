@@ -319,6 +319,105 @@
       "proposed_in": "eval/translate/article32.glossary.llm.json (sha256 8ddb67a23ab64dec2398dcf57595c269efc234a335cc8436b44f8ad574d8e736)",
       "reviewed_by": "Vũ Đức Phong",
       "reviewed_on": "2026-11-22"
+    },
+    {
+      "id": "phoi_hop_tham_gia_voi_co_quan_phong_chong_ruou_bia_gia_nhap_lau",
+      "gloss": "phối hợp, tham gia với cơ quan có thẩm quyền trong phòng, chống rượu, bia giả, không bảo đảm chất lượng, an toàn thực phẩm và rượu, bia nhập lậu, không rõ nguồn gốc, xuất xứ",
+      "sources": [
+        "Điều 20 khoản 2"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article20.glossary.llm.json (sha256 08836e1b84ca68b306733937202d833bb8d0ce1ce81569a74ace332edadf2758)"
+    },
+    {
+      "id": "thuc_hien_bien_phap_phong_ngua_phat_hien_ngan_chan_nguoi_dieu_khien_phuong_tien_van_tai_uong_ruou_bia",
+      "gloss": "chủ động thực hiện biện pháp phòng ngừa, phát hiện, ngăn chặn người điều khiển phương tiện vận tải uống rượu, bia ngay trước và trong khi tham gia giao thông",
+      "sources": [
+        "Điều 21 khoản 2"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article21.glossary.llm.json (sha256 ccf9b20701b2b5ca828c5a92e2e98cc1b72aee1f4da17ae3f6f9910cf944593e)"
+    },
+    {
+      "id": "to_chuc_thuc_hien_bien_phap_phong_chong_tac_hai_ruou_bia",
+      "gloss": "tổ chức thực hiện các biện pháp phòng, chống tác hại của rượu, bia trong phạm vi nhiệm vụ, quyền hạn của người đứng đầu",
+      "sources": [
+        "Điều 33 khoản 1"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+    },
+    {
+      "id": "to_chuc_thuc_hien_nghiem_quy_dinh_khong_uong_ruou_bia_trong_gio_lam_viec_tai_noi_lam_viec",
+      "gloss": "tổ chức thực hiện nghiêm quy định không uống rượu, bia trong thời gian làm việc, tại nơi làm việc của cơ quan, tổ chức",
+      "sources": [
+        "Điều 33 khoản 1"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+    },
+    {
+      "id": "tham_gia_hoat_dong_phong_chong_tac_hai_ruou_bia_tai_cong_dong_theo_dieu_24",
+      "gloss": "tham gia các hoạt động phòng, chống tác hại của rượu, bia tại cơ sở, cộng đồng quy định tại Điều 24",
+      "sources": [
+        "Điều 33 khoản 2"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+    },
+    {
+      "id": "nhac_nho_yeu_cau_cham_dut_vi_pham_dieu_10_va_19",
+      "gloss": "nhắc nhở, yêu cầu chấm dứt hành vi vi phạm quy định tại Điều 10 và Điều 19 tại địa điểm thuộc quyền quản lý",
+      "sources": [
+        "Điều 33 khoản 3 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+    },
+    {
+      "id": "tu_choi_cung_cap_dich_vu_cho_nguoi_tiep_tuc_vi_pham",
+      "gloss": "từ chối cung cấp dịch vụ cho người tiếp tục vi phạm Điều 10, Điều 19 sau khi đã được nhắc nhở, yêu cầu",
+      "sources": [
+        "Điều 33 khoản 3 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+    },
+    {
+      "id": "to_chuc_huong_dan_kiem_tra_don_doc_khong_uong_khong_ban_ruou_bia_tai_dia_diem",
+      "gloss": "tổ chức thực hiện, hướng dẫn, kiểm tra, đôn đốc mọi người thực hiện đúng quy định không được uống, không được bán rượu, bia tại địa điểm thuộc quyền quản lý, điều hành",
+      "sources": [
+        "Điều 33 khoản 3 điểm b"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+    },
+    {
+      "id": "giao_duc_giam_sat_nhac_nho_thanh_vien_chua_du_18_khong_uong_ruou_bia",
+      "gloss": "giáo dục, giám sát, nhắc nhở thành viên gia đình chưa đủ 18 tuổi không uống rượu, bia",
+      "sources": [
+        "Điều 34 khoản 1"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)"
+    },
+    {
+      "id": "huong_dan_thanh_vien_gia_dinh_ky_nang_tu_choi_uong_ung_xu_nguoi_say_nghien",
+      "gloss": "hướng dẫn các thành viên trong gia đình kỹ năng từ chối uống rượu, bia; kỹ năng nhận biết, ứng xử, xử trí khi gặp người say rượu, bia, người nghiện rượu, bia và thực hiện các biện pháp phòng, chống tác hại",
+      "sources": [
+        "Điều 34 khoản 2"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)"
+    },
+    {
+      "id": "gia_dinh_tham_gia_cung_co_quan_to_chuc_cong_dong_phong_chong_tac_hai_ruou_bia",
+      "gloss": "gia đình tham gia với các cơ quan, tổ chức và cộng đồng thực hiện phòng, chống tác hại của rượu, bia",
+      "sources": [
+        "Điều 34 khoản 3"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)"
     }
   ],
   "atoms": [
@@ -1421,6 +1520,116 @@
       "proposed_in": "eval/translate/article32.glossary.llm.json (sha256 8ddb67a23ab64dec2398dcf57595c269efc234a335cc8436b44f8ad574d8e736)",
       "reviewed_by": "Vũ Đức Phong",
       "reviewed_on": "2026-11-22"
+    },
+    {
+      "id": "ban_theo_hinh_thuc_thuong_mai_dien_tu",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "việc bán rượu, bia được thực hiện theo hình thức thương mại điện tử",
+      "sources": [
+        "Điều 16 tiêu đề"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+    },
+    {
+      "id": "dap_ung_quy_dinh_dieu_15_khoan_4_5_va_dieu_18",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "đáp ứng quy định tại khoản 4, khoản 5 Điều 15 và Điều 18 của Luật",
+      "sources": [
+        "Điều 16 khoản 1"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+    },
+    {
+      "id": "dap_ung_dieu_kien_phap_luat_thuong_mai_dien_tu",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "đáp ứng điều kiện theo quy định của pháp luật về thương mại điện tử (nội dung do văn bản khác quy định)",
+      "sources": [
+        "Điều 16 khoản 2"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+    },
+    {
+      "id": "thuc_hien_bien_phap_ngan_nguoi_chua_du_18_tiep_can_mua_ruou_bia",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "thực hiện biện pháp theo quy định của Chính phủ để ngăn người chưa đủ 18 tuổi tiếp cận, truy cập, tìm kiếm thông tin và mua rượu, bia (nội dung biện pháp do Chính phủ quy định)",
+      "sources": [
+        "Điều 16 khoản 3"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+    },
+    {
+      "id": "ap_dung_thanh_toan_khong_dung_tien_mat",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "áp dụng hình thức thanh toán không dùng tiền mặt",
+      "sources": [
+        "Điều 16 khoản 4"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+    },
+    {
+      "id": "co_ban_ke_khai_gui_ubnd_cap_xa_ve_san_xuat_ruou_thu_cong",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "có bản kê khai gửi Ủy ban nhân dân cấp xã về lượng rượu được sản xuất, phạm vi sử dụng, cam kết bảo đảm an toàn thực phẩm và không bán rượu ra thị trường, theo mẫu do Bộ trưởng Bộ Công Thương quy định",
+      "sources": [
+        "Điều 17 khoản 1"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article17.glossary.llm.json (sha256 9403e9b68ea848941d040289451d43325f18466f06c6e108320bb01818f3740a)"
+    },
+    {
+      "id": "ruou_bia_khong_bao_dam_tieu_chuan_quy_chuan_ky_thuat",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "rượu, bia không bảo đảm tiêu chuẩn, quy chuẩn kỹ thuật (nội dung tiêu chuẩn do văn bản khác quy định)",
+      "sources": [
+        "Điều 18"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article18.glossary.llm.json (sha256 8202d1e53167433814df39e761a340cf13668063a996e43bb62fa73fe040c5d0)"
+    },
+    {
+      "id": "uong_truoc_hoac_trong_khi_tham_gia_giao_thong_voi_tu_cach_nguoi_dieu_khien",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "người uống rượu, bia là người điều khiển phương tiện giao thông và việc uống diễn ra trước hoặc trong khi tham gia giao thông",
+      "sources": [
+        "Điều 21 khoản 1"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article21.glossary.llm.json (sha256 ccf9b20701b2b5ca828c5a92e2e98cc1b72aee1f4da17ae3f6f9910cf944593e)"
+    },
+    {
+      "id": "co_hanh_vi_vi_pham_dieu_10_hoac_19_tai_dia_diem",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "tại địa điểm thuộc quyền quản lý đang có người vi phạm quy định tại Điều 10 hoặc Điều 19",
+      "sources": [
+        "Điều 33 khoản 3 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+    },
+    {
+      "id": "nguoi_vi_pham_tiep_tuc_vi_pham_sau_khi_duoc_nhac_nho_yeu_cau",
+      "kind": "situation",
+      "domain": "bool",
+      "gloss": "người vi phạm Điều 10, Điều 19 tiếp tục vi phạm sau khi đã được nhắc nhở, yêu cầu chấm dứt",
+      "sources": [
+        "Điều 33 khoản 3 điểm a"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
     }
   ]
 }

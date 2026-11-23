@@ -8,12 +8,15 @@ Cách đọc: cột «ai quyết» cho biết ai đã chốt trạng thái. «Ph
 
 | Trạng thái | Điều | Số điều |
 |---|---|---|
-| Đã vào `LexProof/Laws/` (Phong đã duyệt phiếu; kernel chứng minh `no_conflict`) | 5, 10, 12, 13, 14, 15, 19 | 7 |
-| Đã dịch lại (Phong bác giả định A:9), có phiếu mới, chờ Phong | 32 | 1 |
+| Đã vào `LexProof/Laws/` (Phong đã duyệt phiếu; kernel chứng minh `no_conflict`) | 5, 10, 12, 13, 14, 15, 19, 32 | 8 |
 | Đã dịch, đã qua `check`; chưa nhập thuật ngữ, chưa lập phiếu | 16, 17, 18, 20, 21, 33, 34 | 7 |
 | Chưa mã hóa, AI đề xuất «không có chuẩn mực mã hóa được» (chưa duyệt) | 1, 2, 3, 4, 6, 7, 8, 9, 11, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 35, 36 | 21 |
 
-Tổng 36. Chỉ 7/36 điều đã qua người duyệt; 8 điều đã dịch (AI) chờ duyệt; 21 điều chưa có bản mã hóa (AI đề xuất không mã hóa).
+Bảng thuật ngữ: 21 thuật ngữ mới của 7 điều đã dịch đã nhập (trạng thái `proposed`); phiếu `docs/review/duyet-bang-thuat-ngu-44-2019-QH14-4.md` chờ Phong. Phiếu norm của 7 điều đó chỉ lập sau khi bảng được áp (vì phiếu norm ghim sha256 của bảng).
+
+Gộp 14 bản dịch (Điều 5, 10, 12–18, 20, 21, 32–34) qua `run.py`: 67 norm, vẫn không act nào có hai modality khắc nhau (rỗng về xung đột modality). Đây là chạy nháp (Evaluated), Điều 19 chưa gộp.
+
+Tổng 36. Chỉ 8/36 điều đã qua người duyệt; 7 điều đã dịch (AI) chờ duyệt; 21 điều chưa có bản mã hóa (AI đề xuất không mã hóa).
 
 ## Từng điều
 
@@ -50,7 +53,7 @@ Tổng 36. Chỉ 7/36 điều đã qua người duyệt; 8 điều đã dịch (
 | 29 | Nội dung quản lý nhà nước | không mã hóa | AI, chưa duyệt | |
 | 30 | Trách nhiệm quản lý nhà nước | không mã hóa | AI, chưa duyệt | |
 | 31 | Mặt trận, tổ chức xã hội | không mã hóa | AI, chưa duyệt | |
-| 32 | Trách nhiệm của cơ sở kinh doanh | dịch lại, chờ Phong | AI + phiếu mới | Phong bác A:9 (cụm «sau khi uống rượu, bia» áp dụng cho cả hai nhánh khoản 6); bản `-2` đã sửa |
+| 32 | Trách nhiệm của cơ sở kinh doanh | **vào `Laws`** | Phong | lần 1 bị bác A:9 (cụm «sau khi uống rượu, bia» áp dụng cho cả hai nhánh khoản 6); bản dịch lại `-2` được chấp nhận 21/21 |
 | 33 | Trách nhiệm của người đứng đầu cơ quan, tổ chức | dịch | AI | 6 nghĩa vụ; chủ thể không thành atom nên điều kiện phần lớn là true |
 | 34 | Trách nhiệm của gia đình | dịch | AI | 3 nghĩa vụ; hai vế «hạn chế», «động viên» của khoản 1 không mã hóa |
 | 35 | Sửa luật khác | không mã hóa | AI, chưa duyệt | sửa văn bản khác, ngoài Level 1 |
@@ -79,5 +82,5 @@ Tất cả điều dưới đây là phát biểu về **phần đã mã hóa**,
 2. **Luật này gần như chỉ có cấm và bắt buộc.** «Được phép» chỉ có ở Điều 15 (đã vào `Laws`) và Điều 32 khoản 5 nhánh (ii) (chờ duyệt). Cặp cấm–cho phép trên cùng một hành vi, nguồn xung đột modality thông thường, hầu như không xuất hiện trong chữ luật. Một xung đột Level 1 thật có thể không tồn tại trong văn bản này.
 3. **So sánh giữa các điều cần norm suy ra.** Điều 5 với Điều 15 chỉ so được qua norm suy ra (ADR-0028). Lần đo đầu cho 3 cặp xung đột, cả ba dính norm suy ra; Phong bác cả hai cách đọc D1 và D2 (2026-11-21). Công cụ đã bác được cách đọc «đủ điều kiện cấp phép thì được kinh doanh»; đó là kết quả về cách đọc, không phải về luật.
 4. **Độ trung thực chưa có nhiều bằng chứng.** Bản mã hóa đúng luật chỉ do con người đối chiếu: một người duyệt (Phong), không có người học luật độc lập (FR12 chưa làm). Kernel chỉ chứng minh tính hợp lệ của phần đã mã hóa.
-5. **Mức phủ.** 7/36 điều đã qua người duyệt. Phần còn lại hoặc đang chờ duyệt hoặc là phân loại của AI chưa duyệt. Các thuật ngữ mở («hợp lý», «dành cho», «ngay trước») là tham số; hệ thống không quyết giá trị.
-6. **Bản dịch AI không tin cậy.** 29 điều chưa vào `Laws` chưa có định lý kernel nào. `translate.py check` chỉ kiểm cấu trúc, trích dẫn nguyên văn và id; không kiểm nghĩa.
+5. **Mức phủ.** 8/36 điều đã qua người duyệt. Phần còn lại hoặc đang chờ duyệt hoặc là phân loại của AI chưa duyệt. Các thuật ngữ mở («hợp lý», «dành cho», «ngay trước») là tham số; hệ thống không quyết giá trị.
+6. **Bản dịch AI không tin cậy.** 28 điều chưa vào `Laws` chưa có định lý kernel nào. `translate.py check` chỉ kiểm cấu trúc, trích dẫn nguyên văn và id; không kiểm nghĩa.
