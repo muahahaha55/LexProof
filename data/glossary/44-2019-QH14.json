@@ -326,8 +326,10 @@
       "sources": [
         "Điều 20 khoản 2"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article20.glossary.llm.json (sha256 08836e1b84ca68b306733937202d833bb8d0ce1ce81569a74ace332edadf2758)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article20.glossary.llm.json (sha256 08836e1b84ca68b306733937202d833bb8d0ce1ce81569a74ace332edadf2758)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "thuc_hien_bien_phap_phong_ngua_phat_hien_ngan_chan_nguoi_dieu_khien_phuong_tien_van_tai_uong_ruou_bia",
@@ -335,8 +337,10 @@
       "sources": [
         "Điều 21 khoản 2"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article21.glossary.llm.json (sha256 ccf9b20701b2b5ca828c5a92e2e98cc1b72aee1f4da17ae3f6f9910cf944593e)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article21.glossary.llm.json (sha256 ccf9b20701b2b5ca828c5a92e2e98cc1b72aee1f4da17ae3f6f9910cf944593e)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "to_chuc_thuc_hien_bien_phap_phong_chong_tac_hai_ruou_bia",
@@ -344,8 +348,10 @@
       "sources": [
         "Điều 33 khoản 1"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "to_chuc_thuc_hien_nghiem_quy_dinh_khong_uong_ruou_bia_trong_gio_lam_viec_tai_noi_lam_viec",
@@ -353,8 +359,10 @@
       "sources": [
         "Điều 33 khoản 1"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "tham_gia_hoat_dong_phong_chong_tac_hai_ruou_bia_tai_cong_dong_theo_dieu_24",
@@ -362,8 +370,10 @@
       "sources": [
         "Điều 33 khoản 2"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "nhac_nho_yeu_cau_cham_dut_vi_pham_dieu_10_va_19",
@@ -371,8 +381,10 @@
       "sources": [
         "Điều 33 khoản 3 điểm a"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "tu_choi_cung_cap_dich_vu_cho_nguoi_tiep_tuc_vi_pham",
@@ -380,8 +392,10 @@
       "sources": [
         "Điều 33 khoản 3 điểm a"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "to_chuc_huong_dan_kiem_tra_don_doc_khong_uong_khong_ban_ruou_bia_tai_dia_diem",
@@ -389,8 +403,10 @@
       "sources": [
         "Điều 33 khoản 3 điểm b"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "giao_duc_giam_sat_nhac_nho_thanh_vien_chua_du_18_khong_uong_ruou_bia",
@@ -398,8 +414,10 @@
       "sources": [
         "Điều 34 khoản 1"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "huong_dan_thanh_vien_gia_dinh_ky_nang_tu_choi_uong_ung_xu_nguoi_say_nghien",
@@ -407,8 +425,10 @@
       "sources": [
         "Điều 34 khoản 2"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "gia_dinh_tham_gia_cung_co_quan_to_chuc_cong_dong_phong_chong_tac_hai_ruou_bia",
@@ -416,8 +436,10 @@
       "sources": [
         "Điều 34 khoản 3"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     }
   ],
   "atoms": [
@@ -1529,8 +1551,10 @@
       "sources": [
         "Điều 16 tiêu đề"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "dap_ung_quy_dinh_dieu_15_khoan_4_5_va_dieu_18",
@@ -1540,8 +1564,10 @@
       "sources": [
         "Điều 16 khoản 1"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "dap_ung_dieu_kien_phap_luat_thuong_mai_dien_tu",
@@ -1551,8 +1577,10 @@
       "sources": [
         "Điều 16 khoản 2"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "thuc_hien_bien_phap_ngan_nguoi_chua_du_18_tiep_can_mua_ruou_bia",
@@ -1562,8 +1590,10 @@
       "sources": [
         "Điều 16 khoản 3"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "ap_dung_thanh_toan_khong_dung_tien_mat",
@@ -1573,8 +1603,10 @@
       "sources": [
         "Điều 16 khoản 4"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article16.glossary.llm.json (sha256 77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "co_ban_ke_khai_gui_ubnd_cap_xa_ve_san_xuat_ruou_thu_cong",
@@ -1584,8 +1616,10 @@
       "sources": [
         "Điều 17 khoản 1"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article17.glossary.llm.json (sha256 9403e9b68ea848941d040289451d43325f18466f06c6e108320bb01818f3740a)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article17.glossary.llm.json (sha256 9403e9b68ea848941d040289451d43325f18466f06c6e108320bb01818f3740a)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "ruou_bia_khong_bao_dam_tieu_chuan_quy_chuan_ky_thuat",
@@ -1595,8 +1629,10 @@
       "sources": [
         "Điều 18"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article18.glossary.llm.json (sha256 8202d1e53167433814df39e761a340cf13668063a996e43bb62fa73fe040c5d0)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article18.glossary.llm.json (sha256 8202d1e53167433814df39e761a340cf13668063a996e43bb62fa73fe040c5d0)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "uong_truoc_hoac_trong_khi_tham_gia_giao_thong_voi_tu_cach_nguoi_dieu_khien",
@@ -1606,8 +1642,10 @@
       "sources": [
         "Điều 21 khoản 1"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article21.glossary.llm.json (sha256 ccf9b20701b2b5ca828c5a92e2e98cc1b72aee1f4da17ae3f6f9910cf944593e)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article21.glossary.llm.json (sha256 ccf9b20701b2b5ca828c5a92e2e98cc1b72aee1f4da17ae3f6f9910cf944593e)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "co_hanh_vi_vi_pham_dieu_10_hoac_19_tai_dia_diem",
@@ -1617,8 +1655,10 @@
       "sources": [
         "Điều 33 khoản 3 điểm a"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     },
     {
       "id": "nguoi_vi_pham_tiep_tuc_vi_pham_sau_khi_duoc_nhac_nho_yeu_cau",
@@ -1628,8 +1668,10 @@
       "sources": [
         "Điều 33 khoản 3 điểm a"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article33.glossary.llm.json (sha256 d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-23"
     }
   ]
 }
