@@ -19,30 +19,30 @@ sha256 bảng thuật ngữ: 2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8
 
 Một id dùng ở nhiều điều là **một** khái niệm. Nếu norm dưới đây dùng id theo nghĩa khác giải thích ở trên, hãy bác norm đó và ghi lý do.
 
-Người duyệt: 
+Người duyệt: Vũ Đức Phong
 
-Ngày duyệt (YYYY-MM-DD): 
+Ngày duyệt (YYYY-MM-DD): 2026-11-24
 
 ## 1. Norm
 
 | Mã | Nguồn | Trích dẫn | Tính chất | Hành vi | Áp dụng khi | Ngoại lệ | Quyết định | Lý do (bắt buộc nếu bác) |
 |---|---|---|---|---|---|---|---|---|
-| N:34.1.i | Điều 34 khoản 1 nhánh (i) | «Giáo dục, giám sát, nhắc nhở thành viên chưa đủ 18 tuổi không uống rượu, bia» | bắt buộc | `giao_duc_giam_sat_nhac_nho_thanh_vien_chua_du_18_khong_uong_ruou_bia` | luôn áp dụng | — | ☐ Chấp nhận<br>☐ Bác |  |
-| N:34.2 | Điều 34 khoản 2 | «Hướng dẫn các thành viên trong gia đình kỹ năng từ chối uống rượu, bia; kỹ năng nhận biết, ứng xử, xử trí khi gặp người say rượu, bia, người nghiện rượu, bia và thực hiện các biện pháp phòng, chống tác hại của rượu, bia» | bắt buộc | `huong_dan_thanh_vien_gia_dinh_ky_nang_tu_choi_uong_ung_xu_nguoi_say_nghien` | luôn áp dụng | — | ☐ Chấp nhận<br>☐ Bác |  |
-| N:34.3 | Điều 34 khoản 3 | «Tham gia với các cơ quan, tổ chức và cộng đồng thực hiện phòng, chống tác hại của rượu, bia» | bắt buộc | `gia_dinh_tham_gia_cung_co_quan_to_chuc_cong_dong_phong_chong_tac_hai_ruou_bia` | luôn áp dụng | — | ☐ Chấp nhận<br>☐ Bác |  |
+| N:34.1.i | Điều 34 khoản 1 nhánh (i) | «Giáo dục, giám sát, nhắc nhở thành viên chưa đủ 18 tuổi không uống rượu, bia» | bắt buộc | `giao_duc_giam_sat_nhac_nho_thanh_vien_chua_du_18_khong_uong_ruou_bia` | luôn áp dụng | — | [x] ☐ Chấp nhận<br>☐ Bác |  |
+| N:34.2 | Điều 34 khoản 2 | «Hướng dẫn các thành viên trong gia đình kỹ năng từ chối uống rượu, bia; kỹ năng nhận biết, ứng xử, xử trí khi gặp người say rượu, bia, người nghiện rượu, bia và thực hiện các biện pháp phòng, chống tác hại của rượu, bia» | bắt buộc | `huong_dan_thanh_vien_gia_dinh_ky_nang_tu_choi_uong_ung_xu_nguoi_say_nghien` | luôn áp dụng | — | [x] ☐ Chấp nhận<br>☐ Bác |  |
+| N:34.3 | Điều 34 khoản 3 | «Tham gia với các cơ quan, tổ chức và cộng đồng thực hiện phòng, chống tác hại của rượu, bia» | bắt buộc | `gia_dinh_tham_gia_cung_co_quan_to_chuc_cong_dong_phong_chong_tac_hai_ruou_bia` | luôn áp dụng | — | [x] ☐ Chấp nhận<br>☐ Bác |  |
 
 ## 2. Giả định của bản dịch
 
 | Mã | Giả định | Quyết định |
 |---|---|---|
-| A:1 | «effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu. | ☐ Chấp nhận<br>☐ Bác |
-| A:2 | Tiêu đề «Trách nhiệm của gia đình...» cho biết các khoản là nghĩa vụ của gia đình (quy tắc 7). | ☐ Chấp nhận<br>☐ Bác |
-| A:3 | Chủ thể «gia đình» không được mã hóa thành atom; điều kiện là true. | ☐ Chấp nhận<br>☐ Bác |
-| A:4 | Khoản 1 chỉ mã hóa phần giáo dục, giám sát, nhắc nhở thành viên chưa đủ 18 tuổi (nhánh (i)); hai phần còn lại ở not_encoded. | ☐ Chấp nhận<br>☐ Bác |
-| A:5 | Các nghĩa vụ là làm một việc, không trùng hành vi của các điều cấm trong bảng, nên không tạo cặp phương thức khắc nhau. | ☐ Chấp nhận<br>☐ Bác |
+| A:1 | «effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:2 | Tiêu đề «Trách nhiệm của gia đình...» cho biết các khoản là nghĩa vụ của gia đình (quy tắc 7). | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:3 | Chủ thể «gia đình» không được mã hóa thành atom; điều kiện là true. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:4 | Khoản 1 chỉ mã hóa phần giáo dục, giám sát, nhắc nhở thành viên chưa đủ 18 tuổi (nhánh (i)); hai phần còn lại ở not_encoded. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:5 | Các nghĩa vụ là làm một việc, không trùng hành vi của các điều cấm trong bảng, nên không tạo cặp phương thức khắc nhau. | [x] ☐ Chấp nhận<br>☐ Bác |
 
 ## 3. Khoản để ngoài (`not_encoded`)
 
 | Mã | Khoản | Lý do của bản dịch | Quyết định |
 |---|---|---|---|
-| X:1 | Điều 34 khoản 1 | Hai phần sau của khoản («các thành viên khác trong gia đình hạn chế uống rượu, bia»; «động viên, giúp đỡ người nghiện rượu, bia trong gia đình cai nghiện») dùng chuẩn mở «hạn chế», «động viên, giúp đỡ» không có mức đo; không đoán, để người duyệt quyết định. | ☐ Đồng ý để ngoài<br>☐ Không đồng ý |
+| X:1 | Điều 34 khoản 1 | Hai phần sau của khoản («các thành viên khác trong gia đình hạn chế uống rượu, bia»; «động viên, giúp đỡ người nghiện rượu, bia trong gia đình cai nghiện») dùng chuẩn mở «hạn chế», «động viên, giúp đỡ» không có mức đo; không đoán, để người duyệt quyết định. | [x] ☐ Đồng ý để ngoài<br>☐ Không đồng ý |

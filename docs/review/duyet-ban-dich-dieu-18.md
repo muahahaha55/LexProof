@@ -20,28 +20,28 @@ sha256 bảng thuật ngữ: 2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8
 
 Một id dùng ở nhiều điều là **một** khái niệm. Nếu norm dưới đây dùng id theo nghĩa khác giải thích ở trên, hãy bác norm đó và ghi lý do.
 
-Người duyệt: 
+Người duyệt: Vũ Đức Phong   
 
-Ngày duyệt (YYYY-MM-DD): 
+Ngày duyệt (YYYY-MM-DD): 2026-11-24
 
 ## 1. Norm
 
 | Mã | Nguồn | Trích dẫn | Tính chất | Hành vi | Áp dụng khi | Ngoại lệ | Quyết định | Lý do (bắt buộc nếu bác) |
 |---|---|---|---|---|---|---|---|---|
-| N:18.1 | Điều 18 | «Rượu, bia được kinh doanh, lưu hành tại Việt Nam phải bảo đảm tiêu chuẩn, quy chuẩn kỹ thuật, chất lượng sản phẩm, hàng hóa và an toàn thực phẩm» | cấm | `kinh_doanh_ruou_bia` | («ruou_bia_khong_bao_dam_tieu_chuan_quy_chuan_ky_thuat» HOẶC «ruou_bia_khong_bao_dam_chat_luong» HOẶC «ruou_bia_khong_bao_dam_an_toan_thuc_pham») | — | ☐ Chấp nhận<br>☐ Bác |  |
+| N:18.1 | Điều 18 | «Rượu, bia được kinh doanh, lưu hành tại Việt Nam phải bảo đảm tiêu chuẩn, quy chuẩn kỹ thuật, chất lượng sản phẩm, hàng hóa và an toàn thực phẩm» | cấm | `kinh_doanh_ruou_bia` | («ruou_bia_khong_bao_dam_tieu_chuan_quy_chuan_ky_thuat» HOẶC «ruou_bia_khong_bao_dam_chat_luong» HOẶC «ruou_bia_khong_bao_dam_an_toan_thuc_pham») | — | [x] ☐ Chấp nhận<br>☐ Bác |  |
 
 ## 2. Giả định của bản dịch
 
 | Mã | Giả định | Quyết định |
 |---|---|---|
-| A:1 | «effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu. | ☐ Chấp nhận<br>☐ Bác |
-| A:2 | Điều 18 chỉ có một đoạn, không chia khoản, nên «source» là «Điều 18». | ☐ Chấp nhận<br>☐ Bác |
-| A:3 | Nghĩa vụ «phải bảo đảm» được biểu diễn là lệnh cấm kinh doanh khi rượu, bia không bảo đảm một trong ba yêu cầu (tiêu chuẩn, quy chuẩn kỹ thuật; chất lượng; an toàn thực phẩm), tức đủ cả ba mới được kinh doanh. | ☐ Chấp nhận<br>☐ Bác |
-| A:4 | Dùng lại ruou_bia_khong_bao_dam_chat_luong và ruou_bia_khong_bao_dam_an_toan_thuc_pham của bảng; chữ «chất lượng sản phẩm, hàng hóa» được coi là cùng nghĩa với «chất lượng». | ☐ Chấp nhận<br>☐ Bác |
-| A:5 | Cụm «theo quy định của pháp luật» dẫn chiếu văn bản khác nên không ghi vào «references». | ☐ Chấp nhận<br>☐ Bác |
+| A:1 | «effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:2 | Điều 18 chỉ có một đoạn, không chia khoản, nên «source» là «Điều 18». | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:3 | Nghĩa vụ «phải bảo đảm» được biểu diễn là lệnh cấm kinh doanh khi rượu, bia không bảo đảm một trong ba yêu cầu (tiêu chuẩn, quy chuẩn kỹ thuật; chất lượng; an toàn thực phẩm), tức đủ cả ba mới được kinh doanh. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:4 | Dùng lại ruou_bia_khong_bao_dam_chat_luong và ruou_bia_khong_bao_dam_an_toan_thuc_pham của bảng; chữ «chất lượng sản phẩm, hàng hóa» được coi là cùng nghĩa với «chất lượng». | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:5 | Cụm «theo quy định của pháp luật» dẫn chiếu văn bản khác nên không ghi vào «references». | [x] ☐ Chấp nhận<br>☐ Bác |
 
 ## 3. Khoản để ngoài (`not_encoded`)
 
 | Mã | Khoản | Lý do của bản dịch | Quyết định |
 |---|---|---|---|
-| X:1 | Điều 18 | Chữ «lưu hành» không có act tương ứng trong bảng thuật ngữ (bảng chỉ có kinh_doanh_ruou_bia); phần «lưu hành» của nghĩa vụ chưa được mã hóa. Để người duyệt quyết định có thêm act mới hay không. | ☐ Đồng ý để ngoài<br>☐ Không đồng ý |
+| X:1 | Điều 18 | Chữ «lưu hành» không có act tương ứng trong bảng thuật ngữ (bảng chỉ có kinh_doanh_ruou_bia); phần «lưu hành» của nghĩa vụ chưa được mã hóa. Để người duyệt quyết định có thêm act mới hay không. | [x] ☐ Đồng ý để ngoài<br>☐ Không đồng ý |

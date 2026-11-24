@@ -19,30 +19,30 @@ sha256 bảng thuật ngữ: 2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8
 
 Một id dùng ở nhiều điều là **một** khái niệm. Nếu norm dưới đây dùng id theo nghĩa khác giải thích ở trên, hãy bác norm đó và ghi lý do.
 
-Người duyệt: 
+Người duyệt: Vũ Đức Phong
 
-Ngày duyệt (YYYY-MM-DD): 
+Ngày duyệt (YYYY-MM-DD): 2026-11-24
 
 ## 1. Norm
 
 | Mã | Nguồn | Trích dẫn | Tính chất | Hành vi | Áp dụng khi | Ngoại lệ | Quyết định | Lý do (bắt buộc nếu bác) |
 |---|---|---|---|---|---|---|---|---|
-| N:21.1 | Điều 21 khoản 1 | «Người điều khiển phương tiện giao thông không uống rượu, bia trước và trong khi tham gia giao thông» | cấm | `uong_ruou_bia` | «uong_truoc_hoac_trong_khi_tham_gia_giao_thong_voi_tu_cach_nguoi_dieu_khien» | — | ☐ Chấp nhận<br>☐ Bác |  |
-| N:21.2 | Điều 21 khoản 2 | «có trách nhiệm chủ động thực hiện biện pháp phòng ngừa, phát hiện, ngăn chặn người điều khiển phương tiện vận tải uống rượu, bia ngay trước và trong khi tham gia giao thông» | bắt buộc | `thuc_hien_bien_phap_phong_ngua_phat_hien_ngan_chan_nguoi_dieu_khien_phuong_tien_van_tai_uong_ruou_bia` | luôn áp dụng | — | ☐ Chấp nhận<br>☐ Bác |  |
+| N:21.1 | Điều 21 khoản 1 | «Người điều khiển phương tiện giao thông không uống rượu, bia trước và trong khi tham gia giao thông» | cấm | `uong_ruou_bia` | «uong_truoc_hoac_trong_khi_tham_gia_giao_thong_voi_tu_cach_nguoi_dieu_khien» | — | [x] ☐ Chấp nhận<br>☐ Bác |  |
+| N:21.2 | Điều 21 khoản 2 | «có trách nhiệm chủ động thực hiện biện pháp phòng ngừa, phát hiện, ngăn chặn người điều khiển phương tiện vận tải uống rượu, bia ngay trước và trong khi tham gia giao thông» | bắt buộc | `thuc_hien_bien_phap_phong_ngua_phat_hien_ngan_chan_nguoi_dieu_khien_phuong_tien_van_tai_uong_ruou_bia` | luôn áp dụng | — | [x] ☐ Chấp nhận<br>☐ Bác |  |
 
 ## 2. Giả định của bản dịch
 
 | Mã | Giả định | Quyết định |
 |---|---|---|
-| A:1 | «effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu. | ☐ Chấp nhận<br>☐ Bác |
-| A:2 | Khoản 1 chỉ có một lệnh cấm; chữ «trước và trong khi» được gộp vào một atom bool («trước hoặc trong khi»), vì luật cấm cả hai thời điểm, mỗi thời điểm đủ để vi phạm. | ☐ Chấp nhận<br>☐ Bác |
-| A:3 | Act uong_ruou_bia trùng act của Điều 5 khoản 2 và khoản 5; đó đều là lệnh cấm nên không tạo xung đột phương thức, nhưng người duyệt cần xem việc dùng chung act có đúng ý hay không. | ☐ Chấp nhận<br>☐ Bác |
-| A:4 | Khoản 2 dùng điều kiện true vì chủ thể (người đứng đầu cơ sở kinh doanh vận tải, chủ phương tiện) không được mã hóa thành atom; ghi nhận đây là nghĩa vụ chung của nhóm chủ thể đó. | ☐ Chấp nhận<br>☐ Bác |
-| A:5 | «Chủ động thực hiện biện pháp» là một act nguyên khối, không mã hóa nội dung biện pháp. | ☐ Chấp nhận<br>☐ Bác |
+| A:1 | «effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:2 | Khoản 1 chỉ có một lệnh cấm; chữ «trước và trong khi» được gộp vào một atom bool («trước hoặc trong khi»), vì luật cấm cả hai thời điểm, mỗi thời điểm đủ để vi phạm. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:3 | Act uong_ruou_bia trùng act của Điều 5 khoản 2 và khoản 5; đó đều là lệnh cấm nên không tạo xung đột phương thức, nhưng người duyệt cần xem việc dùng chung act có đúng ý hay không. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:4 | Khoản 2 dùng điều kiện true vì chủ thể (người đứng đầu cơ sở kinh doanh vận tải, chủ phương tiện) không được mã hóa thành atom; ghi nhận đây là nghĩa vụ chung của nhóm chủ thể đó. | [x] ☐ Chấp nhận<br>☐ Bác |
+| A:5 | «Chủ động thực hiện biện pháp» là một act nguyên khối, không mã hóa nội dung biện pháp. | [x] ☐ Chấp nhận<br>☐ Bác |
 
 ## 3. Khoản để ngoài (`not_encoded`)
 
 | Mã | Khoản | Lý do của bản dịch | Quyết định |
 |---|---|---|---|
-| X:1 | Điều 21 khoản 3 | Nghĩa vụ kiểm tra nồng độ cồn là của cơ quan, người có thẩm quyền. Quy tắc nhất quán của bản dịch này: nghĩa vụ của cơ quan nhà nước (hướng dẫn, kiểm tra, báo cáo, tịch thu) không được mã hóa, vì bảng thuật ngữ chỉ có hành vi của chủ thể tư nhân; những khoản đó vào «not_encoded» để người duyệt quyết định. | ☐ Đồng ý để ngoài<br>☐ Không đồng ý |
-| X:2 | Điều 21 khoản 4 | Trách nhiệm đào tạo của Bộ Giao thông vận tải là việc của cơ quan nhà nước. Quy tắc nhất quán của bản dịch này: nghĩa vụ của cơ quan nhà nước (hướng dẫn, kiểm tra, báo cáo, tịch thu) không được mã hóa, vì bảng thuật ngữ chỉ có hành vi của chủ thể tư nhân; những khoản đó vào «not_encoded» để người duyệt quyết định. | ☐ Đồng ý để ngoài<br>☐ Không đồng ý |
+| X:1 | Điều 21 khoản 3 | Nghĩa vụ kiểm tra nồng độ cồn là của cơ quan, người có thẩm quyền. Quy tắc nhất quán của bản dịch này: nghĩa vụ của cơ quan nhà nước (hướng dẫn, kiểm tra, báo cáo, tịch thu) không được mã hóa, vì bảng thuật ngữ chỉ có hành vi của chủ thể tư nhân; những khoản đó vào «not_encoded» để người duyệt quyết định. | [x] ☐ Đồng ý để ngoài<br>☐ Không đồng ý |
+| X:2 | Điều 21 khoản 4 | Trách nhiệm đào tạo của Bộ Giao thông vận tải là việc của cơ quan nhà nước. Quy tắc nhất quán của bản dịch này: nghĩa vụ của cơ quan nhà nước (hướng dẫn, kiểm tra, báo cáo, tịch thu) không được mã hóa, vì bảng thuật ngữ chỉ có hành vi của chủ thể tư nhân; những khoản đó vào «not_encoded» để người duyệt quyết định. | [x] ☐ Đồng ý để ngoài<br>☐ Không đồng ý |
