@@ -9,29 +9,29 @@ Cách đọc: cột «ai quyết» cho biết ai đã chốt trạng thái. «Ph
 | Trạng thái | Điều | Số điều |
 |---|---|---|
 | Đã vào `LexProof/Laws/` (Phong đã duyệt phiếu; kernel chứng minh `no_conflict`) | 5, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 32, 33, 34 | 15 |
-| Chưa mã hóa, AI đề xuất «không có chuẩn mực mã hóa được» (chưa duyệt) | 1, 2, 3, 4, 6, 7, 8, 9, 11, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 35, 36 | 21 |
+| Chưa mã hóa; AI đề xuất «không có chuẩn mực mã hóa được», Phong đồng ý để ngoài (phiếu phân loại, 21/21) | 1, 2, 3, 4, 6, 7, 8, 9, 11, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 35, 36 | 21 |
 
 Bảng thuật ngữ: 21 thuật ngữ mới đã được Phong chấp nhận (21/21, phiếu số 4) và áp vào bảng; 7 phiếu norm của các Điều 16, 17, 18, 20, 21, 33, 34 được Phong chấp nhận hết (kể cả các dòng «không mã hóa»).
 
-Gộp 14 bản dịch theo bảng thuật ngữ (Điều 5, 10, 12–14, 16–21, 32–34; Điều 19 là bản dịch lại chờ duyệt) qua `run.py`, 2026-11-24: 69 norm, 0 tệp bị từ chối, 161 cặp đã kiểm, vẫn không act nào có hai modality khắc nhau (rỗng về xung đột modality). Đây là chạy nháp (Evaluated), không phải định lý kernel.
+Gộp 14 bản dịch theo bảng thuật ngữ (Điều 5, 10, 12–14, 16–21, 32–34; Điều 19 là bản dịch lại đã được duyệt) qua `run.py`, 2026-11-24: 69 norm, 0 tệp bị từ chối, 161 cặp đã kiểm, vẫn không act nào có hai modality khắc nhau (rỗng về xung đột modality). Đây là chạy nháp (Evaluated), không phải định lý kernel.
 
-Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 điều chưa có bản mã hóa (AI đề xuất không mã hóa).
+Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 điều chưa có bản mã hóa (AI đề xuất, Phong đồng ý để ngoài phạm vi; không phải kết luận rằng chúng không có chuẩn mực).
 
 ## Từng điều
 
 | Điều | Nội dung | Trạng thái | Ai quyết | Ghi chú |
 |---|---|---|---|---|
-| 1 | Phạm vi điều chỉnh | không mã hóa | AI, chưa duyệt | không có nội dung chuẩn mực |
-| 2 | Giải thích từ ngữ | không mã hóa | AI, chưa duyệt | định nghĩa; độ cồn dùng làm atom `do_con` ở các điều khác |
-| 3 | Chính sách của Nhà nước | không mã hóa | AI, chưa duyệt | chính sách, không đặt nghĩa vụ lên hành vi cụ thể |
-| 4 | Quyền và nghĩa vụ của cá nhân, tổ chức | không mã hóa | AI, chưa duyệt | khoản 4 «tuân thủ pháp luật» không có nội dung riêng; khoản 1–3 là quyền |
+| 1 | Phạm vi điều chỉnh | không mã hóa | Phong (phiếu phân loại) | không có nội dung chuẩn mực |
+| 2 | Giải thích từ ngữ | không mã hóa | Phong (phiếu phân loại) | định nghĩa; độ cồn dùng làm atom `do_con` ở các điều khác |
+| 3 | Chính sách của Nhà nước | không mã hóa | Phong (phiếu phân loại) | chính sách, không đặt nghĩa vụ lên hành vi cụ thể |
+| 4 | Quyền và nghĩa vụ của cá nhân, tổ chức | không mã hóa | Phong (phiếu phân loại) | khoản 4 «tuân thủ pháp luật» không có nội dung riêng; khoản 1–3 là quyền |
 | 5 | Hành vi bị nghiêm cấm | **vào `Laws`** | Phong | 19 norm, đều là cấm |
-| 6 | Mục đích, yêu cầu truyền thông | không mã hóa | AI, chưa duyệt | yêu cầu đối với hoạt động truyền thông của cơ quan |
-| 7 | Nội dung truyền thông | không mã hóa | AI, chưa duyệt | danh mục nội dung |
-| 8 | Hình thức truyền thông | không mã hóa | AI, chưa duyệt | danh mục hình thức |
-| 9 | Trách nhiệm truyền thông | không mã hóa | AI, chưa duyệt | khoản 2 giao Chính phủ quy định (văn bản khác) |
+| 6 | Mục đích, yêu cầu truyền thông | không mã hóa | Phong (phiếu phân loại) | yêu cầu đối với hoạt động truyền thông của cơ quan |
+| 7 | Nội dung truyền thông | không mã hóa | Phong (phiếu phân loại) | danh mục nội dung |
+| 8 | Hình thức truyền thông | không mã hóa | Phong (phiếu phân loại) | danh mục hình thức |
+| 9 | Trách nhiệm truyền thông | không mã hóa | Phong (phiếu phân loại) | khoản 2 giao Chính phủ quy định (văn bản khác) |
 | 10 | Địa điểm không uống rượu, bia | **vào `Laws`** | Phong | 6 norm cấm |
-| 11 | Quản lý khuyến mại | không mã hóa | AI, chưa duyệt | chỉ dẫn chiếu sang pháp luật khác |
+| 11 | Quản lý khuyến mại | không mã hóa | Phong (phiếu phân loại) | chỉ dẫn chiếu sang pháp luật khác |
 | 12 | Quảng cáo rượu, bia dưới 5,5 độ | **vào `Laws`** | Phong | dùng `do_con_nguong_5_5` cho cả rượu và bia (xem «Điểm cần người duyệt xem») |
 | 13 | Quảng cáo rượu 5,5–dưới 15 độ, bia từ 5,5 độ | **vào `Laws`** | Phong | 2 norm cấm |
 | 14 | Tài trợ | **vào `Laws`** | Phong | phần «tuân thủ pháp luật liên quan» không mã hóa |
@@ -39,28 +39,28 @@ Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 
 | 16 | Điều kiện bán qua thương mại điện tử | **vào `Laws`** | Phong | 4 lệnh cấm bán khi thiếu điều kiện; 5 thuật ngữ mới đã vào bảng (được duyệt) |
 | 17 | Rượu thủ công không kinh doanh | **vào `Laws`** | Phong | xem «Điểm cần người duyệt xem» |
 | 18 | Chất lượng, an toàn thực phẩm | **vào `Laws`** | Phong | chữ «lưu hành» chưa mã hóa |
-| 19 | Địa điểm không bán rượu, bia | **vào `Laws`** | Phong | chỉ có cấm; bản dịch lại theo bảng thuật ngữ (`article19.glossary.llm.json`) chờ Phong duyệt, chưa thay module `Article19.lean` |
+| 19 | Địa điểm không bán rượu, bia | **vào `Laws`** | Phong | chỉ có cấm; module thay bằng bản dịch theo bảng thuật ngữ (`article19.glossary.llm.json`, Phong duyệt 13/13, 2026-11-24) |
 | 20 | Rượu, bia giả, nhập lậu | **vào `Laws`** | Phong | khoản 1 và 3 không mã hóa (việc của cơ quan nhà nước) |
 | 21 | Phòng ngừa tai nạn giao thông | **vào `Laws`** | Phong | khoản 3 và 4 không mã hóa (việc của cơ quan nhà nước) |
-| 22 | Phòng ngừa, can thiệp, giảm tác hại về sức khỏe | không mã hóa | AI, chưa duyệt | biện pháp của cơ sở y tế theo hướng dẫn của Bộ |
-| 23 | Tư vấn | không mã hóa | AI, chưa duyệt | |
-| 24 | Phòng ngừa tại cộng đồng | không mã hóa | AI, chưa duyệt | «vận động», «tuyên truyền» |
-| 25 | Chăm sóc, bảo vệ đối tượng yếu thế | không mã hóa | AI, chưa duyệt | |
-| 26 | Kinh phí | không mã hóa | AI, chưa duyệt | |
-| 27 | Đào tạo, bồi dưỡng | không mã hóa | AI, chưa duyệt | |
-| 28 | Xử lý vi phạm | không mã hóa | AI, chưa duyệt | chế tài chung, không nêu hành vi |
-| 29 | Nội dung quản lý nhà nước | không mã hóa | AI, chưa duyệt | |
-| 30 | Trách nhiệm quản lý nhà nước | không mã hóa | AI, chưa duyệt | |
-| 31 | Mặt trận, tổ chức xã hội | không mã hóa | AI, chưa duyệt | |
+| 22 | Phòng ngừa, can thiệp, giảm tác hại về sức khỏe | không mã hóa | Phong (phiếu phân loại) | biện pháp của cơ sở y tế theo hướng dẫn của Bộ |
+| 23 | Tư vấn | không mã hóa | Phong (phiếu phân loại) | |
+| 24 | Phòng ngừa tại cộng đồng | không mã hóa | Phong (phiếu phân loại) | «vận động», «tuyên truyền» |
+| 25 | Chăm sóc, bảo vệ đối tượng yếu thế | không mã hóa | Phong (phiếu phân loại) | |
+| 26 | Kinh phí | không mã hóa | Phong (phiếu phân loại) | |
+| 27 | Đào tạo, bồi dưỡng | không mã hóa | Phong (phiếu phân loại) | |
+| 28 | Xử lý vi phạm | không mã hóa | Phong (phiếu phân loại) | chế tài chung, không nêu hành vi |
+| 29 | Nội dung quản lý nhà nước | không mã hóa | Phong (phiếu phân loại) | |
+| 30 | Trách nhiệm quản lý nhà nước | không mã hóa | Phong (phiếu phân loại) | |
+| 31 | Mặt trận, tổ chức xã hội | không mã hóa | Phong (phiếu phân loại) | |
 | 32 | Trách nhiệm của cơ sở kinh doanh | **vào `Laws`** | Phong | lần 1 bị bác A:9 (cụm «sau khi uống rượu, bia» áp dụng cho cả hai nhánh khoản 6); bản dịch lại `-2` được chấp nhận 21/21 |
 | 33 | Trách nhiệm của người đứng đầu cơ quan, tổ chức | **vào `Laws`** | Phong | 6 nghĩa vụ; chủ thể không thành atom nên điều kiện phần lớn là true |
 | 34 | Trách nhiệm của gia đình | **vào `Laws`** | Phong | 3 nghĩa vụ; hai vế «hạn chế», «động viên» của khoản 1 không mã hóa |
-| 35 | Sửa luật khác | không mã hóa | AI, chưa duyệt | sửa văn bản khác, ngoài Level 1 |
-| 36 | Hiệu lực thi hành | không mã hóa | AI, chưa duyệt | ngày hiệu lực dùng làm trường `effective` |
+| 35 | Sửa luật khác | không mã hóa | Phong (phiếu phân loại) | sửa văn bản khác, ngoài Level 1 |
+| 36 | Hiệu lực thi hành | không mã hóa | Phong (phiếu phân loại) | ngày hiệu lực dùng làm trường `effective` |
 
-## Quy ước phân loại «không mã hóa» (AI đề xuất, chưa duyệt)
+## Quy ước phân loại «không mã hóa» (AI đề xuất; Phong đồng ý 2026-11-24)
 
-Phiếu để Phong duyệt: `docs/review/duyet-phan-loai-khong-ma-hoa.md` (21 dòng, lập 2026-11-24, chưa duyệt). Phiếu này do tay lập, không công cụ nào đọc nó.
+Phiếu `docs/review/duyet-phan-loai-khong-ma-hoa.md` (21 dòng): Phong chọn «Đồng ý để ngoài» cả 21 (2026-11-24), không ghi lý do nào. Phiếu này do tay lập, không công cụ nào đọc nó.
 
 1. Định nghĩa, chính sách, phạm vi, hiệu lực, kinh phí, tổ chức: không đặt nghĩa vụ hay cấm đoán lên hành vi của một chủ thể.
 2. Nghĩa vụ của cơ quan nhà nước (hướng dẫn, kiểm tra, báo cáo, tịch thu, đào tạo): không mã hóa, vì bảng thuật ngữ chỉ có hành vi của chủ thể tư nhân. Đây là lựa chọn phạm vi, không phải nhận định rằng các nghĩa vụ đó không có hiệu lực.
@@ -83,5 +83,5 @@ Tất cả điều dưới đây là phát biểu về **phần đã mã hóa**,
 2. **Luật này gần như chỉ có cấm và bắt buộc.** «Được phép» chỉ có ở Điều 15 (đã vào `Laws`) và Điều 32 khoản 5 nhánh (ii) (đã được duyệt). Cặp cấm–cho phép trên cùng một hành vi, nguồn xung đột modality thông thường, hầu như không xuất hiện trong chữ luật. Một xung đột Level 1 thật có thể không tồn tại trong văn bản này.
 3. **So sánh giữa các điều cần norm suy ra.** Điều 5 với Điều 15 chỉ so được qua norm suy ra (ADR-0028). Lần đo đầu cho 3 cặp xung đột, cả ba dính norm suy ra; Phong bác cả hai cách đọc D1 và D2 (2026-11-21). Công cụ đã bác được cách đọc «đủ điều kiện cấp phép thì được kinh doanh»; đó là kết quả về cách đọc, không phải về luật.
 4. **Độ trung thực chưa có nhiều bằng chứng.** Bản mã hóa đúng luật chỉ do con người đối chiếu: một người duyệt (Phong), không có người học luật độc lập (FR12 chưa làm). Kernel chỉ chứng minh tính hợp lệ của phần đã mã hóa.
-5. **Mức phủ.** 15/36 điều đã qua người duyệt. Phần còn lại là phân loại của AI chưa duyệt. Các thuật ngữ mở («hợp lý», «dành cho», «ngay trước») là tham số; hệ thống không quyết giá trị.
+5. **Mức phủ.** 15/36 điều đã qua người duyệt. Phần còn lại là phân loại của AI, mới có một người (Phong) đồng ý. Các thuật ngữ mở («hợp lý», «dành cho», «ngay trước») là tham số; hệ thống không quyết giá trị.
 6. **Bản dịch AI không tin cậy.** 28 điều chưa vào `Laws` chưa có định lý kernel nào. `translate.py check` chỉ kiểm cấu trúc, trích dẫn nguyên văn và id; không kiểm nghĩa.
