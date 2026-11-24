@@ -60,6 +60,8 @@ Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 
 
 ## Quy ước phân loại «không mã hóa» (AI đề xuất, chưa duyệt)
 
+Phiếu để Phong duyệt: `docs/review/duyet-phan-loai-khong-ma-hoa.md` (21 dòng, lập 2026-11-24, chưa duyệt). Phiếu này do tay lập, không công cụ nào đọc nó.
+
 1. Định nghĩa, chính sách, phạm vi, hiệu lực, kinh phí, tổ chức: không đặt nghĩa vụ hay cấm đoán lên hành vi của một chủ thể.
 2. Nghĩa vụ của cơ quan nhà nước (hướng dẫn, kiểm tra, báo cáo, tịch thu, đào tạo): không mã hóa, vì bảng thuật ngữ chỉ có hành vi của chủ thể tư nhân. Đây là lựa chọn phạm vi, không phải nhận định rằng các nghĩa vụ đó không có hiệu lực.
 3. Dẫn chiếu sang văn bản khác (Chính phủ quy định, pháp luật về…): không mã hóa nội dung; nêu trong `assumptions`.
