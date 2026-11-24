@@ -28,6 +28,13 @@ import LexProof.Laws.Article12
 import LexProof.Laws.Article13
 import LexProof.Laws.Article14
 import LexProof.Laws.Article32
+import LexProof.Laws.Article16
+import LexProof.Laws.Article17
+import LexProof.Laws.Article18
+import LexProof.Laws.Article20
+import LexProof.Laws.Article21
+import LexProof.Laws.Article33
+import LexProof.Laws.Article34
 import LexProof.Verify.Smoke
 import LexProof.Verify.Tests
 

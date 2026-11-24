@@ -1,6 +1,6 @@
 # Sổ phủ sóng: Luật 44/2019/QH14 (36 điều)
 
-Cập nhật: 2026-11-23 (sau khi áp phiếu của Phong cùng ngày). Tệp này do tay viết, **không** phải báo cáo của hệ thống (báo cáo chỉ do `pipeline/report.py` tạo). Nó trả lời một câu hỏi: mỗi điều của luật đang ở đâu trong đường ống, và vì sao.
+Cập nhật: 2026-11-24 (sau khi Phong duyệt 7 phiếu norm và các điều được đưa vào `Laws`). Tệp này do tay viết, **không** phải báo cáo của hệ thống (báo cáo chỉ do `pipeline/report.py` tạo). Nó trả lời một câu hỏi: mỗi điều của luật đang ở đâu trong đường ống, và vì sao.
 
 Cách đọc: cột «ai quyết» cho biết ai đã chốt trạng thái. «Phong» là người duyệt; «AI, chưa duyệt» nghĩa là chỉ một bản đọc của AI, chưa ai đối chiếu. Một điều «không mã hóa» chưa duyệt **không** có nghĩa là điều đó không có chuẩn mực.
 
@@ -8,15 +8,14 @@ Cách đọc: cột «ai quyết» cho biết ai đã chốt trạng thái. «Ph
 
 | Trạng thái | Điều | Số điều |
 |---|---|---|
-| Đã vào `LexProof/Laws/` (Phong đã duyệt phiếu; kernel chứng minh `no_conflict`) | 5, 10, 12, 13, 14, 15, 19, 32 | 8 |
-| Đã dịch, đã qua `check`; chưa nhập thuật ngữ, chưa lập phiếu | 16, 17, 18, 20, 21, 33, 34 | 7 |
+| Đã vào `LexProof/Laws/` (Phong đã duyệt phiếu; kernel chứng minh `no_conflict`) | 5, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 32, 33, 34 | 15 |
 | Chưa mã hóa, AI đề xuất «không có chuẩn mực mã hóa được» (chưa duyệt) | 1, 2, 3, 4, 6, 7, 8, 9, 11, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 35, 36 | 21 |
 
-Bảng thuật ngữ: 21 thuật ngữ mới của 7 điều đã dịch đã nhập (trạng thái `proposed`); phiếu `docs/review/duyet-bang-thuat-ngu-44-2019-QH14-4.md` chờ Phong. Phiếu norm của 7 điều đó chỉ lập sau khi bảng được áp (vì phiếu norm ghim sha256 của bảng).
+Bảng thuật ngữ: 21 thuật ngữ mới đã được Phong chấp nhận (21/21, phiếu số 4) và áp vào bảng; 7 phiếu norm của các Điều 16, 17, 18, 20, 21, 33, 34 được Phong chấp nhận hết (kể cả các dòng «không mã hóa»).
 
 Gộp 14 bản dịch (Điều 5, 10, 12–18, 20, 21, 32–34) qua `run.py`: 67 norm, vẫn không act nào có hai modality khắc nhau (rỗng về xung đột modality). Đây là chạy nháp (Evaluated), Điều 19 chưa gộp.
 
-Tổng 36. Chỉ 8/36 điều đã qua người duyệt; 7 điều đã dịch (AI) chờ duyệt; 21 điều chưa có bản mã hóa (AI đề xuất không mã hóa).
+Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 điều chưa có bản mã hóa (AI đề xuất không mã hóa).
 
 ## Từng điều
 
@@ -37,12 +36,12 @@ Tổng 36. Chỉ 8/36 điều đã qua người duyệt; 7 điều đã dịch (
 | 13 | Quảng cáo rượu 5,5–dưới 15 độ, bia từ 5,5 độ | **vào `Laws`** | Phong | 2 norm cấm |
 | 14 | Tài trợ | **vào `Laws`** | Phong | phần «tuân thủ pháp luật liên quan» không mã hóa |
 | 15 | Quản lý kinh doanh rượu | **vào `Laws`** | Phong | 4 norm «được phép» trên 4 act riêng (bản dịch `article15.llm.json`, trước bảng thuật ngữ) |
-| 16 | Điều kiện bán qua thương mại điện tử | dịch (`eval/translate/article16.glossary.llm.json`) | AI | 4 lệnh cấm bán khi thiếu điều kiện; 5 thuật ngữ mới chưa vào bảng |
-| 17 | Rượu thủ công không kinh doanh | dịch | AI | xem «Điểm cần người duyệt xem» |
-| 18 | Chất lượng, an toàn thực phẩm | dịch | AI | chữ «lưu hành» chưa mã hóa |
+| 16 | Điều kiện bán qua thương mại điện tử | **vào `Laws`** | Phong | 4 lệnh cấm bán khi thiếu điều kiện; 5 thuật ngữ mới đã vào bảng (được duyệt) |
+| 17 | Rượu thủ công không kinh doanh | **vào `Laws`** | Phong | xem «Điểm cần người duyệt xem» |
+| 18 | Chất lượng, an toàn thực phẩm | **vào `Laws`** | Phong | chữ «lưu hành» chưa mã hóa |
 | 19 | Địa điểm không bán rượu, bia | **vào `Laws`** | Phong | chỉ có cấm |
-| 20 | Rượu, bia giả, nhập lậu | dịch | AI | khoản 1 và 3 không mã hóa (việc của cơ quan nhà nước) |
-| 21 | Phòng ngừa tai nạn giao thông | dịch | AI | khoản 3 và 4 không mã hóa (việc của cơ quan nhà nước) |
+| 20 | Rượu, bia giả, nhập lậu | **vào `Laws`** | Phong | khoản 1 và 3 không mã hóa (việc của cơ quan nhà nước) |
+| 21 | Phòng ngừa tai nạn giao thông | **vào `Laws`** | Phong | khoản 3 và 4 không mã hóa (việc của cơ quan nhà nước) |
 | 22 | Phòng ngừa, can thiệp, giảm tác hại về sức khỏe | không mã hóa | AI, chưa duyệt | biện pháp của cơ sở y tế theo hướng dẫn của Bộ |
 | 23 | Tư vấn | không mã hóa | AI, chưa duyệt | |
 | 24 | Phòng ngừa tại cộng đồng | không mã hóa | AI, chưa duyệt | «vận động», «tuyên truyền» |
@@ -54,8 +53,8 @@ Tổng 36. Chỉ 8/36 điều đã qua người duyệt; 7 điều đã dịch (
 | 30 | Trách nhiệm quản lý nhà nước | không mã hóa | AI, chưa duyệt | |
 | 31 | Mặt trận, tổ chức xã hội | không mã hóa | AI, chưa duyệt | |
 | 32 | Trách nhiệm của cơ sở kinh doanh | **vào `Laws`** | Phong | lần 1 bị bác A:9 (cụm «sau khi uống rượu, bia» áp dụng cho cả hai nhánh khoản 6); bản dịch lại `-2` được chấp nhận 21/21 |
-| 33 | Trách nhiệm của người đứng đầu cơ quan, tổ chức | dịch | AI | 6 nghĩa vụ; chủ thể không thành atom nên điều kiện phần lớn là true |
-| 34 | Trách nhiệm của gia đình | dịch | AI | 3 nghĩa vụ; hai vế «hạn chế», «động viên» của khoản 1 không mã hóa |
+| 33 | Trách nhiệm của người đứng đầu cơ quan, tổ chức | **vào `Laws`** | Phong | 6 nghĩa vụ; chủ thể không thành atom nên điều kiện phần lớn là true |
+| 34 | Trách nhiệm của gia đình | **vào `Laws`** | Phong | 3 nghĩa vụ; hai vế «hạn chế», «động viên» của khoản 1 không mã hóa |
 | 35 | Sửa luật khác | không mã hóa | AI, chưa duyệt | sửa văn bản khác, ngoài Level 1 |
 | 36 | Hiệu lực thi hành | không mã hóa | AI, chưa duyệt | ngày hiệu lực dùng làm trường `effective` |
 
@@ -79,8 +78,8 @@ Nếu quy ước 2 bị bác, các điều 9, 20 (khoản 1 và 3), 21 (khoản 
 Tất cả điều dưới đây là phát biểu về **phần đã mã hóa**, không phải về luật.
 
 1. **Nhất quán rỗng.** Các module đã vào `Laws` cho `no_conflict`, nhưng cờ vacuity nêu rõ không có hành vi nào mang hai phương thức khác nhau. Điều 5 và 19 chỉ có cấm; Điều 15 chỉ có cho phép; chúng điều chỉnh hành vi khác nhau. Kết quả «nhất quán» do đó **không nói gì về điều kiện** của các norm.
-2. **Luật này gần như chỉ có cấm và bắt buộc.** «Được phép» chỉ có ở Điều 15 (đã vào `Laws`) và Điều 32 khoản 5 nhánh (ii) (chờ duyệt). Cặp cấm–cho phép trên cùng một hành vi, nguồn xung đột modality thông thường, hầu như không xuất hiện trong chữ luật. Một xung đột Level 1 thật có thể không tồn tại trong văn bản này.
+2. **Luật này gần như chỉ có cấm và bắt buộc.** «Được phép» chỉ có ở Điều 15 (đã vào `Laws`) và Điều 32 khoản 5 nhánh (ii) (đã được duyệt). Cặp cấm–cho phép trên cùng một hành vi, nguồn xung đột modality thông thường, hầu như không xuất hiện trong chữ luật. Một xung đột Level 1 thật có thể không tồn tại trong văn bản này.
 3. **So sánh giữa các điều cần norm suy ra.** Điều 5 với Điều 15 chỉ so được qua norm suy ra (ADR-0028). Lần đo đầu cho 3 cặp xung đột, cả ba dính norm suy ra; Phong bác cả hai cách đọc D1 và D2 (2026-11-21). Công cụ đã bác được cách đọc «đủ điều kiện cấp phép thì được kinh doanh»; đó là kết quả về cách đọc, không phải về luật.
 4. **Độ trung thực chưa có nhiều bằng chứng.** Bản mã hóa đúng luật chỉ do con người đối chiếu: một người duyệt (Phong), không có người học luật độc lập (FR12 chưa làm). Kernel chỉ chứng minh tính hợp lệ của phần đã mã hóa.
-5. **Mức phủ.** 8/36 điều đã qua người duyệt. Phần còn lại hoặc đang chờ duyệt hoặc là phân loại của AI chưa duyệt. Các thuật ngữ mở («hợp lý», «dành cho», «ngay trước») là tham số; hệ thống không quyết giá trị.
+5. **Mức phủ.** 15/36 điều đã qua người duyệt. Phần còn lại là phân loại của AI chưa duyệt. Các thuật ngữ mở («hợp lý», «dành cho», «ngay trước») là tham số; hệ thống không quyết giá trị.
 6. **Bản dịch AI không tin cậy.** 28 điều chưa vào `Laws` chưa có định lý kernel nào. `translate.py check` chỉ kiểm cấu trúc, trích dẫn nguyên văn và id; không kiểm nghĩa.
