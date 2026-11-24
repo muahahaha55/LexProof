@@ -1,0 +1,110 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 19,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {
+    "situation": [],
+    "parameters": []
+  },
+  "glossary_proposals": {
+    "acts": [],
+    "atoms": []
+  },
+  "norms": [
+    {
+      "id": "19.1",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "dia_diem_co_so_y_te"
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 1",
+      "quote": "Cơ sở y tế",
+      "references": []
+    },
+    {
+      "id": "19.2",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "dia_diem_co_so_giao_duc"
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 2",
+      "quote": "Cơ sở giáo dục",
+      "references": []
+    },
+    {
+      "id": "19.3",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "and": [
+          {
+            "sit": "dia_diem_cham_soc_vui_choi"
+          },
+          {
+            "param": "danh_cho_nguoi_chua_du_18"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 3",
+      "quote": "Cơ sở, khu vực chăm sóc, nuôi dưỡng, vui chơi, giải trí dành cho người chưa đủ 18 tuổi",
+      "references": []
+    },
+    {
+      "id": "19.4",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "dia_diem_cai_nghien_giam_giu"
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 4",
+      "quote": "Cơ sở cai nghiện, cơ sở giáo dục bắt buộc, trường giáo dưỡng, cơ sở giam giữ phạm nhân và cơ sở giam giữ khác",
+      "references": []
+    },
+    {
+      "id": "19.5",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "dia_diem_bao_tro_xa_hoi"
+      },
+      "exceptions": [],
+      "source": "Điều 19 khoản 5",
+      "quote": "Cơ sở bảo trợ xã hội",
+      "references": []
+    },
+    {
+      "id": "19.6",
+      "modality": "prohibition",
+      "act": "ban_ruou_bia",
+      "condition": {
+        "sit": "dia_diem_noi_lam_viec_co_quan"
+      },
+      "exceptions": [
+        {
+          "sit": "dia_diem_duoc_phep_kinh_doanh"
+        }
+      ],
+      "source": "Điều 19 khoản 6",
+      "quote": "Nơi làm việc của cơ quan nhà nước, tổ chức chính trị, tổ chức chính trị - xã hội, tổ chức chính trị xã hội - nghề nghiệp, đơn vị sự nghiệp công lập, trừ địa điểm được phép kinh doanh rượu, bia",
+      "references": []
+    }
+  ],
+  "not_encoded": [],
+  "assumptions": [
+    "«effective» = 2020-01-01 lấy theo ngày hiệu lực đã biết của Luật 44/2019/QH14, không có trong đoạn văn được cung cấp; người duyệt cần đối chiếu.",
+    "Tiêu đề «Địa điểm không bán rượu, bia» được áp dụng cho cả 6 khoản: mỗi khoản là một lệnh cấm bán rượu, bia tại địa điểm nêu (quy tắc 7); act dùng chung là ban_ruou_bia.",
+    "Mỗi khoản là một norm; các loại địa điểm liệt kê trong cùng khoản đã được gộp trong một atom của bảng thuật ngữ (dia_diem_cai_nghien_giam_giu, dia_diem_noi_lam_viec_co_quan), không tách «nhánh».",
+    "Khoản 3: «dành cho người chưa đủ 18 tuổi» là khái niệm mở nên dùng tham số danh_cho_nguoi_chua_du_18; đọc cụm này bổ nghĩa cho cả bốn loại (chăm sóc, nuôi dưỡng, vui chơi, giải trí), nên điều kiện là địa điểm và tham số.",
+    "Khoản 6: «trừ địa điểm được phép kinh doanh rượu, bia» là ngoại lệ (exceptions), không phải quyền được phép; việc một địa điểm được phép kinh doanh do quy định khác xác định nên là atom dia_diem_duoc_phep_kinh_doanh, không suy ra giá trị; ngoại lệ áp dụng cho toàn bộ danh sách nơi làm việc trong khoản.",
+    "Khác Điều 10 khoản 2, Điều 19 khoản 2 chỉ ghi «Cơ sở giáo dục», không có điều kiện về thời gian; norm 19.2 vì vậy không có điều kiện thời gian.",
+    "Chỉ mã hóa hành vi «bán» theo tiêu đề điều; không mở rộng sang uống hay mang vào."
+  ]
+}

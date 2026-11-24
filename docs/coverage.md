@@ -13,7 +13,7 @@ Cách đọc: cột «ai quyết» cho biết ai đã chốt trạng thái. «Ph
 
 Bảng thuật ngữ: 21 thuật ngữ mới đã được Phong chấp nhận (21/21, phiếu số 4) và áp vào bảng; 7 phiếu norm của các Điều 16, 17, 18, 20, 21, 33, 34 được Phong chấp nhận hết (kể cả các dòng «không mã hóa»).
 
-Gộp 14 bản dịch (Điều 5, 10, 12–18, 20, 21, 32–34) qua `run.py`: 67 norm, vẫn không act nào có hai modality khắc nhau (rỗng về xung đột modality). Đây là chạy nháp (Evaluated), Điều 19 chưa gộp.
+Gộp 14 bản dịch theo bảng thuật ngữ (Điều 5, 10, 12–14, 16–21, 32–34; Điều 19 là bản dịch lại chờ duyệt) qua `run.py`, 2026-11-24: 69 norm, 0 tệp bị từ chối, 161 cặp đã kiểm, vẫn không act nào có hai modality khắc nhau (rỗng về xung đột modality). Đây là chạy nháp (Evaluated), không phải định lý kernel.
 
 Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 điều chưa có bản mã hóa (AI đề xuất không mã hóa).
 
@@ -39,7 +39,7 @@ Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 
 | 16 | Điều kiện bán qua thương mại điện tử | **vào `Laws`** | Phong | 4 lệnh cấm bán khi thiếu điều kiện; 5 thuật ngữ mới đã vào bảng (được duyệt) |
 | 17 | Rượu thủ công không kinh doanh | **vào `Laws`** | Phong | xem «Điểm cần người duyệt xem» |
 | 18 | Chất lượng, an toàn thực phẩm | **vào `Laws`** | Phong | chữ «lưu hành» chưa mã hóa |
-| 19 | Địa điểm không bán rượu, bia | **vào `Laws`** | Phong | chỉ có cấm |
+| 19 | Địa điểm không bán rượu, bia | **vào `Laws`** | Phong | chỉ có cấm; bản dịch lại theo bảng thuật ngữ (`article19.glossary.llm.json`) chờ Phong duyệt, chưa thay module `Article19.lean` |
 | 20 | Rượu, bia giả, nhập lậu | **vào `Laws`** | Phong | khoản 1 và 3 không mã hóa (việc của cơ quan nhà nước) |
 | 21 | Phòng ngừa tai nạn giao thông | **vào `Laws`** | Phong | khoản 3 và 4 không mã hóa (việc của cơ quan nhà nước) |
 | 22 | Phòng ngừa, can thiệp, giảm tác hại về sức khỏe | không mã hóa | AI, chưa duyệt | biện pháp của cơ sở y tế theo hướng dẫn của Bộ |
