@@ -1,12 +1,19 @@
 # LexProof
 
 Lean 4 system that checks the logical consistency of legal texts.
-Graduation thesis project; research follow-up later (ASE / NeurIPS 2027 considered).
+Graduation thesis project; research follow-up later. A journal paper has top
+priority (first target: Artificial Intelligence and Law); conferences are
+secondary. See `docs/publication-q1.md`.
 
 ## Scope
 - Level 1 only: consistency WITHIN a single document (conflicting obligation /
   prohibition / permission for the same situation with no clear priority;
   dangling references).
+- Also within Level 1, at lower priority (Should, FR14, ADR-0030): drafting
+  defects of the encoded part (dead norm, norm covered by another on the same
+  act and modality, exception that never fires). Reported apart; never part of
+  the consistency conclusion; an item without a witness is «unknown», never a
+  proven defect.
 - Level 2 (consistency ACROSS documents, hierarchy of legal force) is a later
   extension. Do not implement it, but keep `doc_id`, document type and
   effective date fields in schemas.
@@ -58,6 +65,12 @@ file and leave this list as pointers only.
 - `docs/roadmap.md` — goal, progress estimate (%), roadmap steps, parked items.
 - `docs/conventions.md` — standards, repo layout, review checklists, and how to
   run the build and the axiom audit.
+- `docs/related-work.md` — literature survey 2019–2026 (abstracts only) and
+  candidate research directions; not a decision.
+- `docs/thesis-outline.md` — outline of the thesis book and defence slides,
+  each chapter pointing to its sources in the repo.
+- `docs/publication-q1.md` — Q1 journal targets, publication process, and the
+  gap between the current evidence and the Q1 bar; not a decision.
 
 Read first: `docs/traceability.md` for what is actually proven versus trusted —
 in particular the trust base, which includes `Atoms.valid`. Priority-cycle
