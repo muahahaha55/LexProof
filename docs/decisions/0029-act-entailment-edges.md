@@ -7,7 +7,7 @@
   - Công cụ **Tested**: `pipeline/edges.py` (check, draft, sheet, apply, module), `pipeline/tests/test_edges.py`.
   - Báo cáo **Tested**: `report.py --module law44` (chỉ `draft`), `pipeline/report_promoted.py`.
   - Dữ liệu: `data/edges/44-2019-QH14.json`, 13 cạnh `proposed` do AI đề xuất, **chưa ai duyệt**; phiếu cho E9, E10: `docs/review/duyet-canh-keo-theo-44-2019-QH14.md`.
-  - Nhiều cách đọc **Tested**: `pipeline/readings.py`, `data/readings/44-2019-QH14.json` (R1, R2 do AI đề xuất), `pipeline/tests/test_readings.py`.
+  - Nhiều cách đọc **Tested**: `pipeline/readings.py`, `data/readings/44-2019-QH14.json` (R1, R2 do AI đề xuất), `pipeline/tests/test_readings.py`. Chọn cách đọc bằng phiếu: `readings.py sheet` / `apply` (chấp nhận nhiều nhất một; R0 là cách đọc theo đúng bản dịch đã duyệt); phiếu `docs/review/chon-cach-doc-44-2019-QH14.md`.
 - **Ngày**: 2026-11-25
 - **Liên quan**: [ADR-0026](0026-promote-reviewed-translation.md), [ADR-0027](0027-glossary-shared-atoms.md), [ADR-0028](0028-derived-norms.md)
 

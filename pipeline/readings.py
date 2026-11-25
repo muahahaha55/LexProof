@@ -3,6 +3,8 @@
 
     python pipeline/readings.py check data/readings/44-2019-QH14.json
     python pipeline/readings.py run   data/readings/44-2019-QH14.json [--out-dir eval/readings]
+    python pipeline/readings.py sheet data/readings/44-2019-QH14.json -o SHEET.md     choose one reading (R0 = as reviewed)
+    python pipeline/readings.py apply data/readings/44-2019-QH14.json SHEET.md
 
 Where the text admits more than one reading, the translation picks one and records it as an assumption. A reading
 here is a small patch on the reviewed norms of a module (add a conjunct to a condition, add an exception, with new
@@ -25,9 +27,12 @@ sys.path.insert(0, HERE)
 import translate as T   # noqa: E402
 import run as RUN       # noqa: E402
 import edges as E       # noqa: E402
+import glossary as G    # noqa: E402
 
 ROOT = T.ROOT
 ID = re.compile(r"^R\d+$")
+REVIEW_KEYS = ("status", "reviewed_by", "reviewed_on", "review_note", "reviewed_content_sha256")
+SHA_LINE = re.compile(r"^sha256 tệp cách đọc:\s*`?([0-9a-f]{64})`?\s*$", re.M)
 TRANSLATION = re.compile(r"^\* `(eval/translate/[^`]+\.json)` \(sha256 `([0-9a-f]{64})`\)", re.M)
 
 
@@ -79,6 +84,14 @@ def check(dd, merged=None):
         for k in ("reading", "proposed_by"):
             if not r.get(k):
                 out.append("%s: thiếu «%s»" % (w, k))
+        if r.get("id") == "R0" and (r.get("atoms") or r.get("patches")):
+            out.append("%s: R0 là cách đọc theo đúng các bản dịch đã duyệt, không được có atom hay patch" % w)
+        G.check_status(dict(r, status=r.get("status", "proposed")), w, out)
+        if r.get("status") in ("approved", "rejected"):
+            if not r.get("reviewed_content_sha256"):
+                out.append("%s: trạng thái «%s» chỉ được ghi bằng `readings.py apply`" % (w, r["status"]))
+            elif r["reviewed_content_sha256"] != content_sha(r):
+                out.append("%s: nội dung đã đổi sau khi duyệt; đặt lại «status» thành «proposed» và duyệt lại" % w)
         new = set()
         for a in r.get("atoms", []):
             if a.get("name") in have:
@@ -97,7 +110,105 @@ def check(dd, merged=None):
                     atoms = T.cond_atoms(p[k], set())
                     for a in atoms - new - have:
                         out.append("%s: patch dùng atom «%s» không có" % (w, a))
+    chosen = [r.get("id") for r in dd["readings"] if r.get("status") == "approved"]
+    if len(chosen) > 1:
+        out.append("các cách đọc là phương án thay thế nhau; chỉ được chấp nhận một, đang có %s" % ", ".join(chosen))
     return out
+
+
+def content_sha(r):
+    import hashlib
+    body = {k: r[k] for k in r if k not in REVIEW_KEYS}
+    return hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+R0 = {"id": "R0", "reading": "Theo đúng các bản dịch đã duyệt, không thêm gì: nếu một cặp xung đột hiện ra ở đây thì đó là mâu thuẫn theo chữ luật.", "proposed_by": "—", "status": "proposed"}
+
+
+def candidates(dd):
+    """R0 (from the file if it is there, else the implicit one) and the other readings, in file order."""
+    rs = dd["readings"]
+    return rs if any(r.get("id") == "R0" for r in rs) else [R0] + rs
+
+
+def make_sheet(path, dd):
+    import promote as P   # noqa: E402
+    esc = P.esc
+    L = ["# Phiếu chọn cách đọc: %s, module %s" % (dd["doc_id"], dd["module"]), "",
+         "Các hàng dưới đây là **các cách đọc thay thế nhau** của cùng một chỗ trong luật. Chấp nhận **nhiều nhất một** hàng "
+         "(cách đọc đúng); bác các hàng sai, kèm lý do. Đổi `☐` thành `☒` ở đúng một ô mỗi hàng.", "",
+         "Bảng kết quả theo từng cách đọc: chạy `python pipeline/readings.py run %s`." % RUN.rel(path), "",
+         "Tệp cách đọc: `%s`" % RUN.rel(path), "", "sha256 tệp cách đọc: %s" % RUN.sha_lf(path), "",
+         "Người duyệt: ", "", "Ngày duyệt (YYYY-MM-DD): ", "",
+         "| Mã | Cách đọc | Thay đổi so với bản dịch đã duyệt | Quyết định | Lý do (bắt buộc nếu bác) |",
+         "|---|---|---|---|---|"]
+    for r in candidates(dd):
+        if r.get("status", "proposed") != "proposed":
+            continue
+        ch = "; ".join("%s: %s%s" % (x["norm"], ("thêm điều kiện " + P.words(x["add_condition"])) if x.get("add_condition") else "",
+                                      (" thêm ngoại lệ " + P.words(x["add_exception"])) if x.get("add_exception") else "")
+                       for x in r.get("patches", [])) or "không đổi gì"
+        L.append("| R:%s | %s (đề xuất bởi %s) | %s | %s |  |" % (r["id"], esc(r["reading"]), esc(r["proposed_by"]), esc(ch), G.OPTIONS))
+    L.append("")
+    return "\n".join(L)
+
+
+def sheet_problems(dd, path, text):
+    import promote as P   # noqa: E402
+    sheet = P.parse_sheet(text, kinds="R")
+    out, dec = [], {}
+    s = SHA_LINE.search(text)
+    if not s or s.group(1) != RUN.sha_lf(path):
+        out.append("sha256 tệp cách đọc trong phiếu khác tệp hiện tại")
+    if not sheet["reviewer"]:
+        out.append("chưa ghi người duyệt")
+    try:
+        datetime.date.fromisoformat(sheet["date"])
+    except ValueError:
+        out.append("ngày duyệt phải có dạng YYYY-MM-DD")
+    known = {r["id"]: r for r in candidates(dd)}
+    for (_, i), cells in sheet["rows"].items():
+        if i not in known or known[i].get("status", "proposed") != "proposed":
+            out.append("%s: không phải cách đọc đang chờ duyệt" % i)
+            continue
+        t, why = P.decision(cells, 3, i)
+        if why:
+            out.append(why)
+        elif G.DECISIONS[t] == "rejected" and not P.reason_of(cells, 4):
+            out.append("%s: bác nhưng không ghi lý do" % i)
+        else:
+            dec[i] = (G.DECISIONS[t], P.reason_of(cells, 4))
+    if sum(1 for st, _ in dec.values() if st == "approved") > 1:
+        out.append("chấp nhận nhiều hơn một cách đọc; các cách đọc thay thế nhau")
+    return out, dec, sheet
+
+
+def apply_sheet(path, sheet_path):
+    dd = load(path)
+    with open(sheet_path, encoding="utf-8") as f:
+        ps, dec, sheet = sheet_problems(dd, path, f.read())
+    if ps:
+        raise SystemExit("TỪ CHỐI:\n  - " + "\n  - ".join(ps))
+    if "R0" in dec and not any(r.get("id") == "R0" for r in dd["readings"]):
+        dd["readings"].insert(0, dict(R0))
+    n = {st: 0 for st in G.DECISIONS}
+    for r in dd["readings"]:
+        if r["id"] in dec:
+            st, why = dec[r["id"]]
+            n[st] += 1
+            r.setdefault("status", "proposed")
+            if why:
+                r["review_note"] = why
+            if st != "proposed":
+                r.update(status=st, reviewed_by=sheet["reviewer"], reviewed_on=sheet["date"])
+                r["reviewed_content_sha256"] = content_sha(r)
+    fs = check(dd)
+    if fs:
+        raise SystemExit("TỪ CHỐI: sau khi áp phiếu tệp có phát hiện (không ghi): %s" % fs)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(dd, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    return "đã ghi %s: chấp nhận %d, bác %d, để sau %d." % (RUN.rel(path), n["approved"], n["rejected"], n["proposed"])
 
 
 def apply(merged, r):
@@ -141,7 +252,7 @@ def run(path, out_dir=None, today=None):
     out_dir = out_dir or os.path.join(ROOT, "eval", "readings")
     os.makedirs(out_dir, exist_ok=True)
     rows = []
-    for r in [{"id": "R0", "reading": "như các bản dịch đã duyệt (không sửa gì)", "proposed_by": "—"}] + dd["readings"]:
+    for r in candidates(dd):
         lp = os.path.join(out_dir, "%s-%s.lean" % (today, r["id"]))
         with open(lp, "w", encoding="utf-8", newline="\n") as f:
             f.write(lean_text(apply(merged, r), seg, es))
@@ -149,6 +260,7 @@ def run(path, out_dir=None, today=None):
         pairs = RUN.conflict_pairs(res)
         origins = sorted({tuple(sorted((E.chain(a)[1], E.chain(b)[1]))) for a, b in pairs})
         rows.append({"id": r["id"], "reading": r["reading"], "by": r["proposed_by"], "ok": res["ok"],
+                     "status": r.get("status", "proposed"),
                      "pfindings": res.get("pfindings"), "result": res.get("result"), "origins": origins})
     allo = sorted({o for x in rows for o in x["origins"]})
     L = ["# Chạy theo nhiều cách đọc: %s, %s" % (dd["module"], today), "",
@@ -158,7 +270,8 @@ def run(path, out_dir=None, today=None):
          "- Tệp cạnh: `%s` (sha256 `%s`), %d cạnh dùng" % (dd["edges"], RUN.sha_lf(os.path.join(ROOT, dd["edges"])), len(es)),
          "- Lean: Evaluated (chạy mã), không phải định lý kernel", "", "## Các cách đọc", ""]
     for x in rows:
-        L.append("- **%s** (%s): %s" % (x["id"], x["by"], x["reading"]))
+        L.append("- **%s** (%s; %s): %s" % (x["id"], x["by"], {"approved": "ĐƯỢC CHỌN bởi người duyệt", "rejected": "bị bác",
+                                                               "proposed": "chưa duyệt"}[x["status"]], x["reading"]))
     L += ["", "## Cặp norm gốc xung đột theo từng cách đọc", "",
           "| Cặp | " + " | ".join(x["id"] for x in rows) + " |", "|---|" + "---|" * len(rows)]
     for o in allo:
@@ -189,7 +302,26 @@ def main(argv=None):
     p = sub.add_parser("run")
     p.add_argument("file")
     p.add_argument("--out-dir")
+    p = sub.add_parser("sheet")
+    p.add_argument("file")
+    p.add_argument("-o", "--out", required=True)
+    p = sub.add_parser("apply")
+    p.add_argument("file")
+    p.add_argument("sheet")
     a = ap.parse_args(argv)
+    if a.cmd == "apply":
+        print(apply_sheet(a.file, a.sheet))
+        return 0
+    if a.cmd == "sheet":
+        dd = load(a.file)
+        fs = check(dd)
+        if fs:
+            print("TỪ CHỐI: tệp có %d phát hiện; chạy `check` và sửa trước." % len(fs))
+            return 1
+        with open(a.out, "w", encoding="utf-8", newline="\n") as f:
+            f.write(make_sheet(a.file, dd))
+        print(a.out)
+        return 0
     if a.cmd == "run":
         rp, rows = run(a.file, a.out_dir)
         print(rp)
