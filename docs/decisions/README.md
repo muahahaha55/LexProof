@@ -44,6 +44,7 @@ Một quyết định có thể `Accepted` mà vẫn `Planned`: đã chốt làm
 | [0023](0023-report-command.md) | Báo cáo chỉ do lệnh sinh; mỗi kết quả chính nêu định lý kernel hoặc «chưa có định lý kernel cho kết quả này» |
 | [0027](0027-glossary-shared-atoms.md) | Bảng thuật ngữ dùng chung cho act và atom (FR2), gộp theo id, chặn thuật ngữ chưa duyệt |
 | [0028](0028-derived-norms.md) | Norm suy ra (cách đọc luật không viết thẳng), kiểm riêng một lần thứ hai, không đổi kết luận về chữ luật |
+| [0029](0029-act-entailment-edges.md) | Cạnh kéo theo giữa các hành vi (suy ra trong Lean, có chứng minh), duyệt theo nhu cầu; module gộp `Law44`; phiếu không mất hiệu lực khi bảng thuật ngữ chỉ thêm mục |
 | [0026](0026-promote-reviewed-translation.md) | Đưa bản dịch đã duyệt vào `Laws` qua phiếu ghim sha256; module có định lý kernel; build hỏng thì hoàn tác |
 | [0025](0025-run-command-draft-path.md) | Một lệnh cho đường nháp: gộp bản dịch đã kiểm, chạy Lean, báo cáo nháp vào `eval/run/` |
 | [0024](0024-translation-manual-paste.md) | Bước dịch dán tay: LLM trả JSON, `check` từ chối bịa trích dẫn và khoản bị bỏ, bản nháp Lean nằm ngoài `Laws` |

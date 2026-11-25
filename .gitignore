@@ -6,3 +6,8 @@ __pycache__/
 
 # draft outputs of pipeline/run.py (regenerated on demand)
 /eval/run/
+
+# draft outputs of pipeline/edges.py draft (regenerated on demand)
+/eval/edges/
+/eval/readings/
+/eval/entailment/out/

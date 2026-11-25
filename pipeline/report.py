@@ -39,6 +39,17 @@ MODULES = {
         "ledger": "docs/review/alcohol-coverage-ledger.md",
         "sheet": "docs/review/sale-group-cases.md",
     },
+    # a module written by promote.py from reviewed translations (no case set): see report_promoted.py
+    "law44": {
+        "kind": "promoted",
+        "title": "Luật 44/2019/QH14, mọi điều đã mã hóa và được duyệt (module gộp `Law44`)",
+        "lean_module": "Law44",
+        "ns": "LexProof.Laws.Law44",
+        "module_file": LAWS + "Law44.lean",
+        "segmented": "data/segmented/44-2019-QH14.json",
+        "classification": "docs/review/duyet-phan-loai-khong-ma-hoa.md",
+        "edges": "data/edges/44-2019-QH14.json",
+    },
 }
 
 NO_KERNEL = "chưa có định lý kernel cho kết quả này"
@@ -606,6 +617,16 @@ def main(argv=None):
         return
     if a.status is None:
         ap.error("--status là bắt buộc")
+    if cfg.get("kind") == "promoted":
+        import report_promoted as RP   # noqa: E402
+        today = datetime.date.today().isoformat()
+        text = RP.make(cfg, a.status, do_build=not a.no_build, today=today)
+        os.makedirs(a.out_dir, exist_ok=True)
+        out = os.path.join(a.out_dir, "%s-%s.md" % (a.module, today))
+        with open(out, "w", encoding="utf-8", newline="\n") as f:
+            f.write(text)
+        print(out)
+        return
     data = collect(cfg, build=not a.no_build)
     today = datetime.date.today().isoformat()
     text = make_report(cfg, data, a.status, a.by, a.date, a.sheet, today)

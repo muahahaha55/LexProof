@@ -226,5 +226,88 @@ class Promote(Base):
                 self.assertNotIn("TestPromoRollback", f.read())
 
 
+class GlossaryCarryOver(Base):
+    """A sheet pins the sha256 of the whole glossary. A later glossary change voids it only if a term the translation
+    uses changed meaning (`changed_terms`); an added term or a review stamp elsewhere does not."""
+    A10 = os.path.join(T.ROOT, "eval", "translate", "article10.glossary.llm.json")
+
+    def setUp(self):
+        super().setUp()
+        self.data = json.load(open(self.A10, encoding="utf-8"))
+        _, self.cur, self.rel = T.load_glossary(self.data["doc_id"])
+
+    def test_same_glossary_has_no_changed_terms(self):
+        self.assertEqual(P.changed_terms(self.data, copy.deepcopy(self.cur)), [])
+
+    def test_changed_gloss_or_missing_term_is_reported(self):
+        acts, atoms = T.used_terms(self.data)
+        a = sorted(atoms)[0]
+        old = copy.deepcopy(self.cur)
+        for e in old["atoms"]:
+            if e["id"] == a:
+                e["gloss"] += " (khác)"
+        self.assertEqual(P.changed_terms(self.data, old), [a])
+        old = copy.deepcopy(self.cur)
+        old["acts"] = [e for e in old["acts"] if e["id"] not in acts]
+        self.assertEqual(P.changed_terms(self.data, old), sorted(acts))
+
+    def test_review_stamp_is_not_meaning(self):
+        old = copy.deepcopy(self.cur)
+        for e in old["atoms"] + old["acts"]:
+            e["status"], e["reviewed_on"] = "proposed", "1999-01-01"
+        self.assertEqual(P.changed_terms(self.data, old), [])
+
+    def test_glossary_version_finds_the_working_copy_and_refuses_unknown(self):
+        sha = T.glossary_sha(self.rel)
+        self.assertEqual(P.glossary_version(self.rel, sha)["acts"], self.cur["acts"])
+        self.assertIsNone(P.glossary_version(self.rel, "0" * 64))
+        self.assertIsNone(P.glossary_version(self.rel, None))
+
+    def test_real_sheet_on_an_older_glossary_carries_over(self):
+        """Phong's sheet for Article 10 was made before glossary sheet 4 added 21 terms (none of them used here)."""
+        sh = os.path.join(T.ROOT, "docs", "review", "duyet-ban-dich-dieu-10.md")
+        sheet = P.parse_sheet(open(sh, encoding="utf-8").read())
+        if sheet["glossary_sha"] == T.glossary_sha(self.rel):
+            self.skipTest("phiếu đã lập trên bảng hiện tại")
+        ps, dec = P.sheet_problems(self.data, self.A10, sheet)
+        self.assertEqual(ps, [])
+        self.assertEqual(dec["glossary_carried"], sheet["glossary_sha"])
+
+    def test_sheet_on_unknown_glossary_is_refused(self):
+        def edit(text):
+            return text.replace(T.glossary_sha(self.rel), "0" * 64)
+        tr, sh = self.files(self.data, edit)
+        with open(sh, encoding="utf-8") as f:
+            ps, dec = P.sheet_problems(self.data, tr, P.parse_sheet(f.read()))
+        self.assertTrue(any("không có phiên bản nào" in x for x in ps), ps)
+        self.assertIsNone(dec["glossary_carried"])
+
+
+class Covers(Base):
+    def test_covers_theorems_and_latest_date(self):
+        tr, sh = self.files()
+        _, text = P.promote("TestPromoCovers", [(tr, sh)], build=False, covers=["Article19"])
+        self.assertIn("import LexProof.Laws.Article19", text)
+        self.assertIn("theorem covers_articles :", text)
+        self.assertIn("theorem covers_articles_source :", text)
+        self.assertIn("LexProof.Laws.Article19.norms.map", text)
+        with self.assertRaises(SystemExit) as cm:
+            P.promote("TestPromoCovers", [(tr, sh)], build=False, covers=["Article19", "Article10"])
+        self.assertIn("đúng một module cho mỗi --pair", str(cm.exception))
+        with self.assertRaises(SystemExit):
+            P.promote("TestPromoCovers", [(tr, sh)], build=False, covers=["KhongCo"])
+
+    def test_status_carries_the_latest_date(self):
+        reviews = [("a", "x", "s", "y", "TEST", "2000-01-02", [], [], None),
+                   ("b", "x", "t", "y", "TEST", "2000-01-05", [], [], None)]
+        d = copy.deepcopy(GOLD)
+        m = T.materialize(d)
+        import run as RUN
+        seg = T.load_segmented("44/2019/QH14")
+        text = P.module_text("TestDates", RUN.merge([m]), seg, reviews, True)
+        self.assertIn('.reviewed "TEST" ⟨2000, 1, 5⟩', text)
+        self.assertIn("several dates", text)
+
+
 if __name__ == "__main__":
     unittest.main()

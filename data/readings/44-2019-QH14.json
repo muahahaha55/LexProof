@@ -1,0 +1,74 @@
+{
+  "doc_id": "44/2019/QH14",
+  "module": "Law44",
+  "edges": "data/edges/44-2019-QH14.json",
+  "note": "Cách đọc thay thế (ADR-0029). Mỗi mục là một đề xuất của AI, chưa ai duyệt. Kết quả chạy chỉ nói về cách đọc, không nói về luật.",
+  "readings": [
+    {
+      "id": "R1",
+      "proposed_by": "Claude (AI), 2026-11-25",
+      "reading": "Lệnh cấm tàng trữ, vận chuyển rượu, bia không bảo đảm chất lượng (Điều 5 khoản 12) chỉ nhắm việc nhằm mục đích kinh doanh; việc thu hồi theo Điều 32 khoản 4 không nhằm mục đích kinh doanh.",
+      "atoms": [
+        {
+          "name": "nham_muc_dich_kinh_doanh",
+          "source": "Điều 5 khoản 12",
+          "domain": "bool"
+        }
+      ],
+      "patches": [
+        {
+          "norm": "Điều 5:5.12.i.b",
+          "add_condition": {
+            "sit": "nham_muc_dich_kinh_doanh"
+          }
+        },
+        {
+          "norm": "Điều 5:5.12.i.c",
+          "add_condition": {
+            "sit": "nham_muc_dich_kinh_doanh"
+          }
+        },
+        {
+          "norm": "Điều 32:32.4",
+          "add_condition": {
+            "not": {
+              "sit": "nham_muc_dich_kinh_doanh"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "proposed_by": "Claude (AI), 2026-11-25",
+      "reading": "Điều 5 khoản 12 có ngoại lệ ngầm cho việc đang thực hiện nghĩa vụ thu hồi theo Điều 32 khoản 4 (quy định riêng thắng quy định chung). Để nghĩa vụ suy ra (vận chuyển, tàng trữ) gắn với chính việc thu hồi, norm 32.4 được ghép thêm điều kiện «đang thu hồi»; đây là cách mô hình hóa, không phải chữ luật.",
+      "atoms": [
+        {
+          "name": "dang_thuc_hien_thu_hoi_theo_dieu_32_khoan_4",
+          "source": "Điều 32 khoản 4",
+          "domain": "bool"
+        }
+      ],
+      "patches": [
+        {
+          "norm": "Điều 5:5.12.i.b",
+          "add_exception": {
+            "sit": "dang_thuc_hien_thu_hoi_theo_dieu_32_khoan_4"
+          }
+        },
+        {
+          "norm": "Điều 5:5.12.i.c",
+          "add_exception": {
+            "sit": "dang_thuc_hien_thu_hoi_theo_dieu_32_khoan_4"
+          }
+        },
+        {
+          "norm": "Điều 32:32.4",
+          "add_condition": {
+            "sit": "dang_thuc_hien_thu_hoi_theo_dieu_32_khoan_4"
+          }
+        }
+      ]
+    }
+  ]
+}

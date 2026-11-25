@@ -736,3 +736,23 @@ Kết quả trên 37 ca (sau D54, nhánh `d54-c23-branch-source`): C24 ra ngoài
 **D54 (mức chi tiết của nguồn 5.11-ii, C22–C24) — làm lại với phép sửa có chủ ý, đã gộp vào `main` (2026-11-13, sau khi người duyệt xác nhận lại).** Norm 5.11-ii, C22 và C23 trích «Điều 5 khoản 11 nhánh (ii)»; C24 trích «… nhánh (i)». Định lý duy nhất phải đổi là `AlcoholSaleRefs.refOutOfScope_set` (`["C23","C24"]` thành `["C24"]`), được phép sau khi chủ dự án cho sửa `AlcoholSaleRefs.lean`. `lake build` xanh. Hệ quả: hai tệp mô-đun/ca thử đổi sha256 nên các dòng `sha256 …khi duyệt` trong phiếu không còn khớp và `report.py --status reviewed` từ chối cho tới khi người duyệt xác nhận lại; việc này đã làm và hai mã trong phiếu đã được cập nhật (nội dung phiếu các hàng C22–C24 không đổi: cùng khoản, cùng nguyên văn).
 
 **D58 — hai con số «đoạn không đánh số».** `stray_paragraphs = 2` của bộ tách đếm *dòng* thụt đầu dòng không đánh số nằm trong một khoản hoặc điểm (Điều 35 khoản 1 và 2). Sổ phủ đếm *đoạn dẫn*: 6 điều có văn bản đứng trước khoản đầu tiên hoặc không chia khoản (Điều 1, 2, 11, 13, 14, 18). Báo cáo dùng số của sổ phủ (6) cho mục phạm vi và ghi số của bộ tách riêng ở mục nguồn gốc. Tài liệu sai là câu mô tả ở sổ phủ (gọi chung là «đoạn không đánh số»); đã sửa. Bộ tách không bị chỉnh.
+
+## 19. `Verify/Entail.lean` — cạnh kéo theo giữa các hành vi (ADR-0029)
+
+`Conflict` chỉ so hai norm cùng id act. Tệp này thêm một **cách đọc** có kiểm soát: cạnh «làm `src` thì nhất thiết làm `dst`».
+
+| Khai báo | Ý nghĩa |
+|---|---|
+| `Edge` | `src`, `dst` (id act), `source` (đơn vị luật làm căn cứ), `reading` (bằng lời). Là dữ liệu được tin, như `Atoms.valid` |
+| `Edge.step` | Một bước: cấm `dst` ⇒ cấm `src`; bắt buộc `src` ⇒ bắt buộc `dst`; quyền không truyền. Norm sinh ra giữ điều kiện, ngoại lệ, ưu tiên; id có tiền tố «SUY RA [A ⇒ B]» |
+| `stepAll`, `deriveRounds`, `derive` | Mọi cạnh trên mọi norm; `derive es ns` lặp `es.length` vòng, mỗi vòng chỉ suy từ norm của vòng trước (đủ cho mọi đường không lặp cạnh) |
+| `Doing`, `Respects`, `Complies`, `Acts` | Mô hình hành động trong một tình huống: act nào được làm; tôn trọng các cạnh; tuân thủ một norm (quyền không đòi gì); làm theo norm (với quyền: dùng quyền) |
+| `step_sound`, `stepAll_sound`, `deriveRounds_sound`, **`derive_sound`** | Mọi norm suy ra đến từ một norm đầu vào cùng phạm vi (`SameScope`), là cấm hoặc bắt buộc, và tuân thủ norm gốc dưới các cạnh kéo theo tuân thủ norm suy ra |
+| `applies_of_sameScope` | Cùng phạm vi thì `applies` bằng nhau |
+| `not_acts_both` | Hai norm cùng act, modality khắc nhau thì không thể cùng làm theo |
+| **`conflict_derived_meaning`** | `Conflict A n₁ m π s` với `m ∈ derive es ns` ⇒ có `n ∈ ns` áp dụng tại `(π, s)`, và mọi cách hành động tôn trọng cạnh mà làm theo `n₁` đều vi phạm `n` |
+
+**Không được chứng minh:** rằng cạnh đúng với luật. Test: `Verify/EntailTests.lean` (chiều truyền, chuỗi hai cạnh,
+quyền không truyền, cạnh không dính norm nào, giữ phạm vi). Công cụ: `pipeline/edges.py`. Module gộp mà nó dựa vào:
+`Laws/Law44.lean`, có `covers_articles` và `covers_articles_source` (so id, modality, act, nguồn, tham chiếu, số ngoại
+lệ với các module từng điều; **không** so điều kiện).

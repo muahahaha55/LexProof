@@ -146,21 +146,71 @@ def reason_of(cells, col):
     return cells[col].strip() if len(cells) > col else ""
 
 
+MEANING = ("id", "kind", "domain", "gloss", "sources")   # what a glossary entry says; review fields are not meaning
+
+
+def glossary_version(rel, sha):
+    """The glossary (parsed) whose LF-normalized sha256 is `sha`: the working copy or a committed version of `rel`.
+    None if there is none (then a sheet pinned to `sha` cannot be checked against the terms it showed)."""
+    if not sha:
+        return None
+    blobs = [open(os.path.join(ROOT, *rel.split("/")), "rb").read()]
+    try:
+        log = subprocess.run(["git", "log", "--format=%H", "--", rel], cwd=ROOT, capture_output=True, text=True)
+        for h in log.stdout.split():
+            r = subprocess.run(["git", "show", "%s:%s" % (h, rel)], cwd=ROOT, capture_output=True)
+            if r.returncode == 0:
+                blobs.append(r.stdout)
+    except OSError:
+        pass
+    for b in blobs:
+        if hashlib.sha256(b.replace(b"\r\n", b"\n")).hexdigest() == sha:
+            return json.loads(b.decode("utf-8"))
+    return None
+
+
+def changed_terms(data, old):
+    """Ids of the terms the translation uses whose meaning (MEANING fields) differs between the glossary `old` (the one
+    the sheet was made on) and the current one, or that one of the two lacks. Empty: the sheet showed the reviewer the
+    same terms the module will use, so a glossary change elsewhere (an added term, a review stamp) does not void it."""
+    _, new, _ = T.load_glossary(data["doc_id"])
+    idx = lambda g: dict([(("act", e["id"]), e) for e in g["acts"]] + [(("atom", e["id"]), e) for e in g["atoms"]])
+    oi, ni = idx(old), idx(new)
+    acts, atoms = T.used_terms(data)
+    out = []
+    for kind, ids in (("act", acts), ("atom", atoms)):
+        for i in sorted(ids):
+            o, n = oi.get((kind, i)), ni.get((kind, i))
+            if o is None or n is None or any(o.get(k) != n.get(k) for k in MEANING):
+                out.append(i)
+    return out
+
+
 def sheet_problems(data, tr_path, sheet):
     """Reasons to refuse; empty if the sheet is complete, about this exact translation, and accepts everything it must."""
     out = []
     if sheet["sha"] != sha_lf(tr_path):
         out.append("sha256 trong phiếu khác bản dịch hiện tại (bản dịch đã đổi sau khi lập phiếu, hoặc phiếu của tệp khác)")
+    carried = None
     if "glossary" in data and sheet.get("glossary_sha") != T.glossary_sha(T.glossary_rel(data["doc_id"])):
-        out.append("sha256 bảng thuật ngữ trong phiếu khác bảng hiện tại (bảng đã đổi sau khi lập phiếu, nghĩa của các id có thể "
-                   "đã khác): lập lại phiếu và duyệt lại")
+        old = glossary_version(T.glossary_rel(data["doc_id"]), sheet.get("glossary_sha"))
+        if old is None:
+            out.append("sha256 bảng thuật ngữ trong phiếu khác bảng hiện tại, và không có phiên bản nào của bảng trong lịch sử git "
+                       "mang sha256 đó: lập lại phiếu và duyệt lại")
+        else:
+            ch = changed_terms(data, old)
+            if ch:
+                out.append("sha256 bảng thuật ngữ trong phiếu khác bảng hiện tại, và nghĩa của %d thuật ngữ bản dịch dùng đã đổi "
+                           "(%s): lập lại phiếu và duyệt lại" % (len(ch), ", ".join(ch)))
+            else:
+                carried = sheet.get("glossary_sha")
     if not sheet["reviewer"]:
         out.append("chưa ghi người duyệt")
     try:
         datetime.date.fromisoformat(sheet["date"])
     except ValueError:
         out.append("ngày duyệt phải có dạng YYYY-MM-DD")
-    decisions = {"accepted": [], "rejected": []}
+    decisions = {"accepted": [], "rejected": [], "glossary_carried": carried}
     for n in data["norms"]:
         cells = sheet["rows"].get(("N", n["id"]))
         if cells is None:
@@ -211,7 +261,7 @@ def apply_decisions(data, decisions, reviewer, date):
     return d
 
 
-def module_text(name, merged, seg, reviews, consistent):
+def module_text(name, merged, seg, reviews, consistent, covers=None):
     """Lean module for LexProof/Laws/<name>.lean. `reviews`: [(translation rel path, sha, sheet rel path, sheet sha,
     reviewer, date, accepted ids, rejected ids)]. `consistent`: the evaluated result is consistentOn."""
     sit, par = merged["atoms"]["situation"], merged["atoms"]["parameters"]
@@ -219,10 +269,11 @@ def module_text(name, merged, seg, reviews, consistent):
     rp, pl = T.readers(par)
     y, m, d = (int(x) for x in merged["effective"].split("-"))
     acts = sorted({n["act"] for n in merged["norms"]})
-    reviewer, rdate = reviews[0][4], reviews[0][5]
+    reviewer, rdate = reviews[0][4], max(r[5] for r in reviews)   # several sheets: the status carries the latest date
     ry, rm, rd = (int(x) for x in rdate.split("-"))
     q = T.lq
-    L = ["import LexProof.Verify.AnalyzeReport", "import LexProof.Core.Render", "import LexProof.Core.ClauseRef", "",
+    L = ["import LexProof.Verify.AnalyzeReport", "import LexProof.Core.Render", "import LexProof.Core.ClauseRef"] + \
+        ["import LexProof.Laws.%s" % c for c, _ in (covers or [])] + ["",
          "/-!", "# %s — %s (%s), norms from an AI translation accepted on a review sheet" % (name, merged["label"], merged["doc_id"]), "",
          "Written by `pipeline/%s`. **Reviewed** here means only: a person ticked every row of the sheet(s) below, and" % TOOL,
          "the sheet names the sha256 of the translation it was about. The tool does not check who the person is, nor",
@@ -235,9 +286,14 @@ def module_text(name, merged, seg, reviews, consistent):
          "Atom names and norm ids carry their article («Điều 5 · ...»): two articles never share an atom, so a",
          "conflict that depends on a concept shared by two articles can be missed (no translation here uses the glossary)."]
          ) + ["", "Review sheets:"]
-    for tr, tsha, sh, ssha, who, when, acc, rej in reviews:
+    for tr, tsha, sh, ssha, who, when, acc, rej, carried in reviews:
         L.append("* `%s` (sha256 `%s`), sheet `%s` (sha256 `%s`), %s, %s: accepted %d, rejected %d%s" % (
             tr, tsha, sh, ssha, who.replace("-/", "- /"), when, len(acc), len(rej), (" (" + ", ".join(rej) + ")") if rej else ""))
+        if carried:
+            L.append("  (sheet made on glossary sha256 `%s`; every term this translation uses has the same meaning in the" % carried)
+            L.append("  current glossary, so the review carries over: see `changed_terms` in promote.py)")
+    if len({r[5] for r in reviews}) > 1:
+        L.append("* Sheets reviewed on several dates; `status` carries the latest one.")
     L += ["", "Assumptions accepted on the sheets:"]
     L += ["* " + a.replace("-/", "- /") for a in merged["assumptions"]] or ["* (none)"]
     L += T.glossary_header(merged)
@@ -282,6 +338,20 @@ def module_text(name, merged, seg, reviews, consistent):
     else:
         L += ["/-- The module has at least one formal conflict; `analyzeReport` lists the pairs. -/",
               "theorem has_conflict : (analyzeP tS tP rS rP catalog norms).isConsistentOn = false := by decide +kernel", ""]
+    if covers:
+        # two theorems of three fields each: `decide` does not find the instance for a six-field tuple
+        keys = (("covers_articles", "(n.id, n.modality, n.act)"),
+                ("covers_articles_source", "(n.source.article, n.references, n.exceptions.length)"))
+        L += ["/-! The norms here are exactly the norms of the per-article modules, in this order: same id (ids already",
+              "carry their article), modality, act, source, references and number of exceptions. A norm dropped, duplicated or",
+              "reordered by the merge tool fails these theorems. Conditions are **not** compared: atom indices differ between",
+              "modules, so a condition changed by the merge would not be caught here (only by the tool's tests). -/", ""]
+        for thm, key in keys:
+            L += ["theorem %s :" % thm,
+                  "    norms.map (fun n => %s) =" % key,
+                  "    (" + " ++\n     ".join(
+                      "LexProof.Laws.%s.norms.map (fun n => %s)" % (c, key) for c, _ in covers) + ") := by",
+                  "  decide +kernel", ""]
     L += ["/-- What `analyzeReport` prints for this module (always print this, not only the core result). -/",
           "def report : List String := (analyzeReport status acts tS tP rS rP catalog norms).render", "",
           "end LexProof.Laws.%s" % name, ""]
@@ -300,7 +370,7 @@ def add_import(path, name, before):
     return s, s.replace(before, line + nl + before, 1)
 
 
-def promote(name, pairs, build=True):
+def promote(name, pairs, build=True, covers=None):
     """Returns the module path. Raises SystemExit with the reasons on refusal."""
     if not re.match(r"^[A-Z][A-Za-z0-9]*$", name):
         raise SystemExit("--name phải là tên module Lean dạng PascalCase, ví dụ Article19")
@@ -335,11 +405,11 @@ def promote(name, pairs, build=True):
             continue
         accepted.append(m)
         reviews.append((RUN.rel(tr), sha_lf(tr), RUN.rel(sh), sha_lf(sh), sheet["reviewer"], sheet["date"],
-                        [i for i, _ in dec["accepted"]], [i for i, _ in dec["rejected"]]))
+                        [i for i, _ in dec["accepted"]], [i for i, _ in dec["rejected"]], dec.get("glossary_carried")))
     if problems:
         raise SystemExit("TỪ CHỐI:\n  - " + "\n  - ".join(problems))
-    if len({(r[4], r[5]) for r in reviews}) > 1:
-        raise SystemExit("TỪ CHỐI: các phiếu có người duyệt hoặc ngày khác nhau; gộp vào một module cần cùng một lần duyệt")
+    if len({r[4] for r in reviews}) > 1:
+        raise SystemExit("TỪ CHỐI: các phiếu có người duyệt khác nhau; `ReviewStatus` của một module chỉ ghi được một người")
     merged = RUN.merge(accepted)
     # evaluate first, so the theorem written matches the result (the kernel then checks it in `lake build`)
     tmp = os.path.join(ROOT, "eval", "run", "_promote_%s.lean" % name)
@@ -349,7 +419,15 @@ def promote(name, pairs, build=True):
     ev = RUN.run_lean(tmp)
     if not ev["ok"] or ev.get("pfindings") != 0 or ev.get("result") not in ("consistentOn", "XUNG ĐỘT"):
         raise SystemExit("TỪ CHỐI: bản nháp không qua Lean (%s)" % (ev.get("why") or "pfindings %s, kết quả %s" % (ev.get("pfindings"), ev.get("result"))))
-    text = module_text(name, merged, seg, reviews, ev["result"] == "consistentOn")
+    cov = None
+    if covers:
+        if len(covers) != len(accepted):
+            raise SystemExit("TỪ CHỐI: --covers cần đúng một module cho mỗi --pair, cùng thứ tự (%d module, %d cặp)" % (len(covers), len(accepted)))
+        for c in covers:
+            if not os.path.exists(os.path.join(LAWS, c + ".lean")):
+                raise SystemExit("TỪ CHỐI: --covers: không có LexProof/Laws/%s.lean" % c)
+        cov = [(c, m["article"]) for c, m in zip(covers, accepted)]
+    text = module_text(name, merged, seg, reviews, ev["result"] == "consistentOn", cov)
     if not build:
         return target, text
     old_root, new_root = add_import(ROOT_FILE, name, "import LexProof.Cert.Audit")
@@ -386,6 +464,9 @@ def main(argv=None):
     p.add_argument("--name", required=True)
     p.add_argument("--pair", nargs=2, action="append", required=True, metavar=("TRANSLATION", "SHEET"))
     p.add_argument("--no-build", action="store_true", help="chỉ in module ra màn hình, không ghi vào thư viện")
+    p.add_argument("--covers", nargs="+", metavar="MODULE",
+                   help="module một điều đã có trong Laws, mỗi --pair một module, cùng thứ tự; module gộp có thêm định lý "
+                        "covers_articles: danh sách norm đúng bằng norm của các module đó")
     a = ap.parse_args(argv)
     if a.cmd == "sheet":
         data = json.load(open(a.translation, encoding="utf-8"))
@@ -397,7 +478,7 @@ def main(argv=None):
             f.write(make_sheet(a.translation, data))
         print(a.out)
         return 0
-    target, text = promote(a.name, a.pair, build=not a.no_build)
+    target, text = promote(a.name, a.pair, build=not a.no_build, covers=a.covers)
     if a.no_build:
         sys.stdout.write(text)
     else:
