@@ -44,8 +44,14 @@ nên đây là mở rộng phạm vi.
     danh sách chủ thể ở khoản 2 đã loại khoản 3.
   - Trước khi có người quyết, đây chỉ là dấu hiệu, không phải lỗi của luật.
   - **Người duyệt (Vũ Đức Phong) chọn (a)**, 2026-11-25, trả lời bằng tin nhắn: «xuất hiện trùng nhau giữa hộ gia đình,
-    cá nhân và hộ kinh doanh». Vậy đây là lỗi của bản mã hóa, không phải của luật. Bản dịch lại Điều 15 theo bảng thuật
-    ngữ chờ duyệt ở `docs/review/duyet-ban-dich-dieu-15-lan-2.md`; khi được duyệt, `Article15` và `Law44` được promote lại.
+    cá nhân và hộ kinh doanh». Sau đó người duyệt nói rõ thêm (cùng ngày): hộ gia đình đã đăng ký hộ kinh doanh được tính
+    là hộ kinh doanh, tức hai nhóm **tách nhau**. Vậy câu hỏi (a)/(b) đặt sai chỗ: lỗi của bản mã hóa cũ là đưa danh sách
+    chủ thể của khoản 2 (điểm a) vào phạm vi của norm, trong khi luật ghi nó là **một điều kiện cấp phép**. Bản dịch theo
+    bảng thuật ngữ đặt nó vào điều kiện; khi đó ngoại lệ «trừ khoản 3» có tác dụng (loại hộ gia đình, cá nhân của khoản 3
+    khỏi lệnh cấm cấp phép) dù hai nhóm tách nhau. Kết luận vẫn là: lỗi của bản mã hóa, không phải của luật.
+  - Lần 2 (`docs/review/duyet-ban-dich-dieu-15-lan-2.md`) bị bác hai giả định (A:3, A:5). Lần 3
+    (`eval/translate/article15.glossary-2.llm.json`, phiếu `docs/review/duyet-ban-dich-dieu-15-lan-3.md`, cùng phiếu bảng
+    thuật ngữ `-5` cho một act mới) theo các câu trả lời của người duyệt; khi được duyệt, `Article15` và `Law44` được promote lại.
 - So với thử nghiệm E8 (Python, chỉ 14 bản dịch theo bảng thuật ngữ, không có Điều 15): E8 báo 0. Mục này chỉ hiện khi gộp
   cả Điều 15.
 

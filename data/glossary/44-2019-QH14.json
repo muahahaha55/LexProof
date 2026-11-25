@@ -440,6 +440,15 @@
       "proposed_in": "eval/translate/article34.glossary.llm.json (sha256 4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1)",
       "reviewed_by": "Vũ Đức Phong",
       "reviewed_on": "2026-11-23"
+    },
+    {
+      "id": "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai",
+      "gloss": "Ủy ban nhân dân cấp xã nhận đăng ký của hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép sản xuất rượu chế biến lại (việc đăng ký được coi tương đương cấp phép)",
+      "sources": [
+        "Điều 15 khoản 3"
+      ],
+      "status": "proposed",
+      "proposed_in": "eval/translate/article15.glossary-2.llm.json (sha256 a2fcf0d372e37dc8ccce57daa2b47ca3b6e0d75fbe3e8db5b8d4d19b1ea53f5e)"
     }
   ],
   "atoms": [

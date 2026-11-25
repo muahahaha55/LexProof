@@ -1,0 +1,305 @@
+{
+  "doc_id": "44/2019/QH14",
+  "doc_type": "law",
+  "effective": "2020-01-01",
+  "article": 15,
+  "glossary": "data/glossary/44-2019-QH14.json",
+  "atoms": {
+    "situation": [],
+    "parameters": []
+  },
+  "glossary_proposals": {
+    "acts": [
+      {
+        "id": "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai",
+        "gloss": "Ủy ban nhân dân cấp xã nhận đăng ký của hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép sản xuất rượu chế biến lại (việc đăng ký được coi tương đương cấp phép)",
+        "sources": [
+          "Điều 15 khoản 3"
+        ]
+      }
+    ],
+    "atoms": []
+  },
+  "norms": [
+    {
+      "id": "15.1",
+      "modality": "prohibition",
+      "act": "cap_phep_san_xuat_ruou_cong_nghiep",
+      "condition": {
+        "and": [
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "not": {
+              "and": [
+                {
+                  "sit": "chu_the_la_doanh_nghiep_thanh_lap_hop_phap"
+                },
+                {
+                  "param": "day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien"
+                },
+                {
+                  "sit": "bao_dam_dieu_kien_an_toan_thuc_pham"
+                },
+                {
+                  "sit": "bao_dam_dieu_kien_bao_ve_moi_truong"
+                },
+                {
+                  "param": "nhan_vien_ky_thuat_trinh_do_phu_hop"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 15 khoản 1",
+      "quote": "Điều kiện cấp phép sản xuất rượu công nghiệp có độ cồn từ 5,5 độ trở lên bao gồm",
+      "references": []
+    },
+    {
+      "id": "15.1.p",
+      "modality": "permission",
+      "act": "cap_phep_san_xuat_ruou_cong_nghiep",
+      "condition": {
+        "and": [
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "sit": "chu_the_la_doanh_nghiep_thanh_lap_hop_phap"
+          },
+          {
+            "param": "day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien"
+          },
+          {
+            "sit": "bao_dam_dieu_kien_an_toan_thuc_pham"
+          },
+          {
+            "sit": "bao_dam_dieu_kien_bao_ve_moi_truong"
+          },
+          {
+            "param": "nhan_vien_ky_thuat_trinh_do_phu_hop"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 15 khoản 1",
+      "quote": "Điều kiện cấp phép sản xuất rượu công nghiệp có độ cồn từ 5,5 độ trở lên bao gồm",
+      "references": []
+    },
+    {
+      "id": "15.2",
+      "modality": "prohibition",
+      "act": "cap_phep_san_xuat_ruou_thu_cong",
+      "condition": {
+        "and": [
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "sit": "muc_dich_kinh_doanh"
+          },
+          {
+            "not": {
+              "and": [
+                {
+                  "sit": "chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap"
+                },
+                {
+                  "sit": "bao_dam_dieu_kien_an_toan_thuc_pham"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "exceptions": [
+        {
+          "and": [
+            {
+              "sit": "chu_the_la_ho_gia_dinh_ca_nhan"
+            },
+            {
+              "sit": "ban_cho_co_so_co_giay_phep_de_che_bien_lai"
+            }
+          ]
+        }
+      ],
+      "source": "Điều 15 khoản 2",
+      "quote": "Điều kiện cấp phép sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên nhằm mục đích kinh doanh, trừ trường hợp quy định tại khoản 3 Điều này, bao gồm",
+      "references": [
+        "Điều 15 khoản 3"
+      ]
+    },
+    {
+      "id": "15.2.p",
+      "modality": "permission",
+      "act": "cap_phep_san_xuat_ruou_thu_cong",
+      "condition": {
+        "and": [
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "sit": "muc_dich_kinh_doanh"
+          },
+          {
+            "sit": "chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap"
+          },
+          {
+            "sit": "bao_dam_dieu_kien_an_toan_thuc_pham"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 15 khoản 2",
+      "quote": "Điều kiện cấp phép sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên nhằm mục đích kinh doanh, trừ trường hợp quy định tại khoản 3 Điều này, bao gồm",
+      "references": []
+    },
+    {
+      "id": "15.3",
+      "modality": "prohibition",
+      "act": "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai",
+      "condition": {
+        "and": [
+          {
+            "sit": "chu_the_la_ho_gia_dinh_ca_nhan"
+          },
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "sit": "ban_cho_co_so_co_giay_phep_de_che_bien_lai"
+          },
+          {
+            "not": {
+              "and": [
+                {
+                  "sit": "co_hop_dong_mua_ban_voi_co_so_co_giay_phep"
+                },
+                {
+                  "sit": "bao_dam_dieu_kien_an_toan_thuc_pham"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 15 khoản 3",
+      "quote": "Điều kiện đối với hộ gia đình, cá nhân sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên bán cho cơ sở có giấy phép sản xuất rượu để chế biến lại bao gồm",
+      "references": []
+    },
+    {
+      "id": "15.3.p",
+      "modality": "permission",
+      "act": "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai",
+      "condition": {
+        "and": [
+          {
+            "sit": "chu_the_la_ho_gia_dinh_ca_nhan"
+          },
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "sit": "ban_cho_co_so_co_giay_phep_de_che_bien_lai"
+          },
+          {
+            "sit": "co_hop_dong_mua_ban_voi_co_so_co_giay_phep"
+          },
+          {
+            "sit": "bao_dam_dieu_kien_an_toan_thuc_pham"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 15 khoản 3",
+      "quote": "Điều kiện đối với hộ gia đình, cá nhân sản xuất rượu thủ công có độ cồn từ 5,5 độ trở lên bán cho cơ sở có giấy phép sản xuất rượu để chế biến lại bao gồm",
+      "references": []
+    },
+    {
+      "id": "15.4",
+      "modality": "prohibition",
+      "act": "cap_phep_mua_ban_ruou",
+      "condition": {
+        "and": [
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "not": {
+              "and": [
+                {
+                  "sit": "co_dang_ky_kinh_doanh"
+                },
+                {
+                  "sit": "dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 15 khoản 4",
+      "quote": "Điều kiện cấp phép mua bán rượu có độ cồn từ 5,5 độ trở lên bao gồm",
+      "references": []
+    },
+    {
+      "id": "15.4.p",
+      "modality": "permission",
+      "act": "cap_phep_mua_ban_ruou",
+      "condition": {
+        "and": [
+          {
+            "sit": "do_con_nguong_5_5",
+            "value": "từ 5,5 độ trở lên"
+          },
+          {
+            "sit": "co_dang_ky_kinh_doanh"
+          },
+          {
+            "sit": "dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou"
+          }
+        ]
+      },
+      "exceptions": [],
+      "source": "Điều 15 khoản 4",
+      "quote": "Điều kiện cấp phép mua bán rượu có độ cồn từ 5,5 độ trở lên bao gồm",
+      "references": []
+    }
+  ],
+  "not_encoded": [
+    {
+      "clause": "Điều 15 khoản 5",
+      "reason": "Khoản 5 giao Chính phủ quy định chi tiết Điều 15 và việc quản lý kinh doanh rượu dưới 5,5 độ. Nó không đặt ra lệnh cấm, nghĩa vụ hay quyền nào có thể mã hóa từ chữ của luật; chỉ dùng làm nguồn cho nhãn «dưới 5,5 độ»."
+    }
+  ],
+  "assumptions": [
+    "Ngày hiệu lực 2020-01-01 không có trong đoạn văn được cung cấp; giá trị này lấy từ kiến thức bên ngoài và người duyệt cần kiểm tra lại.",
+    "Tiêu đề «Quản lý kinh doanh rượu» không cho biết tính chất cấm, bắt buộc hay được phép, nên không áp dụng tính chất nào từ tiêu đề cho các khoản (quy tắc 7).",
+    "Quy tắc 11 theo người duyệt (lần 2 bác giả định cũ; trả lời 2026-11-25: «được phép»): mỗi danh sách «Điều kiện ... bao gồm» ở khoản 1, 2, 3, 4 được đọc theo hai chiều. Thiếu một điểm thì hành vi bị cấm (15.1, 15.2, 15.3, 15.4); đủ mọi điểm thì hành vi được phép (15.1.p, 15.2.p, 15.3.p, 15.4.p). «Được phép», không phải «bắt buộc»: luật không nói cơ quan phải cấp. Khoản 5 giao Chính phủ quy định chi tiết, nên văn bản hướng dẫn có thể thêm điều kiện; khi đó chiều «được phép» sẽ quá rộng.",
+    "Ở khoản 1, 2 và 4, hành vi bị điều chỉnh là việc cấp giấy phép (do cơ quan có thẩm quyền thực hiện), không phải bản thân việc sản xuất hay mua bán; luật không nêu cơ quan cấp phép.",
+    "Ở khoản 3, theo người duyệt (lần 2 bác giả định cũ; trả lời 2026-11-25: đồng ý), việc đăng ký với Ủy ban nhân dân cấp xã (điểm a) được coi tương đương cấp phép. Vì vậy hành vi bị điều chỉnh là việc Ủy ban nhân dân cấp xã nhận đăng ký (nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai), không phải bản thân việc sản xuất; atom co_dang_ky_voi_ubnd_cap_xa không còn là điều kiện. Điều kiện còn lại: hợp đồng mua bán với cơ sở có giấy phép (điểm a) và an toàn thực phẩm (điểm b).",
+    "Atom do_con của bảng có ngưỡng 15 độ, không dùng được cho ngưỡng 5,5 độ của Điều 15. Vì vậy đề xuất atom mới do_con_nguong_5_5 thay vì sửa do_con (quy tắc 14).",
+    "Không dùng kinh_doanh_ruou_bia cho «mua bán rượu» ở khoản 4, vì kinh doanh rộng hơn (gồm cả sản xuất), nên đề xuất act mới cap_phep_mua_ban_ruou.",
+    "Không dùng co_giay_phep_hoac_dang_ky_kinh_doanh_ruou cho khoản 4 điểm a, vì điểm a là đăng ký kinh doanh chung, không phải giấy phép hay đăng ký riêng cho kinh doanh rượu; đề xuất co_dang_ky_kinh_doanh.",
+    "Điều 15 chỉ nói về rượu, không nói về bia. Tên các act mới đã giới hạn ở rượu, nên không thêm điều kiện loai_do_uong.",
+    "Khoản 1 điểm c tách thành hai atom (an toàn thực phẩm; bảo vệ môi trường). Atom an toàn thực phẩm dùng chung cho khoản 1 điểm c, khoản 2 điểm b và khoản 3 điểm b vì chữ giống nhau.",
+    "Khoản 1 điểm b («đáp ứng quy mô dự kiến sản xuất») và điểm d («phù hợp») được coi là khái niệm mở và mã hóa thành tham số; mỗi điểm là một tham số bao trọn điểm đó.",
+    "Khoản 3 điểm a tách thành hai atom (hợp đồng mua bán; đăng ký với UBND cấp xã) vì chữ «và» đòi cả hai.",
+    "Ngoại lệ của khoản 2 («trừ trường hợp quy định tại khoản 3 Điều này») được biểu diễn bằng phạm vi của khoản 3: chủ thể là hộ gia đình, cá nhân và bán cho cơ sở có giấy phép để chế biến lại. Hộ kinh doanh (khoản 2 điểm a) được coi là khác hộ gia đình (khoản 3).",
+    "Các dẫn chiếu ra văn bản khác không ghi vào «references»: «theo quy định của pháp luật» (khoản 1 điểm a, c; khoản 2 điểm a, b; khoản 3 điểm b; khoản 4 điểm a), «theo từng loại hình mua bán rượu» ở khoản 4 điểm b (nội dung do văn bản khác quy định) và «Chính phủ quy định» ở khoản 5.",
+    "15.2.p không mang ngoại lệ «trừ trường hợp quy định tại khoản 3»: điều kiện của nó đã đòi chủ thể là doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc hộ kinh doanh, mà theo người duyệt (2026-11-25) hộ gia đình đã đăng ký hộ kinh doanh được tính là hộ kinh doanh, không thuộc khoản 3. Ngoại lệ vẫn giữ ở 15.2 (lệnh cấm), vì ở đó nó loại hộ gia đình, cá nhân của khoản 3 khỏi lệnh cấm cấp phép."
+  ]
+}

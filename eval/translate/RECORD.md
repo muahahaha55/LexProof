@@ -175,3 +175,14 @@ Bản dịch Điều 5 cũ (`article5.llm.json`) và phiếu duyệt của nó g
 - D2 × 5.12.i.1: cùng lý do với D1.
 
 Cả bản dịch lẫn các cách đọc đều chưa ai duyệt.
+
+## Điều 15 lần 3 (theo bảng thuật ngữ, bản 2), 2026-11-25
+
+Không gọi LLM qua API: AI trong phiên sửa bản `article15.glossary.llm.json` theo các câu trả lời của người duyệt
+(phiếu lần 2 bác A:3 và A:5; trả lời bằng tin nhắn: A:3 «được phép», A:5 «đồng ý», hộ gia đình đã đăng ký hộ kinh doanh
+được tính là hộ kinh doanh). Kết quả: `article15.glossary-2.llm.json`.
+
+- Thêm 4 norm cho phép (15.1.p đến 15.4.p): đủ mọi điểm thì được phép.
+- Khoản 3: act mới `nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai` (đề xuất vào bảng, phiếu `-5`); bỏ atom đăng ký
+  khỏi điều kiện.
+- `run.py` (chưa duyệt): consistentOn, 4 cặp đã kiểm, cả 4 act có cấm và cho phép, nên kết quả **không rỗng** trên Điều 15.
