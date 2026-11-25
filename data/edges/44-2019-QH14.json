@@ -91,7 +91,11 @@
       "reading": "Thu hồi rượu, bia đã bán ra thì phải chở hàng về; KÉM CHẮC: có thể xử lý tại chỗ mà không chở.",
       "ai_confidence": "trung bình",
       "proposed_by": "Claude (AI), 2026-11-25",
-      "status": "proposed"
+      "status": "rejected",
+      "review_note": "nếu rượu bia chưa bán ra cho khách hàng mà vẫn còn ở cơ sở sản xuất, mua bán thì có thể xử lý tại chỗ mà không cần vận chuyển",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-25",
+      "reviewed_content_sha256": "de8d584d0d2fb184c6e2817dac81539dda2e2d1419e80f8730afeea87b6d660e"
     },
     {
       "id": "E10",
@@ -101,7 +105,11 @@
       "reading": "Thu hồi rồi mới xử lý thì phải giữ hàng trong lúc chờ xử lý; KÉM CHẮC: «tàng trữ» có thể chỉ việc cất giữ để buôn bán.",
       "ai_confidence": "trung bình",
       "proposed_by": "Claude (AI), 2026-11-25",
-      "status": "proposed"
+      "status": "rejected",
+      "review_note": "\"tàng trữ\" nghĩa là giữ lại để bán sau này, không phải nghĩa của \"thu hồi và xử lý\"",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-25",
+      "reviewed_content_sha256": "86159c041b4f0ab6fa95c32f7cec34f44265e9b10379ecf43c7f174882761c33"
     },
     {
       "id": "E11",

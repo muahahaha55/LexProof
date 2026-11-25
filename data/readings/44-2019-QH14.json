@@ -5,6 +5,16 @@
   "note": "Cách đọc thay thế (ADR-0029). Mỗi mục là một đề xuất của AI, chưa ai duyệt. Kết quả chạy chỉ nói về cách đọc, không nói về luật.",
   "readings": [
     {
+      "id": "R0",
+      "reading": "Theo đúng các bản dịch đã duyệt, không thêm gì: nếu một cặp xung đột hiện ra ở đây thì đó là mâu thuẫn theo chữ luật.",
+      "proposed_by": "—",
+      "status": "rejected",
+      "review_note": "văn bản chưa tường minh, cần cơ quan ban hành làm rõ",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-25",
+      "reviewed_content_sha256": "ac605f67ee5c5a673e034c80357861d684f4f9013bf2e791d38d991b0645d120"
+    },
+    {
       "id": "R1",
       "proposed_by": "Claude (AI), 2026-11-25",
       "reading": "Lệnh cấm tàng trữ, vận chuyển rượu, bia không bảo đảm chất lượng (Điều 5 khoản 12) chỉ nhắm việc nhằm mục đích kinh doanh; việc thu hồi theo Điều 32 khoản 4 không nhằm mục đích kinh doanh.",
@@ -36,7 +46,12 @@
             }
           }
         }
-      ]
+      ],
+      "status": "rejected",
+      "review_note": "Tiêu đề Điều 32 là \"trách nhiệm của cơ sở kinh doanh rượu bia\", vì vậy Điều 32 vẫn có điều kiện «nham_muc_dich_kinh_doanh»",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-25",
+      "reviewed_content_sha256": "f756942c1df7500ec448284b95ec40d3111ed58039d14422a1cd0806bc8b09a1"
     },
     {
       "id": "R2",
@@ -68,7 +83,11 @@
             "sit": "dang_thuc_hien_thu_hoi_theo_dieu_32_khoan_4"
           }
         }
-      ]
+      ],
+      "status": "approved",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-25",
+      "reviewed_content_sha256": "793d7323d5e71283b30fea31903dcef6b6c9247752f8c6e03de6ac8b68a67abb"
     }
   ]
 }
