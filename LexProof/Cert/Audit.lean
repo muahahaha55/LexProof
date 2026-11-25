@@ -35,11 +35,11 @@ import LexProof.Laws.Article20
 import LexProof.Laws.Article21
 import LexProof.Laws.Article33
 import LexProof.Laws.Article34
-import LexProof.Laws.Law44
 import LexProof.Verify.Entail
 import LexProof.Verify.EntailTests
 import LexProof.Verify.Drafting
 import LexProof.Verify.DraftingTests
+import LexProof.Laws.Law44
 import LexProof.Laws.Law44Drafting
 import LexProof.Verify.Smoke
 import LexProof.Verify.Tests

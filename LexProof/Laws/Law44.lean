@@ -45,17 +45,35 @@ Review sheets:
   (sheet made on glossary sha256 `c4d8dcbea47080c86e97ba4e42219d80e0f68f6102ac61fcec9eb85796a06758`; every term this translation uses has the same meaning in the
   current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article16.glossary.llm.json` (sha256 `77d47d0e74a5b7eea5ab3fc7c89696883a08f6d6d83ea004edcf2acd908da2a8`), sheet `docs/review/duyet-ban-dich-dieu-16.md` (sha256 `40e6d1149df4f119aa65e7c47d198839c92c33b0bc567ba53b20bfc2f664b13d`), Vũ Đức Phong, 2026-11-24: accepted 4, rejected 0
+  (sheet made on glossary sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article17.glossary.llm.json` (sha256 `9403e9b68ea848941d040289451d43325f18466f06c6e108320bb01818f3740a`), sheet `docs/review/duyet-ban-dich-dieu-17.md` (sha256 `040005d7f974fb20ec7a2039c1c716e15d2ea9d191518d2e63fb8b05f18a3eb1`), Vũ Đức Phong, 2026-11-24: accepted 1, rejected 0
+  (sheet made on glossary sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article18.glossary.llm.json` (sha256 `8202d1e53167433814df39e761a340cf13668063a996e43bb62fa73fe040c5d0`), sheet `docs/review/duyet-ban-dich-dieu-18.md` (sha256 `14cf9c145bb2a143f165ee37fe8494f31f4f25a8be4a15e50db485383b42f3b0`), Vũ Đức Phong, 2026-11-24: accepted 1, rejected 0
+  (sheet made on glossary sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article20.glossary.llm.json` (sha256 `08836e1b84ca68b306733937202d833bb8d0ce1ce81569a74ace332edadf2758`), sheet `docs/review/duyet-ban-dich-dieu-20.md` (sha256 `36eeebbd99cf5631172ead8b3c9e9a83d469ad981020046f4a8a562c7869b5aa`), Vũ Đức Phong, 2026-11-24: accepted 1, rejected 0
+  (sheet made on glossary sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article21.glossary.llm.json` (sha256 `ccf9b20701b2b5ca828c5a92e2e98cc1b72aee1f4da17ae3f6f9910cf944593e`), sheet `docs/review/duyet-ban-dich-dieu-21.md` (sha256 `771ba04d84e27ed55147978587a0196bbe95c8dd88c296ce514fa5d40ae7f5a9`), Vũ Đức Phong, 2026-11-24: accepted 2, rejected 0
+  (sheet made on glossary sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article33.glossary.llm.json` (sha256 `d86cc2f22edb7f74ca62072ce15db450406eda791f3344f9d0f156aee057f2ff`), sheet `docs/review/duyet-ban-dich-dieu-33.md` (sha256 `fa1e373b6a8fa3f3e197a0dfd3af6f11b793c0e6253c4208275a1f2770d09058`), Vũ Đức Phong, 2026-11-24: accepted 6, rejected 0
+  (sheet made on glossary sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article34.glossary.llm.json` (sha256 `4d56cccf85d041dae698eebfa5575d347432f045418976483d3de94c1671f3b1`), sheet `docs/review/duyet-ban-dich-dieu-34.md` (sha256 `81a74effebd614b8814cb6e22618094ea6294c1aa1f2898a72bebc7630694b08`), Vũ Đức Phong, 2026-11-24: accepted 3, rejected 0
+  (sheet made on glossary sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article19.glossary.llm.json` (sha256 `35347eacb9bfcd366544cb140e34a6d850e93795e347b535d15f368e74011b96`), sheet `docs/review/duyet-ban-dich-dieu-19-lan-2.md` (sha256 `5a0ed1c381bac7ed6df8975fa653f9a710713256351d615b7075894e43226d2b`), Vũ Đức Phong, 2026-11-24: accepted 6, rejected 0
+  (sheet made on glossary sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * `eval/translate/article32.glossary-2.llm.json` (sha256 `02c516f06d9c99377489ba238b5a51fce32b85b873f850e84af8e3ff267c8f51`), sheet `docs/review/duyet-ban-dich-dieu-32-lan-2.md` (sha256 `d5e6f853cb83b9ad0ddc3bcfff99bbfea6d458de1d11fb6571998c35828582e5`), Vũ Đức Phong, 2026-11-23: accepted 8, rejected 0
   (sheet made on glossary sha256 `c4d8dcbea47080c86e97ba4e42219d80e0f68f6102ac61fcec9eb85796a06758`; every term this translation uses has the same meaning in the
   current glossary, so the review carries over: see `changed_terms` in promote.py)
-* `eval/translate/article15.llm.json` (sha256 `98241e1293cf2b9b317ffa8915791493b801fe6dae50e8ad69b07ac02545e902`), sheet `docs/review/duyet-ban-dich-dieu-15.md` (sha256 `131389487aa77d1f1a63304b79c5e78e861d4e5684948c36bb59d6ff8d06982d`), Vũ Đức Phong, 2026-11-20: accepted 4, rejected 0
+* `eval/translate/article15.glossary-2.llm.json` (sha256 `a2fcf0d372e37dc8ccce57daa2b47ca3b6e0d75fbe3e8db5b8d4d19b1ea53f5e`), sheet `docs/review/duyet-ban-dich-dieu-15-lan-3.md` (sha256 `06080ed80770a366f188336e9361857b1448b97183e03e097af627b07bfbbcca`), Vũ Đức Phong, 2026-11-25: accepted 8, rejected 0
+  (sheet made on glossary sha256 `d2b183c06512a4dba6499f108d227dcd3731850f9fb493345df69f867acfa43e`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 * Sheets reviewed on several dates; `status` carries the latest one.
 
 Assumptions accepted on the sheets:
@@ -177,21 +195,23 @@ Assumptions accepted on the sheets:
 * Điều 32: Khoản 7: «Kể từ ngày Luật này có hiệu lực» được hiểu là chỉ cấm việc mở mới sau ngày hiệu lực; điểm bán đã mở trước đó không bị điều này điều chỉnh. «Luật này» là cả văn bản, không phải một đơn vị điều khoản, nên không ghi vào references.
 * Điều 32: Khoản 7: không dùng dia_diem_co_so_y_te và dia_diem_co_so_giao_duc vì hai atom đó nói địa điểm chính là cơ sở, còn khoản này nói khoảng cách 100 m tính từ khuôn viên; ngoài ra danh sách cơ sở giáo dục ở đây (nhà trẻ, mẫu giáo, mầm non, phổ thông) hẹp hơn «cơ sở giáo dục». Vì vậy đề xuất atom mới theo quy tắc 14.
 * Điều 32: Không khoản nào của Điều 32 dẫn chiếu tới một điều khoản khác trong cùng Luật, nên mọi references đều rỗng.
-* Điều 15: Ngày hiệu lực 2020-01-01 không có trong đoạn chữ được cung cấp; giá trị này lấy theo hiệu lực chung đã biết của Luật 44/2019/QH14, người duyệt cần đối chiếu lại.
-* Điều 15: Tiêu đề «Quản lý kinh doanh rượu» không cho biết tính chất cấm, bắt buộc hay cho phép, nên không áp dụng một tính chất chung nào từ tiêu đề cho các khoản.
-* Điều 15: Các khoản 1, 2, 4 («Điều kiện cấp phép ... bao gồm:») được biểu diễn là permission: chủ thể được cấp phép khi đáp ứng ĐỦ MỌI điểm (and); chiều ngược lại (thiếu một điểm thì không được cấp phép) không được mã hóa thành norm riêng.
-* Điều 15: Khoản 3 không nhắc tới giấy phép; nó được biểu diễn là permission cho chính hoạt động sản xuất thủ công để bán cho cơ sở chế biến lại khi đủ các điểm a và b, không phải là quyền được cấp phép.
-* Điều 15: Điểm a khoản 3 gồm hai yêu cầu nối bằng «và» (có hợp đồng mua bán; có đăng ký với UBND cấp xã), nên được tách thành hai atom S9 và S10 và cả hai đều bắt buộc.
-* Điều 15: Điểm c khoản 1 được tách thành hai tham số P3 (an toàn thực phẩm) và P4 (bảo vệ môi trường); P3 được dùng lại cho điểm b khoản 2 và điểm b khoản 3 vì đó là cùng một khái niệm, dù «source» của P3 ghi điểm c khoản 1.
-* Điều 15: S1 (độ cồn từ 5,5 độ trở lên) xuất hiện ở các khoản 1 đến 4 và được dùng chung một atom, «source» ghi khoản 1.
-* Điều 15: Ngoại lệ ở khoản 2 («trừ trường hợp quy định tại khoản 3 Điều này») được hiểu là trường hợp hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép chế biến lại; trường hợp này loại khỏi phạm vi norm 15.2 chứ không phải là một quyền.
-* Điều 15: Enum S6 chỉ liệt kê các loại chủ thể có tên trong Điều 15; nó không đầy đủ cho mọi chủ thể có thể có.
-* Điều 15: Các cụm «được thành lập theo quy định của pháp luật» (điểm a khoản 1, điểm a khoản 2), «theo quy định của pháp luật» về an toàn thực phẩm và môi trường (điểm c khoản 1, điểm b khoản 2, điểm b khoản 3) và «Đăng ký kinh doanh theo quy định của pháp luật» (điểm a khoản 4) dẫn chiếu tới văn bản pháp luật khác, nên không ghi vào «references»; các điều kiện phụ thuộc văn bản khác được để là tham số P1, P3, P4.
-* Điều 15: S11 (có đăng ký kinh doanh) được xem là một sự kiện kiểm tra được và đặt trong «situation»; phần «theo quy định của pháp luật» của nó không được mã hóa.
-* Điều 15: «đáp ứng quy mô dự kiến sản xuất» (P2) và «trình độ, chuyên môn phù hợp» (P5) là khái niệm mở, nên được để là tham số và không tự quyết giá trị.
-* Điều 15: «Đáp ứng điều kiện theo từng loại hình mua bán rượu» (điểm b khoản 4) không được Điều 15 định nghĩa, có thể do Chính phủ quy định theo khoản 5, nên được để là tham số P6.
+* Điều 15: Ngày hiệu lực 2020-01-01 không có trong đoạn văn được cung cấp; giá trị này lấy từ kiến thức bên ngoài và người duyệt cần kiểm tra lại.
+* Điều 15: Tiêu đề «Quản lý kinh doanh rượu» không cho biết tính chất cấm, bắt buộc hay được phép, nên không áp dụng tính chất nào từ tiêu đề cho các khoản (quy tắc 7).
+* Điều 15: Quy tắc 11 theo người duyệt (lần 2 bác giả định cũ; trả lời 2026-11-25: «được phép»): mỗi danh sách «Điều kiện ... bao gồm» ở khoản 1, 2, 3, 4 được đọc theo hai chiều. Thiếu một điểm thì hành vi bị cấm (15.1, 15.2, 15.3, 15.4); đủ mọi điểm thì hành vi được phép (15.1.p, 15.2.p, 15.3.p, 15.4.p). «Được phép», không phải «bắt buộc»: luật không nói cơ quan phải cấp. Khoản 5 giao Chính phủ quy định chi tiết, nên văn bản hướng dẫn có thể thêm điều kiện; khi đó chiều «được phép» sẽ quá rộng.
+* Điều 15: Ở khoản 1, 2 và 4, hành vi bị điều chỉnh là việc cấp giấy phép (do cơ quan có thẩm quyền thực hiện), không phải bản thân việc sản xuất hay mua bán; luật không nêu cơ quan cấp phép.
+* Điều 15: Ở khoản 3, theo người duyệt (lần 2 bác giả định cũ; trả lời 2026-11-25: đồng ý), việc đăng ký với Ủy ban nhân dân cấp xã (điểm a) được coi tương đương cấp phép. Vì vậy hành vi bị điều chỉnh là việc Ủy ban nhân dân cấp xã nhận đăng ký (nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai), không phải bản thân việc sản xuất; atom co_dang_ky_voi_ubnd_cap_xa không còn là điều kiện. Điều kiện còn lại: hợp đồng mua bán với cơ sở có giấy phép (điểm a) và an toàn thực phẩm (điểm b).
+* Điều 15: Atom do_con của bảng có ngưỡng 15 độ, không dùng được cho ngưỡng 5,5 độ của Điều 15. Vì vậy đề xuất atom mới do_con_nguong_5_5 thay vì sửa do_con (quy tắc 14).
+* Điều 15: Không dùng kinh_doanh_ruou_bia cho «mua bán rượu» ở khoản 4, vì kinh doanh rộng hơn (gồm cả sản xuất), nên đề xuất act mới cap_phep_mua_ban_ruou.
+* Điều 15: Không dùng co_giay_phep_hoac_dang_ky_kinh_doanh_ruou cho khoản 4 điểm a, vì điểm a là đăng ký kinh doanh chung, không phải giấy phép hay đăng ký riêng cho kinh doanh rượu; đề xuất co_dang_ky_kinh_doanh.
+* Điều 15: Điều 15 chỉ nói về rượu, không nói về bia. Tên các act mới đã giới hạn ở rượu, nên không thêm điều kiện loai_do_uong.
+* Điều 15: Khoản 1 điểm c tách thành hai atom (an toàn thực phẩm; bảo vệ môi trường). Atom an toàn thực phẩm dùng chung cho khoản 1 điểm c, khoản 2 điểm b và khoản 3 điểm b vì chữ giống nhau.
+* Điều 15: Khoản 1 điểm b («đáp ứng quy mô dự kiến sản xuất») và điểm d («phù hợp») được coi là khái niệm mở và mã hóa thành tham số; mỗi điểm là một tham số bao trọn điểm đó.
+* Điều 15: Khoản 3 điểm a tách thành hai atom (hợp đồng mua bán; đăng ký với UBND cấp xã) vì chữ «và» đòi cả hai.
+* Điều 15: Ngoại lệ của khoản 2 («trừ trường hợp quy định tại khoản 3 Điều này») được biểu diễn bằng phạm vi của khoản 3: chủ thể là hộ gia đình, cá nhân và bán cho cơ sở có giấy phép để chế biến lại. Hộ kinh doanh (khoản 2 điểm a) được coi là khác hộ gia đình (khoản 3).
+* Điều 15: Các dẫn chiếu ra văn bản khác không ghi vào «references»: «theo quy định của pháp luật» (khoản 1 điểm a, c; khoản 2 điểm a, b; khoản 3 điểm b; khoản 4 điểm a), «theo từng loại hình mua bán rượu» ở khoản 4 điểm b (nội dung do văn bản khác quy định) và «Chính phủ quy định» ở khoản 5.
+* Điều 15: 15.2.p không mang ngoại lệ «trừ trường hợp quy định tại khoản 3»: điều kiện của nó đã đòi chủ thể là doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc hộ kinh doanh, mà theo người duyệt (2026-11-25) hộ gia đình đã đăng ký hộ kinh doanh được tính là hộ kinh doanh, không thuộc khoản 3. Ngoại lệ vẫn giữ ở 15.2 (lệnh cấm), vì ở đó nó loại hộ gia đình, cá nhân của khoản 3 khỏi lệnh cấm cấp phép.
 
-Glossary terms used (`data/glossary/44-2019-QH14.json`, sha256 `2d192705747a96340ccb68db20fd11537d1aef5741b16654aa8028f8309a5bfe`); an id shared by two articles is ONE atom:
+Glossary terms used (`data/glossary/44-2019-QH14.json`, sha256 `f9f9510bf455995d59675c46a2f3cba8a0777bd5daf646e2eefa3537813750dd`); an id shared by two articles is ONE atom:
 * act ban_ruou_bia [approved]: bán rượu, bia (trao đổi có trả tiền) (nguồn: Điều 5 khoản 3; Điều 19 tiêu đề)
 * act cung_cap_ruou_bia [approved]: cung cấp rượu, bia (gồm cả cho không, tặng — theo ý kiến người duyệt 2026-11-18, Q3) (nguồn: Điều 5 khoản 3)
 * act khuyen_mai_ruou_bia [approved]: khuyến mại rượu, bia trong hoạt động kinh doanh (nguồn: Điều 5 khoản 3; Điều 5 khoản 9 nhánh (i))
@@ -312,6 +332,19 @@ Glossary terms used (`data/glossary/44-2019-QH14.json`, sha256 `2d192705747a9634
 * atom mo_moi_ke_tu_ngay_luat_co_hieu_luc [approved]: việc mở mới điểm bán diễn ra kể từ ngày Luật này có hiệu lực (nguồn: Điều 32 khoản 7)
 * atom trong_ban_kinh_100m_tu_khuon_vien_co_so_y_te [approved]: điểm bán nằm trong bán kính 100 m tính từ khuôn viên của cơ sở y tế (khác dia_diem_co_so_y_te là địa điểm chính là cơ sở y tế) (nguồn: Điều 32 khoản 7)
 * atom trong_ban_kinh_100m_tu_khuon_vien_co_so_mam_non_pho_thong [approved]: điểm bán nằm trong bán kính 100 m tính từ khuôn viên của nhà trẻ, trường mẫu giáo, trường mầm non hoặc cơ sở giáo dục phổ thông (hẹp hơn dia_diem_co_so_giao_duc và đo theo khoảng cách) (nguồn: Điều 32 khoản 7)
+* act cap_phep_san_xuat_ruou_cong_nghiep [approved]: cấp giấy phép sản xuất rượu công nghiệp (nguồn: Điều 15 khoản 1)
+* act cap_phep_san_xuat_ruou_thu_cong [approved]: cấp giấy phép sản xuất rượu thủ công nhằm mục đích kinh doanh (nguồn: Điều 15 khoản 2)
+* act cap_phep_mua_ban_ruou [approved]: cấp giấy phép mua bán rượu (mua bán hẹp hơn kinh_doanh_ruou_bia, vốn gồm cả sản xuất) (nguồn: Điều 15 khoản 4)
+* act nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai [approved]: Ủy ban nhân dân cấp xã nhận đăng ký của hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép sản xuất rượu chế biến lại (việc đăng ký được coi tương đương cấp phép) (nguồn: Điều 15 khoản 3)
+* atom chu_the_la_doanh_nghiep_thanh_lap_hop_phap [approved]: chủ thể là doanh nghiệp được thành lập theo quy định của pháp luật (nguồn: Điều 15 khoản 1 điểm a)
+* atom day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien [approved]: có dây chuyền máy móc, thiết bị công nghiệp, quy trình công nghệ sản xuất rượu «đáp ứng quy mô dự kiến sản xuất» (khái niệm mở, luật không định lượng) (nguồn: Điều 15 khoản 1 điểm b)
+* atom bao_dam_dieu_kien_an_toan_thuc_pham [approved]: bảo đảm điều kiện về an toàn thực phẩm theo quy định của pháp luật (nguồn: Điều 15 khoản 1 điểm c; Điều 15 khoản 2 điểm b; Điều 15 khoản 3 điểm b)
+* atom bao_dam_dieu_kien_bao_ve_moi_truong [approved]: bảo đảm điều kiện về bảo vệ môi trường theo quy định của pháp luật (nguồn: Điều 15 khoản 1 điểm c)
+* atom nhan_vien_ky_thuat_trinh_do_phu_hop [approved]: có nhân viên kỹ thuật có trình độ, chuyên môn «phù hợp» với ngành, nghề sản xuất rượu (khái niệm mở) (nguồn: Điều 15 khoản 1 điểm d)
+* atom chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap [approved]: chủ thể là doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc hộ kinh doanh được thành lập theo quy định của pháp luật (nguồn: Điều 15 khoản 2 điểm a)
+* atom ban_cho_co_so_co_giay_phep_de_che_bien_lai [approved]: rượu sản xuất ra được bán cho cơ sở có giấy phép sản xuất rượu để chế biến lại (nguồn: Điều 15 khoản 3)
+* atom co_hop_dong_mua_ban_voi_co_so_co_giay_phep [approved]: có hợp đồng mua bán với cơ sở có giấy phép sản xuất rượu (nguồn: Điều 15 khoản 3 điểm a)
+* atom dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou [approved]: đáp ứng điều kiện theo từng loại hình mua bán rượu (nội dung điều kiện do văn bản khác quy định) (nguồn: Điều 15 khoản 4 điểm b)
 -/
 
 namespace LexProof.Laws.Law44
@@ -390,17 +423,13 @@ def tS : AtomTable :=
   , { name := "mo_moi_ke_tu_ngay_luat_co_hieu_luc", source := "Điều 32 khoản 7", domain := .bool }
   , { name := "trong_ban_kinh_100m_tu_khuon_vien_co_so_y_te", source := "Điều 32 khoản 7", domain := .bool }
   , { name := "trong_ban_kinh_100m_tu_khuon_vien_co_so_mam_non_pho_thong", source := "Điều 32 khoản 7", domain := .bool }
-  , { name := "Điều 15 · S1 do_con_tu_5_5_do_tro_len", source := "Điều 15 khoản 1", domain := .bool }
-  , { name := "Điều 15 · S2 san_xuat_ruou_cong_nghiep", source := "Điều 15 khoản 1", domain := .bool }
-  , { name := "Điều 15 · S3 san_xuat_ruou_thu_cong_nham_muc_dich_kinh_doanh", source := "Điều 15 khoản 2", domain := .bool }
-  , { name := "Điều 15 · S4 san_xuat_ruou_thu_cong_ban_cho_co_so_co_giay_phep_de_che_bien_lai", source := "Điều 15 khoản 3", domain := .bool }
-  , { name := "Điều 15 · S5 mua_ban_ruou", source := "Điều 15 khoản 4", domain := .bool }
-  , { name := "Điều 15 · S6 loai_chu_the", source := "Điều 15 khoản 2 điểm a", domain := .enum [⟨"doanh_nghiep", "Điều 15 khoản 1 điểm a"⟩, ⟨"hop_tac_xa", "Điều 15 khoản 2 điểm a"⟩, ⟨"lien_hiep_hop_tac_xa", "Điều 15 khoản 2 điểm a"⟩, ⟨"ho_kinh_doanh", "Điều 15 khoản 2 điểm a"⟩, ⟨"ho_gia_dinh", "Điều 15 khoản 3"⟩, ⟨"ca_nhan", "Điều 15 khoản 3"⟩] }
-  , { name := "Điều 15 · S7 co_day_chuyen_may_moc_thiet_bi_quy_trinh_cong_nghe", source := "Điều 15 khoản 1 điểm b", domain := .bool }
-  , { name := "Điều 15 · S8 co_nhan_vien_ky_thuat", source := "Điều 15 khoản 1 điểm d", domain := .bool }
-  , { name := "Điều 15 · S9 co_hop_dong_mua_ban_voi_co_so_co_giay_phep_san_xuat_ruou", source := "Điều 15 khoản 3 điểm a", domain := .bool }
-  , { name := "Điều 15 · S10 co_dang_ky_voi_ubnd_cap_xa_noi_co_co_so_san_xuat", source := "Điều 15 khoản 3 điểm a", domain := .bool }
-  , { name := "Điều 15 · S11 co_dang_ky_kinh_doanh", source := "Điều 15 khoản 4 điểm a", domain := .bool } ]
+  , { name := "chu_the_la_doanh_nghiep_thanh_lap_hop_phap", source := "Điều 15 khoản 1 điểm a", domain := .bool }
+  , { name := "bao_dam_dieu_kien_an_toan_thuc_pham", source := "Điều 15 khoản 1 điểm c", domain := .bool }
+  , { name := "bao_dam_dieu_kien_bao_ve_moi_truong", source := "Điều 15 khoản 1 điểm c", domain := .bool }
+  , { name := "chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap", source := "Điều 15 khoản 2 điểm a", domain := .bool }
+  , { name := "ban_cho_co_so_co_giay_phep_de_che_bien_lai", source := "Điều 15 khoản 3", domain := .bool }
+  , { name := "co_hop_dong_mua_ban_voi_co_so_co_giay_phep", source := "Điều 15 khoản 3 điểm a", domain := .bool }
+  , { name := "dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", source := "Điều 15 khoản 4 điểm b", domain := .bool } ]
 
 def tP : AtomTable :=
   [ { name := "ngay_truoc_gio_lam_viec_hoc_tap", source := "Điều 5 khoản 5", domain := .bool }
@@ -410,12 +439,8 @@ def tP : AtomTable :=
   , { name := "su_kien_phuong_tien_san_pham_danh_cho_nhom_dac_biet", source := "Điều 12 khoản 3 điểm a", domain := .bool }
   , { name := "ngay_truoc_trong_ngay_sau_chuong_trinh_danh_cho_tre_em", source := "Điều 12 khoản 3 điểm c nhánh (i)", domain := .bool }
   , { name := "co_so_lan_can_danh_cho_nguoi_chua_du_18", source := "Điều 12 khoản 3 điểm d", domain := .bool }
-  , { name := "Điều 15 · P1 duoc_thanh_lap_theo_quy_dinh_phap_luat", source := "Điều 15 khoản 1 điểm a", domain := .bool }
-  , { name := "Điều 15 · P2 day_chuyen_dap_ung_quy_mo_du_kien_san_xuat", source := "Điều 15 khoản 1 điểm b", domain := .bool }
-  , { name := "Điều 15 · P3 bao_dam_dieu_kien_an_toan_thuc_pham", source := "Điều 15 khoản 1 điểm c", domain := .bool }
-  , { name := "Điều 15 · P4 bao_dam_dieu_kien_bao_ve_moi_truong", source := "Điều 15 khoản 1 điểm c", domain := .bool }
-  , { name := "Điều 15 · P5 trinh_do_chuyen_mon_phu_hop_nganh_nghe_san_xuat_ruou", source := "Điều 15 khoản 1 điểm d", domain := .bool }
-  , { name := "Điều 15 · P6 dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", source := "Điều 15 khoản 4 điểm b", domain := .bool } ]
+  , { name := "day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien", source := "Điều 15 khoản 1 điểm b", domain := .bool }
+  , { name := "nhan_vien_ky_thuat_trinh_do_phu_hop", source := "Điều 15 khoản 1 điểm d", domain := .bool } ]
 
 def rS : List ReaderSpec :=
   [ ("tuoi_nguoi_nhan = chưa đủ 18 tuổi", 0, 0)
@@ -496,22 +521,13 @@ def rS : List ReaderSpec :=
   , ("mo_moi_ke_tu_ngay_luat_co_hieu_luc", 68, 1)
   , ("trong_ban_kinh_100m_tu_khuon_vien_co_so_y_te", 69, 1)
   , ("trong_ban_kinh_100m_tu_khuon_vien_co_so_mam_non_pho_thong", 70, 1)
-  , ("Điều 15 · S1 do_con_tu_5_5_do_tro_len", 71, 1)
-  , ("Điều 15 · S2 san_xuat_ruou_cong_nghiep", 72, 1)
-  , ("Điều 15 · S3 san_xuat_ruou_thu_cong_nham_muc_dich_kinh_doanh", 73, 1)
-  , ("Điều 15 · S4 san_xuat_ruou_thu_cong_ban_cho_co_so_co_giay_phep_de_che_bien_lai", 74, 1)
-  , ("Điều 15 · S5 mua_ban_ruou", 75, 1)
-  , ("Điều 15 · S6 loai_chu_the = doanh_nghiep", 76, 0)
-  , ("Điều 15 · S6 loai_chu_the = hop_tac_xa", 76, 1)
-  , ("Điều 15 · S6 loai_chu_the = lien_hiep_hop_tac_xa", 76, 2)
-  , ("Điều 15 · S6 loai_chu_the = ho_kinh_doanh", 76, 3)
-  , ("Điều 15 · S6 loai_chu_the = ho_gia_dinh", 76, 4)
-  , ("Điều 15 · S6 loai_chu_the = ca_nhan", 76, 5)
-  , ("Điều 15 · S7 co_day_chuyen_may_moc_thiet_bi_quy_trinh_cong_nghe", 77, 1)
-  , ("Điều 15 · S8 co_nhan_vien_ky_thuat", 78, 1)
-  , ("Điều 15 · S9 co_hop_dong_mua_ban_voi_co_so_co_giay_phep_san_xuat_ruou", 79, 1)
-  , ("Điều 15 · S10 co_dang_ky_voi_ubnd_cap_xa_noi_co_co_so_san_xuat", 80, 1)
-  , ("Điều 15 · S11 co_dang_ky_kinh_doanh", 81, 1) ]
+  , ("chu_the_la_doanh_nghiep_thanh_lap_hop_phap", 71, 1)
+  , ("bao_dam_dieu_kien_an_toan_thuc_pham", 72, 1)
+  , ("bao_dam_dieu_kien_bao_ve_moi_truong", 73, 1)
+  , ("chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap", 74, 1)
+  , ("ban_cho_co_so_co_giay_phep_de_che_bien_lai", 75, 1)
+  , ("co_hop_dong_mua_ban_voi_co_so_co_giay_phep", 76, 1)
+  , ("dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", 77, 1) ]
 
 def rP : List ReaderSpec :=
   [ ("ngay_truoc_gio_lam_viec_hoc_tap", 0, 1)
@@ -521,12 +537,8 @@ def rP : List ReaderSpec :=
   , ("su_kien_phuong_tien_san_pham_danh_cho_nhom_dac_biet", 4, 1)
   , ("ngay_truoc_trong_ngay_sau_chuong_trinh_danh_cho_tre_em", 5, 1)
   , ("co_so_lan_can_danh_cho_nguoi_chua_du_18", 6, 1)
-  , ("Điều 15 · P1 duoc_thanh_lap_theo_quy_dinh_phap_luat", 7, 1)
-  , ("Điều 15 · P2 day_chuyen_dap_ung_quy_mo_du_kien_san_xuat", 8, 1)
-  , ("Điều 15 · P3 bao_dam_dieu_kien_an_toan_thuc_pham", 9, 1)
-  , ("Điều 15 · P4 bao_dam_dieu_kien_bao_ve_moi_truong", 10, 1)
-  , ("Điều 15 · P5 trinh_do_chuyen_mon_phu_hop_nganh_nghe_san_xuat_ruou", 11, 1)
-  , ("Điều 15 · P6 dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", 12, 1) ]
+  , ("day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien", 7, 1)
+  , ("nhan_vien_ky_thuat_trinh_do_phu_hop", 8, 1) ]
 
 /-- Every legal unit of the document (articles, clauses, points), for the dangling-reference check. -/
 def catalog : List String :=
@@ -829,10 +841,14 @@ def norms : List Norm :=
   , nrm "Điều 32:32.6.i" .obligation "nhac_nho_thong_tin_khach_hang_khong_dieu_khien_phuong_tien" (.and (.sit 73) (.sit 74)) [] "Điều 32 khoản 6 nhánh (i)" []
   , nrm "Điều 32:32.6.ii" .obligation "ho_tro_khach_hang_su_dung_phuong_tien_cong_cong" (.and (.sit 73) (.sit 74)) [] "Điều 32 khoản 6 nhánh (ii)" []
   , nrm "Điều 32:32.7" .prohibition "mo_moi_diem_ban_ruou_bia_tieu_dung_tai_cho" (.and (.sit 75) (.or (.sit 76) (.sit 77))) [] "Điều 32 khoản 7" []
-  , nrm "Điều 15:15.1" .permission "duoc_cap_phep_san_xuat_ruou_cong_nghiep" (.and (.sit 79) (.and (.sit 78) (.and (.sit 83) (.and (.param 7) (.and (.sit 89) (.and (.param 8) (.and (.param 9) (.and (.param 10) (.and (.sit 90) (.param 11)))))))))) [] "Điều 15 khoản 1" []
-  , nrm "Điều 15:15.2" .permission "duoc_cap_phep_san_xuat_ruou_thu_cong" (.and (.sit 80) (.and (.sit 78) (.and (.or (.sit 83) (.or (.sit 84) (.or (.sit 85) (.sit 86)))) (.and (.param 7) (.param 9))))) [(.and (.sit 81) (.or (.sit 87) (.sit 88)))] "Điều 15 khoản 2" ["Điều 15 khoản 3"]
-  , nrm "Điều 15:15.3" .permission "san_xuat_ruou_thu_cong_ban_cho_co_so_che_bien_lai" (.and (.sit 81) (.and (.sit 78) (.and (.or (.sit 87) (.sit 88)) (.and (.sit 91) (.and (.sit 92) (.param 9)))))) [] "Điều 15 khoản 3" []
-  , nrm "Điều 15:15.4" .permission "duoc_cap_phep_mua_ban_ruou" (.and (.sit 82) (.and (.sit 78) (.and (.sit 93) (.param 12)))) [] "Điều 15 khoản 4" [] ]
+  , nrm "Điều 15:15.1" .prohibition "cap_phep_san_xuat_ruou_cong_nghiep" (.and (.sit 34) (.not (.and (.sit 78) (.and (.param 7) (.and (.sit 79) (.and (.sit 80) (.param 8))))))) [] "Điều 15 khoản 1" []
+  , nrm "Điều 15:15.1.p" .permission "cap_phep_san_xuat_ruou_cong_nghiep" (.and (.sit 34) (.and (.sit 78) (.and (.param 7) (.and (.sit 79) (.and (.sit 80) (.param 8)))))) [] "Điều 15 khoản 1" []
+  , nrm "Điều 15:15.2" .prohibition "cap_phep_san_xuat_ruou_thu_cong" (.and (.sit 34) (.and (.sit 61) (.not (.and (.sit 81) (.sit 79))))) [(.and (.sit 62) (.sit 82))] "Điều 15 khoản 2" ["Điều 15 khoản 3"]
+  , nrm "Điều 15:15.2.p" .permission "cap_phep_san_xuat_ruou_thu_cong" (.and (.sit 34) (.and (.sit 61) (.and (.sit 81) (.sit 79)))) [] "Điều 15 khoản 2" []
+  , nrm "Điều 15:15.3" .prohibition "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai" (.and (.sit 62) (.and (.sit 34) (.and (.sit 82) (.not (.and (.sit 83) (.sit 79)))))) [] "Điều 15 khoản 3" []
+  , nrm "Điều 15:15.3.p" .permission "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai" (.and (.sit 62) (.and (.sit 34) (.and (.sit 82) (.and (.sit 83) (.sit 79))))) [] "Điều 15 khoản 3" []
+  , nrm "Điều 15:15.4" .prohibition "cap_phep_mua_ban_ruou" (.and (.sit 34) (.not (.and (.sit 22) (.sit 84)))) [] "Điều 15 khoản 4" []
+  , nrm "Điều 15:15.4.p" .permission "cap_phep_mua_ban_ruou" (.and (.sit 34) (.and (.sit 22) (.sit 84))) [] "Điều 15 khoản 4" [] ]
 
 /-- Clauses not encoded, with the reason (from the translation or from the reviewer). Never a silent skip. -/
 def notEncoded : List (String × String) :=
@@ -852,11 +868,11 @@ def notEncoded : List (String × String) :=
   , ("Điều 33 khoản 3", "Câu dẫn của khoản xác định chủ thể là người đứng đầu, người quản lý, điều hành địa điểm quy định tại Điều 10 và Điều 19; chủ thể không được mã hóa thành atom, nên các norm của khoản này dùng điều kiện true hoặc điều kiện về hành vi vi phạm.")
   , ("Điều 34 khoản 1", "Hai phần sau của khoản («các thành viên khác trong gia đình hạn chế uống rượu, bia»; «động viên, giúp đỡ người nghiện rượu, bia trong gia đình cai nghiện») dùng chuẩn mở «hạn chế», «động viên, giúp đỡ» không có mức đo; không đoán, để người duyệt quyết định.")
   , ("Điều 32 khoản 1", "Câu đầu chỉ dẫn chiếu tới các văn bản pháp luật khác (điều kiện kinh doanh, quảng cáo, khuyến mại, tài trợ, an toàn thực phẩm, chất lượng, tiêu chuẩn, quy chuẩn, ghi nhãn) nên không có nội dung để mã hóa trong điều này. Câu sau («phải bảo đảm chính xác, khoa học») dùng chuẩn mở «khoa học», không trùng nghĩa với atom thong_tin_khong_chinh_xac_sai_su_that, và bảng không có act «cung cấp thông tin về sản phẩm» (cung_cap_thong_tin_ve_anh_huong_suc_khoe_cua_ruou_bia chỉ nói về ảnh hưởng sức khỏe). Để người duyệt quyết định cách đọc, không đoán.")
-  , ("Điều 15 khoản 5", "Khoản này giao Chính phủ quy định chi tiết Điều 15 và quy định việc quản lý kinh doanh rượu có độ cồn dưới 5,5 độ; trong văn bản này không có quy phạm cấm, bắt buộc hay cho phép nào có điều kiện cụ thể.") ]
+  , ("Điều 15 khoản 5", "Khoản 5 giao Chính phủ quy định chi tiết Điều 15 và việc quản lý kinh doanh rượu dưới 5,5 độ. Nó không đặt ra lệnh cấm, nghĩa vụ hay quyền nào có thể mã hóa từ chữ của luật; chỉ dùng làm nguồn cho nhãn «dưới 5,5 độ».") ]
 
-def acts : List Act := ["ban_ruou_bia", "ban_ruou_bia_bang_may_tu_dong", "cung_cap_ruou_bia", "cung_cap_thong_tin_hoat_dong_kinh_doanh_cho_co_quan", "cung_cap_thong_tin_ve_anh_huong_suc_khoe_cua_ruou_bia", "dieu_khien_phuong_tien_giao_thong", "dung_ruou_bia_lam_qua_khuyen_mai", "duoc_cap_phep_mua_ban_ruou", "duoc_cap_phep_san_xuat_ruou_cong_nghiep", "duoc_cap_phep_san_xuat_ruou_thu_cong", "gia_dinh_tham_gia_cung_co_quan_to_chuc_cong_dong_phong_chong_tac_hai_ruou_bia", "giao_duc_giam_sat_nhac_nho_thanh_vien_chua_du_18_khong_uong_ruou_bia", "ho_tro_khach_hang_su_dung_phuong_tien_cong_cong", "huong_dan_thanh_vien_gia_dinh_ky_nang_tu_choi_uong_ung_xu_nguoi_say_nghien", "khuyen_mai_ruou_bia", "kinh_doanh_ruou_bia", "mo_moi_diem_ban_ruou_bia_tieu_dung_tai_cho", "nhac_nho_thong_tin_khach_hang_khong_dieu_khien_phuong_tien", "nhac_nho_yeu_cau_cham_dut_vi_pham_dieu_10_va_19", "nhap_lau_ruou_bia", "niem_yet_thong_bao_khong_ban_cho_nguoi_chua_du_18", "phoi_hop_tham_gia_voi_co_quan_phong_chong_ruou_bia_gia_nhap_lau", "quang_cao_ruou_bia", "san_xuat_ruou_thu_cong", "san_xuat_ruou_thu_cong_ban_cho_co_so_che_bien_lai", "su_dung_lao_dong_truc_tiep_kinh_doanh_quang_cao_ruou_bia", "su_dung_lao_dong_truc_tiep_san_xuat_mua_ban_ruou_bia", "su_dung_nguyen_lieu_san_xuat_pha_che_ruou_bia", "tai_tro_bang_san_pham_ruou_bia", "tang_tru_ruou_bia", "tham_gia_hoat_dong_phong_chong_tac_hai_ruou_bia_tai_cong_dong_theo_dieu_24", "thu_hoi_xu_ly_ruou_bia", "thuc_hien_bien_phap_phong_ngua_phat_hien_ngan_chan_nguoi_dieu_khien_phuong_tien_van_tai_uong_ruou_bia", "to_chuc_huong_dan_kiem_tra_don_doc_khong_uong_khong_ban_ruou_bia_tai_dia_diem", "to_chuc_thuc_hien_bien_phap_phong_chong_tac_hai_ruou_bia", "to_chuc_thuc_hien_nghiem_quy_dinh_khong_uong_ruou_bia_trong_gio_lam_viec_tai_noi_lam_viec", "tu_choi_cung_cap_dich_vu_cho_nguoi_tiep_tuc_vi_pham", "uong_ruou_bia", "van_chuyen_ruou_bia", "xui_giuc_ep_buoc_uong_ruou_bia", "yeu_cau_nguoi_mua_xuat_trinh_giay_to_chung_minh_tuoi"]
+def acts : List Act := ["ban_ruou_bia", "ban_ruou_bia_bang_may_tu_dong", "cap_phep_mua_ban_ruou", "cap_phep_san_xuat_ruou_cong_nghiep", "cap_phep_san_xuat_ruou_thu_cong", "cung_cap_ruou_bia", "cung_cap_thong_tin_hoat_dong_kinh_doanh_cho_co_quan", "cung_cap_thong_tin_ve_anh_huong_suc_khoe_cua_ruou_bia", "dieu_khien_phuong_tien_giao_thong", "dung_ruou_bia_lam_qua_khuyen_mai", "gia_dinh_tham_gia_cung_co_quan_to_chuc_cong_dong_phong_chong_tac_hai_ruou_bia", "giao_duc_giam_sat_nhac_nho_thanh_vien_chua_du_18_khong_uong_ruou_bia", "ho_tro_khach_hang_su_dung_phuong_tien_cong_cong", "huong_dan_thanh_vien_gia_dinh_ky_nang_tu_choi_uong_ung_xu_nguoi_say_nghien", "khuyen_mai_ruou_bia", "kinh_doanh_ruou_bia", "mo_moi_diem_ban_ruou_bia_tieu_dung_tai_cho", "nhac_nho_thong_tin_khach_hang_khong_dieu_khien_phuong_tien", "nhac_nho_yeu_cau_cham_dut_vi_pham_dieu_10_va_19", "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai", "nhap_lau_ruou_bia", "niem_yet_thong_bao_khong_ban_cho_nguoi_chua_du_18", "phoi_hop_tham_gia_voi_co_quan_phong_chong_ruou_bia_gia_nhap_lau", "quang_cao_ruou_bia", "san_xuat_ruou_thu_cong", "su_dung_lao_dong_truc_tiep_kinh_doanh_quang_cao_ruou_bia", "su_dung_lao_dong_truc_tiep_san_xuat_mua_ban_ruou_bia", "su_dung_nguyen_lieu_san_xuat_pha_che_ruou_bia", "tai_tro_bang_san_pham_ruou_bia", "tang_tru_ruou_bia", "tham_gia_hoat_dong_phong_chong_tac_hai_ruou_bia_tai_cong_dong_theo_dieu_24", "thu_hoi_xu_ly_ruou_bia", "thuc_hien_bien_phap_phong_ngua_phat_hien_ngan_chan_nguoi_dieu_khien_phuong_tien_van_tai_uong_ruou_bia", "to_chuc_huong_dan_kiem_tra_don_doc_khong_uong_khong_ban_ruou_bia_tai_dia_diem", "to_chuc_thuc_hien_bien_phap_phong_chong_tac_hai_ruou_bia", "to_chuc_thuc_hien_nghiem_quy_dinh_khong_uong_ruou_bia_trong_gio_lam_viec_tai_noi_lam_viec", "tu_choi_cung_cap_dich_vu_cho_nguoi_tiep_tuc_vi_pham", "uong_ruou_bia", "van_chuyen_ruou_bia", "xui_giuc_ep_buoc_uong_ruou_bia", "yeu_cau_nguoi_mua_xuat_trinh_giay_to_chung_minh_tuoi"]
 
-def status : ReviewStatus := .reviewed "Vũ Đức Phong" ⟨2026, 11, 24⟩
+def status : ReviewStatus := .reviewed "Vũ Đức Phong" ⟨2026, 11, 25⟩
 
 /-- Every clause reference of the module, as written. -/
 def usedRefs : List String :=
@@ -926,6 +942,7 @@ theorem covers_articles_source :
   decide +kernel
 
 /-- What `analyzeReport` prints for this module (always print this, not only the core result). -/
-def report : List String := (analyzeReport status acts tS tP rS rP catalog norms).render
+def report : List String := (analyzeReport status acts tS tP rS rP catalog norms).render ++
+  counterexampleLines tS tP (analyzeP tS tP rS rP catalog norms)
 
 end LexProof.Laws.Law44

@@ -52,6 +52,9 @@ nên đây là mở rộng phạm vi.
   - Lần 2 (`docs/review/duyet-ban-dich-dieu-15-lan-2.md`) bị bác hai giả định (A:3, A:5). Lần 3
     (`eval/translate/article15.glossary-2.llm.json`, phiếu `docs/review/duyet-ban-dich-dieu-15-lan-3.md`, cùng phiếu bảng
     thuật ngữ `-5` cho một act mới) theo các câu trả lời của người duyệt; khi được duyệt, `Article15` và `Law44` được promote lại.
+  - **Kết quả sau lần 3** (cả hai phiếu được chấp nhận đủ, 2026-11-25): `Law44` có 77 norm; `Law44Drafting`: 77/77 norm
+    sống, 322 cặp không bao trùm, 6/6 ngoại lệ kích hoạt, **0 «không biết»**. `Law44.consistent` không còn rỗng: 4 act của
+    Điều 15 có cả lệnh cấm lẫn quyền.
 - So với thử nghiệm E8 (Python, chỉ 14 bản dịch theo bảng thuật ngữ, không có Điều 15): E8 báo 0. Mục này chỉ hiện khi gộp
   cả Điều 15.
 

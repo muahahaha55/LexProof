@@ -59,9 +59,9 @@ class Make(unittest.TestCase):
     @unittest.skipUnless(shutil.which("lake") and BUILT, "cần lake và Law44 đã build")
     def test_draft_report_says_scope_vacuity_and_keeps_edges_apart(self):
         text = RP.make(CFG, "draft", do_build=False, today="2000-01-01")
-        for s in ("BẢN NHÁP", "Không phải tư vấn pháp lý", "Nhất quán trên phần đã mã hóa", "Cảnh báo rỗng", "| **Cộng** | **36** |",
+        for s in ("BẢN NHÁP", "Không phải tư vấn pháp lý", "Nhất quán trên phần đã mã hóa", "| **Cộng** | **36** |",
                   "không có đơn vị nào bị bỏ qua im lặng", "covers_articles", "## 5. Kiểm qua quan hệ giữa các hành vi",
-                  "không** đổi kết luận ở mục 1", "## 6. Dấu hiệu lỗi soạn thảo", "## 7. Điều KHÔNG được chứng minh", "Điều 15:15.2 / 0", "KẾT QUẢ: consistentOn"):
+                  "không** đổi kết luận ở mục 1", "## 6. Dấu hiệu lỗi soạn thảo", "## 7. Điều KHÔNG được chứng minh", "KẾT QUẢ: consistentOn"):
             # no counterexample check here: whether section 5 has one depends on the reviewed edges in data/
             self.assertIn(s, text)
         self.assertIn("KHÔNG CHẠY (--no-build)", text)

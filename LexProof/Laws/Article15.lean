@@ -9,26 +9,50 @@ Written by `pipeline/promote.py 1.0`. **Reviewed** here means only: a person tic
 the sheet names the sha256 of the translation it was about. The tool does not check who the person is, nor
 whether the answers are right. Faithfulness to the law is not proved by anything in this file.
 
-Atom names and norm ids carry their article («Điều 5 · ...»): two articles never share an atom, so a
-conflict that depends on a concept shared by two articles can be missed (no translation here uses the glossary).
+Atoms of the glossary keep their id and are shared by every article that uses them; every term used was
+`approved` in the glossary file named below (ADR-0027). Other atom names, and all norm ids, carry their article.
+A wrong merge (two different concepts under one id) is stopped only by the glossary reviewer.
 
 Review sheets:
-* `eval/translate/article15.llm.json` (sha256 `98241e1293cf2b9b317ffa8915791493b801fe6dae50e8ad69b07ac02545e902`), sheet `docs/review/duyet-ban-dich-dieu-15.md` (sha256 `131389487aa77d1f1a63304b79c5e78e861d4e5684948c36bb59d6ff8d06982d`), Vũ Đức Phong, 2026-11-20: accepted 4, rejected 0
+* `eval/translate/article15.glossary-2.llm.json` (sha256 `a2fcf0d372e37dc8ccce57daa2b47ca3b6e0d75fbe3e8db5b8d4d19b1ea53f5e`), sheet `docs/review/duyet-ban-dich-dieu-15-lan-3.md` (sha256 `06080ed80770a366f188336e9361857b1448b97183e03e097af627b07bfbbcca`), Vũ Đức Phong, 2026-11-25: accepted 8, rejected 0
+  (sheet made on glossary sha256 `d2b183c06512a4dba6499f108d227dcd3731850f9fb493345df69f867acfa43e`; every term this translation uses has the same meaning in the
+  current glossary, so the review carries over: see `changed_terms` in promote.py)
 
 Assumptions accepted on the sheets:
-* Điều 15: Ngày hiệu lực 2020-01-01 không có trong đoạn chữ được cung cấp; giá trị này lấy theo hiệu lực chung đã biết của Luật 44/2019/QH14, người duyệt cần đối chiếu lại.
-* Điều 15: Tiêu đề «Quản lý kinh doanh rượu» không cho biết tính chất cấm, bắt buộc hay cho phép, nên không áp dụng một tính chất chung nào từ tiêu đề cho các khoản.
-* Điều 15: Các khoản 1, 2, 4 («Điều kiện cấp phép ... bao gồm:») được biểu diễn là permission: chủ thể được cấp phép khi đáp ứng ĐỦ MỌI điểm (and); chiều ngược lại (thiếu một điểm thì không được cấp phép) không được mã hóa thành norm riêng.
-* Điều 15: Khoản 3 không nhắc tới giấy phép; nó được biểu diễn là permission cho chính hoạt động sản xuất thủ công để bán cho cơ sở chế biến lại khi đủ các điểm a và b, không phải là quyền được cấp phép.
-* Điều 15: Điểm a khoản 3 gồm hai yêu cầu nối bằng «và» (có hợp đồng mua bán; có đăng ký với UBND cấp xã), nên được tách thành hai atom S9 và S10 và cả hai đều bắt buộc.
-* Điều 15: Điểm c khoản 1 được tách thành hai tham số P3 (an toàn thực phẩm) và P4 (bảo vệ môi trường); P3 được dùng lại cho điểm b khoản 2 và điểm b khoản 3 vì đó là cùng một khái niệm, dù «source» của P3 ghi điểm c khoản 1.
-* Điều 15: S1 (độ cồn từ 5,5 độ trở lên) xuất hiện ở các khoản 1 đến 4 và được dùng chung một atom, «source» ghi khoản 1.
-* Điều 15: Ngoại lệ ở khoản 2 («trừ trường hợp quy định tại khoản 3 Điều này») được hiểu là trường hợp hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép chế biến lại; trường hợp này loại khỏi phạm vi norm 15.2 chứ không phải là một quyền.
-* Điều 15: Enum S6 chỉ liệt kê các loại chủ thể có tên trong Điều 15; nó không đầy đủ cho mọi chủ thể có thể có.
-* Điều 15: Các cụm «được thành lập theo quy định của pháp luật» (điểm a khoản 1, điểm a khoản 2), «theo quy định của pháp luật» về an toàn thực phẩm và môi trường (điểm c khoản 1, điểm b khoản 2, điểm b khoản 3) và «Đăng ký kinh doanh theo quy định của pháp luật» (điểm a khoản 4) dẫn chiếu tới văn bản pháp luật khác, nên không ghi vào «references»; các điều kiện phụ thuộc văn bản khác được để là tham số P1, P3, P4.
-* Điều 15: S11 (có đăng ký kinh doanh) được xem là một sự kiện kiểm tra được và đặt trong «situation»; phần «theo quy định của pháp luật» của nó không được mã hóa.
-* Điều 15: «đáp ứng quy mô dự kiến sản xuất» (P2) và «trình độ, chuyên môn phù hợp» (P5) là khái niệm mở, nên được để là tham số và không tự quyết giá trị.
-* Điều 15: «Đáp ứng điều kiện theo từng loại hình mua bán rượu» (điểm b khoản 4) không được Điều 15 định nghĩa, có thể do Chính phủ quy định theo khoản 5, nên được để là tham số P6.
+* Điều 15: Ngày hiệu lực 2020-01-01 không có trong đoạn văn được cung cấp; giá trị này lấy từ kiến thức bên ngoài và người duyệt cần kiểm tra lại.
+* Điều 15: Tiêu đề «Quản lý kinh doanh rượu» không cho biết tính chất cấm, bắt buộc hay được phép, nên không áp dụng tính chất nào từ tiêu đề cho các khoản (quy tắc 7).
+* Điều 15: Quy tắc 11 theo người duyệt (lần 2 bác giả định cũ; trả lời 2026-11-25: «được phép»): mỗi danh sách «Điều kiện ... bao gồm» ở khoản 1, 2, 3, 4 được đọc theo hai chiều. Thiếu một điểm thì hành vi bị cấm (15.1, 15.2, 15.3, 15.4); đủ mọi điểm thì hành vi được phép (15.1.p, 15.2.p, 15.3.p, 15.4.p). «Được phép», không phải «bắt buộc»: luật không nói cơ quan phải cấp. Khoản 5 giao Chính phủ quy định chi tiết, nên văn bản hướng dẫn có thể thêm điều kiện; khi đó chiều «được phép» sẽ quá rộng.
+* Điều 15: Ở khoản 1, 2 và 4, hành vi bị điều chỉnh là việc cấp giấy phép (do cơ quan có thẩm quyền thực hiện), không phải bản thân việc sản xuất hay mua bán; luật không nêu cơ quan cấp phép.
+* Điều 15: Ở khoản 3, theo người duyệt (lần 2 bác giả định cũ; trả lời 2026-11-25: đồng ý), việc đăng ký với Ủy ban nhân dân cấp xã (điểm a) được coi tương đương cấp phép. Vì vậy hành vi bị điều chỉnh là việc Ủy ban nhân dân cấp xã nhận đăng ký (nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai), không phải bản thân việc sản xuất; atom co_dang_ky_voi_ubnd_cap_xa không còn là điều kiện. Điều kiện còn lại: hợp đồng mua bán với cơ sở có giấy phép (điểm a) và an toàn thực phẩm (điểm b).
+* Điều 15: Atom do_con của bảng có ngưỡng 15 độ, không dùng được cho ngưỡng 5,5 độ của Điều 15. Vì vậy đề xuất atom mới do_con_nguong_5_5 thay vì sửa do_con (quy tắc 14).
+* Điều 15: Không dùng kinh_doanh_ruou_bia cho «mua bán rượu» ở khoản 4, vì kinh doanh rộng hơn (gồm cả sản xuất), nên đề xuất act mới cap_phep_mua_ban_ruou.
+* Điều 15: Không dùng co_giay_phep_hoac_dang_ky_kinh_doanh_ruou cho khoản 4 điểm a, vì điểm a là đăng ký kinh doanh chung, không phải giấy phép hay đăng ký riêng cho kinh doanh rượu; đề xuất co_dang_ky_kinh_doanh.
+* Điều 15: Điều 15 chỉ nói về rượu, không nói về bia. Tên các act mới đã giới hạn ở rượu, nên không thêm điều kiện loai_do_uong.
+* Điều 15: Khoản 1 điểm c tách thành hai atom (an toàn thực phẩm; bảo vệ môi trường). Atom an toàn thực phẩm dùng chung cho khoản 1 điểm c, khoản 2 điểm b và khoản 3 điểm b vì chữ giống nhau.
+* Điều 15: Khoản 1 điểm b («đáp ứng quy mô dự kiến sản xuất») và điểm d («phù hợp») được coi là khái niệm mở và mã hóa thành tham số; mỗi điểm là một tham số bao trọn điểm đó.
+* Điều 15: Khoản 3 điểm a tách thành hai atom (hợp đồng mua bán; đăng ký với UBND cấp xã) vì chữ «và» đòi cả hai.
+* Điều 15: Ngoại lệ của khoản 2 («trừ trường hợp quy định tại khoản 3 Điều này») được biểu diễn bằng phạm vi của khoản 3: chủ thể là hộ gia đình, cá nhân và bán cho cơ sở có giấy phép để chế biến lại. Hộ kinh doanh (khoản 2 điểm a) được coi là khác hộ gia đình (khoản 3).
+* Điều 15: Các dẫn chiếu ra văn bản khác không ghi vào «references»: «theo quy định của pháp luật» (khoản 1 điểm a, c; khoản 2 điểm a, b; khoản 3 điểm b; khoản 4 điểm a), «theo từng loại hình mua bán rượu» ở khoản 4 điểm b (nội dung do văn bản khác quy định) và «Chính phủ quy định» ở khoản 5.
+* Điều 15: 15.2.p không mang ngoại lệ «trừ trường hợp quy định tại khoản 3»: điều kiện của nó đã đòi chủ thể là doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc hộ kinh doanh, mà theo người duyệt (2026-11-25) hộ gia đình đã đăng ký hộ kinh doanh được tính là hộ kinh doanh, không thuộc khoản 3. Ngoại lệ vẫn giữ ở 15.2 (lệnh cấm), vì ở đó nó loại hộ gia đình, cá nhân của khoản 3 khỏi lệnh cấm cấp phép.
+
+Glossary terms used (`data/glossary/44-2019-QH14.json`, sha256 `f9f9510bf455995d59675c46a2f3cba8a0777bd5daf646e2eefa3537813750dd`); an id shared by two articles is ONE atom:
+* act cap_phep_san_xuat_ruou_cong_nghiep [approved]: cấp giấy phép sản xuất rượu công nghiệp (nguồn: Điều 15 khoản 1)
+* act cap_phep_san_xuat_ruou_thu_cong [approved]: cấp giấy phép sản xuất rượu thủ công nhằm mục đích kinh doanh (nguồn: Điều 15 khoản 2)
+* act cap_phep_mua_ban_ruou [approved]: cấp giấy phép mua bán rượu (mua bán hẹp hơn kinh_doanh_ruou_bia, vốn gồm cả sản xuất) (nguồn: Điều 15 khoản 4)
+* act nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai [approved]: Ủy ban nhân dân cấp xã nhận đăng ký của hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép sản xuất rượu chế biến lại (việc đăng ký được coi tương đương cấp phép) (nguồn: Điều 15 khoản 3)
+* atom do_con_nguong_5_5 [approved]: độ cồn của rượu so với ngưỡng 5,5 độ (nguồn: Điều 15 khoản 1; Điều 15 khoản 5)
+* atom chu_the_la_doanh_nghiep_thanh_lap_hop_phap [approved]: chủ thể là doanh nghiệp được thành lập theo quy định của pháp luật (nguồn: Điều 15 khoản 1 điểm a)
+* atom day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien [approved]: có dây chuyền máy móc, thiết bị công nghiệp, quy trình công nghệ sản xuất rượu «đáp ứng quy mô dự kiến sản xuất» (khái niệm mở, luật không định lượng) (nguồn: Điều 15 khoản 1 điểm b)
+* atom bao_dam_dieu_kien_an_toan_thuc_pham [approved]: bảo đảm điều kiện về an toàn thực phẩm theo quy định của pháp luật (nguồn: Điều 15 khoản 1 điểm c; Điều 15 khoản 2 điểm b; Điều 15 khoản 3 điểm b)
+* atom bao_dam_dieu_kien_bao_ve_moi_truong [approved]: bảo đảm điều kiện về bảo vệ môi trường theo quy định của pháp luật (nguồn: Điều 15 khoản 1 điểm c)
+* atom nhan_vien_ky_thuat_trinh_do_phu_hop [approved]: có nhân viên kỹ thuật có trình độ, chuyên môn «phù hợp» với ngành, nghề sản xuất rượu (khái niệm mở) (nguồn: Điều 15 khoản 1 điểm d)
+* atom muc_dich_kinh_doanh [approved]: việc sản xuất rượu nhằm mục đích kinh doanh (nguồn: Điều 15 khoản 2)
+* atom chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap [approved]: chủ thể là doanh nghiệp, hợp tác xã, liên hiệp hợp tác xã hoặc hộ kinh doanh được thành lập theo quy định của pháp luật (nguồn: Điều 15 khoản 2 điểm a)
+* atom chu_the_la_ho_gia_dinh_ca_nhan [approved]: chủ thể sản xuất là hộ gia đình hoặc cá nhân (khác hộ kinh doanh) (nguồn: Điều 15 khoản 3)
+* atom ban_cho_co_so_co_giay_phep_de_che_bien_lai [approved]: rượu sản xuất ra được bán cho cơ sở có giấy phép sản xuất rượu để chế biến lại (nguồn: Điều 15 khoản 3)
+* atom co_hop_dong_mua_ban_voi_co_so_co_giay_phep [approved]: có hợp đồng mua bán với cơ sở có giấy phép sản xuất rượu (nguồn: Điều 15 khoản 3 điểm a)
+* atom co_dang_ky_kinh_doanh [approved]: đã đăng ký kinh doanh theo quy định của pháp luật (đăng ký kinh doanh chung, khác co_giay_phep_hoac_dang_ky_kinh_doanh_ruou) (nguồn: Điều 15 khoản 4 điểm a)
+* atom dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou [approved]: đáp ứng điều kiện theo từng loại hình mua bán rượu (nội dung điều kiện do văn bản khác quy định) (nguồn: Điều 15 khoản 4 điểm b)
 -/
 
 namespace LexProof.Laws.Article15
@@ -36,51 +60,39 @@ namespace LexProof.Laws.Article15
 open LexProof
 
 def tS : AtomTable :=
-  [ { name := "Điều 15 · S1 do_con_tu_5_5_do_tro_len", source := "Điều 15 khoản 1", domain := .bool }
-  , { name := "Điều 15 · S2 san_xuat_ruou_cong_nghiep", source := "Điều 15 khoản 1", domain := .bool }
-  , { name := "Điều 15 · S3 san_xuat_ruou_thu_cong_nham_muc_dich_kinh_doanh", source := "Điều 15 khoản 2", domain := .bool }
-  , { name := "Điều 15 · S4 san_xuat_ruou_thu_cong_ban_cho_co_so_co_giay_phep_de_che_bien_lai", source := "Điều 15 khoản 3", domain := .bool }
-  , { name := "Điều 15 · S5 mua_ban_ruou", source := "Điều 15 khoản 4", domain := .bool }
-  , { name := "Điều 15 · S6 loai_chu_the", source := "Điều 15 khoản 2 điểm a", domain := .enum [⟨"doanh_nghiep", "Điều 15 khoản 1 điểm a"⟩, ⟨"hop_tac_xa", "Điều 15 khoản 2 điểm a"⟩, ⟨"lien_hiep_hop_tac_xa", "Điều 15 khoản 2 điểm a"⟩, ⟨"ho_kinh_doanh", "Điều 15 khoản 2 điểm a"⟩, ⟨"ho_gia_dinh", "Điều 15 khoản 3"⟩, ⟨"ca_nhan", "Điều 15 khoản 3"⟩] }
-  , { name := "Điều 15 · S7 co_day_chuyen_may_moc_thiet_bi_quy_trinh_cong_nghe", source := "Điều 15 khoản 1 điểm b", domain := .bool }
-  , { name := "Điều 15 · S8 co_nhan_vien_ky_thuat", source := "Điều 15 khoản 1 điểm d", domain := .bool }
-  , { name := "Điều 15 · S9 co_hop_dong_mua_ban_voi_co_so_co_giay_phep_san_xuat_ruou", source := "Điều 15 khoản 3 điểm a", domain := .bool }
-  , { name := "Điều 15 · S10 co_dang_ky_voi_ubnd_cap_xa_noi_co_co_so_san_xuat", source := "Điều 15 khoản 3 điểm a", domain := .bool }
-  , { name := "Điều 15 · S11 co_dang_ky_kinh_doanh", source := "Điều 15 khoản 4 điểm a", domain := .bool } ]
+  [ { name := "do_con_nguong_5_5", source := "Điều 15 khoản 1", domain := .enum [⟨"dưới 5,5 độ", "Điều 15 khoản 5"⟩, ⟨"từ 5,5 độ trở lên", "Điều 15 khoản 1"⟩] }
+  , { name := "chu_the_la_doanh_nghiep_thanh_lap_hop_phap", source := "Điều 15 khoản 1 điểm a", domain := .bool }
+  , { name := "bao_dam_dieu_kien_an_toan_thuc_pham", source := "Điều 15 khoản 1 điểm c", domain := .bool }
+  , { name := "bao_dam_dieu_kien_bao_ve_moi_truong", source := "Điều 15 khoản 1 điểm c", domain := .bool }
+  , { name := "muc_dich_kinh_doanh", source := "Điều 15 khoản 2", domain := .bool }
+  , { name := "chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap", source := "Điều 15 khoản 2 điểm a", domain := .bool }
+  , { name := "chu_the_la_ho_gia_dinh_ca_nhan", source := "Điều 15 khoản 3", domain := .bool }
+  , { name := "ban_cho_co_so_co_giay_phep_de_che_bien_lai", source := "Điều 15 khoản 3", domain := .bool }
+  , { name := "co_hop_dong_mua_ban_voi_co_so_co_giay_phep", source := "Điều 15 khoản 3 điểm a", domain := .bool }
+  , { name := "co_dang_ky_kinh_doanh", source := "Điều 15 khoản 4 điểm a", domain := .bool }
+  , { name := "dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", source := "Điều 15 khoản 4 điểm b", domain := .bool } ]
 
 def tP : AtomTable :=
-  [ { name := "Điều 15 · P1 duoc_thanh_lap_theo_quy_dinh_phap_luat", source := "Điều 15 khoản 1 điểm a", domain := .bool }
-  , { name := "Điều 15 · P2 day_chuyen_dap_ung_quy_mo_du_kien_san_xuat", source := "Điều 15 khoản 1 điểm b", domain := .bool }
-  , { name := "Điều 15 · P3 bao_dam_dieu_kien_an_toan_thuc_pham", source := "Điều 15 khoản 1 điểm c", domain := .bool }
-  , { name := "Điều 15 · P4 bao_dam_dieu_kien_bao_ve_moi_truong", source := "Điều 15 khoản 1 điểm c", domain := .bool }
-  , { name := "Điều 15 · P5 trinh_do_chuyen_mon_phu_hop_nganh_nghe_san_xuat_ruou", source := "Điều 15 khoản 1 điểm d", domain := .bool }
-  , { name := "Điều 15 · P6 dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", source := "Điều 15 khoản 4 điểm b", domain := .bool } ]
+  [ { name := "day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien", source := "Điều 15 khoản 1 điểm b", domain := .bool }
+  , { name := "nhan_vien_ky_thuat_trinh_do_phu_hop", source := "Điều 15 khoản 1 điểm d", domain := .bool } ]
 
 def rS : List ReaderSpec :=
-  [ ("Điều 15 · S1 do_con_tu_5_5_do_tro_len", 0, 1)
-  , ("Điều 15 · S2 san_xuat_ruou_cong_nghiep", 1, 1)
-  , ("Điều 15 · S3 san_xuat_ruou_thu_cong_nham_muc_dich_kinh_doanh", 2, 1)
-  , ("Điều 15 · S4 san_xuat_ruou_thu_cong_ban_cho_co_so_co_giay_phep_de_che_bien_lai", 3, 1)
-  , ("Điều 15 · S5 mua_ban_ruou", 4, 1)
-  , ("Điều 15 · S6 loai_chu_the = doanh_nghiep", 5, 0)
-  , ("Điều 15 · S6 loai_chu_the = hop_tac_xa", 5, 1)
-  , ("Điều 15 · S6 loai_chu_the = lien_hiep_hop_tac_xa", 5, 2)
-  , ("Điều 15 · S6 loai_chu_the = ho_kinh_doanh", 5, 3)
-  , ("Điều 15 · S6 loai_chu_the = ho_gia_dinh", 5, 4)
-  , ("Điều 15 · S6 loai_chu_the = ca_nhan", 5, 5)
-  , ("Điều 15 · S7 co_day_chuyen_may_moc_thiet_bi_quy_trinh_cong_nghe", 6, 1)
-  , ("Điều 15 · S8 co_nhan_vien_ky_thuat", 7, 1)
-  , ("Điều 15 · S9 co_hop_dong_mua_ban_voi_co_so_co_giay_phep_san_xuat_ruou", 8, 1)
-  , ("Điều 15 · S10 co_dang_ky_voi_ubnd_cap_xa_noi_co_co_so_san_xuat", 9, 1)
-  , ("Điều 15 · S11 co_dang_ky_kinh_doanh", 10, 1) ]
+  [ ("do_con_nguong_5_5 = dưới 5,5 độ", 0, 0)
+  , ("do_con_nguong_5_5 = từ 5,5 độ trở lên", 0, 1)
+  , ("chu_the_la_doanh_nghiep_thanh_lap_hop_phap", 1, 1)
+  , ("bao_dam_dieu_kien_an_toan_thuc_pham", 2, 1)
+  , ("bao_dam_dieu_kien_bao_ve_moi_truong", 3, 1)
+  , ("muc_dich_kinh_doanh", 4, 1)
+  , ("chu_the_la_dn_htx_lhhtx_hkd_thanh_lap_hop_phap", 5, 1)
+  , ("chu_the_la_ho_gia_dinh_ca_nhan", 6, 1)
+  , ("ban_cho_co_so_co_giay_phep_de_che_bien_lai", 7, 1)
+  , ("co_hop_dong_mua_ban_voi_co_so_co_giay_phep", 8, 1)
+  , ("co_dang_ky_kinh_doanh", 9, 1)
+  , ("dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", 10, 1) ]
 
 def rP : List ReaderSpec :=
-  [ ("Điều 15 · P1 duoc_thanh_lap_theo_quy_dinh_phap_luat", 0, 1)
-  , ("Điều 15 · P2 day_chuyen_dap_ung_quy_mo_du_kien_san_xuat", 1, 1)
-  , ("Điều 15 · P3 bao_dam_dieu_kien_an_toan_thuc_pham", 2, 1)
-  , ("Điều 15 · P4 bao_dam_dieu_kien_bao_ve_moi_truong", 3, 1)
-  , ("Điều 15 · P5 trinh_do_chuyen_mon_phu_hop_nganh_nghe_san_xuat_ruou", 4, 1)
-  , ("Điều 15 · P6 dap_ung_dieu_kien_theo_loai_hinh_mua_ban_ruou", 5, 1) ]
+  [ ("day_chuyen_thiet_bi_quy_trinh_dap_ung_quy_mo_du_kien", 0, 1)
+  , ("nhan_vien_ky_thuat_trinh_do_phu_hop", 1, 1) ]
 
 /-- Every legal unit of the document (articles, clauses, points), for the dangling-reference check. -/
 def catalog : List String :=
@@ -314,18 +326,22 @@ private def nrm (id : String) (mo : Modality) (act : String) (c : Cond) (ex : Li
   , references := refs }
 
 def norms : List Norm :=
-  [ nrm "Điều 15:15.1" .permission "duoc_cap_phep_san_xuat_ruou_cong_nghiep" (.and (.sit 1) (.and (.sit 0) (.and (.sit 5) (.and (.param 0) (.and (.sit 11) (.and (.param 1) (.and (.param 2) (.and (.param 3) (.and (.sit 12) (.param 4)))))))))) [] "Điều 15 khoản 1" []
-  , nrm "Điều 15:15.2" .permission "duoc_cap_phep_san_xuat_ruou_thu_cong" (.and (.sit 2) (.and (.sit 0) (.and (.or (.sit 5) (.or (.sit 6) (.or (.sit 7) (.sit 8)))) (.and (.param 0) (.param 2))))) [(.and (.sit 3) (.or (.sit 9) (.sit 10)))] "Điều 15 khoản 2" ["Điều 15 khoản 3"]
-  , nrm "Điều 15:15.3" .permission "san_xuat_ruou_thu_cong_ban_cho_co_so_che_bien_lai" (.and (.sit 3) (.and (.sit 0) (.and (.or (.sit 9) (.sit 10)) (.and (.sit 13) (.and (.sit 14) (.param 2)))))) [] "Điều 15 khoản 3" []
-  , nrm "Điều 15:15.4" .permission "duoc_cap_phep_mua_ban_ruou" (.and (.sit 4) (.and (.sit 0) (.and (.sit 15) (.param 5)))) [] "Điều 15 khoản 4" [] ]
+  [ nrm "Điều 15:15.1" .prohibition "cap_phep_san_xuat_ruou_cong_nghiep" (.and (.sit 1) (.not (.and (.sit 2) (.and (.param 0) (.and (.sit 3) (.and (.sit 4) (.param 1))))))) [] "Điều 15 khoản 1" []
+  , nrm "Điều 15:15.1.p" .permission "cap_phep_san_xuat_ruou_cong_nghiep" (.and (.sit 1) (.and (.sit 2) (.and (.param 0) (.and (.sit 3) (.and (.sit 4) (.param 1)))))) [] "Điều 15 khoản 1" []
+  , nrm "Điều 15:15.2" .prohibition "cap_phep_san_xuat_ruou_thu_cong" (.and (.sit 1) (.and (.sit 5) (.not (.and (.sit 6) (.sit 3))))) [(.and (.sit 7) (.sit 8))] "Điều 15 khoản 2" ["Điều 15 khoản 3"]
+  , nrm "Điều 15:15.2.p" .permission "cap_phep_san_xuat_ruou_thu_cong" (.and (.sit 1) (.and (.sit 5) (.and (.sit 6) (.sit 3)))) [] "Điều 15 khoản 2" []
+  , nrm "Điều 15:15.3" .prohibition "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai" (.and (.sit 7) (.and (.sit 1) (.and (.sit 8) (.not (.and (.sit 9) (.sit 3)))))) [] "Điều 15 khoản 3" []
+  , nrm "Điều 15:15.3.p" .permission "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai" (.and (.sit 7) (.and (.sit 1) (.and (.sit 8) (.and (.sit 9) (.sit 3))))) [] "Điều 15 khoản 3" []
+  , nrm "Điều 15:15.4" .prohibition "cap_phep_mua_ban_ruou" (.and (.sit 1) (.not (.and (.sit 10) (.sit 11)))) [] "Điều 15 khoản 4" []
+  , nrm "Điều 15:15.4.p" .permission "cap_phep_mua_ban_ruou" (.and (.sit 1) (.and (.sit 10) (.sit 11))) [] "Điều 15 khoản 4" [] ]
 
 /-- Clauses not encoded, with the reason (from the translation or from the reviewer). Never a silent skip. -/
 def notEncoded : List (String × String) :=
-  [ ("Điều 15 khoản 5", "Khoản này giao Chính phủ quy định chi tiết Điều 15 và quy định việc quản lý kinh doanh rượu có độ cồn dưới 5,5 độ; trong văn bản này không có quy phạm cấm, bắt buộc hay cho phép nào có điều kiện cụ thể.") ]
+  [ ("Điều 15 khoản 5", "Khoản 5 giao Chính phủ quy định chi tiết Điều 15 và việc quản lý kinh doanh rượu dưới 5,5 độ. Nó không đặt ra lệnh cấm, nghĩa vụ hay quyền nào có thể mã hóa từ chữ của luật; chỉ dùng làm nguồn cho nhãn «dưới 5,5 độ».") ]
 
-def acts : List Act := ["duoc_cap_phep_mua_ban_ruou", "duoc_cap_phep_san_xuat_ruou_cong_nghiep", "duoc_cap_phep_san_xuat_ruou_thu_cong", "san_xuat_ruou_thu_cong_ban_cho_co_so_che_bien_lai"]
+def acts : List Act := ["cap_phep_mua_ban_ruou", "cap_phep_san_xuat_ruou_cong_nghiep", "cap_phep_san_xuat_ruou_thu_cong", "nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai"]
 
-def status : ReviewStatus := .reviewed "Vũ Đức Phong" ⟨2026, 11, 20⟩
+def status : ReviewStatus := .reviewed "Vũ Đức Phong" ⟨2026, 11, 25⟩
 
 /-- Every clause reference of the module, as written. -/
 def usedRefs : List String :=
@@ -352,6 +368,7 @@ theorem no_conflict :
   not_conflict_of_consistentOnP consistent
 
 /-- What `analyzeReport` prints for this module (always print this, not only the core result). -/
-def report : List String := (analyzeReport status acts tS tP rS rP catalog norms).render
+def report : List String := (analyzeReport status acts tS tP rS rP catalog norms).render ++
+  counterexampleLines tS tP (analyzeP tS tP rS rP catalog norms)
 
 end LexProof.Laws.Article15

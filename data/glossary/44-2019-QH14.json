@@ -447,8 +447,10 @@
       "sources": [
         "Điều 15 khoản 3"
       ],
-      "status": "proposed",
-      "proposed_in": "eval/translate/article15.glossary-2.llm.json (sha256 a2fcf0d372e37dc8ccce57daa2b47ca3b6e0d75fbe3e8db5b8d4d19b1ea53f5e)"
+      "status": "approved",
+      "proposed_in": "eval/translate/article15.glossary-2.llm.json (sha256 a2fcf0d372e37dc8ccce57daa2b47ca3b6e0d75fbe3e8db5b8d4d19b1ea53f5e)",
+      "reviewed_by": "Vũ Đức Phong",
+      "reviewed_on": "2026-11-25"
     }
   ],
   "atoms": [
