@@ -1,6 +1,6 @@
 # Sổ phủ sóng: Luật 44/2019/QH14 (36 điều)
 
-Cập nhật: 2026-11-24 (sau khi Phong duyệt 7 phiếu norm và các điều được đưa vào `Laws`). Tệp này do tay viết, **không** phải báo cáo của hệ thống (báo cáo chỉ do `pipeline/report.py` tạo). Nó trả lời một câu hỏi: mỗi điều của luật đang ở đâu trong đường ống, và vì sao.
+Cập nhật: 2026-11-25 (sau khi Điều 15 bản dịch lần 3 được duyệt và module gộp `Law44` được build lại). Tệp này do tay viết, **không** phải báo cáo của hệ thống (báo cáo chỉ do `pipeline/report.py` tạo). Nó trả lời một câu hỏi: mỗi điều của luật đang ở đâu trong đường ống, và vì sao.
 
 Cách đọc: cột «ai quyết» cho biết ai đã chốt trạng thái. «Phong» là người duyệt; «AI, chưa duyệt» nghĩa là chỉ một bản đọc của AI, chưa ai đối chiếu. Một điều «không mã hóa» chưa duyệt **không** có nghĩa là điều đó không có chuẩn mực.
 
@@ -13,7 +13,7 @@ Cách đọc: cột «ai quyết» cho biết ai đã chốt trạng thái. «Ph
 
 Bảng thuật ngữ: 21 thuật ngữ mới đã được Phong chấp nhận (21/21, phiếu số 4) và áp vào bảng; 7 phiếu norm của các Điều 16, 17, 18, 20, 21, 33, 34 được Phong chấp nhận hết (kể cả các dòng «không mã hóa»).
 
-Gộp 14 bản dịch theo bảng thuật ngữ (Điều 5, 10, 12–14, 16–21, 32–34; Điều 19 là bản dịch lại đã được duyệt) qua `run.py`, 2026-11-24: 69 norm, 0 tệp bị từ chối, 161 cặp đã kiểm, vẫn không act nào có hai modality khắc nhau (rỗng về xung đột modality). Đây là chạy nháp (Evaluated), không phải định lý kernel.
+Module gộp `LexProof/Laws/Law44.lean` (15 điều, mọi điều theo bảng thuật ngữ, 2026-11-25): 77 norm; kernel chứng minh `consistent` và `no_conflict`, cùng `covers_articles` (norm gộp đúng bằng norm của 15 module từng điều). Kết quả **không còn rỗng**: 4 act của Điều 15 có cả cấm lẫn được phép. Kiểm lỗi soạn thảo (`Law44Drafting`): 77/77 norm sống, 322 cặp không bao trùm, 6/6 ngoại lệ kích hoạt, 0 «không biết». Báo cáo: `reports/law44-2026-11-25.md`.
 
 Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 điều chưa có bản mã hóa (AI đề xuất, Phong đồng ý để ngoài phạm vi; không phải kết luận rằng chúng không có chuẩn mực).
 
@@ -35,7 +35,7 @@ Tổng 36. 15/36 điều đã qua người duyệt (một người duyệt); 21 
 | 12 | Quảng cáo rượu, bia dưới 5,5 độ | **vào `Laws`** | Phong | dùng `do_con_nguong_5_5` cho cả rượu và bia (xem «Điểm cần người duyệt xem») |
 | 13 | Quảng cáo rượu 5,5–dưới 15 độ, bia từ 5,5 độ | **vào `Laws`** | Phong | 2 norm cấm |
 | 14 | Tài trợ | **vào `Laws`** | Phong | phần «tuân thủ pháp luật liên quan» không mã hóa |
-| 15 | Quản lý kinh doanh rượu | **vào `Laws`** | Phong | 4 norm «được phép» trên 4 act riêng (bản dịch `article15.llm.json`, trước bảng thuật ngữ) |
+| 15 | Quản lý kinh doanh rượu | **vào `Laws`** | Phong | 4 norm cấm (thiếu điều kiện) và 4 norm được phép (đủ điều kiện) trên 4 act; bản dịch lần 3 theo bảng thuật ngữ (`article15.glossary-2.llm.json`, Phong duyệt 24/24, 2026-11-25); khoản 3 điều chỉnh việc UBND cấp xã nhận đăng ký |
 | 16 | Điều kiện bán qua thương mại điện tử | **vào `Laws`** | Phong | 4 lệnh cấm bán khi thiếu điều kiện; 5 thuật ngữ mới đã vào bảng (được duyệt) |
 | 17 | Rượu thủ công không kinh doanh | **vào `Laws`** | Phong | xem «Điểm cần người duyệt xem» |
 | 18 | Chất lượng, an toàn thực phẩm | **vào `Laws`** | Phong | chữ «lưu hành» chưa mã hóa |
@@ -71,7 +71,8 @@ Nếu quy ước 2 bị bác, các điều 9, 20 (khoản 1 và 3), 21 (khoản 
 
 ## Điểm cần người duyệt xem
 
-- **Điều 17 và Điều 15 khoản 3.** Điều 17 cấm `san_xuat_ruou_thu_cong` khi hộ gia đình, cá nhân không kinh doanh mà chưa kê khai. Điều 15 khoản 3 trong `Laws` dùng act riêng (`san_xuat_ruou_thu_cong_ban_cho_co_so_che_bien_lai`, được phép) nên hai điều không so được với nhau. Chạy thử Điều 15 (bản dịch theo bảng thuật ngữ, `article15.glossary.llm.json`, chưa vào `Laws`) cùng Điều 17: cả hai cùng dùng act `san_xuat_ruou_thu_cong` nhưng đều là cấm, nên kết quả vẫn nhất quán rỗng (không có cặp khắc nhau). Hai norm chồng lên nhau chỉ khi cách đọc Điều 15 khoản 3 đổi thành «được phép sản xuất».
+- **Điều 17 và Điều 15 khoản 3.** Điều 17 cấm `san_xuat_ruou_thu_cong` khi hộ gia đình, cá nhân không kinh doanh mà chưa kê khai. Điều 15 khoản 3 (bản lần 3, theo ý người duyệt: đăng ký tương đương cấp phép) điều chỉnh việc UBND cấp xã nhận đăng ký (`nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai`), nên hai điều không so được với nhau.
+- **Điều 15 khoản 2 và 3.** «Hộ kinh doanh» và «hộ gia đình, cá nhân» là hai atom độc lập. Theo người duyệt hai nhóm tách nhau (hộ gia đình đã đăng ký hộ kinh doanh là hộ kinh doanh), nhưng ràng buộc này chưa được mã hóa: Lean vẫn xét cả tình huống một chủ thể thuộc cả hai nhóm.
 - **Điều 12** dùng `do_con_nguong_5_5` (gloss chỉ ghi «rượu») cho cả rượu và bia. Điều 13 dùng `do_con_bia_nguong_5_5`. Phong đã chấp nhận cả hai trong bảng và chấp nhận cách đọc này ở phiếu Điều 12 (A:3) mà không ghi chú.
 - **Điều 16, 17, 18**: nghĩa vụ «phải có/đáp ứng» được biểu diễn là lệnh cấm khi thiếu điều kiện; không biểu diễn là nghĩa vụ làm hành vi chính.
 
@@ -79,9 +80,9 @@ Nếu quy ước 2 bị bác, các điều 9, 20 (khoản 1 và 3), 21 (khoản 
 
 Tất cả điều dưới đây là phát biểu về **phần đã mã hóa**, không phải về luật.
 
-1. **Nhất quán rỗng.** Các module đã vào `Laws` cho `no_conflict`, nhưng cờ vacuity nêu rõ không có hành vi nào mang hai phương thức khác nhau. Điều 5 và 19 chỉ có cấm; Điều 15 chỉ có cho phép; chúng điều chỉnh hành vi khác nhau. Kết quả «nhất quán» do đó **không nói gì về điều kiện** của các norm.
-2. **Luật này gần như chỉ có cấm và bắt buộc.** «Được phép» chỉ có ở Điều 15 (đã vào `Laws`) và Điều 32 khoản 5 nhánh (ii) (đã được duyệt). Cặp cấm–cho phép trên cùng một hành vi, nguồn xung đột modality thông thường, hầu như không xuất hiện trong chữ luật. Một xung đột Level 1 thật có thể không tồn tại trong văn bản này.
-3. **So sánh giữa các điều cần norm suy ra.** Điều 5 với Điều 15 chỉ so được qua norm suy ra (ADR-0028). Lần đo đầu cho 3 cặp xung đột, cả ba dính norm suy ra; Phong bác cả hai cách đọc D1 và D2 (2026-11-21). Công cụ đã bác được cách đọc «đủ điều kiện cấp phép thì được kinh doanh»; đó là kết quả về cách đọc, không phải về luật.
+1. **Nhất quán chỉ có nghĩa ở Điều 15.** `Law44.consistent` không còn rỗng, nhưng chỉ 4 act (đều ở Điều 15) mang cả cấm lẫn được phép; ở đó mỗi cặp cấm và được phép có điều kiện bù nhau (thiếu điều kiện / đủ điều kiện), nên kết quả nhất quán là điều đã được chờ đợi. Mọi act khác chỉ có một modality: với chúng, «nhất quán» **không nói gì về điều kiện**.
+2. **Luật này gần như chỉ có cấm và bắt buộc.** «Được phép» chỉ có ở Điều 15 (4 norm, cách đọc «đủ điều kiện thì được phép» do người duyệt chọn) và Điều 32 khoản 5 nhánh (ii). Cặp cấm–cho phép trên cùng một hành vi, nguồn xung đột modality thông thường, hầu như không xuất hiện trong chữ luật. Một xung đột Level 1 thật có thể không tồn tại trong văn bản này.
+3. **So sánh giữa các điều cần norm suy ra hoặc cạnh kéo theo.** Điều 5 với Điều 15 chỉ so được qua norm suy ra (ADR-0028): Phong bác cả D1 và D2 (2026-11-21). Qua cạnh kéo theo (ADR-0029): ứng viên duy nhất, Điều 32 khoản 4 × Điều 5 khoản 12, cần hai cạnh E9, E10; Phong bác cả hai (2026-11-25), nên nó không còn. Đó là kết quả về cách đọc, không phải về luật.
 4. **Độ trung thực chưa có nhiều bằng chứng.** Bản mã hóa đúng luật chỉ do con người đối chiếu: một người duyệt (Phong), không có người học luật độc lập (FR12 chưa làm). Kernel chỉ chứng minh tính hợp lệ của phần đã mã hóa.
 5. **Mức phủ.** 15/36 điều đã qua người duyệt. Phần còn lại là phân loại của AI, mới có một người (Phong) đồng ý. Các thuật ngữ mở («hợp lý», «dành cho», «ngay trước») là tham số; hệ thống không quyết giá trị.
-6. **Bản dịch AI không tin cậy.** 28 điều chưa vào `Laws` chưa có định lý kernel nào. `translate.py check` chỉ kiểm cấu trúc, trích dẫn nguyên văn và id; không kiểm nghĩa.
+6. **Bản dịch AI không tin cậy.** 21 điều chưa vào `Laws` chưa có định lý kernel nào. `translate.py check` chỉ kiểm cấu trúc, trích dẫn nguyên văn và id; không kiểm nghĩa.
