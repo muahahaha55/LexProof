@@ -309,7 +309,7 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **AC**: Build lại cho kết quả như cũ từ một commit; mỗi `Norm` do LLM sinh ra
   truy được về một lần gọi LLM cụ thể.
 - **Kiểm chứng**: Review
-- **Trạng thái**: **Partial**. Đã có: `lean-toolchain` ghim `v4.35.0`, không phụ thuộc ngoài; mọi bản dịch và prompt dán tay được lưu trong `eval/translate/` (thay cho log LLM, vì không gọi API); báo cáo ghi commit, sha256 module và đầu vào. Chưa có: một lệnh chạy lại toàn bộ và hướng dẫn cài đặt (bước đóng gói).
+- **Trạng thái**: **Implemented** (2026-11-25). Đã có: `lean-toolchain` ghim `v4.35.0`, không phụ thuộc ngoài; mọi bản dịch và prompt dán tay được lưu trong `eval/translate/` (thay cho log LLM, vì không gọi API); báo cáo ghi commit, sha256 module và đầu vào. Một lệnh chạy lại: `python pipeline/demo.py`; hướng dẫn cài đặt trong `README.md`.
 
 ### 2.4 Usability (Interaction capability)
 
@@ -362,7 +362,7 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **Ưu tiên**: Must
 - **AC**: Mọi báo cáo có dòng nhãn; không có dữ liệu không công khai trong `data/`.
 - **Kiểm chứng**: Review
-- **Trạng thái**: **Partial**. Mọi báo cáo có dòng «Không phải tư vấn pháp lý»; `data/` chỉ chứa văn bản công khai (Luật 44/2019/QH14 từ Công báo). Chưa có: ghi nguồn và điều kiện sử dụng trong README (bước đóng gói).
+- **Trạng thái**: **Implemented** (2026-11-25). Mọi báo cáo và `README.md` có dòng «Không phải tư vấn pháp lý»; `data/` chỉ chứa văn bản công khai (Luật 44/2019/QH14 từ Công báo). Nguồn và điều kiện dùng ghi trong `README.md` và `data/README.md`.
 
 ---
 

@@ -15,16 +15,15 @@ Cách tính: Implemented = 1, Tested = 0.6, Partial = 0.5, Planned/Open = 0. FR4
 | Nhóm | Yêu cầu | Ước lượng |
 |---|---|---|
 | Chức năng (10 Must) | FR1, FR2, FR5, FR6, FR7, FR8, FR9, FR10, FR11 Implemented; FR3 Tested (dán tay) | ~96% (9.6 / 10) |
-| Phi chức năng (9 Must) | N1, N2, N3, N6, N12 Implemented; N4, N7, N10, N11 Partial | ~78% (7 / 9) |
-| Tổng | | ~88% (16.6 / 19) |
+| Phi chức năng (9 Must) | N1, N2, N3, N6, N7, N11, N12 Implemented; N4, N10 Partial | ~89% (8 / 9) |
+| Tổng | | ~92% (17.6 / 19) |
 
 **Đọc con số này cẩn thận.** So với ~55% ngày 2026-11-24, phần tăng đến từ ba nguồn: việc mới (module gộp, cạnh kéo theo,
 lỗi soạn thảo, báo cáo `law44`), cập nhật các trạng thái đã lỗi thời, và **hạ mức** FR4, N5, N8, N9. Mẫu số cũng đổi
 (trước chỉ tính 11 FR). **Độ trung thực vẫn là chỗ yếu nhất**: một người duyệt, chưa có bộ ca độc lập (FR12), kết luận
 nhất quán chính rỗng về thông tin.
 
-Việc kỹ thuật trước đóng gói: xong (FR9, 2026-11-25). Còn lại thuộc đóng gói: N7 (một lệnh chạy lại), N10
-(demo cho người không biết Lean), N11 (nguồn và điều kiện dùng trong README).
+Việc kỹ thuật trước đóng gói: xong (FR9, 2026-11-25). Còn lại: N10 (thử với một người không biết Lean ngoài Phong), N4 (người duyệt thứ hai, FR12), và viết quyển, slide.
 
 **Tiến độ dữ liệu (2026-11-24, chi tiết ở `docs/coverage.md`)**: 15/36 điều đã qua người duyệt và vào `LexProof/Laws/` (Điều 5, 10, 12–21, 32–34); 21/36 là phân loại «không mã hóa» của AI, Phong đồng ý để ngoài (21/21). Bản gộp 14 bản dịch (Điều 19 đã dịch lại theo bảng thuật ngữ, Phong duyệt 13/13, module thay) cho 69 norm, `consistentOn`, vẫn rỗng về xung đột modality. Con số % ở trên **chưa tính lại**: các điều mới là dữ liệu, không thêm chức năng.
 
@@ -38,7 +37,7 @@ Việc kỹ thuật trước đóng gói: xong (FR9, 2026-11-25). Còn lại thu
 | 4 | Bộ ca của người học luật, trả lời độc lập (FR12) | chưa; phụ thuộc người ngoài |
 | 5 | Kiểm trên cả văn bản và qua quan hệ giữa hành vi: module gộp `Law44`, cạnh kéo theo (ADR-0029), dấu hiệu lỗi soạn thảo (ADR-0030), báo cáo `law44` | **xong** (2026-11-25); cạnh chờ duyệt |
 | 6 | FR9: phản ví dụ bằng lời | **xong** (2026-11-25) |
-| 7 | Đóng gói đồ án: quyển, demo, README chạy lại được, slide, phần giới hạn | chưa |
+| 7 | Đóng gói đồ án: demo một lệnh (`pipeline/demo.py`), `README.md`, dàn ý quyển và slide (`docs/thesis-outline.md`) | **phần repo xong** (2026-11-25); quyển và slide chưa viết |
 
 Sau bước 1 và 2: có hệ thống cơ bản chạy từ đầu đến cuối. Bước 3–5: mở rộng và bằng chứng chất lượng.
 
