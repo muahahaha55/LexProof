@@ -12,15 +12,15 @@ Bảng thuật ngữ: `data/glossary/44-2019-QH14.json`
 
 sha256 bảng thuật ngữ: d2b183c06512a4dba6499f108d227dcd3731850f9fb493345df69f867acfa43e
 
-Người duyệt: 
+Người duyệt: Vũ Đức Phong
 
-Ngày duyệt (YYYY-MM-DD): 
+Ngày duyệt (YYYY-MM-DD): 2026-11-25
 
 ## 1. Mục chờ duyệt
 
 | Mã | Loại | Giải thích | Giá trị | Nguồn | Quyết định | Lý do (bắt buộc nếu bác) |
 |---|---|---|---|---|---|---|
-| T:act:nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai | act | Ủy ban nhân dân cấp xã nhận đăng ký của hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép sản xuất rượu chế biến lại (việc đăng ký được coi tương đương cấp phép) | — | Điều 15 khoản 3 | ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
+| T:act:nhan_dang_ky_san_xuat_ruou_thu_cong_ban_che_bien_lai | act | Ủy ban nhân dân cấp xã nhận đăng ký của hộ gia đình, cá nhân sản xuất rượu thủ công để bán cho cơ sở có giấy phép sản xuất rượu chế biến lại (việc đăng ký được coi tương đương cấp phép) | — | Điều 15 khoản 3 | [x] ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
 
 ## 2. Đã quyết trước đây (chỉ để đọc)
 
