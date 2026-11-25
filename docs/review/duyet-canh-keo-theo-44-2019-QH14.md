@@ -12,11 +12,11 @@ Tệp cạnh: `data/edges/44-2019-QH14.json`
 
 sha256 tệp cạnh: 95d9b63981a7c7cf3a36530e72cc1245f8644a6231ac8011567a3a86399f54ed
 
-Người duyệt: 
+Người duyệt: Vũ Đức Phong   
 
-Ngày duyệt (YYYY-MM-DD): 
+Ngày duyệt (YYYY-MM-DD): 2026-11-25
 
 | Mã | A (làm việc này) | B (thì cũng làm việc này) | Nguồn | Cách đọc | Quyết định | Lý do (bắt buộc nếu bác) |
 |---|---|---|---|---|---|---|
-| E:E9 | `thu_hoi_xu_ly_ruou_bia` | `van_chuyen_ruou_bia` | Điều 32 khoản 4 | Thu hồi rượu, bia đã bán ra thì phải chở hàng về; KÉM CHẮC: có thể xử lý tại chỗ mà không chở. (đề xuất bởi Claude (AI), 2026-11-25) | ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
-| E:E10 | `thu_hoi_xu_ly_ruou_bia` | `tang_tru_ruou_bia` | Điều 32 khoản 4 | Thu hồi rồi mới xử lý thì phải giữ hàng trong lúc chờ xử lý; KÉM CHẮC: «tàng trữ» có thể chỉ việc cất giữ để buôn bán. (đề xuất bởi Claude (AI), 2026-11-25) | ☐ Chấp nhận<br>☐ Bác<br>☐ Để sau |  |
+| E:E9 | `thu_hoi_xu_ly_ruou_bia` | `van_chuyen_ruou_bia` | Điều 32 khoản 4 | Thu hồi rượu, bia đã bán ra thì phải chở hàng về; KÉM CHẮC: có thể xử lý tại chỗ mà không chở. (đề xuất bởi Claude (AI), 2026-11-25) | ☐ Chấp nhận<br>[x] ☐ Bác<br>☐ Để sau |nếu rượu bia chưa bán ra cho khách hàng mà vẫn còn ở cơ sở sản xuất, mua bán thì có thể xử lý tại chỗ mà không cần vận chuyển |
+| E:E10 | `thu_hoi_xu_ly_ruou_bia` | `tang_tru_ruou_bia` | Điều 32 khoản 4 | Thu hồi rồi mới xử lý thì phải giữ hàng trong lúc chờ xử lý; KÉM CHẮC: «tàng trữ» có thể chỉ việc cất giữ để buôn bán. (đề xuất bởi Claude (AI), 2026-11-25) | ☐ Chấp nhận<br>[x] ☐ Bác<br>☐ Để sau |"tàng trữ" nghĩa là giữ lại để bán sau này, không phải nghĩa của "thu hồi và xử lý" |
