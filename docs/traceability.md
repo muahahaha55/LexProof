@@ -238,6 +238,7 @@ có chứng minh cả hai chiều — `cycle_of_validate_finding` và
 | `Incompatible` | `Core/Norm.lean` | Rằng đúng hai cặp modality đó xung đột, không hơn không kém | Báo nhiễu, hoặc bỏ sót im lặng ([ADR-0001](decisions/0001-incompatible-modalities.md)) |
 | `Cond.eval` | `Core/Norm.lean` | Rằng `and`/`or`/`not` trên `Option Bool` khớp với cách luật ghép điều kiện | Điều kiện bị hiểu sai ⇒ phạm vi áp dụng sai |
 | Cạnh kéo theo (`edges`) | `data/edges/*.json`, `Verify/Entail.lean` | Rằng mỗi cạnh đã duyệt «làm A thì nhất thiết làm B» đúng với luật. `derive_sound` và `conflict_derived_meaning` chỉ chứng minh phép suy ra **từ** cạnh | Cạnh sai tạo xung đột giả; cạnh thiếu che xung đột thật (ADR-0029). Chỉ dùng ở mục 5 của báo cáo `law44` và trong module riêng, không đổi kết luận về chữ luật |
+| Chứng nhân lỗi soạn thảo | `Laws/Law44Drafting.lean`, `Verify/Drafting.lean` | Không có gì được tin thêm: mỗi chứng nhân được kernel kiểm. Điều được tin là **ý nghĩa**: «không thừa» chỉ nói có một tình huống norm A áp dụng mà B không, trên phần đã mã hóa | Mục «không biết» chỉ là dấu hiệu, không được báo là lỗi (FR14) |
 | Danh sách norm của module gộp | `Laws/Law44.lean` | Rằng **điều kiện** của norm gộp khớp module từng điều. `covers_articles*` chỉ so id, modality, act, nguồn, tham chiếu, số ngoại lệ | Điều kiện bị đổi khi gộp sẽ không bị định lý bắt; chỉ test của công cụ bắt |
 
 Ngoài những cái trên, trust base còn gồm: **kernel Lean 4.35.0**, **Lean core**

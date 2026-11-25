@@ -61,7 +61,7 @@ class Make(unittest.TestCase):
         text = RP.make(CFG, "draft", do_build=False, today="2000-01-01")
         for s in ("BẢN NHÁP", "Nhất quán trên phần đã mã hóa", "Cảnh báo rỗng", "| **Cộng** | **36** |",
                   "không có đơn vị nào bị bỏ qua im lặng", "covers_articles", "## 5. Kiểm qua quan hệ giữa các hành vi",
-                  "không** đổi kết luận ở mục 1", "## 6. Điều KHÔNG được chứng minh", "KẾT QUẢ: consistentOn"):
+                  "không** đổi kết luận ở mục 1", "## 6. Dấu hiệu lỗi soạn thảo", "## 7. Điều KHÔNG được chứng minh", "Điều 15:15.2 / 0", "KẾT QUẢ: consistentOn"):
             self.assertIn(s, text)
         self.assertIn("KHÔNG CHẠY (--no-build)", text)
 

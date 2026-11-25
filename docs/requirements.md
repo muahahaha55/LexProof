@@ -200,6 +200,17 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **Trạng thái**: **Planned**. Trường đã để sẵn: `SourceId.docId`,
   `SourceId.docType`, `SourceId.effective` ([ADR-0007](decisions/0007-keep-level2-fields-in-sourceid.md)).
 
+### FR14 — Dấu hiệu lỗi soạn thảo trong một văn bản
+- **Phát biểu**: Trên phần đã mã hóa của một văn bản, hệ thống chỉ ra norm không bao giờ áp dụng, norm bị một norm khác
+  cùng hành vi và cùng tính chất bao trùm, và ngoại lệ không bao giờ kích hoạt. Kết quả báo riêng, không phải xung đột,
+  không đổi kết luận nhất quán.
+- **Ưu tiên**: Should
+- **AC**: Mỗi mục «sạch» có định lý kernel từ một chứng nhân; mỗi mục không có chứng nhân được báo «không biết», không bao
+  giờ «sạch» và không bao giờ «là lỗi»; một chứng nhân sai làm build thất bại.
+- **Kiểm chứng**: Test (`Verify/DraftingTests.lean`, `pipeline/tests/test_drafting.py`) và định lý trên `Laws/Law44Drafting.lean`
+- **Trạng thái**: **Implemented** (2026-11-25, [ADR-0030](decisions/0030-drafting-defects.md)). Trên `Law44`: 73 norm sống,
+  322 cặp không bao trùm, 5 ngoại lệ có kích hoạt; 1 mục «không biết» (ngoại lệ của norm 15.2).
+
 ---
 
 ## 2. Yêu cầu phi chức năng

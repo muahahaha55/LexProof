@@ -160,6 +160,33 @@ def edges_section(cfg):
     return L
 
 
+UNK = re.compile(r'^\s*[\[,] \("((?:[^"\\]|\\.)*)", "((?:[^"\\]|\\.)*)"\)', re.M)
+
+
+def drafting_section(cfg):
+    """From the drafting module's source: its kernel theorems and its `unknown` list (no witness found)."""
+    name = cfg.get("drafting")
+    path = R.LAWS + name + ".lean" if name else None
+    if not path or not os.path.exists(R.path_of(path)):
+        return ["Chưa có module kiểm lỗi soạn thảo cho module này."]
+    src = R.read_text(path)
+    thms = [t for t, _ in theorems(src)]
+    body = src.split("def unknown", 1)[1].split("def liveSkip", 1)[0] if "def unknown" in src else ""
+    unk = UNK.findall(body)
+    L = ["Đây **không** phải kiểm xung đột và không đổi kết luận ở mục 1. Nó tìm ba dấu hiệu lỗi soạn thảo trong phần đã mã hóa: "
+         "norm không bao giờ áp dụng (chết), norm bị một norm khác cùng hành vi, cùng tính chất bao trùm (thừa), ngoại lệ "
+         "không bao giờ kích hoạt. Một luật có thể cố ý nhắc lại, nên «thừa» chưa chắc là lỗi.", "",
+         "- Module: `%s` (sha256 `%s`); định lý kernel: %s" % (path, R.sha_lf(path), ", ".join("`%s`" % t for t in thms) or "(không có)"),
+         "- Cách chứng minh: một công cụ không tin cậy tìm cho mỗi mục **một tình huống làm chứng**; kernel kiểm từng chứng nhân. "
+         "Mục không tìm được chứng nhân thì bị loại khỏi định lý và ghi «không biết» dưới đây; hệ thống không khẳng định nó là lỗi.", ""]
+    if unk:
+        L.append("**Không biết (%d), cần người xem:**" % len(unk))
+        L += ["- `%s`: %s" % (a, b) for a, b in unk]
+    else:
+        L.append("Mọi norm, mọi cặp cùng hành vi và cùng tính chất, mọi ngoại lệ đều có chứng nhân: không có dấu hiệu nào.")
+    return L
+
+
 def render(cfg, info, dump, today):
     src = R.read_text(cfg["module_file"])
     arts, gaps = scope(cfg, dump)
@@ -191,7 +218,7 @@ def render(cfg, info, dump, today):
           "cho phép trái nhau. Xem mục 5 cho phép kiểm qua quan hệ giữa các hành vi.")
         w("")
     w("Kết luận này **không** nói văn bản đúng hay không mâu thuẫn: nó chỉ nói về phần đã mã hóa (mục 2), và chỉ đúng nếu "
-      "bản mã hóa trung thực với luật (mục 6).")
+      "bản mã hóa trung thực với luật (mục 7).")
     w("")
     w("## 2. Phạm vi")
     w("")
@@ -249,7 +276,11 @@ def render(cfg, info, dump, today):
     w("")
     L += edges_section(cfg)
     w("")
-    w("## 6. Điều KHÔNG được chứng minh")
+    w("## 6. Dấu hiệu lỗi soạn thảo (ADR-0030)")
+    w("")
+    L += drafting_section(cfg)
+    w("")
+    w("## 7. Điều KHÔNG được chứng minh")
     w("")
     for s in ("Độ trung thực của bản mã hóa với luật: chỉ có phiếu của một người duyệt; chưa có người học luật độc lập (FR12).",
               "`Atoms.valid` (tình huống nào được coi là không thể xảy ra) là giả định được tin, không được chứng minh.",
@@ -259,13 +290,13 @@ def render(cfg, info, dump, today):
               "Khái niệm mở («dành cho», «ngay trước», …) là tham số: hệ thống không quyết giá trị của chúng."):
         w("- " + s)
     w("")
-    w("## 7. Đầu ra của Lean (`%s.report`)" % cfg["ns"])
+    w("## 8. Đầu ra của Lean (`%s.report`)" % cfg["ns"])
     w("")
     w("```")
     L += dump["render"]
     w("```")
     w("")
-    w("## 8. Nguồn gốc")
+    w("## 9. Nguồn gốc")
     w("")
     g = R.git_info()
     w("- Công cụ: %s; ngày tạo: %s" % (TOOL, today))

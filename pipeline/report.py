@@ -49,6 +49,7 @@ MODULES = {
         "segmented": "data/segmented/44-2019-QH14.json",
         "classification": "docs/review/duyet-phan-loai-khong-ma-hoa.md",
         "edges": "data/edges/44-2019-QH14.json",
+        "drafting": "Law44Drafting",
     },
 }
 

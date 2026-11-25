@@ -756,3 +756,20 @@ Kết quả trên 37 ca (sau D54, nhánh `d54-c23-branch-source`): C24 ra ngoài
 quyền không truyền, cạnh không dính norm nào, giữ phạm vi). Công cụ: `pipeline/edges.py`. Module gộp mà nó dựa vào:
 `Laws/Law44.lean`, có `covers_articles` và `covers_articles_source` (so id, modality, act, nguồn, tham chiếu, số ngoại
 lệ với các module từng điều; **không** so điều kiện).
+
+## 20. `Verify/Drafting.lean` — dấu hiệu lỗi soạn thảo bằng chứng nhân (ADR-0030, FR14)
+
+| Khai báo | Ý nghĩa |
+|---|---|
+| `Live A n` | Có `(π, s)` mà `n.applies A π s = some true` (norm không chết) |
+| `NotSubsumed A a b` | Có `(π, s)` mà `a` áp dụng và `b` không (`a` không bị `b` bao trùm); chỉ xét khi `SameDuty a b` (cùng act, cùng modality) |
+| `ExcFires A n e` | Có `(π, s)` mà điều kiện của `n` và ngoại lệ `e` cùng đúng |
+| `lookup1`, `lookup2`, `lookupE` | Tìm chứng nhân theo id (và id thứ hai, hoặc chỉ số ngoại lệ) |
+| `checkLive`, `checkNotSubsumed`, `checkExcFires` | Kiểm mọi mục bằng chứng nhân đọc qua bộ giải mã `dec`; mục trong `skip` không kiểm |
+| `live_of_check`, `notSubsumed_of_check`, `excFires_of_check` | Kiểm trả `true` ⇒ mệnh đề đúng cho mọi mục **không** nằm trong `skip` |
+| `decodeVal` | Bộ giải mã cho module trên bảng atom: hai danh sách chỉ số, chỉ nhận khi hợp lệ (`legalVals`) |
+| `not_covered_of_notSubsumed` | `NotSubsumed A a b` ⇒ không phải mọi chỗ `a` áp dụng thì `b` áp dụng |
+
+**Không được chứng minh:** rằng một mục trong `skip` thật sự là lỗi (cần chứng minh «với mọi tình huống», chưa làm). Test:
+`Verify/DraftingTests.lean` (chứng nhân thiếu, chứng nhân sai, `skip`). Công cụ tìm chứng nhân: `pipeline/drafting.py`.
+Module: `Laws/Law44Drafting.lean`.
