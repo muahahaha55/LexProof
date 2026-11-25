@@ -43,6 +43,9 @@ nên đây là mở rộng phạm vi.
     nhau (một hộ gia đình có thể đăng ký hộ kinh doanh); (b) chữ «trừ trường hợp quy định tại khoản 3» của luật thừa, vì
     danh sách chủ thể ở khoản 2 đã loại khoản 3.
   - Trước khi có người quyết, đây chỉ là dấu hiệu, không phải lỗi của luật.
+  - **Người duyệt (Vũ Đức Phong) chọn (a)**, 2026-11-25, trả lời bằng tin nhắn: «xuất hiện trùng nhau giữa hộ gia đình,
+    cá nhân và hộ kinh doanh». Vậy đây là lỗi của bản mã hóa, không phải của luật. Bản dịch lại Điều 15 theo bảng thuật
+    ngữ chờ duyệt ở `docs/review/duyet-ban-dich-dieu-15-lan-2.md`; khi được duyệt, `Article15` và `Law44` được promote lại.
 - So với thử nghiệm E8 (Python, chỉ 14 bản dịch theo bảng thuật ngữ, không có Điều 15): E8 báo 0. Mục này chỉ hiện khi gộp
   cả Điều 15.
 
