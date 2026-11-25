@@ -35,7 +35,7 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **AC**: ID là duy nhất trong văn bản; mọi tham chiếu không phân giải được đều
   được báo cáo, không bị bỏ qua.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Partial (công cụ, chưa duyệt)** — `pipeline/segment.py` phân đoạn **một văn bản** (Luật 44/2019/QH14) thành chương/điều/khoản/điểm, tất định (hai lần chạy cho byte giống nhau), kèm kiểm tra S1–S5 và test (`pipeline/tests/`); kết quả ở `data/segmented/`. **Chưa có**: phân giải tham chiếu nội bộ giữa các điều (chỉ có `ClauseRef` cho các chuỗi của một mô-đun, `Core/ClauseRef.lean`), văn bản khác, và kiểm độc lập bộ tách (các kiểm tra chỉ chứng minh kết quả nhất quán với chính tệp trích xuất).
+- **Trạng thái**: **Implemented cho một văn bản** (2026-11-25). `pipeline/segment.py` tách Luật 44/2019/QH14 thành chương/điều/khoản/điểm, tất định, kèm kiểm tra S1–S5 và test; kết quả ở `data/segmented/`. Tham chiếu nội bộ: mọi module `Laws` dùng `ClauseRef` (`Core/ClauseRef.lean`) và có định lý `refs_parse`; tham chiếu treo bị bắt qua `catalog`. **Chưa có**: văn bản thứ hai, kiểm độc lập bộ tách.
 
 ### FR2 — Glossary
 - **Phát biểu**: Hệ thống phải có glossary ánh xạ thuật ngữ sang kiểu Lean và
@@ -44,8 +44,7 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **AC**: Thuật ngữ chưa có trong glossary bị chặn (không tự suy diễn) cho đến
   khi người duyệt thêm vào.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Partial** (ADR-0027 bước 1–3 xong). Có: lược đồ và `pipeline/glossary.py check`; bảng hạt giống (mọi mục chưa duyệt); `translate.py prompt --glossary` và `check` theo id; gộp theo id ở `run.py`/`promote.py`; `promote.py` **từ chối** bản dịch dùng bảng nếu norm được chấp nhận dùng act/atom chưa `approved` hoặc mới chỉ là đề xuất (test `test_glossary.py`: `test_promote_refuses_unapproved_terms`, `test_promote_refuses_a_proposal_even_with_an_approved_glossary`). **Chưa đạt toàn hệ thống**: bản dịch *không* dùng bảng (kiểu cũ, như Điều 5, 15, 19 đang duyệt) vẫn đi qua `promote.py` với atom riêng của từng điều, không qua bảng; phiếu duyệt bảng (bước 4) chưa có. Kiểu đích đã có: `Act` là id chuỗi mờ
-  ([ADR-0004](decisions/0004-act-as-opaque-glossary-id.md)).
+- **Trạng thái**: **Implemented** (2026-11-25, ADR-0027). Bảng `data/glossary/44-2019-QH14.json`: 40 act, 90 atom; 128 mục đã duyệt qua 4 phiếu, 2 bị bác, 0 chờ. `promote.py` từ chối thuật ngữ chưa `approved`; phiếu duyệt bản dịch lập trên bảng cũ chỉ được dùng tiếp khi mọi thuật ngữ nó dùng giữ nguyên nghĩa (ADR-0029). **Ngoại lệ**: Điều 15 vẫn là bản dịch kiểu cũ, không theo bảng. Kiểu đích: `Act` là id chuỗi mờ ([ADR-0004](decisions/0004-act-as-opaque-glossary-id.md)).
 
 ### FR3 — Dịch điều khoản thành dữ liệu Lean
 - **Phát biểu**: Hệ thống phải dịch mỗi điều khoản thành **dữ liệu** Lean
@@ -59,10 +58,10 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 ### FR4 — Sửa lỗi có giới hạn
 - **Phát biểu**: Hệ thống phải thử sửa lỗi dịch tối đa N vòng, sau đó đánh dấu
   điều khoản là "not encoded".
-- **Ưu tiên**: Must
+- **Ưu tiên**: ~~Must~~ **Won't (bản đồ án)**, [ADR-0031](decisions/0031-scope-down-for-thesis.md)
 - **AC**: Không điều khoản nào bị loại bỏ mà không có bản ghi lý do.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Planned**. Giá trị N chưa chốt (xem báo cáo).
+- **Trạng thái**: **Won't (bản đồ án)**. Không có dịch tự động nên không có vòng sửa tự động; dịch lại khi người duyệt bác do người làm (Điều 32 lần 2, Điều 5 lần 3). AC vẫn đúng: khoản không mã hóa luôn có lý do (`notEncoded`, lý do bác ghi vào module).
 
 ### FR5 — Dịch ngược để đối chiếu
 - **Phát biểu**: Hệ thống phải diễn đạt lại mỗi `Norm` thành tiếng Việt để
@@ -70,8 +69,7 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **Ưu tiên**: Must
 - **AC**: Norm chưa được duyệt không bao giờ vào tập đã phê duyệt (`Laws`).
 - **Kiểm chứng**: Review
-- **Trạng thái**: **Open** — LLM hay renderer tất định; ưu tiên tất định. Xem
-  [ADR-0019](decisions/0019-back-translation-renderer.md).
+- **Trạng thái**: **Implemented ở mức tối thiểu** (2026-11-25, [ADR-0031](decisions/0031-scope-down-for-thesis.md)). Bộ in tất định `promote.words` diễn đạt mỗi norm thành lời trên phiếu duyệt, cạnh câu trích của luật (hướng «tất định» của [ADR-0019](decisions/0019-back-translation-renderer.md)). Dịch vòng bằng LLM: chưa làm, để cho nghiên cứu sau.
 
 ### FR6 — Mô hình chuẩn tắc
 - **Phát biểu**: Hệ thống phải biểu diễn obligation/permission/prohibition,
@@ -133,25 +131,18 @@ Chi tiết thiết kế: [design-core.md](design-core.md). Ma trận truy vết:
 - **Ưu tiên**: Must
 - **AC**: Từ phản ví dụ, người duyệt tái lập được tình huống mà không cần đọc Lean.
 - **Kiểm chứng**: Demo + Review
-- **Trạng thái**: **Partial (công cụ, chưa duyệt)**. `pipeline/report.py` in các cặp xung đột (id hai norm) ở mục 3 của
-  báo cáo; **chưa** diễn đạt tình huống phản ví dụ bằng tiếng Việt và chưa được thử trên mô-đun nào có xung đột
-  (`alcohol-sale` không có). Phần dữ liệu đã **Implemented**:
-  `Counterexample` có `situation`, `params`, hai `NormId`, hai `Modality`, hai
-  `SourceId`, và `deriving Repr` nên in được. Phần diễn đạt tiếng Việt chưa có.
-
+- **Trạng thái**: **Implemented** (2026-11-25). `counterexampleLines` (`Verify/AnalyzeReport.lean`) in mỗi cặp xung
+  đột kèm id, tính chất và nguồn của hai norm, và tình huống bằng lời: tên atom, nhãn giá trị, khoản nguồn; khái niệm mở
+  in riêng; «mọi atom khác: giá trị bất kỳ». Có test `decide` trong Lean. Dùng ở `edges.py draft`, `readings.py`,
+  `run.py`, module do `promote.py` và `edges.py module` viết, và mục 5 của báo cáo `law44` (ví dụ thật: Điều 32 khoản 4 ×
+  Điều 5 khoản 12). Tình huống là cái `analyzeP` tìm thấy đầu tiên, không phải tình huống nhỏ nhất.
 ### FR10 — Báo cáo tiếng Việt
 - **Phát biểu**: Hệ thống phải sinh báo cáo tiếng Việt nêu rõ scope (đã mã hóa /
   đã duyệt / đã bỏ qua) và trích dẫn điều khoản.
 - **Ưu tiên**: Must
 - **AC**: Báo cáo luôn có mục scope; không có mục scope thì không phát hành.
 - **Kiểm chứng**: Review
-- **Trạng thái**: **Partial (công cụ, chưa duyệt)**. `pipeline/report.py --module alcohol-sale --status draft|reviewed`
-  (D55) sinh báo cáo tiếng Việt, 7 mục: trạng thái, phạm vi (luôn có), kết quả ba giá trị, phát hiện, ca thử, «báo cáo
-  này KHÔNG nói gì», nguồn gốc. `reviewed` bị từ chối nếu phiếu ca thử chưa điền đủ hoặc mô-đun đã đổi sau khi duyệt
-  (`pipeline/tests/test_report.py`). Chưa có: bước duyệt thật (phiếu còn trống), báo cáo cho văn bản khác,
-  so sánh với bản in. `Scope` đã có `docId`, `normIds`, `articles`,
-  `situations`, `params`, `validExcluded`/`validTotal`; chưa có trường "đã
-  duyệt"/"đã bỏ qua".
+- **Trạng thái**: **Implemented** (2026-11-25). `pipeline/report.py --module alcohol-sale --status draft|reviewed` và `--module law44 --status draft` (module gộp 15 điều; 9 mục: kết luận, phạm vi luôn có, định lý kernel, duyệt, kiểm qua cạnh, dấu hiệu lỗi soạn thảo, điều không được chứng minh, đầu ra Lean, nguồn gốc). `reviewed` cho `law44` bị từ chối khi chưa có bộ ca (FR12). Test: `test_report.py`, `test_report_promoted.py`.
 - **Ràng buộc cho tầng báo cáo (D33)**: `Result.invalid` **không** mang `Scope`,
   và sẽ không mang. Khi có khuyết điểm cấu trúc thì **chưa kiểm gì cả**, nên
   không có phạm vi nào để báo. Báo cáo phải hiển thị nhánh này thành
@@ -268,8 +259,7 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **Ưu tiên**: Must · **Mục tiêu**: ≥95% sau khi duyệt *(giả định, cần hiệu chỉnh)*
 - **AC**: Có số đo trên bộ ca; mọi ca trượt có bản ghi nguyên nhân.
 - **Kiểm chứng**: Test + Review
-- **Trạng thái**: **Planned**. Faithfulness **không** chứng minh được bằng
-  kernel — xem bảng G2 trong [traceability.md](traceability.md).
+- **Trạng thái**: **Partial**. Bằng chứng hiện có: phiếu duyệt từng norm của **một** người duyệt (Phong), có ghim sha256. Không đo được mục tiêu ≥95% khi chưa có người thứ hai hay bộ ca độc lập (FR12). Ghi thành giới hạn trong mọi báo cáo. Xem bảng G2 trong [traceability.md](traceability.md).
 
 #### N6 — Traceability
 - **Phát biểu**: Mọi kết luận phải truy được về điều khoản nguồn.
@@ -284,7 +274,7 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 #### N8 — Scale
 - **Phát biểu**: Chi phí liệt kê là `|S| × |P| × số cặp norm`; hệ thống phải giữ
   trong ngân sách và trả `unknown` khi vượt.
-- **Ưu tiên**: Must
+- **Ưu tiên**: ~~Must~~ **Should** («đo và ghi giới hạn»), [ADR-0031](decisions/0031-scope-down-for-thesis.md)
 - **Số đo theo chi phí mỗi điểm** (đo bằng `analyze` thật, `decide +kernel`, Windows, một máy; chi tiết và điều kiện:
   [situation-model-experiment.md](situation-model-experiment.md)): **2,3 đến 3,5 ms mỗi điểm** của miền
   `(tham số × tình huống)` của một module (2,3 ms ở cặp 5.5 × 10.6, 7 bit; 3,5 ms ở cặp 12.3.c × 13.2, 10,6 bit),
@@ -308,9 +298,7 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
   2,3–3,5 ms). **Không dùng số cũ để lập kế hoạch.**
 - **AC**: Vượt ngân sách → `unknown(outOfBudget)`, không bao giờ im lặng hoặc treo.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Planned**. `UnknownReason` hiện **không có** `outOfBudget`;
-  không có cơ chế đo hay chặn ngân sách. `decide +kernel` đã dùng được trong thí nghiệm
-  (đến 12 288 điểm); trần 2^18 với `+kernel` trên `check` thật: **chưa kiểm**.
+- **Trạng thái**: **Implemented theo nghĩa đã hạ** (2026-11-25). Không có `outOfBudget`. Fail closed nhờ giới hạn nhịp của Lean: quá giới hạn thì build thất bại và không có kết quả. Số đo: module gộp `Law44` (73 norm, 78 atom) build khoảng 330 giây; `Law44Drafting` khoảng 80 giây; một module có cạnh khoảng 43 giây (ADR-0029, ADR-0030).
 
 ### 2.3 Reliability
 
@@ -321,8 +309,7 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **AC**: Build lại cho kết quả như cũ từ một commit; mỗi `Norm` do LLM sinh ra
   truy được về một lần gọi LLM cụ thể.
 - **Kiểm chứng**: Review
-- **Trạng thái**: **Planned**. Đã có: `lean-toolchain` ghim `v4.35.0`, không
-  phụ thuộc ngoài (`lake-manifest.json` rỗng). Chưa có: log LLM.
+- **Trạng thái**: **Partial**. Đã có: `lean-toolchain` ghim `v4.35.0`, không phụ thuộc ngoài; mọi bản dịch và prompt dán tay được lưu trong `eval/translate/` (thay cho log LLM, vì không gọi API); báo cáo ghi commit, sha256 module và đầu vào. Chưa có: một lệnh chạy lại toàn bộ và hướng dẫn cài đặt (bước đóng gói).
 
 ### 2.4 Usability (Interaction capability)
 
@@ -331,26 +318,24 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **Ưu tiên**: Must
 - **AC**: 1–2 người duyệt không biết Lean hiểu đúng một phản ví dụ mẫu.
 - **Kiểm chứng**: Demo + Review
-- **Trạng thái**: **Planned**. Hiện `Repr` in ra cấu trúc Lean thô.
+- **Trạng thái**: **Partial**. Báo cáo, phiếu duyệt và kết quả đều bằng tiếng Việt, norm được diễn đạt thành lời (FR5). Người duyệt (Phong) đọc phiếu không cần biết Lean. Chưa có: thử với người thứ hai (bước đóng gói).
 
 ### 2.5 Maintainability
 
 #### N5 — Evaluability
 - **Phát biểu**: Hệ thống phải đo được recall (tiêm xung đột vào bản sao văn bản)
   và precision (người duyệt đánh giá).
-- **Ưu tiên**: Must · **Mục tiêu**: TBD
+- **Ưu tiên**: ~~Must~~ **Should**, [ADR-0031](decisions/0031-scope-down-for-thesis.md) · **Mục tiêu**: TBD
 - **AC**: *chưa định nghĩa được* — phụ thuộc mục tiêu số, xem báo cáo.
 - **Kiểm chứng**: Test
-- **Trạng thái**: **Planned**.
+- **Trạng thái**: **Partial**. Recall đo bằng gieo lỗi trên luật thật (`eval/entailment/`, E2: 23/23 ca cùng act; E5: 3/3 ca qua cạnh; 0 báo nhầm). Precision do người đánh giá phụ thuộc FR12.
 
 #### N9 — Maintainability
 - **Phát biểu**: Mỗi văn bản một module; thêm một văn bản không được sửa `Core`.
-- **Ưu tiên**: Must
+- **Ưu tiên**: ~~Must~~ **Should**, [ADR-0031](decisions/0031-scope-down-for-thesis.md)
 - **AC**: Thêm một module `Laws/` mới không thay đổi file nào trong `Core/`.
 - **Kiểm chứng**: Review
-- **Trạng thái**: **Planned**. Thiết kế đã hỗ trợ (`Norm` không phụ thuộc `S`,
-  `P`), nhưng `LexProof/Laws/` rỗng nên chưa được kiểm thực tế. Lưu ý: mỗi văn
-  bản mới vẫn phải **viết tay** một instance `Finite` cho `S` và `P`.
+- **Trạng thái**: **Implemented** (kiểm thực tế 2026-11-25): từ 2026-11-19, 8 commit thêm 17 module `Laws` mà không đổi file nào trong `Core/`.
 
 #### N12 — Build integrity
 - **Phát biểu**: Một lệnh `lake build` trần và CI phải build mọi module.
@@ -377,7 +362,7 @@ Nhóm theo đặc tính chất lượng **ISO/IEC 25010**.
 - **Ưu tiên**: Must
 - **AC**: Mọi báo cáo có dòng nhãn; không có dữ liệu không công khai trong `data/`.
 - **Kiểm chứng**: Review
-- **Trạng thái**: **Planned**.
+- **Trạng thái**: **Partial**. Mọi báo cáo có dòng «Không phải tư vấn pháp lý»; `data/` chỉ chứa văn bản công khai (Luật 44/2019/QH14 từ Công báo). Chưa có: ghi nguồn và điều kiện sử dụng trong README (bước đóng gói).
 
 ---
 

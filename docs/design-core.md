@@ -773,3 +773,11 @@ lệ với các module từng điều; **không** so điều kiện).
 **Không được chứng minh:** rằng một mục trong `skip` thật sự là lỗi (cần chứng minh «với mọi tình huống», chưa làm). Test:
 `Verify/DraftingTests.lean` (chứng nhân thiếu, chứng nhân sai, `skip`). Công cụ tìm chứng nhân: `pipeline/drafting.py`.
 Module: `Laws/Law44Drafting.lean`.
+
+## 21. `counterexampleLines` (`Verify/AnalyzeReport.lean`) — phản ví dụ bằng lời (FR9)
+
+`Modality.vi`, `Atom.valueLabel`, `describeAssign`, `ProjHit.describe`, `counterexampleLines ts tp r`: in mỗi `ProjHit`
+của một kết quả `.conflicts` thành tiếng Việt (id, tính chất và nguồn hai norm; từng atom của tình huống với nhãn giá trị
+và khoản nguồn; khái niệm mở in riêng; mọi atom khác là tùy ý). Chỉ là in: tính đúng của tình huống do `conflicts_sound`
+bảo đảm, và «atom khác tùy ý» đúng vì hai norm không đọc chúng (`Norm.applies_congr`). Tình huống là cái tìm thấy đầu tiên,
+không phải tình huống nhỏ nhất. Dòng đầu của mỗi cặp bắt đầu bằng «▸» để không lẫn với danh sách cặp «·» mà các công cụ đọc.

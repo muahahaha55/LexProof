@@ -296,6 +296,42 @@ def AnalysisReport.render (r : AnalysisReport) : List String :=
    s!"ACT TRONG DANH MỤC NHƯNG KHÔNG DÙNG: {String.intercalate ", " r.unusedCatalogActs}"] ++
   r.actFindings.map fun f => s!"FINDING ACT: {(repr f).pretty}"
 
+/-! ## Counterexamples in words (FR9)
+
+A `ProjHit` is a partial valuation over the atoms the two norms read. `conflicts_sound` says it extends to a real
+`(π, s)` where both norms apply and clash; since the norms read no other atom (`Norm.applies_congr`), every other atom
+may take any value. These functions only print it: atom names, value labels and sources come from the tables. -/
+
+def Modality.vi : Modality → String
+  | .obligation => "bắt buộc"
+  | .prohibition => "cấm"
+  | .permission => "được phép"
+
+def Atom.valueLabel (a : Atom) (v : Nat) : String :=
+  match a.domain with
+  | .bool => if v == 1 then "đúng" else "sai"
+  | .enum vs => (vs[v]?.map (·.label)).getD s!"giá trị số {v}"
+
+def describeAssign (t : AtomTable) (p : PartialAssign) : List String :=
+  p.map fun x => match t[x.1]? with
+    | some a => s!"{a.name} = {a.valueLabel x.2} (nguồn: {a.source})"
+    | none => s!"atom số {x.1} = {x.2} (không có trong bảng)"
+
+def ProjHit.describe (ts tp : AtomTable) (h : ProjHit) : List String :=
+  [s!"  ▸ {h.left} ({h.modalities.1.vi}; {h.sources.1.article}) × {h.right} ({h.modalities.2.vi}; {h.sources.2.article})",
+   "      Tình huống:"] ++
+  ((describeAssign ts h.situation).map ("        - " ++ ·)) ++
+  (if h.params.isEmpty then [] else
+    ["      Khái niệm mở (giá trị do người dùng quyết, hệ thống không quyết):"] ++
+      (describeAssign tp h.params).map ("        - " ++ ·)) ++
+  ["      Mọi atom khác: giá trị bất kỳ (hai norm này không đọc chúng)."]
+
+/-- `PHẢN VÍ DỤ` lines for a result with conflicts; nothing otherwise. -/
+def counterexampleLines (ts tp : AtomTable) : ProjResult → List String
+  | .conflicts hs _ =>
+    "PHẢN VÍ DỤ (mỗi cặp một tình huống; cả hai norm cùng áp dụng và trái nhau):" :: hs.flatMap (ProjHit.describe ts tp)
+  | _ => []
+
 /-! ## Non-vacuity -/
 
 example : ReviewStatus.draft.label = "DRAFT, NOT HUMAN REVIEWED" := by decide
@@ -333,5 +369,14 @@ example : noModalityClash [exN "a" .prohibition "x" [], exN "b" .prohibition "x"
 
 example : ((analyzeReport .draft [] exT [] exRS [] [] exNs).render.head?) =
     some "TRẠNG THÁI DUYỆT: DRAFT, NOT HUMAN REVIEWED" := by decide
+
+/-- A conflicting pair is printed with its situation in words. -/
+example : (counterexampleLines exT [] (analyzeP exT [] exRS [] []
+    [exN "o" .obligation "x" [], exN "p" .prohibition "x" []])) =
+    ["PHẢN VÍ DỤ (mỗi cặp một tình huống; cả hai norm cùng áp dụng và trái nhau):",
+     "  ▸ o (bắt buộc; Điều 1) × p (cấm; Điều 1)",
+     "      Tình huống:",
+     "        - A = đúng (nguồn: Điều 1)",
+     "      Mọi atom khác: giá trị bất kỳ (hai norm này không đọc chúng)."] := by decide
 
 end LexProof

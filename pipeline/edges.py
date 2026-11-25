@@ -134,7 +134,8 @@ def draft_text(es, module):
                       "open LexProof %s DraftEdges in" % m, "def main : IO Unit := do",
                       "  IO.println s!\"derived: {(derive edges norms).length}\"",
                       "  IO.println s!\"pfindings: {(pfindings tS tP rS rP catalog allNorms).length}\"",
-                      "  for l in (analyzeReport .draft allActs tS tP rS rP catalog allNorms).render do IO.println l", ""])
+                      "  for l in (analyzeReport .draft allActs tS tP rS rP catalog allNorms).render do IO.println l",
+                      "  for l in counterexampleLines tS tP (analyzeP tS tP rS rP catalog allNorms) do IO.println l", ""])
 
 
 def module_text(es, name, module, consistent):
@@ -156,7 +157,8 @@ def module_text(es, name, module, consistent):
               "    `conflict_derived_meaning` says what a pair with a derived norm means. -/",
               "theorem has_conflict : (analyzeP tS tP rS rP catalog allNorms).isConsistentOn = false := by decide +kernel", ""]
     L += ["/-- What `analyzeReport` prints (the status is the one of `%s`; the edges have their own, above). -/" % module,
-          "def report : List String := (analyzeReport status allActs tS tP rS rP catalog allNorms).render", "",
+          "def report : List String := (analyzeReport status allActs tS tP rS rP catalog allNorms).render ++",
+          "  counterexampleLines tS tP (analyzeP tS tP rS rP catalog allNorms)", "",
           "end LexProof.Laws.%s" % name, ""]
     return "\n".join(L)
 
@@ -224,6 +226,9 @@ def draft(path, module="Law44", out_dir=None, today=None):
     if pairs:
         L += ["", "Theo norm gốc (một cặp hiện hai lần khi cả hai chiều truyền đều cho ra nó): %d cặp norm gốc." % len(origins)]
         L += ["- `%s` × `%s`" % o for o in origins]
+    cx = out.split("PHẢN VÍ DỤ", 1)
+    if len(cx) == 2:
+        L += ["", "## Phản ví dụ (tình huống cụ thể của từng cặp)", "", "```", "PHẢN VÍ DỤ" + cx[1].rstrip(), "```"]
     L += ["", "## Cạnh cần người duyệt trước (nằm trên đường dẫn tới một cặp xung đột)", ""]
     L += ["- %s `%s ⇒ %s` [%s]: %s (nguồn %s)" % (e["id"], e["src"], e["dst"], e["status"], e["reading"], e["source"])
           for e in sorted(need.values(), key=lambda e: int(e["id"][1:]))] or ["- (không có)"]

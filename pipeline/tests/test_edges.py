@@ -138,6 +138,10 @@ class Lean(unittest.TestCase):
             self.assertTrue(res.startswith("KẾT QUẢ: XUNG ĐỘT"), res)
             self.assertEqual(need, ["E1"])
             self.assertTrue(any("Điều 5:5.12.i.c" in l or "Điều 5:5.12.i.c" in r for l, r in pairs))
+            md = open(rp, encoding="utf-8").read()
+            self.assertIn("## Phản ví dụ", md)
+            self.assertIn("ruou_bia_khong_bao_dam_chat_luong = đúng", md)
+            self.assertIn("Mọi atom khác: giá trị bất kỳ", md)
         finally:
             shutil.rmtree(d)
 

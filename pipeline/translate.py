@@ -615,7 +615,8 @@ def to_lean(data, seg):
           "  IO.println s!\"pfindings: {(pfindings tS tP rS rP catalog norms).length}\"",
           "  for f in pfindings tS tP rS rP catalog norms do IO.println s!\"  {(repr f).pretty}\"",
           "  let rep := analyzeReport .draft acts tS tP rS rP catalog norms",
-          "  for l in rep.render do IO.println l", ""]
+          "  for l in rep.render do IO.println l",
+          "  for l in counterexampleLines tS tP rep.core do IO.println l", ""]
     return "\n".join(L)
 
 

@@ -124,7 +124,8 @@ def lean_text(m, seg, es):
                         "def allActs : List Act := (allNorms.map (·.act)).eraseDups\n\nend Draft\n", 1)
     return head + "\n".join(["open LexProof Draft in", "def main : IO Unit := do",
                              "  IO.println s!\"pfindings: {(pfindings tS tP rS rP catalog allNorms).length}\"",
-                             "  for l in (analyzeReport .draft allActs tS tP rS rP catalog allNorms).render do IO.println l", ""])
+                             "  for l in (analyzeReport .draft allActs tS tP rS rP catalog allNorms).render do IO.println l",
+                             "  for l in counterexampleLines tS tP (analyzeP tS tP rS rP catalog allNorms) do IO.println l", ""])
 
 
 def run(path, out_dir=None, today=None):

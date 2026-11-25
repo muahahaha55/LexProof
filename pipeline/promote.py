@@ -353,7 +353,8 @@ def module_text(name, merged, seg, reviews, consistent, covers=None):
                       "LexProof.Laws.%s.norms.map (fun n => %s)" % (c, key) for c, _ in covers) + ") := by",
                   "  decide +kernel", ""]
     L += ["/-- What `analyzeReport` prints for this module (always print this, not only the core result). -/",
-          "def report : List String := (analyzeReport status acts tS tP rS rP catalog norms).render", "",
+          "def report : List String := (analyzeReport status acts tS tP rS rP catalog norms).render ++",
+          "  counterexampleLines tS tP (analyzeP tS tP rS rP catalog norms)", "",
           "end LexProof.Laws.%s" % name, ""]
     return "\n".join(L)
 

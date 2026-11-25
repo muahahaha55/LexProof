@@ -1,6 +1,6 @@
 # Lộ trình và tiến độ
 
-Cập nhật: 2026-11-24. Con số % dưới đây là **ước lượng theo kế hoạch của repo**, không phải theo đề bài môn học (chưa có rubric).
+Cập nhật: 2026-11-25 (sau [ADR-0031](decisions/0031-scope-down-for-thesis.md): thu gọn yêu cầu cho bản đồ án). Con số % dưới đây là **ước lượng theo kế hoạch của repo**, không phải theo đề bài môn học (chưa có rubric).
 
 ## Mục tiêu
 
@@ -8,17 +8,23 @@ Hệ thống **Level 1**: nhận một văn bản luật tiếng Việt, kiểm 
 
 Đường đi: văn bản → tách điều khoản → AI dịch thành dữ liệu → **người duyệt** → Lean kiểm tra → báo cáo.
 
-## Tiến độ theo 11 yêu cầu Must (`requirements.md`)
+## Tiến độ theo các yêu cầu Must (`requirements.md`, sau ADR-0031)
 
-Cách tính: Implemented = 1, Tested = 0.6, Partial = 0.5, Planned/Open = 0.
+Cách tính: Implemented = 1, Tested = 0.6, Partial = 0.5, Planned/Open = 0. FR4 đã chuyển sang Won't; N5, N8, N9 sang Should.
 
 | Nhóm | Yêu cầu | Ước lượng |
 |---|---|---|
-| Lõi kiểm tra (tin cậy) | FR6, FR7, FR8, FR11 Implemented; FR9, FR10 Partial | ~83% |
-| Đưa văn bản vào (không tin cậy) | FR1 Partial; FR3 Tested (dán tay); FR2 Partial (bảng chưa duyệt); FR4 Planned; FR5 Open | ~25% |
-| Tổng | | ~55% (6.1 / 11) |
+| Chức năng (10 Must) | FR1, FR2, FR5, FR6, FR7, FR8, FR9, FR10, FR11 Implemented; FR3 Tested (dán tay) | ~96% (9.6 / 10) |
+| Phi chức năng (9 Must) | N1, N2, N3, N6, N12 Implemented; N4, N7, N10, N11 Partial | ~78% (7 / 9) |
+| Tổng | | ~88% (16.6 / 19) |
 
-Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Độ trung thực hầu như chưa có bằng chứng**: 9/141 khoản mã hóa tay; phiếu 37 ca là đồng thuận với bản nháp AI; một người duyệt độc lập (Phong, 2026-11-18); hai lần dịch AI (Điều 19, Điều 5) mới được đối chiếu một phần.
+**Đọc con số này cẩn thận.** So với ~55% ngày 2026-11-24, phần tăng đến từ ba nguồn: việc mới (module gộp, cạnh kéo theo,
+lỗi soạn thảo, báo cáo `law44`), cập nhật các trạng thái đã lỗi thời, và **hạ mức** FR4, N5, N8, N9. Mẫu số cũng đổi
+(trước chỉ tính 11 FR). **Độ trung thực vẫn là chỗ yếu nhất**: một người duyệt, chưa có bộ ca độc lập (FR12), kết luận
+nhất quán chính rỗng về thông tin.
+
+Việc kỹ thuật trước đóng gói: xong (FR9, 2026-11-25). Còn lại thuộc đóng gói: N7 (một lệnh chạy lại), N10
+(demo cho người không biết Lean), N11 (nguồn và điều kiện dùng trong README).
 
 **Tiến độ dữ liệu (2026-11-24, chi tiết ở `docs/coverage.md`)**: 15/36 điều đã qua người duyệt và vào `LexProof/Laws/` (Điều 5, 10, 12–21, 32–34); 21/36 là phân loại «không mã hóa» của AI, Phong đồng ý để ngoài (21/21). Bản gộp 14 bản dịch (Điều 19 đã dịch lại theo bảng thuật ngữ, Phong duyệt 13/13, module thay) cho 69 norm, `consistentOn`, vẫn rỗng về xung đột modality. Con số % ở trên **chưa tính lại**: các điều mới là dữ liệu, không thêm chức năng.
 
@@ -30,13 +36,15 @@ Không tính: 13 yêu cầu phi chức năng, FR12 (Should), FR13 (Could). **Đ�
 | 2 | Đường từ bản nháp đã duyệt sang module `LexProof/Laws/` (`pipeline/promote.py`, ADR-0026) | **xong** (2026-11-21): hai module thật đầu tiên, `LexProof/Laws/Article19.lean` và `Article15.lean`, từ phiếu của Phong; kernel chứng minh `no_conflict`, nhưng cả hai **rỗng về xung đột modality** (Điều 19 chỉ có cấm, Điều 15 chỉ có cho phép). Điều 5 bị bác (N:5.11.1, A:13): phải dịch lại |
 | 3 | Dịch cả một điều dài theo lô (thử Điều 15, có điểm lồng) | **làm một điều** (2026-11-20): Điều 15 qua `check` lần đầu, Lean 0 finding; đã duyệt và vào thư viện (2026-11-21); chưa làm theo lô nhiều điều |
 | 4 | Bộ ca của người học luật, trả lời độc lập (FR12) | chưa; phụ thuộc người ngoài |
-| 5 | Đóng gói đồ án: báo cáo, demo, phần giới hạn | chưa |
+| 5 | Kiểm trên cả văn bản và qua quan hệ giữa hành vi: module gộp `Law44`, cạnh kéo theo (ADR-0029), dấu hiệu lỗi soạn thảo (ADR-0030), báo cáo `law44` | **xong** (2026-11-25); cạnh chờ duyệt |
+| 6 | FR9: phản ví dụ bằng lời | **xong** (2026-11-25) |
+| 7 | Đóng gói đồ án: quyển, demo, README chạy lại được, slide, phần giới hạn | chưa |
 
 Sau bước 1 và 2: có hệ thống cơ bản chạy từ đầu đến cuối. Bước 3–5: mở rộng và bằng chứng chất lượng.
 
 Bảng thuật ngữ dùng chung (FR2, ADR-0027, Accepted 2026-11-20): theo từng văn bản, Phong duyệt, ba act bán / cung cấp / khuyến mại riêng. Bước 1/5 xong (lược đồ, `check`, bảng hạt giống `data/glossary/44-2019-QH14.json`, mọi mục chưa duyệt). Bước 2/5 xong (câu lệnh `--glossary`, `glossary_proposals`, `check` theo id). Bước 3/5 xong (gộp theo id; `promote.py` chặn thuật ngữ chưa duyệt; phiếu norm ghim sha256 của bảng). Bước 4/5 xong (`glossary.py sheet`/`apply`; phiếu trống cho Phong `docs/review/duyet-bang-thuat-ngu-44-2019-QH14.md`, 15 mục). Bước 5/5 đã đo, kết quả âm: Điều 5 + 15 với bảng có 3 cặp được kiểm (không dùng bảng là 5), không act chung, vẫn rỗng về thông tin, vì hai điều điều chỉnh hai hành vi khác nhau (ADR-0027 «Bước 5: kết quả»). Phong đã duyệt bảng (2026-11-21): 60 chấp nhận, 1 bác (`co_giay_phep_hoac_dang_ky_kinh_doanh_ruou`). Kiểm Điều 5 với Điều 15 qua **norm suy ra** (ADR-0028, Accepted 2026-11-20). Bước 1 xong: `derived.py check`, `run.py --derived` chạy Lean thêm một lần và báo riêng ở mục 5b. Kết quả đầu tiên: 3 cặp xung đột, cả 3 dính norm suy ra; công cụ bác được cách đọc «đủ điều kiện cấp phép thì được kinh doanh». Bước 2 xong: phiếu duyệt `derived.py sheet`/`apply` (ghim sha256 tệp suy ra và bảng thuật ngữ; sửa mục đã duyệt thì `check` báo); phiếu trống cho Phong `docs/review/duyet-norm-suy-ra-44-2019-QH14.md`. Phong đã duyệt (2026-11-21): bác cả D1 và D2; mục bị bác không còn được chạy. Còn: đề xuất cách đọc mới, rồi đưa norm suy ra đã duyệt vào `promote.py`. Cần trước khi dịch theo lô, vì không có nó các điều không so được với nhau.
 
-Việc đang chờ người duyệt (Phong): không còn phiếu nào mở (2026-11-24).
+Việc đang chờ người duyệt: phiếu 2 cạnh E9, E10 (`docs/review/duyet-canh-keo-theo-44-2019-QH14.md`); câu hỏi R0/R1/R2 về Điều 32 khoản 4 × Điều 5 khoản 12; câu hỏi (a)/(b) về ngoại lệ của norm 15.2 (ADR-0030).
 
 ## Tạm gác (không chặn lộ trình)
 

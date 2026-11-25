@@ -138,9 +138,12 @@ def edges_section(cfg):
     import edges as E   # noqa: E402
     d = tempfile.mkdtemp()
     try:
-        _, res, need, pairs = E.draft(R.path_of(cfg["edges"]), cfg["lean_module"], d)
+        rp, res, need, pairs = E.draft(R.path_of(cfg["edges"]), cfg["lean_module"], d)
+        md = open(rp, encoding="utf-8").read()
     finally:
         shutil.rmtree(d)
+    cx = md.split("## Phản ví dụ (tình huống cụ thể của từng cặp)", 1)
+    cx = cx[1].split("## Cạnh cần", 1)[0].strip() if len(cx) == 2 else ""
     dd = E.load(R.path_of(cfg["edges"]))
     byid = {e["id"]: e for e in dd["edges"]}
     origins = sorted({tuple(sorted((E.chain(l)[1], E.chain(r)[1]))) for l, r in pairs})
@@ -154,6 +157,8 @@ def edges_section(cfg):
         L.append("Cặp norm gốc va nhau qua cạnh (%d):" % len(origins))
         L += ["- `%s` × `%s`" % o for o in origins]
         L.append("")
+    if cx:
+        L += ["Phản ví dụ (Lean in ra, FR9): mỗi cặp một tình huống mà cả hai norm cùng áp dụng và trái nhau.", "", cx, ""]
     L.append("Cạnh nằm trên đường dẫn tới một cặp xung đột (chỉ các cạnh này cần quyết trước):")
     L += ["- %s `%s ⇒ %s` [%s]: %s" % (i, byid[i]["src"], byid[i]["dst"], byid[i]["status"], byid[i]["reading"]) for i in need] \
         or ["- (không có)"]
@@ -217,6 +222,8 @@ def render(cfg, info, dump, today):
           "điều kiện. Nó chỉ nói: theo đúng chữ đã mã hóa, không có hai norm nào cùng một hành vi mà cấm / bắt buộc / "
           "cho phép trái nhau. Xem mục 5 cho phép kiểm qua quan hệ giữa các hành vi.")
         w("")
+    w("**Không phải tư vấn pháp lý.** Báo cáo là công cụ hỗ trợ người đọc luật; nó không nói hành vi nào hợp pháp hay trái luật.")
+    w("")
     w("Kết luận này **không** nói văn bản đúng hay không mâu thuẫn: nó chỉ nói về phần đã mã hóa (mục 2), và chỉ đúng nếu "
       "bản mã hóa trung thực với luật (mục 7).")
     w("")
