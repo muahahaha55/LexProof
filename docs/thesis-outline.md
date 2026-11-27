@@ -1,37 +1,37 @@
-# Dàn ý quyển đồ án và slide bảo vệ
+# Dàn ý khóa luận
 
-Tài liệu làm việc: dàn ý để viết quyển, mỗi chương chỉ tới nguồn đã có trong repo. Không lặp nội dung các tài liệu đó.
-Số liệu trích vào quyển phải lấy từ báo cáo do `pipeline/report.py` tạo hoặc từ `eval/`, kèm commit.
+Cập nhật: 2026-11-27. Tài liệu làm việc: dàn ý khóa luận tốt nghiệp. Khóa luận dùng **báo cáo dự án**
+([docs/report/bao-cao-du-an.pdf](report/bao-cao-du-an.pdf), kết quả Level 1) làm nền, cộng các chương mới của giai đoạn 2
+([roadmap.md](roadmap.md), mục «Giai đoạn 2»; [research-plan.md](research-plan.md)). Mỗi chương chỉ tới nguồn trong repo.
+Số liệu trích vào khóa luận phải lấy từ bản kết quả kiểm tra do `pipeline/report.py` sinh hoặc từ `eval/`, kèm commit.
 
-## Quyển
+Hạn nộp: chưa chốt (roadmap, Q4). Phạm vi chương 5 và 6 phụ thuộc quyết định mở Level 2 (roadmap, Q1).
 
-| Chương | Nội dung | Nguồn trong repo | Còn phải viết |
+## Khóa luận
+
+| Chương | Nội dung | Nguồn đã có | Phải làm thêm |
 |---|---|---|---|
-| 1. Mở đầu | Vấn đề mâu thuẫn trong văn bản luật; vì sao cần kiểm hình thức; mục tiêu và phạm vi (Level 1); đóng góp | `CLAUDE.md` (Scope), `docs/roadmap.md` (Mục tiêu) | viết văn xuôi; nêu 4 đóng góp: lõi có chứng minh, quy trình duyệt có ghim sha256, cạnh kéo theo, kiểm lỗi soạn thảo bằng chứng nhân |
-| 2. Cơ sở lý thuyết và công trình liên quan | Logic chuẩn tắc, định nghĩa xung đột (Kelsen, Vranes); hình thức hóa luật (Catala, L4L, Prolog cho luật thuế); Lean và chứng minh bằng kernel; LLM dịch sang dạng hình thức | `docs/related-work.md` | chọn 10–15 công trình; bảng so sánh |
-| 3. Yêu cầu | FR/NFR, ưu tiên, tiêu chí chấp nhận; ADR-0031 (thu gọn cho đồ án) | `docs/requirements.md`, ADR-0031 | rút gọn thành bảng |
-| 4. Kiến trúc | 4 tầng, ranh giới tin cậy, hai vòng phản hồi | `docs/architecture.md` | hình C4 |
-| 5. Thiết kế lõi Lean | Norm, Cond, bảng atom; `analyzeP` và phép chiếu theo cặp; các định lý liên kết; cạnh kéo theo (`derive_sound`, `conflict_derived_meaning`); lỗi soạn thảo bằng chứng nhân; phản ví dụ bằng lời; trust base | `docs/design-core.md` (mục 2–21), `docs/traceability.md` (mục 3) | chọn định lý chính, giải thích bằng lời |
-| 6. Quy trình đưa văn bản vào | Tách văn bản; bảng thuật ngữ dùng chung; dịch dán tay; phiếu duyệt ghim sha256; promote; module gộp | ADR-0024 đến ADR-0029, `docs/review/` | sơ đồ quy trình; số vòng duyệt và số dòng |
-| 7. Thực nghiệm trên Luật 44/2019/QH14 | Phạm vi 15 + 21 điều; `Law44` 77 norm, nhất quán không còn rỗng (4 act của Điều 15); gieo lỗi E2, E5; cạnh E4; cách đọc E7 và quyết định của người duyệt (bác E9, E10; chọn R2); lỗi soạn thảo: dấu hiệu 15.2 dẫn tới dịch lại Điều 15, nay 0 «không biết»; thời gian kernel | `reports/law44-*.md`, `eval/entailment/README.md`, ADR-0030 | bảng số liệu; thảo luận ứng viên Điều 32 × Điều 5 và vì sao nó bị loại |
-| 8. Giới hạn và đe dọa tính hợp lệ | Một người duyệt; chưa có FR12; kết luận chính chỉ có nghĩa ở Điều 15; 11 cạnh chưa duyệt; hai atom chủ thể của Điều 15 chưa có ràng buộc tách nhau; bộ dò E9 khớp quá mức; Level 2 | mục 7 của báo cáo `law44`, `docs/traceability.md`, `eval/entailment/README.md` (Đính chính) | viết thẳng, không giảm nhẹ |
-| 9. Kết luận và hướng phát triển | Tóm tắt; bài báo (FR12, dịch vòng, văn bản thứ hai có nhiều quyền); Level 2 | `docs/publication-q1.md`, `docs/roadmap.md` | |
-| Phụ lục | Hướng dẫn chạy (`README.md`, `pipeline/demo.py`); danh sách định lý; phiếu duyệt mẫu | | |
+| 1. Mở đầu | Bối cảnh; đề bài và sản phẩm; hai loại «đúng»; câu hỏi nghiên cứu; đóng góp | Báo cáo dự án mục 1; `research-plan.md` mục 1, 3 | Viết lại theo RQ1–RQ4 |
+| 2. Cơ sở lý thuyết và công trình liên quan | Logic chuẩn tắc; xung đột (Kelsen, Vranes); thứ bậc hiệu lực và nguyên tắc ưu tiên; Lean 4; LLM dịch luật; bảng so sánh | Báo cáo dự án mục 2; `related-work.md` | Thêm phần thứ bậc văn bản (Level 2); cập nhật so sánh với L4L, LexGuard |
+| 3. Vai trò của Lean 4 và kiến trúc | Vì sao Lean; sáu vai trò; cơ sở tin cậy; HLD, LLD | Báo cáo dự án mục 3, 4; `architecture.md`; `design-core.md` | Cập nhật HLD, LLD khi có Level 2 |
+| 4. Lõi kiểm trong một văn bản (Level 1) | Norm, `Conflict`, kiểm theo cặp, định lý W1–W4, cạnh kéo theo, lỗi soạn thảo, phản ví dụ | Báo cáo dự án mục 5; `design-core.md` mục 2–21 | Rút gọn từ báo cáo |
+| 5. Mở rộng lõi hình thức | (a) ràng buộc giữa atom; (b) cách đọc là tham số, kết luận ∀/∃; (c) ngữ nghĩa cạnh kéo theo | `related-work.md` Ý tưởng 1; ADR-0029 | **Mới**: thiết kế, định lý, ADR |
+| 6. Kiểm giữa nhiều văn bản (Level 2) | Thứ bậc hiệu lực, ngày hiệu lực, dẫn chiếu chéo; định lý liên kết mở rộng | (chưa có) | **Mới**: toàn bộ; cần quyết định Q1 |
+| 7. Dữ liệu và quy trình duyệt | Văn bản đã đưa vào; bảng thuật ngữ; phiếu duyệt; người gán nhãn và kappa | Báo cáo dự án mục 4.4, 6.1; `coverage.md`; `docs/review/` | Văn bản mới; ground truth độc lập |
+| 8. Đánh giá | RQ1–RQ4: xung đột được xác nhận; phụ thuộc cách đọc; so với baseline; độ trung thực và chi phí duyệt | Báo cáo dự án mục 6; `eval/entailment/`, `eval/mutation/` | **Mới**: baseline, nhãn chuyên gia, số đo |
+| 9. Vấn đề gặp phải và cách giải quyết | Bảng vấn đề, cách giải quyết, kết quả | Báo cáo dự án mục 7 (Bảng 14) | Bổ sung vấn đề của giai đoạn 2 |
+| 10. Giới hạn và đe dọa tính hợp lệ | Viết thẳng, không giảm nhẹ | Báo cáo dự án mục 8; `traceability.md` | Cập nhật theo kết quả mới |
+| 11. Kết luận và hướng phát triển | Tóm tắt; bài tạp chí | Báo cáo dự án mục 9; `publication-q1.md` | |
+| Phụ lục | Hướng dẫn chạy; danh sách định lý; phiếu duyệt mẫu; gói tái lập | `README.md`, `pipeline/demo.py` | DOI Zenodo khi công bố |
 
-## Slide bảo vệ (khoảng 15 slide)
+## Quan hệ với bài tạp chí
 
-1. Bài toán và ví dụ một cặp norm trái nhau.
-2. Vì sao cần kernel: tách soundness và faithfulness.
-3. Kiến trúc và ranh giới tin cậy.
-4. Norm, điều kiện, bảng atom (một norm thật của Điều 19).
-5. Định lý chính: `consistent` ⇒ `no_conflict`; kết quả ba giá trị.
-6. Quy trình duyệt: phiếu, sha256, số dòng đã duyệt.
-7. Kết quả trên Luật 44: phạm vi, nhất quán (không còn rỗng nhờ Điều 15 lần 3).
-8. Gieo lỗi: hệ thống bắt được khi có xung đột.
-9. Cạnh kéo theo và duyệt theo nhu cầu (2/13 cạnh).
-10. Ứng viên Điều 32 khoản 4 × Điều 5 khoản 12, phản ví dụ bằng lời.
-11. Cách đọc R0/R1/R2: ai quyết.
-12. Lỗi soạn thảo: chứng nhân; dấu hiệu 15.2 hóa ra là lỗi mã hóa, đã sửa.
-13. Giới hạn.
-14. Hướng tiếp theo.
-15. Demo trực tiếp: `python pipeline/demo.py --no-build`.
+Khóa luận và bài P1 (*Artificial Intelligence and Law*) dùng chung chương 5, 6, 8. Khóa luận bằng tiếng Việt, đủ chi tiết; bài báo bằng
+tiếng Anh, 25–40 trang, tập trung vào RQ và đánh giá. Khóa luận không cần chờ bài báo: nó cần chương 5, 6, một phần chương 8, và dữ liệu
+mở rộng vừa phải; bài Q1 cần thêm ground truth độc lập (đầu mục 5) và một phát hiện có ý nghĩa (đầu mục 7).
+
+## Slide bảo vệ
+
+Dựng lại từ slide báo cáo dự án (đã có, 33 slide, cùng cách đánh số với báo cáo; bộ slide là một Artifact trên claude.ai:
+https://claude.ai/artifact/Qdjqgoqd3y3KQo4apv6Pm9), thêm phần chương 5, 6, 8. Giữ hình HLD, LLD dùng chung với văn bản
+(`docs/report/fig-*.tex`).

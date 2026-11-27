@@ -23,10 +23,10 @@ Khái niệm mở («dành cho», «hợp lý», …) là tham số: hệ thốn
 
 | | |
 |---|---|
-| Phạm vi | 15 điều mã hóa và được một người duyệt (73 norm); 21 điều ngoài phạm vi mã hóa, người duyệt đồng ý; 36/36 điều có trạng thái |
-| Nhất quán (kernel) | `consistent` trên cả 73 norm. **Rỗng về thông tin**: không hành vi nào mang hai tính chất trái nhau |
-| Xung đột qua quan hệ giữa hành vi | 1 ứng viên: Điều 32 khoản 4 (bắt buộc thu hồi) × Điều 5 khoản 12 (cấm tàng trữ, vận chuyển rượu, bia không bảo đảm chất lượng). Dựa trên 2 cạnh «thu hồi ⇒ vận chuyển / tàng trữ» **chưa duyệt**; mất đi dưới hai cách đọc khác |
-| Dấu hiệu lỗi soạn thảo (kernel) | 73/73 norm sống, 322 cặp không bao trùm, 5/6 ngoại lệ có kích hoạt; 1 «không biết»: ngoại lệ của norm 15.2 |
+| Phạm vi | 15 điều mã hóa và được một người duyệt (77 norm); 21 điều ngoài phạm vi mã hóa, người duyệt đồng ý; 36/36 điều có trạng thái |
+| Nhất quán (kernel) | `consistent` trên cả 77 norm. Có nội dung ở 4 hành vi của Điều 15 (mang cả cấm lẫn cho phép); ở 37 hành vi còn lại chỉ có một tính chất nên «nhất quán» là hiển nhiên |
+| Xung đột qua quan hệ giữa hành vi | Ứng viên Điều 32 khoản 4 (bắt buộc thu hồi) × Điều 5 khoản 12 (cấm tàng trữ, vận chuyển rượu, bia không bảo đảm chất lượng) cần 2 cạnh «thu hồi ⇒ vận chuyển / tàng trữ»; người duyệt **bác** cả hai (2026-11-25), nên ứng viên bị loại. 11 cạnh khác chưa duyệt, không nằm trên đường xung đột nào |
+| Dấu hiệu lỗi soạn thảo (kernel) | 77/77 norm sống, 322 cặp không bao trùm, 6/6 ngoại lệ có kích hoạt; 0 «không biết» (dấu hiệu 15.2 trước đây là lỗi của bản mã hóa, đã dịch lại Điều 15) |
 | Gieo lỗi | Bộ kiểm bắt 23/23 xung đột gieo cùng hành vi, 0/23 báo nhầm (`eval/entailment/`) |
 
 Báo cáo chính: [`reports/law44-2026-11-25.md`](reports/law44-2026-11-25.md). Giới hạn: một người duyệt; chưa có bộ ca của

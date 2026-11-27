@@ -1,0 +1,49 @@
+% Hình LLD: luồng xử lý bên trong lõi Lean (bộ kiểm xung đột và bộ kiểm lỗi soạn thảo), kèm các định lý bảo đảm từng bước.
+\begin{tikzpicture}[
+  font=\sffamily\small,
+  fn/.style={draw=accentc,fill=accentc!8,rounded corners=2pt,align=center,text width=2.9cm,minimum height=1.3cm,inner sep=3pt,line width=0.7pt},
+  dat/.style={draw=black!45,fill=white,rounded corners=2pt,align=center,text width=2.9cm,minimum height=1.3cm,inner sep=3pt,line width=0.7pt},
+  unt/.style={dat,dashed},
+  thm/.style={draw=accentc!70,fill=white,align=left,text width=3.3cm,inner sep=4pt,font=\sffamily\scriptsize,line width=0.5pt},
+  dec/.style={diamond,draw=accentc,fill=accentc!8,aspect=1.6,inner sep=1pt,align=center,font=\sffamily\scriptsize,line width=0.7pt},
+  band/.style={draw=#1!45,fill=#1!4,rounded corners=4pt,line width=0.6pt},
+  lab/.style={font=\sffamily\scriptsize\bfseries,anchor=north west,text=#1},
+  arr/.style={-{Stealth[length=2mm]},line width=0.7pt,black!60},
+  prf/.style={-{Stealth[length=1.6mm]},line width=0.5pt,densely dotted,accentc},
+  tag/.style={font=\sffamily\scriptsize,text=black!60}]
+
+\draw[band=accentc] (-0.3,1.15) rectangle (16.8,-6.15);
+\draw[band=black]   (-0.3,-6.55) rectangle (16.8,-10.25);
+\node[lab=accentc] at (-0.2,1.1)  {A · KIỂM XUNG ĐỘT \quad (\ttfamily Verify/AnalyzeProjected, Verify/AnalyzeReport)};
+\node[lab=black!60] at (-0.2,-6.6) {B · KIỂM LỖI SOẠN THẢO \quad (\ttfamily Verify/Drafting)};
+
+% ---- A: main flow
+\node[dat] (in)  at (1.7,-0.2)  {\textbf{Module Laws}\\[-1pt]{\scriptsize bảng atom, bộ đọc,\\danh mục điều khoản, norm}};
+\node[fn]  (val) at (5.3,-0.2)  {\textbf{Kiểm dữ liệu}\\[-1pt]{\scriptsize\ttfamily validate, tableFindings, readerFindings}};
+\node[dec] (dq)  at (8.45,-0.2) {có\\lỗi?};
+\node[fn]  (prj) at (11.6,-0.2) {\textbf{Kiểm theo cặp}\\[-1pt]{\scriptsize mỗi cặp cùng hành vi, phép gán một phần (\ttfamily projConsistentT)}};
+\node[fn]  (res) at (15.05,-0.2) {\textbf{Kết quả}\\[-1pt]{\scriptsize\ttfamily .consistentOn\\.conflicts}};
+\node[dat] (inv) at (8.45,-2.6) {\textbf{.invalid}\\[-1pt]{\scriptsize lỗi có tên, kết luận «không biết»}};
+\node[fn]  (rep) at (15.05,-2.6) {\textbf{In kết quả}\\[-1pt]{\scriptsize\ttfamily analyzeReport, counterexampleLines}};
+\node[fn]  (ent) at (1.7,-2.6) {\textbf{Norm suy ra}\\[-1pt]{\scriptsize từ cạnh đã duyệt (\ttfamily derive)}};
+
+\draw[arr] (in) -- (val); \draw[arr] (val) -- (dq);
+\draw[arr] (dq) -- node[above,tag]{không} (prj);
+\draw[arr] (dq) -- node[right,tag]{có} (inv);
+\draw[arr] (prj) -- (res); \draw[arr] (res) -- (rep);
+\draw[arr] (ent) -- node[right,tag]{tùy chọn} (in);
+
+% ---- A: theorems
+\node[thm] (t1) at (5.3,-4.75) {\textbf{W1} \texttt{silent\_of\_not\_invalid}: không lỗi thì đủ giả thiết cho W2--W4};
+\node[thm] (t2) at (11.6,-4.75) {\textbf{W2} nhất quán thì không có xung đột\\\textbf{W3} xung đột báo ra là thật\\\textbf{W4} không bỏ sót cặp nào};
+\node[thm] (t3) at (1.7,-4.75) {\texttt{derive\_sound}, \texttt{conflict\_derived\_meaning}};
+\node[thm] (t4) at (15.05,-4.75) {Theo văn bản: \texttt{consistent := by decide +kernel}, rồi \texttt{no\_conflict}};
+\draw[prf] (t1) -- (val); \draw[prf] (t2) -- (prj); \draw[prf] (t3) -- (ent); \draw[prf] (t4) -- (rep);
+
+% ---- B: drafting
+\node[unt] (cer) at (1.7,-8.0) {\textbf{Chứng nhân}\\[-1pt]{\scriptsize do \texttt{drafting.py} tìm\\(không tin cậy)}};
+\node[fn]  (dcd) at (5.3,-8.0) {\textbf{Giải mã}\\[-1pt]{\scriptsize \texttt{decodeVal}: chỉ nhận\\giá trị hợp lệ}};
+\node[fn]  (chk) at (9.0,-8.0) {\textbf{Kiểm chứng nhân}\\[-1pt]{\scriptsize\ttfamily checkLive, checkNotSubsumed, checkExcFires}};
+\node[thm,text width=3.9cm] (t5) at (13.8,-8.0) {\texttt{live\_of\_check} \dots\ cho ra định lý \texttt{no\_dead}, \texttt{no\_redundant}, \texttt{exceptions\_fire}; mục không có chứng nhân thành «không biết»};
+\draw[arr] (cer) -- (dcd); \draw[arr] (dcd) -- (chk); \draw[prf] (t5) -- (chk);
+\end{tikzpicture}

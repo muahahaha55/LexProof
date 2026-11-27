@@ -1,0 +1,45 @@
+% Hình HLD: kiến trúc bốn tầng của LexProof, mức tổng quát (không tên tệp). Dùng chung cho báo cáo và slide.
+\begin{tikzpicture}[
+  font=\sffamily\small,
+  comp/.style={draw=black!45,fill=white,rounded corners=3pt,align=center,text width=3.4cm,minimum height=1.2cm,inner sep=4pt,line width=0.7pt},
+  hum/.style={comp,draw=warnc,fill=warnc!10},
+  lean/.style={comp,draw=accentc,fill=accentc!12},
+  band/.style={draw=#1!45,fill=#1!4,rounded corners=5pt,line width=0.6pt},
+  lab/.style={font=\sffamily\scriptsize\bfseries,anchor=west,text=#1,align=left,text width=2.3cm},
+  arr/.style={-{Stealth[length=2.2mm]},line width=0.8pt,black!60},
+  loop/.style={-{Stealth[length=2.2mm]},line width=0.8pt,dashed,warnc},
+  note/.style={font=\sffamily\scriptsize,text=warnc}]
+
+% bands (one row each)
+\draw[band=black]   (0,0.8)   rectangle (15.2,-0.8);
+\draw[band=black]   (0,-1.2)  rectangle (15.2,-2.8);
+\draw[band=accentc] (0,-3.2)  rectangle (15.2,-4.8);
+\draw[band=black]   (0,-5.2)  rectangle (15.2,-6.8);
+\node[lab=black!60] at (0.15,0)    {TẦNG 1\\chuẩn bị dữ liệu};
+\node[lab=black!60] at (0.15,-2)   {TẦNG 2\\dịch và duyệt};
+\node[lab=accentc]  at (0.15,-4)   {TẦNG 3\\lõi Lean 4\\(tin cậy)};
+\node[lab=black!60] at (0.15,-6)   {TẦNG 4\\đầu ra};
+
+% components
+\node[comp] (law) at (4.6,0)   {Văn bản luật\\[-1pt]{\scriptsize từ Công báo}};
+\node[comp] (seg) at (8.6,0)   {Tách điều, khoản, điểm};
+\node[comp] (glo) at (12.6,0)  {Bảng thuật ngữ chung};
+\node[comp] (ai)  at (5.8,-2)  {AI dịch thành norm\\[-1pt]{\scriptsize không được tin}};
+\node[hum]  (rev) at (11.8,-2) {\textbf{Người duyệt}\\[-1pt]{\scriptsize duyệt từng dòng}};
+\node[lean] (lib) at (5.8,-4)  {\textbf{Thư viện luật}\\[-1pt]{\scriptsize các điều đã duyệt}};
+\node[lean] (chk) at (11.8,-4) {\textbf{Bộ kiểm và định lý}\\[-1pt]{\scriptsize kernel kiểm mọi kết luận}};
+\node[comp,draw=accentc] (res) at (11.8,-6) {\textbf{Bản kết quả kiểm tra}};
+
+% flow
+\draw[arr] (law) -- (seg);
+\draw[arr] (seg.south) -- ++(0,-0.35) -| (ai.north);
+\draw[arr] (glo.south) -- ++(0,-0.35) -| ([xshift=6mm]ai.north);
+\draw[arr] (ai) -- (rev);
+\draw[arr] (rev.south) -- ++(0,-0.3) -| (lib.north);
+\draw[arr] (lib) -- (chk);
+\draw[arr] (chk) -- (res);
+
+% feedback loops
+\draw[loop] ([yshift=-3mm]rev.west) -- node[below,note]{A: bác thì dịch lại} ([yshift=-3mm]ai.east);
+\draw[loop] (res.east) -- ++(1.2,0) |- node[pos=0.25,right,note,align=left]{B: phản ví dụ,\\luật sai hay\\dịch sai?} (rev.east);
+\end{tikzpicture}

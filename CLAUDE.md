@@ -67,10 +67,14 @@ file and leave this list as pointers only.
   run the build and the axiom audit.
 - `docs/related-work.md` — literature survey 2019–2026 (abstracts only) and
   candidate research directions; not a decision.
-- `docs/thesis-outline.md` — outline of the thesis book and defence slides,
-  each chapter pointing to its sources in the repo.
+- `docs/thesis-outline.md` — outline of the khóa luận (built on the project
+  report) and defence slides, each chapter pointing to its sources in the repo.
 - `docs/publication-q1.md` — Q1 journal targets, publication process, and the
   gap between the current evidence and the Q1 bar; not a decision.
+- `docs/research-plan.md` — phase 2: contribution claim, RQ1–RQ4, evaluation
+  design, risks; not a decision. Workstreams and open decisions: `docs/roadmap.md`.
+- `docs/report/` — project report (LaTeX + PDF, Level 1) and the shared HLD/LLD
+  figures (`fig-*.tex`).
 
 Read first: `docs/traceability.md` for what is actually proven versus trusted —
 in particular the trust base, which includes `Atoms.valid`. Priority-cycle

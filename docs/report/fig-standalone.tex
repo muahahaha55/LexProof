@@ -1,0 +1,15 @@
+% Biên dịch riêng một hình (cho slide): lualatex "\def\fig{fig-hld}\input{fig-standalone}"
+\documentclass[border=6pt]{standalone}
+\usepackage{fontspec}
+\directlua{luaotfload.add_fallback("symfb",{"SegoeUISymbol:mode=harf;","CambriaMath:mode=harf;"})}
+\setmainfont{Times New Roman}[RawFeature={fallback=symfb}]
+\setsansfont{Arial}[RawFeature={fallback=symfb}]
+\setmonofont{Cascadia Mono}[Scale=0.78,RawFeature={fallback=symfb}]
+\usepackage{xcolor}
+\definecolor{accentc}{HTML}{1F4E79}
+\definecolor{warnc}{HTML}{8A3B12}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,shapes.geometric,calc}
+\begin{document}
+\input{\fig}
+\end{document}
